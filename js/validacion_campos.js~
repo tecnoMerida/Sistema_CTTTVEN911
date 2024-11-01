@@ -1,0 +1,25 @@
+
+function(){
+
+var input = document.getElementById('usuario_acceso');
+input.oninvalid = function(event) {
+    event.target.setCustomValidity('intenta probar desbloqueando Mayús');
+}
+
+
+
+var input = document.getElementById('usuario_acceso');
+var form  = document.getElementById('form');
+var elem               = document.createElement('div');
+    elem.id            = 'notify';
+    elem.style.display = 'none';
+    form.appendChild(elem);
+    
+    input.addEventListener('input', function(event){
+    if ( 'block' === elem.style.display ) {
+        input.className = '';
+        elem.style.display = 'none';
+    }
+});
+
+}

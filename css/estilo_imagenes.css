@@ -1,0 +1,505 @@
+/*      **************************************LOGOS INSTITUCIOANAL***************************************************     */
+
+/* **** Inicio Session **** */
+
+#buhosession {
+
+    margin-top: 0%;
+    width: 6.6em;
+    height: 5.1em;
+	background: #FFFFFF;
+	border-color: black;
+	border-image-outset: 20px;
+	border-radius: 50%;
+    z-index:1;
+    
+}
+
+.buho01{
+    background-image: url("../../production/images/BUHO1.png");
+}
+
+#uptminicio {
+    margin-top: 0;
+    width: 40px;
+    height: 50px;
+
+    position: relative; 
+    top: 0;
+}
+
+.uptminicio{
+    background-image: url("../images/uptm.png");
+}
+
+/*	LOGO INSTITUCIONAL 171*/
+#gobinicio {
+    margin-top: 0;
+    width: 150px;
+    height: 40px;
+
+    position: relative; 
+    top: 0;
+}
+
+.gobinicio{
+    background-image: url("../images/Gobierno_bolivariano_venezuela.jpeg");
+}
+/**************************************LOGO INSTITUCIONAL AJUSTADO LADO IZQUIERDO **************************************/
+
+#izquierda {
+    float: left;
+    box-align: left;
+    margin-top: 0%;
+    margin-left: 12%;
+    
+    width: 30%;
+    height: 40%;
+
+    /*width: 121px;
+    height: 181px;*/
+    position: absolute;
+    top: 45%;
+    left: 50px;
+    
+    transition: all 5s;
+}
+
+#izquierda:hover{
+    
+    transform: scale(2);
+    background: none;
+}
+
+#izquierda1 {
+    float: right;
+    box-align: right;
+    margin-top: 0%;
+    margin-right: 10%;
+    padding: 0% 1%;
+    width: 15%;
+    height: 20%;
+    position: absolute;
+    top: 310px;
+    left: 50px;
+    transition: all 5s;
+}
+
+/**************************************LOGO INSTITUCIONAL AJUSTADO LADO DERECHO **************************************/
+
+#derecha {
+    float: right;
+    align: right;
+    margin-top: 0%;
+    margin-right: 10%;
+    padding: 0% 1%;
+    width: 30%;
+    height: 40%;
+
+    position: absolute;
+    top: 310px;
+    left: 50px;
+
+    transition: all 5s;
+}
+
+#derecha:hover{
+    transform: scale(2);
+    background: none;
+}
+
+#derecha3 {
+    float: right;
+    align: right;
+    margin-top: 0%;
+    margin-right: 10%;
+    padding: 0% 1%;
+    width: 25%;
+    height: 30%;
+
+    position: absolute;
+    top: 310px;
+    left: 50px;
+
+    transition: all 5s;
+}
+
+
+#derecha3:hover{
+    
+    transform: scale(2);
+    background: none;
+}
+
+
+#derecha1 {
+    float: right;
+    align: right;
+    margin-top: 0%;
+    margin-right: 10%;
+    padding: 0% 1%;
+    width: 30%;
+    height: 40%;
+
+    position: absolute;
+    top: 310px;
+    left: 60%;
+    
+    transition: all 5s;
+}
+
+#derecha1:hover{
+    
+    transform: scale(2);
+    background: none;
+}
+
+
+
+/* 	IMAGEN MASCOTA BUHO		*/
+#buhoder1 {
+    float: right;
+    align: right;
+    margin-top: 0%;
+    margin-right: 10%;
+    padding: 0% 1%;
+    width: 8%;
+    height: 15%;
+
+    position: absolute; z-index:1;
+    top: 310px;
+    left: 60%;
+
+}
+
+#buhoder11 {
+    float: right;
+    align: right;
+    margin-top: 0%;
+    margin-right: 10%;
+    padding: 0% 1%;
+    width: 4.5em;
+    height: 5.5em;
+
+    position: absolute; z-index:1;
+    top: 310px;
+    left: 62%;
+}
+
+
+#buhoder2 {
+    float: right;
+    align: right;
+    margin-top: 0%;
+    margin-right: 10%;
+    padding: 0% 1%;
+    width: 5.8em;
+    height: 6.8em;
+
+    position: absolute; z-index:1;
+    top: 300px;
+    left: 57%;
+   
+}
+
+#buhoder22 {
+    float: right;
+    align: right;
+    margin-top: 0%;
+    margin-right: 10%;
+    padding: 0% 1%;
+    width: 6em;
+    height: 7em;
+
+    position: absolute; z-index:1;
+    top: 260px;
+    left: 68%;
+   
+}
+
+#buhoder3 {
+    float: right;
+    align: right;
+    margin-top: 0%;
+    margin-right: 10%;
+    padding: 0% 1%;
+    width: 30%;
+    height: 40%;
+
+    position: absolute; z-index:1;
+    top: 370px;
+    left: 60%;
+
+    transition: all 5s;
+}
+
+#buhoder3:hover{
+
+    transform: scale(2);
+    background: none;
+}
+
+
+/* 	IMAGEN LOGO BOMBEROS MERIDA 	*/
+#bombder1 {
+    float: right;
+    align: right;
+    margin-top: 0%;
+    margin-right: 10%;
+    padding: 0% 1%;
+    width: 7em;
+    height: 7em;
+
+    position: absolute;
+    top: 270px;
+    left: 62%;
+    
+    transition: all 5s;
+}
+
+#bombder11 {
+    float: right;
+    align: right;
+    margin-top: 0%;
+    margin-right: 10%;
+    padding: 0% 1%;
+    width: 7em;
+    height: 7em;
+
+    position: absolute; z-index:1;
+    top: 250px;
+    left: 68%;
+    
+    transition: all 5s;
+}
+
+/* 	IMAGEN LOGO PROTECCION CIVIL MERIDA 	*/
+#pcder1 {
+    float: right;
+    align: right;
+    margin-top: 0%;
+    margin-right: 10%;
+    padding: 0% 1%;
+    width: 7em;
+    height: 7em;
+
+    position: absolute; z-index:1;
+    top: 255px;
+    left: 70%;
+    
+}
+
+#pcder11 {
+    float: right;
+    align: right;
+    margin-top: 0%;
+    margin-right: 10%;
+    padding: 0% 1%;
+    width: 6em;
+    height: 6.5em;
+
+    position: absolute; z-index:1;
+    top: 265px;
+    left: 65%;
+    
+}
+
+/* 	IMAGEN LOGO POLICIA MERIDA 	*/
+#pmder1 {
+    float: right;
+    align: right;
+    margin-top: 0%;
+    margin-right: 10%;
+    padding: 0% 1%;
+    width: 6em;
+    height: 6.2em;
+
+    position: absolute; z-index:1;
+    top: 280px;
+    left: 65%;
+    
+
+}
+
+
+#pmder11 {
+    float: right;
+    align: right;
+    margin-top: 0%;
+    margin-right: 10%;
+    padding: 0% 1%;
+    width: 6em;
+    height: 6em;
+
+    position: absolute; z-index:1;
+    top: 250px;
+    left: 880px;
+    
+}
+
+/*	LOGO INSTITUCIONAL 171*/
+#logoder1 {
+/*    margin-top: 0;
+    margin-left: 35%;*/
+    width: 250px;
+    height: 300px;
+    position: relative; 
+}
+
+/*	LOGO INSTITUCIONAL UPTM*/
+#uptmder1 {
+    float: right;
+    margin-top: 0;
+    margin-left: 1%;
+    margin-right: 35%;
+    width: 200px;
+    height: 250px;
+
+    position: relative; 
+    top: 0;
+}
+
+#uptmder2 {
+    margin-top: 0;
+    width: 50px;
+    height: 60px;
+
+    position: relative; 
+    top: 0;
+}
+
+/*	*********************************			LOGOS CENTRADOS			*******************************************		*/
+
+/*	LOGO INSTITUCIONAL 171*/
+#gobcentral1 {
+    margin-top: 0;
+    width: 260px;
+    height: 50px;
+
+    position: relative; 
+    top: 0;
+}
+
+/* 	IMAGEN MASCOTA BUHO		*/
+#buhocenter1 {
+    margin-top: 0%;
+    width: 100px;
+    height: 150px;
+
+    position: absolute;
+    top: 30%;
+    left: 86%;
+
+}
+
+#buhocenter11 {
+    margin-top: 0%;
+    width: 100px;
+    height: 150px;
+
+    position: absolute;
+    top: 30%;
+    left: 5.4%;
+
+}
+
+/* LOGO PROTECCION CIVIL MERIDA */
+#pccentral {
+    margin-top: 0%;
+    width: 13em;
+    height: 12em;
+    position: absolute; 
+    top: 530px;
+    left: 42%;
+
+}
+
+
+
+/*LOGO BOMBEROS MERIDA */
+#bombcentral {
+    width: 360px;
+    height: 360px;
+
+    position: absolute;
+    top: 480px;
+    left: 36%;
+
+}
+
+/* ********************************** LOGOS ENCABEZADO Y PIE DE PAGINAS ******************************************** */
+
+/*Logos Encabezado Plantilla*/
+
+.encabezado1 {
+/*    background: #A8A8A8;*/
+    background: #FFFFFF;
+    width: 100%;
+    height: 70%;
+}
+
+.encabezado2 {
+/*    background: #A8A8A8;*/
+    background: #FFFFFF;
+}
+
+#izquierda3 {
+    float: left;
+    box-align: left;
+    margin-top: 0%;
+    margin-right: 0%;
+    width: 6.7%;
+    height: 20%;
+}
+
+#izquierda2 {
+    float: center;
+    box-align: center;
+    margin-top: 0%;
+    margin-left: 0%;
+    width: 50%;
+    height: 100%;
+}
+
+#derecha2 {
+    float: right;
+    box-align: right;
+    margin-top: 0%;
+    margin-right: 0%;
+    width: 8%;
+    height: 100%;
+}
+
+#derecha22 {
+    float: right;
+    box-align: right;
+    margin-top: 0%;
+    margin-right: 0%;
+    width: 20%;
+    height: 100%;
+}
+
+/*logo pie de pagina */
+
+.pie {
+    background: #CDCDCD;
+    width: 100%;
+    height: 100%;
+}
+
+#bandera {
+    float: left;
+    margin-top: 30%;
+    margin-left: 8%;
+    margin-right: 0%;
+    width: 83%;
+    height: 140px;
+}
+
+/*  **************************************************  */
+/*  ***********T.S.U. Gilbert H. Gonzalez M.**********  */
+/*  **********Tecnico Operador de Telematica**********  */
+/*  ***********gilbertgonzalez5@outlook.com***********  */
+/*  ********Gobernacion del Estado Merida 2019********  */
+/*  *************D.E.P.P. TELEINFORMATICA*************  */
+/*  **************************************************  */

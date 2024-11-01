@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html PUBLIC ?-//W3C//DTD XHTML 1.0 Transitional//EN? ?http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd?&gt;>
+<html lang="es-español" xmlns=?http://www.w3.org/1999/xhtml?&gt;>
+<head>
+  <link href=""
+        rel="">
+  <meta charset="UTF-8">
+  <meta content="width=device-width"
+        name="viewport">
+  <link href="../css/estilo_imagenes.css"
+        media="screen"
+        rel="stylesheet">
+  <title>Fecha y Hora</title>
+</head>
+<body>
+  <section class="encabezado1">
+    <div>
+       <img id="izquierda2"
+           src="../images/cintillo_MPPRIJP_1.jpeg"
+           title="Ministerio del Poder Popular para las Relaciones Interiores, Justicia y Paz"> 
+       <img id="derecha2"
+           src="../images/mark_cuadrantes.png"
+           title="Emergencias 9-1-1 Merida"> 
+      <img id="derecha22"
+           src="../images/BCarabobo.png"
+           title="Celebración 200 Años Batalla de Carabobo">
+    </div>
+  </section>
+  <section class="encabezado2">
+    <div style="font-size:14px; font-family:Arial;">
+      <!-- <script type="text/javascript" style="font-size:30px;">
+                    var d = new Date();
+                    document.write(d.getDate());
+     </script> -->
+      <script type="text/javascript">
+                var d = new Date();
+                var dia = new Array(7);
+                dia[0] = "Domingo";
+                dia[1] = "Lunes";
+                dia[2] = "Martes";
+                dia[3] = "Miercoles";
+                dia[4] = "Jueves";
+                dia[5] = "Viernes";
+                dia[6] = "Sabado";
+                document.write(" " + dia[d.getDay()]);
+      </script> 
+      <script type="text/javascript">
+
+                //<![CDATA[
+                function makeArray() {
+                    for (i = 0; i < makeArray.arguments.length; i++)
+                        this[i + 1] = makeArray.arguments[i];
+                }
+                var months = new makeArray('Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo',
+                    'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre');
+                var date = new Date();
+                var day = date.getDate();
+                var month = date.getMonth() + 1;
+                var yy = date.getYear();
+                var year = (yy < 1000) ? yy + 1900 : yy;
+                document.write(", " + day + " de " + months[month] + " del " + year);
+                //]]>
+      </script> <!--hora-->
+ 
+      <script type="text/javascript">
+
+                    function startTime() {
+                        today = new Date();
+                        H = today.getHours();
+                        m = today.getMinutes();
+                        s = today.getSeconds();
+                        m = checkTime(m);
+                        s = checkTime(s);
+                        document.getElementById('reloj').innerHTML = H + ":" + m + ":" + s;
+                        t = setTimeout('startTime()', 500);
+                    }
+
+                    function checkTime(i) {
+                        if (i < 10) {
+                            i = "0" + i;
+                        }
+                        return i;
+                    }
+                    window.onload = function() {
+                        startTime();
+                    }
+      </script>
+      <div id="reloj"
+           style="font-size:12px; float:right; font-family:Arial;"></div>
+    </div>
+  </section>
+</body>
+</html>

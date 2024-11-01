@@ -1,0 +1,273 @@
+<?php
+
+  $id_guardia = $_REQUEST['id_personal_guard'];
+  $id_guardia =$_GET['id_personal_guard'];
+
+require_once('../../config/conexion_bd.php');
+require('fpdf123/fpdf.php');
+
+
+class PDF extends FPDF
+{
+ 
+
+// Cabecera de página
+function Header()
+{
+    // Logo
+    $this->Image('../../imagenes/SEG.CIUDADANA.png',10,8,85);
+    $this->Image('../../imagenes/logo_171.png',179,8,18);
+    // Arial bold 15
+    $this->SetFont('Arial','',12);
+    // Movernos a la derecha
+    $this->Cell(80);
+    // Título
+
+// ZONA HORARIA
+date_default_timezone_set('America/Caracas');
+setlocale(LC_ALL,"es_ES");
+
+    $week_days = array ("Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado");  
+    $months = array ("", "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");  
+    $year_now = date ("Y");  
+    $month_now = date ("n");  
+    $day_now = date ("j");  
+    $week_day_now = date ("w");  
+//    $date = $week_days[$week_day_now] . ", " . $day_now . " de " . $months[$month_now] . " de " . $year_now;
+    $date = $day_now . " de " . $months[$month_now] . " de " . $year_now;
+    
+    $this->Cell(108,60,utf8_decode('Merida, '.$date.''),0,0,'R');
+    // Salto de línea
+    $this->Ln(40);
+}
+
+// Pie de página
+function Footer()
+{
+    // Posición: a 1,5 cm del final
+    $this->SetY(-30);
+    // Arial italic 8
+    $this->SetFont('Arial','I',8);
+
+    // Direccion 
+    $this->Cell(0,10,utf8_decode('_______________________________________________________________________________________'),0,1,'C');
+    $this->Cell(0,5,utf8_decode('Av. Los Proceres, santa Barbara oeste, sede de Protección Civil Mérida'),0,1,'C');
+    $this->Cell(0,5,utf8_decode('tlfs: 0274-4178066 / E-mail: 171t@gmail.com '),0,0,'C');
+    // Posición: a 1,5 cm del final
+    $this->SetY(-10);
+    // Número de página
+    $this->Cell(0,5,utf8_decode('Página ').$this->PageNo().'/{nb}',0,0,'C');
+}
+}
+
+
+	///////////////////////////////////				CONSULTAS			//////////////////////////////////////////////
+	//consulta 1
+   $personal = mysqli_query($conexion, "SELECT * FROM personal_guardia WHERE id_personal_guard = $id_guardia ");
+	$reg = mysqli_fetch_array($personal);
+
+	$organismo = $reg['id_organismo'];
+	$grupo= $reg['id_grupo'];	
+	
+	$fecha_a = $reg['fecha_sistema'];
+   $now1 = new DateTime($fecha_a);
+   $fecha_a1=$now1->format('d-m-Y');
+
+	//consulta 2
+	$consulta = mysqli_query($conexion,"SELECT * FROM grupos_organismos WHERE id_organismo = $organismo");
+	$reg1= mysqli_fetch_array($consulta);
+
+	//consulta 3
+	$personal = mysqli_query($conexion, "SELECT * FROM personal_171 WHERE (id_grupo= $grupo AND id_asignado= 1) AND id_organismo= 4 ");		
+	$reg2 = mysqli_fetch_array($personal);
+
+	//consulta 4
+	$coordinador = mysqli_query($conexion, "SELECT * FROM administrador_coord WHERE cargo LIKE '%Coordinador%' ");		
+	$coord1 = mysqli_fetch_array($coordinador);
+
+	//consulta 5
+	$coordinador1 = mysqli_query($conexion, "SELECT * FROM administrador_coord WHERE cargo LIKE '%Director%' ");		
+	$coord2 = mysqli_fetch_array($coordinador1);
+
+
+$pdf = new PDF('P','mm','A4');
+$pdf->AddPage();
+$title = 'Reporte Personal de Guardia';
+$pdf->SetTitle($title);
+
+$pdf->SetFont('Arial','B',16);
+$pdf->SetX(20);
+$pdf->Cell(170,10,utf8_decode('Personal de guardia'),0,1,'C');
+
+$pdf->SetFont('Arial','',14);
+$y = $pdf->GetY();
+$pdf->SetY($y+10);
+$pdf->SetX(20);
+$pdf ->Cell(80,7,utf8_decode('Se hace constar que  para la  hora '),1,0);
+$pdf->SetFont('Arial','B',14);
+$pdf ->Cell(35,7,utf8_decode(''.$reg['hora_sistema'].' HLV'),1,0,'C');
+$pdf->SetFont('Arial','',14);
+$pdf ->Cell(20,7,utf8_decode(' y fecha '),1,0);
+$pdf->SetFont('Arial','B',14);
+$pdf ->Cell(35,7,utf8_decode(''.$fecha_a1.''),1,1,'C');
+$pdf->SetX(20);
+$pdf->SetFont('Arial','',14);
+$pdf ->Cell(120,7,utf8_decode('es realizada la apertura de guardia del grupo numero'),1,0);
+$pdf->SetFont('Arial','B',14);
+$pdf ->Cell(12,7,utf8_decode(''.$reg['id_grupo'].''),1,0,'C');
+$pdf->SetFont('Arial','',14);
+$pdf ->Cell(38,7,utf8_decode(', bajo el registro'),1,1);
+$pdf->SetX(20);
+$pdf ->Cell(55,7,utf8_decode('indicado con el numero'),1,0);
+$pdf->SetFont('Arial','B',14);
+$pdf ->Cell(30,7,utf8_decode(''.$reg['id_personal_guard'].''),1,0,'C');
+$pdf->SetFont('Arial','',14);
+$pdf ->Cell(85,7,utf8_decode(', compuesto por el siguiente personal'),1,1);
+
+$pdf->SetX(20);
+$pdf->Cell(170,8,utf8_decode(''),0,1);
+$pdf->SetX(20);
+$pdf->Cell(170,8,utf8_decode(''),0,1);
+
+$pdf->SetX(20);
+$pdf->SetFont('Arial','',14);
+$pdf ->Cell(70,7,utf8_decode('     1-. Supervisor'),1,0);
+$pdf->SetFont('Arial','B',14);
+$pdf ->Cell(100,7,utf8_decode(''.$reg['nomb_sup'].' '.$reg['apelli_sup'].''),1,1,'L');
+$pdf->SetX(20);
+$pdf->SetFont('Arial','',14);
+$pdf ->Cell(70,7,utf8_decode('     2-. Auxiliar Supervisor'),1,0);
+$pdf->SetFont('Arial','B',14);
+$pdf ->Cell(100,7,utf8_decode(''.$reg['nomb_aux'].' '.$reg['apelli_aux'].''),1,1,'L');
+
+$pdf->SetX(20);
+$pdf->Cell(170,8,utf8_decode(''),0,1);
+
+$pdf->SetX(20);
+$pdf->SetFont('Arial','',14);
+$pdf ->Cell(70,7,utf8_decode('     1-. Operador'),1,0);
+$pdf->SetFont('Arial','B',14);
+$pdf ->Cell(100,7,utf8_decode(''.$reg['nomb_op1'].' '.$reg['apelli_op1'].''),1,1,'L');
+$pdf->SetX(20);
+$pdf->SetFont('Arial','',14);
+$pdf ->Cell(70,7,utf8_decode('     2-. Operador'),1,0);
+$pdf->SetFont('Arial','B',14);
+$pdf ->Cell(100,7,utf8_decode(''.$reg['nomb_op2'].' '.$reg['apelli_op2'].''),1,1,'L');
+$pdf->SetX(20);
+$pdf->SetFont('Arial','',14);
+$pdf ->Cell(70,7,utf8_decode('     3-. Operador'),1,0);
+$pdf->SetFont('Arial','B',14);
+$pdf ->Cell(100,7,utf8_decode(''.$reg['nomb_op3'].' '.$reg['apelli_op3'].''),1,1,'L');
+$pdf->SetX(20);
+$pdf->SetFont('Arial','',14);
+$pdf ->Cell(70,7,utf8_decode('     4-. Operador'),1,0);
+$pdf->SetFont('Arial','B',14);
+$pdf ->Cell(100,7,utf8_decode(''.$reg['nomb_op4'].' '.$reg['apelli_op4'].''),1,1,'L');
+$pdf->SetX(20);
+$pdf->SetFont('Arial','',14);
+$pdf ->Cell(70,7,utf8_decode('     5-. Operador'),1,0);
+$pdf->SetFont('Arial','B',14);
+$pdf ->Cell(100,7,utf8_decode(''.$reg['nomb_op5'].' '.$reg['apelli_op5'].''),1,1,'L');
+$pdf->SetX(20);
+$pdf->SetFont('Arial','',14);
+$pdf ->Cell(70,7,utf8_decode('     6-. Operador'),1,0);
+$pdf->SetFont('Arial','B',14);
+$pdf ->Cell(100,7,utf8_decode(''.$reg['nomb_op6'].' '.$reg['apelli_op6'].''),1,1,'L');
+
+$pdf->SetX(20);
+$pdf->Cell(170,8,utf8_decode(''),0,1);
+
+$pdf->SetX(20);
+$pdf->SetFont('Arial','',14);
+$pdf ->Cell(70,7,utf8_decode('     1-. Despachador Policia'),1,0);
+$pdf->SetFont('Arial','B',14);
+$pdf ->Cell(100,7,utf8_decode(''.$reg['nomb_desp1_pm'].' '.$reg['apelli_desp1_pm'].''),1,1,'L');
+$pdf->SetX(20);
+$pdf->SetFont('Arial','',14);
+$pdf ->Cell(70,7,utf8_decode('     2-. Despachador Policia'),1,0);
+$pdf->SetFont('Arial','B',14);
+$pdf ->Cell(100,7,utf8_decode(''.$reg['nomb_desp2_pm'].' '.$reg['apelli_desp2_pm'].''),1,1,'L');
+$pdf->SetX(20);
+$pdf->SetFont('Arial','',14);
+$pdf ->Cell(70,7,utf8_decode('     3-. Despachador Policia'),1,0);
+$pdf->SetFont('Arial','B',14);
+$pdf ->Cell(100,7,utf8_decode(''.$reg['nomb_desp3_pm'].' '.$reg['apelli_desp3_pm'].''),1,1,'L');
+
+$pdf->SetX(20);
+$pdf->Cell(170,8,utf8_decode(''),0,1);
+
+$pdf->SetX(20);
+$pdf->SetFont('Arial','',14);
+$pdf ->Cell(70,7,utf8_decode('     1-. Despachador Bomberos'),1,0);
+$pdf->SetFont('Arial','B',14);
+$pdf ->Cell(100,7,utf8_decode(''.$reg['nomb_desp1_bm'].' '.$reg['apelli_desp1_bm'].''),1,1,'L');
+$pdf->SetX(20);
+$pdf->SetFont('Arial','',14);
+$pdf ->Cell(70,7,utf8_decode('     2-. Despachador Bomberos'),1,0);
+$pdf->SetFont('Arial','B',14);
+$pdf ->Cell(100,7,utf8_decode(''.$reg['nomb_desp2_bm'].' '.$reg['apelli_desp2_bm'].''),1,1,'L');
+
+$pdf->SetX(20);
+$pdf->Cell(170,8,utf8_decode(''),0,1);
+
+$pdf->SetX(20);
+$pdf->SetFont('Arial','',14);
+$pdf ->Cell(70,7,utf8_decode('     1-. Despachador P. Civil'),1,0);
+$pdf->SetFont('Arial','B',14);
+$pdf ->Cell(100,7,utf8_decode(''.$reg['nomb_desp1_pc'].' '.$reg['apelli_desp1_pc'].''),1,1,'L');
+$pdf->SetX(20);
+$pdf->SetFont('Arial','',14);
+$pdf ->Cell(70,7,utf8_decode('     2-. Despachador P. Civil'),1,0);
+$pdf->SetFont('Arial','B',14);
+$pdf ->Cell(100,7,utf8_decode(''.$reg['nomb_desp2_pc'].' '.$reg['apelli_desp2_pc'].''),1,1,'L');
+
+
+
+$pdf->SetX(20);
+$pdf->Cell(170,8,utf8_decode(''),0,1);
+$pdf->SetX(20);
+$pdf->Cell(170,8,utf8_decode(''),0,1);
+$pdf->SetX(20);
+$pdf->Cell(170,8,utf8_decode(''),0,1);
+
+$pdf->SetFont('Arial','B',12);
+$pdf->SetX(20);
+$pdf->Cell(85,10,utf8_decode('__________________________'),0,0,'C');
+$pdf->Cell(85,10,utf8_decode('__________________________'),0,1,'C');
+$pdf->SetX(20);
+$pdf->Cell(85,7,utf8_decode(''.$reg2['grado_instruccion'].' '.$reg2['p_nombre'].' '.$reg2['p_apellido'].''),0,0,'C');
+$pdf->Cell(85,7,utf8_decode(''.$coord1['grado_instruccion_coord'].' '.$coord1['p_nombre_coord'].' '.$coord1['p_apellido_coord'].''),0,1,'C');
+$pdf->SetX(20);
+if($organismo != 4) {
+		$pdf ->Cell(40,7,utf8_decode(' Despachador'),0,0,'R');
+	}else {
+		$pdf ->Cell(40,7,utf8_decode(''.$reg1['nombre_organismo'].''),0,0,'R');
+		}
+$pdf->Cell(45,7,utf8_decode(' de Guardia'),0,0,'L');
+$pdf->Cell(85,7,utf8_decode('Jefe Dto. del Sist. A. Emerg. Merida 1-7-1'),0,1,'C');
+$pdf->SetFont('Arial','',8);
+$pdf->SetX(115);
+$pdf->MultiCell(70,5,utf8_decode(''.$coord1['decreto_coord'].''),0,1);
+
+$pdf->SetFont('Arial','B',12);
+$pdf->Cell(170,8,utf8_decode(''),0,1);
+$pdf->SetX(20);
+$pdf->Cell(170,8,utf8_decode(''),0,1);
+$pdf->SetX(20);
+$pdf->Cell(170,8,utf8_decode(''),0,1);
+$pdf->SetX(60);
+$pdf->Cell(85,10,utf8_decode('__________________________'),0,1,'C');
+$pdf->SetX(60);
+$pdf->Cell(85,7,utf8_decode(''.$coord2['grado_instruccion_coord'].' '.$coord2['p_nombre_coord'].' '.$coord2['s_nombre_coord'].' '.$coord2['p_apellido_coord'].' '.$coord2['s_apellido_coord'].''),0,1,'C');
+$pdf->SetX(60);
+$pdf->Cell(85,7,utf8_decode('Director E.P.P. Seguridad Ciudadana del Estado Merida'),0,1,'C');
+$pdf->SetFont('Arial','',8);
+$pdf->SetX(20);
+$pdf->Cell(170,5,utf8_decode(''.$coord2['decreto_coord'].''),0,1,'C');
+$pdf->SetFont('Arial','B',12);
+$pdf->SetX(60);
+$pdf->Cell(85,7,utf8_decode('Firma y Sello'),0,1,'C');
+
+$pdf->Output();
+
+?>

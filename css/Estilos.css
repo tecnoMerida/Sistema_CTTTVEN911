@@ -1,0 +1,123 @@
+/*************************** HOJA DE ESTILO PARA AGREGAR ELEMENTOS A LOS FORMULARIOS **********************/
+input:valid,
+textarea:valid {
+  box-shadow: 0 0 0.5px 1px green;
+}
+
+input:focus:valid {
+  box-shadow: none;
+}
+
+textarea:focus:valid {
+  box-shadow: none;
+}
+
+input:invalid,
+textarea:invalid {
+  box-shadow: 0 0 0.5px 1px red;
+}
+
+input:focus:invalid {
+  box-shadow: none;
+}
+
+textarea:focus:invalid {
+  box-shadow: none;
+}
+
+/*************************** HOJA DE ESTILO PARA AGREGAR ELEMENTOS A LOS FORMULARIOS **********************/
+a.cerrar{
+width: 100%;  
+}
+
+.apertura{
+  background-color: #FFFFFF;
+  margin-left: -5px;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
+.fapertura{
+  margin-left: -5px;
+}
+
+.msn1{
+  font-size: 18px;
+  height: 50px;
+
+}
+
+
+/************************** BOTON SUBIR ***************************/
+.ir-arriba {
+  position: fixed;
+  bottom: 4rem;
+  right: 1rem;
+  font-size: 3rem;
+  color: #12afaf;
+  text-decoration: none;
+  z-index: 99999;
+  line-height: 0;
+/*  display: none;*/
+  -webkit-transition: all .5s ease;
+          transition: all .5s ease; }
+
+.ir-arriba:hover,
+.ir-arriba:focus {
+  outline: 0;
+  text-decoration: none;
+  color: #fff; }
+
+
+  /************ CAMBIO DE COLOR POR TIEMPO TRANSCURRDIO *****************/
+  @keyframes anim0{
+    0% {background-color: #DCEDC8;} /*VERDES*/
+   25% {background-color: #AED581;} /*VERDES*/
+   50% {background-color: #8BC34A;} /*VERDES*/
+   75% {background-color: #689F38;} /*VERDES*/
+  100% {background-color: #558B2F;} /*VERDES*/
+}
+.cero {
+  animation-name: anim0;
+  animation-duration: 59s;
+  animation-iteration-count: infinite;
+}
+
+
+      @keyframes anim1{
+        0% {background-color: #FFFFD8;} /*AMARILLOS*/
+       25% {background-color: #FFFF00;} /*AMARILLOS*/
+       50% {background-color: #FFEA00;} /*AMARILLOS*/
+       75% {background-color: #FFEB3B;} /*AMARILLOS*/
+      100% {background-color: #FFD600;} /*AMARILLOS*/
+    }
+    .uno {
+      animation-name: anim1;
+      animation-duration: 59s;
+      animation-iteration-count: infinite;
+    }
+
+    @keyframes anim2{
+      0% {background-color: #FFCDD2;} /*ROJOS*/
+     25% {background-color: #E57373;} /*ROJOS*/
+     50% {background-color: #EF5350;} /*ROJOS*/
+     75% {background-color: #F44336;} /*ROJOS*/
+    100% {background-color: #E53935;} /*ROJOS*/
+  }
+  .dos {
+    animation-name: anim2;
+    animation-duration: 59s;
+    animation-iteration-count: infinite;
+  }
+
+  .cero0{
+    background-color: #DCEDC8;
+  }
+  
+  .uno1{
+    background-color: #FFFFD8;
+  }
+  
+  .dos2{
+    background-color: #FFCDD2;
+  }
