@@ -123,7 +123,7 @@ if (!isset($_SESSION['tipo_rol_id'])) {
 
                         <!-- ***************************************** -->
 
-                        <?php require '../formularios/form_registro_nueva_solicitud03-09-2023.php'; ?>
+                        <?php require '../formularios/form_registro_nueva_solicitud01.php'; ?>
 
                         <!-- ***************************************** -->
 

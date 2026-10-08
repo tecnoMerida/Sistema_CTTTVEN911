@@ -85,9 +85,9 @@ if (!isset($_SESSION['tipo_rol_id'])) {
                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                         </li>
 <?php 
-echo $fecha_inicio.", ";
+/*echo $fecha_inicio.", ";
 echo $fecha.", ";
-echo $hora.", ";
+echo $hora.", ";*/
 ?>
                         <li><a class="close-link"><i class="fa fa-close"></i></a>
                         </li>

@@ -37,7 +37,9 @@ while ($reg = pg_fetch_array($result)) {
                     <div class="col-md-6 col-sm-6">
                         <input type="hiden" class="form-control" name="tiempo_apertura_sol" id="tiempo_apertura_sol" placeholder="Tiempo de apertura" required value="<?php echo $cadena; ?>" title="Llene este campo con la hora de apertura de la solicitud" readonly/>
                     </div>
-       
+                    <div class="col-md-3 col-ms-3" style="position: relative;">
+                            <img src="../images/Avatar_VEN-9-1-1_operador .png" id="operador_avatar" alt="" style="height: 700%; position: absolute; z-index: 100;">
+                        </div>
                 </div>
 
                 <div class="field item form-group">
@@ -287,7 +289,7 @@ while ($reg = pg_fetch_array($result)) {
                     <div class="col-md-6 col-sm-6">
                         <select class="form-control" name="sector_sol" id="cboSectores" title="Seleccione sector en que sucede el evento de solicitud">
                         <option value="<?php echo $reg_ciudad[0] ?>" ><?php echo $reg_ciudad[1] ?></option>         
-                        <!--                        <option value="<?php echo $reg['sector_sol'] ?>" ><?php echo $reg['sector_sol'] ?></option>-->
+                        <option value="<?php echo $reg['sector_sol'] ?>" ><?php echo $reg_ciudad[1] ?></option>
                                     </select>
                     </div>
 

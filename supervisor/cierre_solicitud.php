@@ -210,13 +210,13 @@ if (!isset($_SESSION['tipo_rol_id'])) {
 
                                     // VALORES A COMPARAR
                                     // mktime(0, 1, 0, 5, 24,2024); => mktime(Hora, Min, seg, Mes, Día,Año);
-                                    $marca_tiempo1 = mktime(0, 1, 0, 5, 24,2024);
+                                    $marca_tiempo1 = mktime(0, 5, 0, 5, 24,2024);
                                     $time1 = date("H:i:s", $marca_tiempo1);
 
-                                    $marca_tiempo2 = mktime(0, 3, 0, 5, 24,2024);
+                                    $marca_tiempo2 = mktime(0, 10, 0, 5, 24,2024);
                                     $time2 = date("H:i:s", $marca_tiempo2);
 
-                                    $marca_tiempo3 = mktime(0, 5, 0, 5, 24,2024);
+                                    $marca_tiempo3 = mktime(0, 15, 0, 5, 24,2024);
                                     $time3 = date("H:i:s", $marca_tiempo3);
 
                                     if ($hx7x7 <= $time1){

@@ -34,6 +34,10 @@ require('plantilla.php');
                           
                 $reg_org=pg_fetch_array($result_org);
 
+    //consulta 5
+    $coordinador1 = pg_query($dbconn, "SELECT * FROM director WHERE cargo_dir LIKE '%DIRECTOR%' ");        
+    $coord1 = pg_fetch_array($coordinador1);
+
 
 $pdf = new PDF('P','mm','A4');
 $pdf->AddPage();
@@ -47,30 +51,32 @@ $pdf->Cell(170,20,utf8_decode('Cierre de Guardia'),0,1,'C');
 require('directivo_2.php'); 
 
 $pdf->SetFont('Arial','',12);
-$pdf ->Cell(77,6,utf8_decode(' es  realizado   el  cierre  y   entrega'),0,1);
+$pdf ->Cell(77,6,utf8_decode(' es  realizado   el  cierre  y   entrega  de'),0,1);
 $pdf->SetX(20);
 $pdf->SetFont('Arial','',12);
-$pdf ->Cell(60,6,utf8_decode('de  guardia,  bajo  el  número : '),0,0);
+$pdf ->Cell(54,6,utf8_decode('guardia,  bajo  el  número: '),0,0);
 $pdf->SetFont('Arial','B',12);
 $pdf ->Cell(25,6,utf8_decode(''.$reg['id'].''),0,0,'C');
 $pdf->SetFont('Arial','',12);
-$pdf ->Cell(10,6,utf8_decode('del'),0,0);
+$pdf ->Cell(8,6,utf8_decode('del'),0,0);
 $pdf->SetFont('Arial','B',12);
-$pdf ->Cell(75,6,utf8_decode('"Libro  Digital  de  Novedades  9-1-1"'),0,1);
+$pdf ->Cell(75,6,utf8_decode('"Libro Digital de Novedades del C.C.C.T.'),0,1);
 $pdf->SetX(20);
-$pdf->SetFont('Arial','',12);
-$pdf ->Cell(55,6,utf8_decode(', con  el  grupo  de  guardia :'),0,0);
 $pdf->SetFont('Arial','B',12);
-$pdf ->Cell(15,6,utf8_decode(''.$reg['grupos_guardia_id'].''),0,0,'C');
+$pdf ->Cell(22,6,utf8_decode('VEN 9-1-1"'),0,0);
 $pdf->SetFont('Arial','',12);
-$pdf ->Cell(36,6,utf8_decode(', por  el  ciudadano '),0,0);
+$pdf ->Cell(52,6,utf8_decode(', con  el  grupo  de  guardia:'),0,0);
+$pdf->SetFont('Arial','B',12);
+$pdf ->Cell(11,6,utf8_decode(''.$reg['grupos_guardia_id'].''),0,0,'C');
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(34,6,utf8_decode(', por  el  ciudadano '),0,0);
 $pdf->SetFont('Arial','B',12);
 $pdf ->Cell(62,6,utf8_decode(''.strtoupper($reg_persona['p_nombre']).' '.strtoupper($reg_persona['p_apellido']).''),0,0,'C');
 $pdf->SetFont('Arial','',12);
 $pdf ->Cell(2,6,utf8_decode(','),0,1);
 $pdf->SetX(20);
 $pdf->SetFont('Arial','',12);
-$pdf ->Cell(75,6,utf8_decode('titular  de  la  cédula  de  identidad  Nº :'),0,0);
+$pdf ->Cell(75,6,utf8_decode('titular  de  la  cédula  de  identidad  Nº: V-'),0,0);
 $pdf->SetFont('Arial','B',12);
 $pdf ->Cell(40,6,utf8_decode(''.$reg_persona['cedula'].''),0,0,'C');
 $pdf->SetFont('Arial','',12);
@@ -87,18 +93,21 @@ if($reg_org['id'] != 5 AND $reg_org['id'] != 9 ) {
         $pdf->SetFont('Arial','',12);
         $pdf ->Cell(8,6,utf8_decode('y el'),0,0);
         $pdf->SetFont('Arial','B',12);
-        $pdf ->Cell(45,6,utf8_decode(' Sistema de  Atención'),0,1);
+        $pdf ->Cell(45,6,utf8_decode(' Centro Comandos Control'),0,1);
         $pdf->SetX(20);
         $pdf->SetFont('Arial','B',12);
-        $pdf ->Cell(117,6,utf8_decode(' de Emergencias 9-1-1.'),0,1);
+        $pdf ->Cell(117,6,utf8_decode(' y Telecomunicaciones VEN 9-1-1 Mérida.'),0,1);
     } else {
 
         $pdf->SetFont('Arial','B',12);
-        $pdf ->Cell(45,6,utf8_decode(''.strtoupper($reg_org['nombre_oganismos']).''),0,0,'C');
+        $pdf ->Cell(30,6,utf8_decode(''.strtoupper($reg_org['nombre_oganismos']).''),0,0,'C');
         $pdf->SetFont('Arial','',12);
         $pdf ->Cell(18,6,utf8_decode(' para  el '),0,0);
         $pdf->SetFont('Arial','B',12);
-        $pdf ->Cell(90,6,utf8_decode(' Sistema de Atención de Emergencias 9-1-1.'),0,1);
+        $pdf ->Cell(90,6,utf8_decode(' Centro Comandos Control y Telecomunicaciones VEN 9-1-1'),0,1);
+        $pdf->SetX(20);
+        $pdf->SetFont('Arial','B',12);
+        $pdf ->Cell(117,6,utf8_decode('Mérida.'),0,1);
     }
 
 $pdf->SetX(20);

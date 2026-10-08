@@ -12,7 +12,7 @@ if (!isset($_SESSION['tipo_rol_id'])) {
     if ($_POST['usuario'] == $usuario && $_POST['contrasena'] == $clave) {
 
 
-
+      
       // Conexion a la base de datos
       include_once '../config/conexion1.php';
 

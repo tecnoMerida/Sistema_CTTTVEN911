@@ -35,6 +35,12 @@ if ($id != 0){
                           
                 $reg_motivo=pg_fetch_array($result_motivo);
 
+    //consulta 5 - sector solicitud
+    $sector = $reg['sector_sol'];
+            $result_sector = pg_query($dbconn, "SELECT * FROM public.sectores WHERE id = $sector");
+                          
+                $reg_sector=pg_fetch_array($result_sector);
+
     //consulta 5 - parroquia solicitud
     $parroquia = $reg['parroquias_id'];
             $result_parrq = pg_query($dbconn, "SELECT * FROM public.parroquias WHERE id = $parroquia");
@@ -109,6 +115,9 @@ if ($id != 0){
                           
                 $reg_org=pg_fetch_array($result_org);
 
+    //consulta 14 - DIRECTOR
+    $coordinador1 = pg_query($dbconn, "SELECT * FROM director WHERE cargo_dir LIKE '%DIRECTOR%' ");        
+    $coord1 = pg_fetch_array($coordinador1);                
 
 $pdf = new PDF('P','mm','A4');
 $pdf->AddPage();
@@ -172,14 +181,14 @@ if($reg_org['id'] != 5 AND $reg_org['id'] != 9 ) {
         $pdf ->Cell(43,6,utf8_decode(''.strtoupper($reg_org['nombre_oganismos']).''),0,1,'C');
         $pdf->SetX(20);
         $pdf->SetFont('Arial','',12);
-        $pdf ->Cell(16,6,utf8_decode('para  el '),0,0);
+        $pdf ->Cell(16,6,utf8_decode('para  el'),0,0);
         $pdf->SetFont('Arial','B',12);
-        $pdf ->Cell(90,6,utf8_decode(' Sistema de Atención de Emergencias 9-1-1.'),0,0);
-        $pdf->SetFont('Arial','',12);
-        $pdf ->Cell(65,6,utf8_decode(' Es copia  fiel y  exacta, indicando'),0,1);
+        $pdf ->Cell(90,6,utf8_decode(' Centro  de  Comandos,  Control  y  Telecomunicaciones  VEN  9-1-1  Mérida.'),0,1);
+//        $pdf->SetFont('Arial','',12);
+//        $pdf ->Cell(65,6,utf8_decode(' '),0,1);
 		$pdf->SetX(20);
 		$pdf->SetFont('Arial','',12);
-		$pdf ->Cell(170,6,utf8_decode('lo que acontinuación se describe: '),0,1);
+		$pdf ->Cell(170,6,utf8_decode('Es copia  fiel  y  exacta, indicando lo que acontinuación se describe: '),0,1);
     }
 
 $pdf->SetX(20);
@@ -245,7 +254,7 @@ $pdf ->Cell(110,7,utf8_decode(''.$reg_parrq['nombre_parroquia'].''),0,1,'L');
 $pdf->SetX(20);
 $pdf->SetFont('Arial','B',14);
 $pdf ->Cell(60,7,utf8_decode('Sector:'),0,0);
-$pdf ->Cell(110,7,utf8_decode(''.$reg['sector_sol'].''),0,1,'L');
+$pdf ->Cell(110,7,utf8_decode(''.$reg_sector['nombre_sector'].''),0,1,'L');
 $pdf->SetX(20);
 $pdf->SetFont('Arial','B',14);
 $pdf ->Cell(60,7,utf8_decode('Punto de referencia:'),0,0);

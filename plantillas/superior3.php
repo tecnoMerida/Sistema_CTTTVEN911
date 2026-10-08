@@ -43,6 +43,13 @@
      <link href="../vendors/Select/bootstrap-multiselect.css" rel="stylesheet" />
      <script src="../js/jquery-3.5.1.js"></script>
      <script src="../js/jquery-3.1.1.min.js"></script>
+    <!-- Chart.js -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="path/to/Chart.min.js"></script>
+
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>-->
+
 
       <title>Libro Digital de Novedades 9-1-1</title>
    </head>

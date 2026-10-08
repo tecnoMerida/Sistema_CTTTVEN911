@@ -31,6 +31,9 @@ $hora = date('H:i:s',strtotime($dato));
 
                $reg_org=pg_fetch_array($result_org);
 
+    //consulta 4
+            $coordinador1 = pg_query($dbconn, "SELECT * FROM director WHERE cargo_dir LIKE '%DIRECTOR%' ");        
+            $coord1 = pg_fetch_array($coordinador1);
 
 
 $pdf = new PDF('P','mm','A4');
@@ -47,17 +50,19 @@ require('directivo_2.php');
 
 
 $pdf->SetFont('Arial','',12);
-$pdf ->Cell(77,6,utf8_decode('verificando los materiales y equipos '),0,1);
+$pdf ->Cell(77,6,utf8_decode('verificando  los  materiales  y  equipos '),0,1);
 $pdf->SetX(20);
 $pdf->SetFont('Arial','',12);
-$pdf ->Cell(170,6,utf8_decode('que son parte de los bienes del Ministerio del Poder Popular de Relaciones Interiores, '),0,1);
+$pdf ->Cell(170,6,utf8_decode('que son  parte de los  bienes nacionales del  Ministerio del Poder Popular  de Relaciones '),0,1);
 $pdf->SetX(20);
 $pdf->SetFont('Arial','',12);
-$pdf ->Cell(170,6,utf8_decode('Justicia y Paz.,  sede Mérida,  asignada a  la Coordinación del Sistema de Atención de'),0,1);
+$pdf ->Cell(170,6,utf8_decode('Interiores,  Justicia  y  Paz.,  asignada a  la  Coordinación Operaciones.'),0,1);
 $pdf->SetX(20);
-$pdf ->Cell(40,6,utf8_decode('Emergencias 9-1-1 .'),0,0);
-$pdf->SetFont('Arial','',12);
-$pdf ->Cell(100,6,utf8_decode('Bienes que son verificados en el grupo de guardia: '),0,0);
+/*$pdf ->Cell(40,6,utf8_decode('Emergencias 9-1-1 .'),0,0);
+$pdf->SetFont('Arial','',12);*/
+$pdf->Cell(170,8,utf8_decode(''),0,1);
+$pdf->SetX(20);
+$pdf ->Cell(110,6,utf8_decode('Bienes que son verificados en el grupo de guardia número: '),0,0);
 $pdf->SetFont('Arial','B',12);
 $pdf ->Cell(15,6,utf8_decode(''.$reg['grupos_guardia_id'].''),0,0,'C');
 $pdf->SetFont('Arial','',12);
@@ -66,7 +71,7 @@ $pdf->SetX(20);
 $pdf->SetFont('Arial','B',12);
 $pdf ->Cell(60,6,utf8_decode(''.strtoupper($reg['p_nombre']).' '.strtoupper($reg['p_apellido']).''),0,0,'C');
 $pdf->SetFont('Arial','',12);
-$pdf ->Cell(75,6,utf8_decode(', titular de la cédula de identidad Nº: '),0,0);
+$pdf ->Cell(75,6,utf8_decode(', titular de la cédula de identidad Nº V-: '),0,0);
 $pdf->SetFont('Arial','B',12);
 $pdf ->Cell(35,6,utf8_decode(''.$reg['cedula'].''),0,1,'C');
 $pdf->SetX(20);

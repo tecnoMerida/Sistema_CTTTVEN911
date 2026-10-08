@@ -39,11 +39,11 @@ session_start();
           <div class="row" style="display: inline-block; background-color: #CDCDCD;" >
 
           </div>
-          <div class="col-md-12 col-sm-12" style="display: inline-block; background-color: #CDCDCD;" >
+          <div class="col-md-12 col-sm-12" style="display: inline-block; " >
             <nav>
-              <div align="center">
+<!--              <div align="center">
                 <MARQUEE><h1><font color="#00009C">LÍBRO DIGITAL DE NOVEDADES</font><font color="#800000"> 911</font></h1></MARQUEE>
-              </div>
+              </div>-->
           </nav>
           </div>
           <!-- /Superior tiles -->
@@ -56,7 +56,7 @@ session_start();
            </div>
             <div class="col-md-4 col-sm-4" style="display: inline-block; background-color: #CDCDCD;">
               <div>
-                <img src="../images/Escudo_Gobernacion.png" id="logoder1" alt="">
+                <img src="../images/avatar_VEN-9-1-1.png" id="logoder1" alt="">
               </div>
             </div>
            <div class="col-md-4 col-sm-4">

@@ -19,7 +19,7 @@ $registro = pg_fetch_array($consulta_usuario);
 
             // Valores asignados a la "Bitacora"
             $usuario_session = $registro['personal_cedula'];
-            $fecha_actual = date("d/m/Y | H:i:s ");
+            $fecha_actual = date("Y/m/d | H:i:s ");
             $nombre_esquema = 'CIERRE DE SESSION';
             $nombre_tabla =  'USUARIO';
             $proceso = 'VALIDAR'; 

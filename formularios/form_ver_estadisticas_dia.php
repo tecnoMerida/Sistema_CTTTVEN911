@@ -548,11 +548,11 @@ ORDER BY estatus_solicitud.id ";
                 <div><br /><br /><br /><br /></div>
 
 
-                <input type="text" name="mes" id="mes" value="<?php echo $mes = date("n"); ?>" required />
-                <input type="text" name="ano" id="ano" value="<?php echo $ano = date("Y"); ?>" required />
-                <input type="text" name="fecha_creacion" id="fecha_creacion" value="<?php echo $fecha_creacion = date("Y/n/j h:m:s"); ?>" required />
+                <input type="hidden" name="mes" id="mes" value="<?php echo $mes = date("n"); ?>" required />
+                <input type="hidden" name="ano" id="ano" value="<?php echo $ano = date("Y"); ?>" required />
+                <input type="hidden" name="fecha_creacion" id="fecha_creacion" value="<?php echo $fecha_creacion = date("Y/n/j h:m:s"); ?>" required />
                 <input type="hidden" name="guardia_id" id="guardia_id" value="<?php echo $grupos01; ?>" required />
-                <input type="text" name="personal_cedula" id="personal_cedula" value="<?php echo $cedula_personal; ?>" required />
+                <input type="hidden" name="personal_cedula" id="personal_cedula" value="<?php echo $cedula_personal; ?>" required />
               </div>
 
               <div class="col-md-12 col-sm-12 "><br /><br /></div>

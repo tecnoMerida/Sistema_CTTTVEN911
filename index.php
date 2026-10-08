@@ -141,10 +141,20 @@
     </div>
 
     <div>
-      <div><br /><br /><br /><br /><br /><br /></div>
       <div class="col-md-1 col-sm-1  "></div>
       <div class="col-md-10 col-sm-10  ">
-        <img src="images/Headers.png" class="bandera" id="bandera">
+        <!-- Banner de la consolidación institucional de los cuerpos de seguridad y prevención del Estado -->
+        <!-- Actualizado en nobiembre del 2025 -->
+      <img src="images/Banner_headers.png" class="bandera" id="bandera">
+        <br><br/>
+        <br><br/>
+        <br><br/>
+        <br><br/>
+        <br><br/>
+        <br><br/>
+        <br><br/>
+        <br><br/>
+        <br><br/>
       </div>
       <div class="col-md-1 col-sm-1  "></div>
 
@@ -155,9 +165,7 @@
     <div id="copyright">
 	    <small ><em><i class="fa fa-copyright"></i> copyright and copyleft 2021, bajo</em></small>
     	<img id="gobinicio" class="gobinicio" src="images/Gobierno_bolivariano_venezuela.jpeg" alt="" title="Ministerio del Poder Popular para las Relaciones Interiores, Justicia y Paz">
-<!--      <img id="uptmder22"  src="images/uptm.png" id="uptmder2" alt="" title="Logo Institucional UPTM">
-    	<img id="gobinicio" class="gobinicio" alt="" title="Ministerio del Poder Popular para las Relaciones Interiores, Justicia y Paz">-->
-      <img id="uptminicio" class="uptminicio" src="images/uptm.png" id="uptmder2" alt="" title="Universidad Politécnica Territorial del Estado Mérida 'Klever Ramírez'">
+<!--      <img id="uptminicio" class="uptminicio" src="images/uptm.png" id="uptmder2" alt="" title="Universidad Politécnica Territorial del Estado Mérida 'Klever Ramírez'">-->
     </div>
     </div>
 

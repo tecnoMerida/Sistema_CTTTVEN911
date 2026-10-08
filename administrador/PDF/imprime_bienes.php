@@ -22,6 +22,10 @@ require('plantilla.php');
 	$consulta = pg_query($dbconn,"SELECT * FROM organismos WHERE id = $id");
 	$reg1= pg_fetch_array($consulta);
 
+	    //consulta 3
+		$coordinador1 = pg_query($dbconn, "SELECT * FROM director WHERE cargo_dir LIKE '%DIRECTOR%' ");        
+		$coord1 = pg_fetch_array($coordinador1);
+
 
 $pdf = new PDF('P','mm','A4');
 $pdf->AddPage();
@@ -40,27 +44,28 @@ $pdf->SetY($y+10);
 $pdf->SetX(20);
 $pdf->Cell(30,6,utf8_decode('Quién suscribe:'),0,0);
 $pdf->SetFont('Arial','B',12);
-$pdf->Cell(80,6,utf8_decode(''.$coord1['grado_instruccion_coord'].' '.$coord1 ['p_apellido_coord'].' '.$coord1 ['s_apellido_coord'].', '.$coord1['p_nombre_coord'].' '.$coord1['s_nombre_coord'].''),0,0,'C');
+$pdf->Cell(80,6,utf8_decode(''.$coord1['grado_instruccion_dir'].' '.$coord1 ['p_apellido_dir'].' '.$coord1 ['s_apellido_dir'].', '.$coord1['p_nombre_dir'].' '.$coord1['s_nombre_dir'].''),0,0,'C');
 $pdf->SetFont('Arial','',12);
 $pdf->Cell(60,6,utf8_decode(' Venezolana,  mayor   de   edad,'),0,1,'C'); 
 $pdf->SetX(20);
 $pdf->Cell(96,6,utf8_decode('titular  de  la  cédula  de  identidad   número:   V-'),0,0);
 $pdf->SetFont('Arial','B',12);
-$pdf->Cell(26,6,utf8_decode(''.$coord1['cedula'].''),0,0,'C');
+$pdf->Cell(26,6,utf8_decode(''.$coord1['cedula_dir'].''),0,0,'C');
 $pdf->SetFont('Arial','',12);
 $pdf->Cell(48,6,utf8_decode(',  en   mi   condición   de'),0,1);
 $pdf->SetX(20);
 $pdf->SetFont('Arial','B',12);
-$pdf->Cell(34,6,utf8_decode(''.$coord1['cargo'].'(a)'),0,0,'C');
+$pdf->Cell(34,6,utf8_decode(''.$coord1['cargo_dir'].'(a)'),0,0,'C');
 $pdf->SetFont('Arial','',12);
-$pdf ->Cell(136,6,utf8_decode('del Sistema de Atención de Emergencias 911, hago constar'),0,1);
+$pdf ->Cell(136,6,utf8_decode('del Centro Comando Control y Telecomunicaciones VEN 9-1-1 Mérida, '),0,1);
 $pdf->SetX(20);
-$pdf ->Cell(170,6,utf8_decode('que el presente equipo forma parte de los bienes de la Gobernación del Estado Bolivariano'),0,1);
+$pdf ->Cell(170,6,utf8_decode('hago constar que el presente equipo forma parte de los bienes nacionales del CCCT VEN'),0,1);
 $pdf->SetX(20);
-$pdf ->Cell(60,6,utf8_decode('de   Mérida,   asignada    a   la '),0,0);
+$pdf ->Cell(60,6,utf8_decode('9-1-1  Mérida,  asignada   a  la '),0,0);
 $pdf->SetFont('Arial','B',12);
-$pdf ->Cell(110,6,utf8_decode('  Coordinación    del   Sistema     de    Atención    de '),0,1);
-$pdf->SetX(20);
+$pdf ->Cell(40,6,utf8_decode('  Coordinación    de '),0,0);
+$pdf->SetFont('Arial','B',12);
+//$pdf->SetX(20);
 $pdf ->Cell(50,6,utf8_decode(''.$reg['coordinacion'].'.'),0,1,'C');
 $pdf->SetX(20);
 $pdf->SetFont('Arial','',12);

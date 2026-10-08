@@ -32,6 +32,10 @@ $hora = date('H:i:s',strtotime($dato));
 
                $reg_org=pg_fetch_array($result_org);
 
+        //consulta 4
+        $coordinador1 = pg_query($dbconn, "SELECT * FROM director WHERE cargo_dir LIKE '%DIRECTOR%' ");        
+        $coord1 = pg_fetch_array($coordinador1);
+
 $pdf = new PDF('P','mm','A4');
 $pdf->AddPage();
 $title = 'Reporte observaciones al personal';

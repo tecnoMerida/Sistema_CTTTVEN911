@@ -123,11 +123,13 @@ if (!isset($_SESSION['tipo_rol_id'])) {
 
               <div>
                 <?php
-                if ($organismo_id != 5) {
+                if ($organismo_id != 5 && $organismo_id != 4){
                   require '../controlador/consulta_novedades_desp_adm.php';
-                } else {
+              } elseif ($organismo_id != 1 && $organismo_id != 2 && $organismo_id != 3 && $organismo_id != 5){
+                  require '../controlador/consulta_novedades_op_adm.php';
+              } else {
                   require '../controlador/consulta_novedades_sup_adm.php';
-                }
+              }
                 ?>
               </div>
 

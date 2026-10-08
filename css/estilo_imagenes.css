@@ -337,14 +337,23 @@
     
 }
 
-/*	LOGO INSTITUCIONAL 171*/
+/*	LOGO INSTITUCIONAL 911*/
 #logoder1 {
 /*    margin-top: 0;
     margin-left: 35%;*/
-    width: 250px;
-    height: 300px;
-    position: relative; 
+    width: 310px; 
+    height: 360px; 
+    position: sticky; 
 }
+
+#operador_avatar {
+    /*    margin-top: 0;
+        margin-left: 35%;*/
+        width: 310px; 
+        height: 360px; 
+        position: fixed;
+        float: left;
+    }
 
 /*	LOGO INSTITUCIONAL UPTM*/
 #uptmder1 {
@@ -457,8 +466,8 @@
     box-align: center;
     margin-top: 0%;
     margin-left: 0%;
-    width: 50%;
-    height: 100%;
+    width: 40%;
+    height: 90%;
 }
 
 #derecha2 {
@@ -494,7 +503,9 @@
     margin-right: 0%;
     width: 83%;
     height: 140px;
+
 }
+
 
 /*  **************************************************  */
 /*  ***********T.S.U. Gilbert H. Gonzalez M.**********  */

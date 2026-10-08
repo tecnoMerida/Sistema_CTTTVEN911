@@ -51,7 +51,7 @@ session_start();
                 <div class="x_panel">
 
                   <div class="x_content">
-                      <embed src="../Manuales/Manual_Usuario_Libro_Digital_de_Novedades.pdf" type="application/pdf" width="100%" height="600px" />
+                      <embed src="../Manuales/Manual_Usuario_Libro_Digital_de_Novedades1.pdf" type="application/pdf" width="100%" height="600px" />
                   </div>
                 </div>
               </div>

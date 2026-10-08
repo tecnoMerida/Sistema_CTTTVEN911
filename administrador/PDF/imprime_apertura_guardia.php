@@ -34,6 +34,9 @@ require('plantilla.php');
                           
                 $reg_org=pg_fetch_array($result_org);
 
+    //consulta 5
+            $coordinador1 = pg_query($dbconn, "SELECT * FROM director WHERE cargo_dir LIKE '%DIRECTOR%' ");        
+            $coord1 = pg_fetch_array($coordinador1);
 
 $pdf = new PDF('P','mm','A4');
 $pdf->AddPage();
@@ -63,7 +66,7 @@ $pdf ->Cell(55,6,utf8_decode(', con  el  grupo  de  guardia :'),0,0);
 $pdf->SetFont('Arial','B',12);
 $pdf ->Cell(15,6,utf8_decode(''.$reg['grupos_guardia_id'].''),0,0,'C');
 $pdf->SetFont('Arial','',12);
-$pdf ->Cell(36,6,utf8_decode(', por  el  ciudadano '),0,0);
+$pdf ->Cell(36,6,utf8_decode(', por  el  ciudadano(a) '),0,0);
 $pdf->SetFont('Arial','B',12);
 $pdf ->Cell(62,6,utf8_decode(''.strtoupper($reg_persona['p_nombre']).' '.strtoupper($reg_persona['p_apellido']).''),0,0,'C');
 $pdf->SetFont('Arial','',12);
@@ -87,18 +90,21 @@ if($reg_org['id'] != 5 AND $reg_org['id'] != 9 ) {
         $pdf->SetFont('Arial','',12);
         $pdf ->Cell(8,6,utf8_decode('y el'),0,0);
         $pdf->SetFont('Arial','B',12);
-        $pdf ->Cell(45,6,utf8_decode(' Sistema de  Atención'),0,1);
+        $pdf ->Cell(45,6,utf8_decode(' Centro Comandos Control'),0,1);
         $pdf->SetX(20);
         $pdf->SetFont('Arial','B',12);
-        $pdf ->Cell(117,6,utf8_decode(' de Emergencias 9-1-1.'),0,1);
+        $pdf ->Cell(117,6,utf8_decode(' y Telecomunicaciones VEN 9-1-1 Mérida.'),0,1);
     } else {
 
         $pdf->SetFont('Arial','B',12);
-        $pdf ->Cell(45,6,utf8_decode(''.strtoupper($reg_org['nombre_oganismos']).''),0,0,'C');
+        $pdf ->Cell(30,6,utf8_decode(''.strtoupper($reg_org['nombre_oganismos']).''),0,0,'C');
         $pdf->SetFont('Arial','',12);
         $pdf ->Cell(18,6,utf8_decode(' para  el '),0,0);
         $pdf->SetFont('Arial','B',12);
-        $pdf ->Cell(90,6,utf8_decode(' Sistema de Atención de Emergencias 9-1-1.'),0,1);
+        $pdf ->Cell(90,6,utf8_decode(' Centro Comandos Control y Telecomunicaciones VEN 9-1-1'),0,1);
+        $pdf->SetX(20);
+        $pdf->SetFont('Arial','B',12);
+        $pdf ->Cell(117,6,utf8_decode('Mérida.'),0,1);
     }
 
 $pdf->SetX(20);

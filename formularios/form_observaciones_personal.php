@@ -105,8 +105,8 @@
                       <div class="ln_solid"></div>
                       <div class="item form-group">
                         <div class="col-md-9 col-sm-9  offset-md-9">
-                          <button type="submit" class="btn btn-primary">Guardar</button>
-                          <button type="reset" class="btn btn-success">Limpiar</button>
+                          <button type="submit" class="btn btn-success">Guardar</button>
+                          <button type="reset" class="btn btn-primary">Limpiar</button>
                         </div>
                       </div>
 

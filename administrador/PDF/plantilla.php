@@ -10,9 +10,10 @@ class PDF extends FPDF
 function Header()
 {
     // Logo
-    $this->Image('../../images/MPPRIJP_1.png',15,8,28);
-    $this->Image('../../images/cintillo_MPPRIJP_1.jpeg',43.5,15,105);
-    $this->Image('../../images/mark_cuadrantes.png',179,8,18);
+    //$this->Image('../../images/MPPRIJP_1.png',15,8,28);
+    $this->Image('../../images/cintillo_MPPRIJP_2.jpg',15,5,75);
+    //$this->Image('../../images/cintillo_MPPRIJP_2.jpg',43.5,5,105);
+    $this->Image('../../images/mark_cuadrantes.png',179,8,12);
     // Arial bold 15
     $this->SetFont('Arial','',12);
 
@@ -34,23 +35,24 @@ setlocale(LC_ALL,"es_ES");
     // Movernos a la Izquierda
     $this->SetFont('Arial','B',12);
     $this->Cell(10);    
-    $this->Cell(10,80,utf8_decode('SC/171/___/'.$year_now.''),0,0);
+    $this->Cell(10,60,utf8_decode('CCCTVEN911/___/'.$year_now.''),0,0);
 
     // Movernos a la derecha
     $this->SetFont('Arial','',12);
     $this->Cell(80);
-    $this->Cell(80,80,utf8_decode('Mérida, '.$date.''),0,0,'R');
+    $this->Cell(80,60,utf8_decode('Mérida, '.$date.''),0,0,'R');
     // Salto de línea
-    $this->Ln(45);
+    $this->Ln(35);
 
     // Movernos al Centro
-    $this->Cell(10);
+/*    $this->Cell(10);
     $this->Cell(170,5,utf8_decode('REPÚBLICA BOLIVARIANA DE VENEZUELA'),0,1,'C');
     $this->Cell(10);
     $this->Cell(170,5,utf8_decode('MINISTERIO DEL PODER POPULAR PARA LAS RELACIONES'),0,1,'C');
     $this->Cell(10);
     $this->Cell(170,5,utf8_decode('INTERIORES, JUSTICIA Y PAZ'),0,1,'C');   
     $this->Ln(1);
+    */
 }
 
 // Pie de página

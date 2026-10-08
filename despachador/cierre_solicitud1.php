@@ -101,17 +101,17 @@ if (!isset($_SESSION['tipo_rol_id'])) {
                         <?php
                         if ($_GET['msg'] == "1") {
                           echo '<div class="alert alert-danger alert-dismissible msn1">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>La Solicitud ya Existe!!!</strong></div>';
+                          <button type="button" class="close" data-dismiss="alert">&times;</button>
+                          <strong>La Solicitud ya Existe!!!</strong></div>';
                         }
                         if ($_GET['msg'] == "2") {
                           echo '<div class="alert alert-success alert-dismissible msn1">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Solicitud registrada con EXITO!!!</strong></div>';
+                          <button type="button" class="close" data-dismiss="alert">&times;</button>
+                          <strong>Solicitud registrada con EXITO!!!</strong></div>';
                         } elseif ($_GET['msg'] == "3") {
                           echo '<div class="alert alert-secondary alert-dismissible msn1">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Cierre de guardia NO registrado</strong></div>';
+                          <button type="button" class="close" data-dismiss="alert">&times;</button>
+                          <strong>Cierre de guardia NO registrado</strong></div>';
                         }
 
                         ?>
@@ -155,6 +155,6 @@ if (!isset($_SESSION['tipo_rol_id'])) {
 
     ?>
 
-<a data-scroll class="ir-arriba" href="#encabezado-top"><i class="fa fa-arrow-circle-up" aria-hidden="true"> </i> </a>
+    <a data-scroll class="ir-arriba" href="#encabezado-top"><i class="fa fa-arrow-circle-up" aria-hidden="true"> </i> </a>
 
     <?php require '../plantillas/inferior2.php'; ?>

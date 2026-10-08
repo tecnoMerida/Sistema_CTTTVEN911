@@ -36,7 +36,7 @@ contrasena = '$clave' AND estado_usuario_id = 1");
 
 				// Valores asignados a la "Bitacora"
 				$usuario = $registro['personal_cedula'];
-				$fecha = date("d/m/Y | H:i:s ");
+				$fecha = date("Y/m/d | H:i:s ");
 				$nombre_esquema = 'Inicio de Session';
 				$nombre_tabla =  'Usuario';
 				$proceso = 'VALIDAR';
@@ -56,7 +56,7 @@ contrasena = '$clave' AND estado_usuario_id = 1");
 				switch ($rol) {
 					case 1: // USUARIO ADMINISTRADOR
 						$_COOKIE3 = $_SESSION['usuario'];
-						$fecha = date("d/m/Y | H:i:s ");
+						$fecha = date("Y/m/d | H:i:s ");
 
 						setcookie("usuario", $_COOKIE3);
 						setcookie("fecha", $fecha);
@@ -68,7 +68,7 @@ contrasena = '$clave' AND estado_usuario_id = 1");
 
 						$_COOKIE3 = $_SESSION['usuario'];
 						$CEDULA = $_SESSION['personal_cedula'];
-						$fecha = date("d/m/Y | H:i:s ");
+						$fecha = date("Y/m/d | H:i:s ");
 
 						if (isset($_POST)) {
 
@@ -157,7 +157,7 @@ contrasena = '$clave' AND estado_usuario_id = 1");
 
 						$_COOKIE3 = $_SESSION['usuario'];
 						$CEDULA = $_SESSION['personal_cedula'];
-						$fecha = date("d/m/Y | H:i:s ");
+						$fecha = date("Y/m/d | H:i:s ");
 
 						if (isset($_POST)) {
 
@@ -248,7 +248,7 @@ contrasena = '$clave' AND estado_usuario_id = 1");
 
 						$_COOKIE3 = $_SESSION['usuario'];
 						$CEDULA = $_SESSION['personal_cedula'];
-						$fecha = date("d/m/Y | H:i:s ");
+						$fecha = date("Y/m/d | H:i:s ");
 
 						if (isset($_POST)) {
 

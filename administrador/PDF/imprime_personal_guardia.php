@@ -100,6 +100,10 @@ $hora = date('H:i:s',strtotime($dato));
                   $result_pc3 = pg_query("SELECT * FROM public.personal WHERE cedula = $pc3"); 
                   $reg_pc3 = pg_fetch_array($result_pc3);
 
+        //consulta 3
+        $coordinador1 = pg_query($dbconn, "SELECT * FROM director WHERE cargo_dir LIKE '%DIRECTOR%' ");        
+        $coord1 = pg_fetch_array($coordinador1);
+
 $pdf = new PDF('P','mm','A4');
 $pdf->AddPage();
 $title = 'Reporte Personal de Guardia';
@@ -228,6 +232,8 @@ $pdf->SetFont('Arial','B',12);
 $pdf ->Cell(100,7,utf8_decode(''.strtoupper($reg_pc2['p_nombre']).' '.strtoupper($reg_pc2['p_apellido']).''),1,1,'L');
 
 
+$pdf->SetX(20);
+$pdf ->Cell(5,7,utf8_decode(' '),0,1);
 $pdf->SetX(20);
 $pdf ->Cell(5,7,utf8_decode(' '),0,1);
 $pdf->SetX(20);

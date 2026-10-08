@@ -225,7 +225,7 @@ $cedula11 = $_REQUEST['cedula_consultada'];
             <div><br /><br /><br /><br /><br /><br /></div>
             <div class="col-md-1 col-sm-1  "></div>
             <div class="col-md-10 col-sm-10  ">
-                <img src="../images/Headers.png" class="bandera" id="bandera">
+                <img src="../images/Banner_headers.png" class="bandera" id="bandera">
             </div>
             <div class="col-md-1 col-sm-1  "></div>
 

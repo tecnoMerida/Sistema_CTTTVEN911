@@ -47,6 +47,16 @@ $fecha_salida1 = $_REQUEST['fecha_salida'];
         </div>
      <!-- ***** /Superior menú navegacion ***** -->
 
+     <style>
+		table{
+			width:60%;
+			border-spacing: 10px 25px;
+      font-weight: bold;
+		}
+	    </style>
+
+
+
         <!-- page content -->
         <div class="right_col" role="main">
           <div class="">

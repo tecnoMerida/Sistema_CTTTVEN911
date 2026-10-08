@@ -485,7 +485,7 @@ $hx7x71 = $horax71->format('%H:%I:%s');
 $tiempo_respuesta01 = date('H', strtotime($hx7x71));
 $tiempo_respuesta02 = date('i', strtotime($hx7x71));
 
-echo $hx7x71;
+//echo $hx7x71;
       
       ?>
       <div class="field item form-group">

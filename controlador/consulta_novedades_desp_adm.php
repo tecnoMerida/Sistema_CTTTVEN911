@@ -57,8 +57,8 @@
                           while ($reg_apt = pg_fetch_array($consulta_apt)) {
                             if ($reg_apt) {
                               $id = $reg_apt[1];
-                              $filtro = "WHERE id = '$id' ";
-                              $consulta_bienes = pg_query($dbconn, "SELECT * FROM public.control_bienes $filtro ");
+                              $filtro2 = "WHERE id = '$id' ";
+                              $consulta_bienes = pg_query($dbconn, "SELECT * FROM public.control_bienes $filtro2 ");
                               $reg_pag = pg_fetch_array($consulta_bienes);
 
                               $total_rows_pag = pg_fetch_all($consulta_bienes);
@@ -108,9 +108,9 @@
                                 pg_free_result($consulta_bienes);
                               } else {
                                 // si no existen datos muestra mensaje
-                              //  echo "<tr><br/><td colspan='1'></td>";
-                              //  echo "<td colspan='4' align='center' ><div class='alert alert-secondary msn1'><strong>No se obtuvieron resultados</strong></div></td>";
-                              //  echo "<td colspan='1'></td></tr>";
+                                //  echo "<tr><br/><td colspan='1'></td>";
+                                //  echo "<td colspan='4' align='center' ><div class='alert alert-secondary msn1'><strong>No se obtuvieron resultados</strong></div></td>";
+                                //  echo "<td colspan='1'></td></tr>";
                               }
                             }
                           }
@@ -238,8 +238,6 @@
                       $fecha_e = $fecha_entrada;
                       $fecha_s = $fecha_salida;
                       $organismo = $organismo_id;
-                      //                      $filtro1 = "INNER JOIN personal ON guardias.usuario_entrada_id=personal.cedula WHERE (fecha_inicio_g BETWEEN '$fecha_e' AND '$fecha_s') AND personal.organismos_id = $organismo ORDER BY guardias.id ASC";
-                      //                      $consulta_solic = pg_query($dbconn,"SELECT guardias.id, guardias.fecha_inicio_g, guardias.usuario_salida_id, guardias.usuario_entrada_id, personal.cedula, personal.organismos_id FROM public.guardias $filtro1 ");
                       $filtro1 = "WHERE fecha_inicio_g BETWEEN '$fecha_e' AND '$fecha_s'";
                       $consulta_solic = pg_query($dbconn, "SELECT * FROM public.guardias $filtro1");
 
@@ -248,9 +246,6 @@
                       if ($total_rows_pag != 0) {
                         do {
 
-                          /*            while($reg_01=pg_fetch_array($consulta_obs))
-                          { 
-                  if ($reg_01){*/
                           $id = $reg_01['id'];
                           $usuario1 = $reg_01['usuario_entrada_id'];
                           $usuario2 = $reg_01['usuario_salida_id'];
@@ -263,17 +258,14 @@
 
                             //impresion de los datos.
                             do {
-                              //  while($reg_obs=pg_fetch_array($consulta_obs1))
-                              //  { 
-                              //if ($reg_obs){
-                              //$guardia_id = $reg_01['id'];
+
                               $guardia_id = $reg_obs[0];
                               $filtro_solic = "INNER JOIN solicitante ON solicitudes.solicitante_id = solicitante.id
-                                INNER JOIN solicitud_atencion ON solicitudes.id = solicitud_atencion.solicitudes_id
-                                INNER JOIN motivo_solicitud ON solicitante.motivo_solicitud_id = motivo_solicitud.id
-                                INNER JOIN personal ON solicitud_atencion.despachador_solicitud = personal.cedula
-                                WHERE solicitudes.guardias_id = $guardia_id";
-                              $consulta_solicitudes = pg_query($dbconn, "SELECT solicitudes.id, solicitudes.guardias_id, solicitudes.fecha_creacion_sol, motivo_solicitud.nombre_motivo, personal.p_nombre, personal.p_apellido FROM solicitudes $filtro_solic");
+                          INNER JOIN solicitud_atencion ON solicitudes.id = solicitud_atencion.solicitudes_id
+                          INNER JOIN motivo_solicitud ON solicitante.motivo_solicitud_id = motivo_solicitud.id
+                          INNER JOIN personal ON solicitud_atencion.despachador_solicitud = personal.cedula
+                          WHERE solicitudes.guardias_id = $guardia_id";
+                              $consulta_solicitudes = pg_query($dbconn, "SELECT solicitudes.id, solicitudes.tiempo_apertura_sol, solicitudes.hora_sol, solicitudes.guardias_id, solicitudes.fecha_creacion_sol, motivo_solicitud.nombre_motivo, personal.p_nombre, personal.p_apellido FROM public.solicitudes $filtro_solic");
                               $reg_solic = pg_fetch_array($consulta_solicitudes);
 
                               $total_rows_pag = pg_fetch_all($consulta_solicitudes);
@@ -285,48 +277,48 @@
                                 //impresion de los datos.
                                 do {
 
-                                    // COMPARACION DE VALORES PARA INDICAR COLORES
-                                    // MODIFICADO 18-06/2024 7:00:00 am
+                                  // COMPARACION DE VALORES PARA INDICAR COLORES
+                                  // MODIFICADO 18-06/2024 7:00:00 am
 
-                                    $fecha_y_hora_sol = date($reg_solic[1]);
-                                    $fecha_hora_sol = date($reg_solic[2]);
+                                  $fecha_y_hora_sol = date($reg_solic[1]);
+                                  $fecha_hora_sol = date($reg_solic[2]);
 
-                                    // OPERACION DE RESTA DE HORAS
-                                    $horaInicio_sol = $fecha_y_hora_sol;
-                                    $horaTermino_sol = $fecha_hora_sol;
-                                    $datex7_sol = new DateTime($horaTermino_sol);
-                                    $datex77_sol = new DateTime($horaInicio_sol);
-                                    $horax7_sol = date_diff($datex7_sol, $datex77_sol);
+                                  // OPERACION DE RESTA DE HORAS
+                                  $horaInicio_sol = $fecha_y_hora_sol;
+                                  $horaTermino_sol = $fecha_hora_sol;
+                                  $datex7_sol = new DateTime($horaTermino_sol);
+                                  $datex77_sol = new DateTime($horaInicio_sol);
+                                  $horax7_sol = date_diff($datex7_sol, $datex77_sol);
 
-                                    $hx7x7_sol = $horax7_sol->format('%H:%I:%s');
-                                    //echo $hx7x7_sol;
+                                  $hx7x7_sol = $horax7_sol->format('%H:%I:%s');
+                                  //echo $hx7x7_sol;
 
-                                    // VALORES A COMPARAR
-                                    $marca_tiempo1 = mktime(0, 1, 0, 5, 24,2024);
-                                    $time1 = date("H:i:s", $marca_tiempo1);
-
-
-                                    $marca_tiempo2 = mktime(0, 2, 0, 5, 24,2024);
-                                    $time2 = date("H:i:s", $marca_tiempo2);
+                                  // VALORES A COMPARAR
+                                  $marca_tiempo1 = mktime(0, 1, 0, 5, 24, 2024);
+                                  $time1 = date("H:i:s", $marca_tiempo1);
 
 
-                                    $marca_tiempo3 = mktime(0, 4, 0, 5, 24,2024);
-                                    $time3 = date("H:i:s", $marca_tiempo3);
+                                  $marca_tiempo2 = mktime(0, 2, 0, 5, 24, 2024);
+                                  $time2 = date("H:i:s", $marca_tiempo2);
 
 
-                                    if ($hx7x7_sol <= $time1){
-                                        $clase = 'cero0';
-                                    }elseif ($hx7x7_sol <= $time2){
-                                        $clase = 'uno1';
-                                    }else{
-                                        $clase = 'dos2';
-                                    }
+                                  $marca_tiempo3 = mktime(0, 4, 0, 5, 24, 2024);
+                                  $time3 = date("H:i:s", $marca_tiempo3);
+
+
+                                  if ($hx7x7_sol <= $time1) {
+                                    $clase = 'cero0';
+                                  } elseif ($hx7x7_sol <= $time2) {
+                                    $clase = 'uno1';
+                                  } else {
+                                    $clase = 'dos2';
+                                  }
 
                                   // MUESTRA LOS VALORES DE LA CONSULTAS
                                   $dato = $reg_solic[4];
                                   $fecha = date('Y-m-d', strtotime($dato));
                                   $hora = date('H:i:s', strtotime($dato));
-                                  echo "<tr class='". $clase ."' align='center' ><td>" . $reg_solic[0] . "</td>\n";
+                                  echo "<tr class='" . $clase . "' align='center' ><td>" . $reg_solic[0] . "</td>\n";
                                   echo "<td>" . strtoupper($reg_solic[5]) . "</td>\n";
                                   echo "<td>" . $fecha . "</td>\n";
                                   echo "<td>" . $hora . "</td>\n";
@@ -349,11 +341,11 @@
 
 
                               /*
-                    * Consulta a Tablas de Solicitudes Traidas del "Sistema de Emergencias 171"
+                    * Consulta a Tablas de Solicitudes Traidas del "Sistema de Emergencias 911"
                     */
                               $guardia_id = $reg_01[0];
                               $filtro_solic1 = "WHERE guardias_id = $guardia_id";
-                              $consulta_solicitudes1 = pg_query("SELECT numero_solicitud, fecha_solicitud, hora_solicitud, motivo_solicitud, despachador, guardias_id FROM public.reporte_solicitudes  $filtro_solic1");
+                              $consulta_solicitudes1 = pg_query($dbconn, "SELECT numero_solicitud, fecha_solicitud, hora_solicitud, motivo_solicitud, despachador, guardias_id FROM public.reporte_solicitudes  $filtro_solic1");
                               $reg_solic1 = pg_fetch_array($consulta_solicitudes1);
 
                               $total_rows_pag1 = pg_fetch_all($consulta_solicitudes1);
@@ -369,15 +361,15 @@
                                   $fecha = date('Y-m-d', strtotime($dato));
                                   $hora = date('H:i:s', strtotime($dato));
                                   echo "<tr align='center' ><td>" . $reg_solic1[0] . "</td>\n";
-                                                                                // Consulta a la Base de Datos Tabla Motivos por Grupo
-                $motivo_sol = $reg_solic1[3];
-                $result44 = pg_query($dbconn, "SELECT * FROM motivo_solicitud_grupo INNER JOIN motivo_solicitud ON motivo_solicitud.motivo_grupo_id = motivo_solicitud_grupo.id WHERE motivo_solicitud.id = $motivo_sol ") or die("Error L:05 ved");
-                $registro44 = pg_fetch_array($result44);
-                              echo "<td>" .strtoupper($registro44['nombre_motivo_grupo']).' - '.strtoupper($registro44['nombre_motivo']) . "</td>\n";
+                                  // Consulta a la Base de Datos Tabla Motivos por Grupo
+                                  $motivo_sol = $reg_solic1[3];
+                                  $result44 = pg_query($dbconn, "SELECT * FROM motivo_solicitud_grupo INNER JOIN motivo_solicitud ON motivo_solicitud.motivo_grupo_id = motivo_solicitud_grupo.id WHERE motivo_solicitud.id = $motivo_sol ") or die("Error L:05 ved");
+                                  $registro44 = pg_fetch_array($result44);
+                                  echo "<td>" . strtoupper($registro44['nombre_motivo_grupo']) . ' - ' . strtoupper($registro44['nombre_motivo']) . "</td>\n";
                                   echo "<td>" . $fecha . "</td>\n";
                                   echo "<td>" . $reg_solic1[2] . "</td>\n";
                                   $cedula_desp = $reg_solic1[4];
-                                  $consulta_personal1 = pg_query("SELECT cedula, p_nombre, p_apellido FROM public.personal WHERE cedula = $cedula_desp");
+                                  $consulta_personal1 = pg_query($dbconn, "SELECT cedula, p_nombre, p_apellido FROM public.personal WHERE cedula = $cedula_desp");
                                   $reg_perso = pg_fetch_array($consulta_personal1);
 
                                   echo "<td>" . strtoupper($reg_perso[1]) . " " . strtoupper($reg_perso[2]) . "</td>\n";
@@ -401,12 +393,13 @@
                         exit;
                       }
 
-
                       //                        pg_free_result($consulta_obs);
-                      //                                            }
+                      //                      }
 
                     }
                   }
+
+
                   /********************************     FIN FILTRO BUSQUEDA     ************************************/
                   /********************************     CONSULTA DESPUES DEL FILTRO     ***************************/
                   ?>
@@ -423,7 +416,7 @@
           <div id="collapseSeven" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSeven">
             <div class="panel-body">
               <p class="text-muted font-13 m-b-30">
-              Esta sección muestra las notas, acciones pendientes, apoyo administrativo y anexos
+                Esta sección muestra las notas, acciones pendientes, apoyo administrativo y anexos
               </p>
               <table class="table table-bordered">
                 <thead>
@@ -449,10 +442,6 @@
                       while ($reg_01 = pg_fetch_array($consulta_obs)) {
                         if ($reg_01) {
                           $id = $reg_01['id'];
-                          /*                        $filtro_obs2 = "INNER JOIN personal ON guardias.usuario_entrada_id=personal.cedula INNER JOIN public.observaciones ON observaciones.guardias_id = guardias.id WHERE guardias.id = $id AND personal.organismos_id = $organismo";
-                        $consulta_obs2 = pg_query($dbconn,"SELECT guardias.id, guardias.fecha_inicio_g, personal.cedula, personal.organismos_id, observaciones.id, observaciones.notas, observaciones.acciones_pen, observaciones.apoyo_adm, observaciones.anexo, observaciones.fecha_creacion_obs, observaciones.guardias_id, observaciones.organismos_id FROM public.guardias $filtro_obs2");
-                        $reg_obs = pg_fetch_array($consulta_obs2);
-*/
 
                           $filtro_obs2 = "WHERE guardias_id = $id AND organismos_id = $organismo ";
                           $consulta_obs2 = pg_query($dbconn, "SELECT * FROM public.observaciones $filtro_obs2 ");
@@ -601,9 +590,9 @@
                                 pg_free_result($consulta_bienes);
                               } else {
                                 // si no existen datos muestra mensaje
-                                echo "<tr><br/><td colspan='1'></td>";
-                                echo "<td colspan='4' align='center' ><div class='alert alert-secondary msn1'><strong>No se obtuvieron resultados</strong></div></td>";
-                                echo "<td colspan='1'></td></tr>";
+                                //echo "<tr><br/><td colspan='1'></td>";
+                                //echo "<td colspan='4' align='center' ><div class='alert alert-secondary msn1'><strong>No se obtuvieron resultados</strong></div></td>";
+                                //echo "<td colspan='1'></td></tr>";
                               }
                             }
                           }

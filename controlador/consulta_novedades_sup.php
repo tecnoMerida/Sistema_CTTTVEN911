@@ -49,12 +49,13 @@
                       $reg_01 = pg_fetch_assoc($consulta_entrada);
                       $total_rows_pag = pg_fetch_all($consulta_entrada);
 
+                          /*
+<!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
+*/
+
                       if ($total_rows_pag != 0) {
 
                         do {
-                          //                while($reg_01=pg_fetch_array($consulta_entrada))
-                          //                          { 
-                          //                  if ($reg_01){
 
                           // MUESTRA LOS VALORES DE LA CONSULTAS
                           $dato = $reg_01['fecha_asig'];
@@ -77,6 +78,8 @@
                     //             }
                     //       }
                   }
+                  /********************************     FIN FILTRO BUSQUEDA     ************************************/
+                  /********************************     CONSULTA DESPUES DEL FILTRO     ***************************/
                   ?>
 
                 </tbody>
@@ -125,6 +128,7 @@
                           $reg_pag = pg_fetch_array($consulta_personal);
 
                           $total_rows_pag = pg_fetch_all($consulta_personal);
+                          
                           /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
 */
@@ -586,7 +590,7 @@
                               }
 
                               /*
-                    * Consulta a Tablas de Solicitudes Traidas del "Sistema de Emergencias 171"
+                    * Consulta a Tablas de Solicitudes Traidas del "Sistema de Emergencias 911"
                     */
                               $guardia_id = $reg_01[0];
                               $filtro_solic1 = "WHERE guardias_id = $guardia_id";
@@ -684,10 +688,6 @@
                       while ($reg_01 = pg_fetch_array($consulta_obs)) {
                         if ($reg_01) {
                           $id = $reg_01['id'];
-                          /*                        $filtro_obs2 = "INNER JOIN personal ON guardias.usuario_entrada_id=personal.cedula INNER JOIN public.observaciones ON observaciones.guardias_id = guardias.id WHERE guardias.id = $id AND personal.organismos_id = $organismo";
-                        $consulta_obs2 = pg_query($dbconn,"SELECT guardias.id, guardias.fecha_inicio_g, personal.cedula, personal.organismos_id, observaciones.id, observaciones.notas, observaciones.acciones_pen, observaciones.apoyo_adm, observaciones.anexo, observaciones.fecha_creacion_obs, observaciones.guardias_id, observaciones.organismos_id FROM public.guardias $filtro_obs2");
-                        $reg_obs = pg_fetch_array($consulta_obs2);
-*/
 
                           $filtro_obs2 = "WHERE guardias_id = $id AND organismos_id = $organismo ";
                           $consulta_obs2 = pg_query($dbconn, "SELECT * FROM public.observaciones $filtro_obs2 ");

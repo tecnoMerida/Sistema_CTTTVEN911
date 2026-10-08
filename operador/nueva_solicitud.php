@@ -34,8 +34,7 @@ if (!isset($_SESSION['tipo_rol_id'])) {
       // Consulta datos del personal de guardia
       $ultimo1 = pg_query($dbconn, "SELECT id, fecha_inicio_g::timestamp::date, grupos_guardia_id, usuario_entrada_id  
       FROM public.guardias
-      WHERE usuario_entrada_id = $cedula_personal
-      AND fecha_inicio_g::timestamp::date = (SELECT MAX(fecha_inicio_g::timestamp::date) FROM guardias) order by id DESC");
+      WHERE fecha_inicio_g::timestamp::date = (SELECT MAX(fecha_inicio_g::timestamp::date) FROM guardias) order by id DESC");
       $reg_id = pg_fetch_array($ultimo1);
 
       $grupos01 = $reg_id['id'];
@@ -112,9 +111,13 @@ if (!isset($_SESSION['tipo_rol_id'])) {
                         ?>
                         <strong>Los campos que contengan (<font COLOR="#FF0000">*</font>) son de asignación obligatoria</strong>
                       </div>
-                      <div class="col-md-3 col-sm-3">
+                      <!-- ********* Imagen Avatar Operador del VEN 9-1-1 ********* -->
+                      <div class="col-md-3 col-sm-3" style="position:relative;">
+                      <div style="position: absolute;">
+                            <img src="../images/Avatar_VEN-9-1-1_operador .png" id="operador_avatar" alt="" style="position: fixed;">
+                        </div>
                       </div>
-
+                      <!-- ********* FIN Imagen Avatar Operador del VEN 9-1-1 ********* -->
                       <br />
                       <!-- **************************************************  -->
 
@@ -134,7 +137,9 @@ if (!isset($_SESSION['tipo_rol_id'])) {
                         <!-- end of accordion -->
                       </div>
                       <div class="col-md-4 col-sm-4" style="float: left; z-index: 100; height: 88%">
-                        <!-- ******* Mensaje de Protocolo de Emergencia *******  -->
+                      <!-- **************************************************  -->  
+                      <!-- ******* Mensaje de Protocolo de Emergencia *******  -->
+                      <!-- **************************************************  -->
                         <div class="sticky-top">
 
                           <div aria-live="polite" aria-atomic="true" class="position-relative">
@@ -162,7 +167,9 @@ if (!isset($_SESSION['tipo_rol_id'])) {
                             </div>
                           </div>
                         </div>
+                        <!-- *************************************** -->
                         <!-- Fin Mensaje de Prtotocolo de emergencia -->
+                        <!-- *************************************** -->
                       </div>
                     </div>
                   </div>

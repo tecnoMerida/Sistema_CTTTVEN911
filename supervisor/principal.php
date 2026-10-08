@@ -39,12 +39,12 @@ session_start();
           <div class="row" style="display: inline-block; background-color: #CDCDCD;" >
 
           </div>
-          <div class="col-md-12 col-sm-12" style="display: inline-block; background-color: #CDCDCD;" >
-            <nav>
+          <div class="col-md-12 col-sm-12" style="display: inline-block; " >
+<!--            <nav>
               <div align="center">
                 <MARQUEE><h1><font color="#00009C">LÍBRO DIGITAL DE NOVEDADES</font><font color="#800000"> 911</font></h1></MARQUEE>
               </div>
-          </nav>
+          </nav>-->
           </div>
           <!-- /Superior tiles -->
           <br/>
@@ -54,9 +54,9 @@ session_start();
            </div>
            <div class="col-md-4 col-sm-4">
            </div>
-            <div class="col-md-4 col-sm-4" style="display: inline-block; background-color: #CDCDCD;">
+           <div class="col-md-4 col-sm-4" >
               <div>
-                <img src="../images/Escudo_Gobernacion.png" id="logoder1" alt="">
+                <img src="../images/avatar_VEN-9-1-1.png" id="logoder1" alt="">
               </div>
             </div>
            <div class="col-md-4 col-sm-4">
@@ -65,7 +65,7 @@ session_start();
             <div class="col-md-8 col-sm-8">
             </div>
           </div>
-          <div align="center">
+          <div align="center" >
           <div class="col-md-12 col-sm-12" style="display: inline-block; background-color: #CDCDCD;">
                                       <?php
                   if ($_GET['msg'] == "1") {
@@ -93,9 +93,10 @@ session_start();
                 echo '<div class="alert alert-success alert-dismissible msn1">
                       <button type="button" class="close" data-dismiss="alert">&times;</button>
                       <strong>Cierre solicitud registrada con EXITO!!!</strong></div>';
-                }
+              } 
              
               ?>
+
           </div>
           </div>
         </div>

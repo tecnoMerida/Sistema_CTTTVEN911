@@ -24,6 +24,10 @@ require('plantilla.php');
     $fecha_fin = date('d-m-Y',strtotime($dato));
     $hora_fin = date('H:i:s',strtotime($dato));
 
+        //consulta 3
+        $coordinador1 = pg_query($dbconn, "SELECT * FROM director WHERE cargo_dir LIKE '%DIRECTOR%' ");        
+        $coord1 = pg_fetch_array($coordinador1);
+        
 $pdf = new PDF('P','mm','A4');
 $pdf->AliasNbPages();
 $pdf->AddPage();
@@ -45,24 +49,24 @@ $pdf->SetFont('Arial','B',12);
 $pdf->Cell(80,7,utf8_decode('Sistema  de  Atención  de  Emergencias'),0,1);
 $pdf->SetX(20);
 $pdf->SetFont('Arial','B',12);
-$pdf->Cell(170,7,utf8_decode('9-1-1. '),0,1);
+$pdf->Cell(170,7,utf8_decode('del  Centro  de  Comandos,  Control  y  Telecomunicaciones  VEN  9-1-1  Mérida. '),0,1);
 
 $y = $pdf->GetY();
 $pdf->SetY($y+7);
 $pdf->SetFont('Arial','',12);
 $pdf->SetX(20);
-$pdf->Cell(136,7,utf8_decode('Mérida, quién recibe la guardia del grupo, identificado bajo  el número:'),0,0);
+$pdf->Cell(138,7,utf8_decode('Quién  entrega  la  guardia  del  grupo, identificado  bajo  el número:'),0,0);
 $pdf->SetFont('Arial','B',12);
 $pdf->Cell(9,7,utf8_decode(''.$grupo.''),0,0,'C');
 $pdf->SetFont('Arial','',12);
 $pdf->Cell(25,7,utf8_decode(', registrando '),0,1);
 $pdf->SetX(20);
-$pdf->Cell(120,7,utf8_decode('toda   novedad   y   actividad   durante   ésta,   hasta   la   fecha '),0,0);
+$pdf->Cell(84,7,utf8_decode('toda novedad  y  actividad  hasta  la  fecha '),0,0);
 $pdf->SetFont('Arial','B',12);
-$pdf->Cell(32,7,utf8_decode(' '.$fecha_fin.' '),0,0,'C');
+$pdf->Cell(27,7,utf8_decode(' '.$fecha_fin.' '),0,0,'C');
 $pdf->SetFont('Arial','',12);
-$pdf->Cell(18,7,utf8_decode('y    hora'),0,1);
-$pdf->SetX(20);
+$pdf->Cell(15,7,utf8_decode('y  hora'),0,0);
+//$pdf->SetX(20);
 $pdf->SetFont('Arial','B',12);
 $pdf->Cell(35,7,utf8_decode(''.$hora_fin.' HLV.'),0,1,'C');
 

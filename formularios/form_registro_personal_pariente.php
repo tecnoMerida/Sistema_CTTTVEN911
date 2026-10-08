@@ -85,6 +85,7 @@ $cargos_id = $reg_id['cargos_id'];
 $rango_categoria_id = $reg_id['rango_categoria_id'];
 $grupo_guardia_id = $reg_id['grupo_guardia_id'];
 $estatus_personal_id = $reg_id['estatus_personal_id'];
+
 ?>  
                                <!-- start accordion -->
                                <div class="accordion" id="accordion" role="tablist" aria-multiselectable="true">
@@ -193,7 +194,7 @@ $estatus_personal_id = $reg_id['estatus_personal_id'];
                              </div>
 
 
-                             <input type="hidden" name="personal_cedula" id="personal_cedula" value="<?php echo $reg_id['cedula']; ?>" required />
+                             <input type="text" name="personal_cedula" id="personal_cedula" value="<?php if ($reg_id['cedula'] > 0 ) { echo $reg_id['cedula']; } else { echo $cedula; } ?>" required />
 
                              <input type="hidden" name="cedula_usuario" id="cedula_usuario" value="<?php echo $cedula1; ?>" required />
 
