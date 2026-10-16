@@ -9,7 +9,7 @@ session_start();
             if($_SESSION['tipo_rol_id'] != 1){
                 header('location: ../index.php?error=op');
             }else {
-                if ($_POST['usuario'] == $usuario && $_POST['contrasena'] == $clave) {
+                if (($_POST['usuario'] ?? '') == ($usuario ?? '') && ($_POST['contrasena'] ?? '') == ($clave ?? '')) {
 
 // Identificador unico de registro a modificar
   $id = $_REQUEST['id'];
@@ -18,22 +18,6 @@ session_start();
 // Conexion a la BASE DE DATOS
 include_once '../config/conexion1.php';
 
-
-$cedula1 = $_SESSION['personal_cedula'];
-$ultimo1 = pg_query($dbconn,"SELECT * FROM public.guardias WHERE usuario_entrada_id = $cedula1 AND fecha_inicio_g=(SELECT MAX(fecha_inicio_g) FROM guardias)");
-
-$reg_id= pg_fetch_array($ultimo1);
-
-$grupos01 = $reg_id['id'];
-$cedula_personal1 = $reg_id['usuario_entrada_id'];
-$grupo = $reg_id['grupos_guardia_id'];
-
-// Consulta registro del personal
-$consulta_personal = pg_query($dbconn,"SELECT * FROM  personal WHERE  cedula = $cedula_personal1");
-$reg_personal= pg_fetch_array($consulta_personal);
-
-$cedula_personal = $reg_personal['cedula'];
-$organismo = $reg_personal['organismos_id'];
 
 ?>
 

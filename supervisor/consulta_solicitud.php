@@ -9,7 +9,7 @@ if (!isset($_SESSION['tipo_rol_id'])) {
   if ($_SESSION['tipo_rol_id'] != 2 && $_SESSION['tipo_rol_id'] != 1) {
     header('location: ../index.php?error=op');
   } else {
-    if ($_POST['usuario'] == $usuario && $_POST['contrasena'] == $clave) {
+    if (($_POST['usuario'] ?? '') == ($usuario ?? '') && ($_POST['contrasena'] ?? '') == ($clave ?? '')) {
 
       ///////////////////////////////////////////////////////////////////////////////////////////////////////////
       ///////////////////////                                               /////////////////////////////////////
@@ -22,13 +22,13 @@ if (!isset($_SESSION['tipo_rol_id'])) {
 
       ///////////////////      Realizar Busqueda Y CONSULTA del "BOTON CONSULTAR"       //////////////////////////////////
 
-      if (isset($_POST['consultar'])) {
-        $sol = $_POST['numero_solicitud'];
+      if (isset($_POST['consultar']) && $conexion2) {
+        $sol = (int) $_POST['numero_solicitud'];
         $consulta1 = "SELECT * FROM solicitud WHERE id = $sol ";
         $resultado1 = mysqli_query($mysql, $consulta1);
       }
 
-      $sol = ($_REQUEST['numero_solicitud']);
+      $sol = (int) ($_REQUEST['numero_solicitud'] ?? 0);
 ?>
 
       <!-- ***** Membrete ***** -->
@@ -139,10 +139,10 @@ if (!isset($_SESSION['tipo_rol_id'])) {
                         <tbody>
                           <?php
                           // Realiza la conexion y busqueda del boton Buscar
-                          $registros = mysqli_query($mysql, "SELECT * FROM solicitud WHERE id = $sol ");
+                          $registros = ($mysql && $sol > 0) ? mysqli_query($mysql, "SELECT * FROM solicitud WHERE id = $sol ") : false;
 
-                          $reg = mysqli_fetch_assoc($registros);
-                          $total_rows = mysqli_num_rows($registros);
+                          $reg = $registros ? mysqli_fetch_assoc($registros) : null;
+                          $total_rows = $registros ? mysqli_num_rows($registros) : 0;
 
                           if ($total_rows != 0) {
 
@@ -168,19 +168,19 @@ if (!isset($_SESSION['tipo_rol_id'])) {
                             mysqli_free_result($registros);
                           } else { ?>
                             <script type="text/javascript">
-                              alert(" Número de solicitud NO válido ");
+                              <?php if ($conexion2 && $sol > 0) { ?>alert(" Número de solicitud NO válido ");<?php } ?>
                             </script>
                           <?php
                             $mensage1 = 'Número de solicitud NO válido';
 
                             // si no existen datos muestra mensaje
-                            echo "<td colspan='5' align='center' >no se obtuvieron resultados</td></tr>";
+                            echo $conexion2 ? "<td colspan='5' align='center' >no se obtuvieron resultados</td></tr>" : "<td colspan='5' align='center' >Sin conexión con el sistema externo Emergencias 911 (" . HOSTMYSQL . "). Verifique la red.</td></tr>";
                           }
                           ?>
                         </tbody>
                       </table>
                       <?php
-                      mysqli_close($mysql);
+                      if ($mysql) { mysqli_close($mysql); }
                       ?>
                       <!-- /////////////////////////////////      FIN TABLA CONSULTA      ////////////////////////////////////-->
                     </div>

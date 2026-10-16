@@ -48,7 +48,7 @@
                       $consulta_entrada = pg_query($dbconn, "SELECT id, grupos_guardia_id, fecha_asig FROM public.personal_grupos_guardia WHERE fecha_asig BETWEEN '$fecha_e' AND '$fecha_s' ");
 
                       $reg_01 = pg_fetch_assoc($consulta_entrada);
-                      $total_rows_pag = pg_fetch_all($consulta_entrada);
+                      $total_rows_pag = pg_fetch_all($consulta_entrada) ?: 0;
 
                                                     /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
@@ -129,7 +129,7 @@
                           $consulta_personal = pg_query($dbconn, "SELECT * FROM public.personal_datos $filtro ");
                           $reg_pag = pg_fetch_array($consulta_personal);
 
-                          $total_rows_pag = pg_fetch_all($consulta_personal);
+                          $total_rows_pag = pg_fetch_all($consulta_personal) ?: 0;
 
                               /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
@@ -224,7 +224,7 @@
 
                           $reg_pag = pg_fetch_array($consulta_personal);
 
-                          $total_rows_pag = pg_fetch_all($consulta_personal);
+                          $total_rows_pag = pg_fetch_all($consulta_personal) ?: 0;
 
                               /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
@@ -266,8 +266,9 @@
                           echo "Ocurrió un error en consulta.\n";
                           exit;
                         }
-                        pg_free_result($consulta);
+                        break; // PHP 7 cortaba aqui el bucle (liberaba el resultado dentro de el)
                       }
+                      pg_free_result($consulta);
 
                     }
                   }
@@ -323,7 +324,7 @@
                               $consulta_bienes = pg_query($dbconn, "SELECT * FROM public.control_bienes $filtro2 ");
                               $reg_pag = pg_fetch_array($consulta_bienes);
 
-                              $total_rows_pag = pg_fetch_all($consulta_bienes);
+                              $total_rows_pag = pg_fetch_all($consulta_bienes) ?: 0;
                               /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
 */
@@ -344,6 +345,8 @@
                                   $array = explode(",", $cadena);
 
                                   foreach ($array as $id) {
+                                    $id = trim($id);
+                                    if (!ctype_digit($id)) { continue; } // lista vacia o con valores no numericos
                                     $formato1 = $formato1 . ' ' . $id;
 
                                     // Cunsulta el ID de los Bienes registrados
@@ -432,7 +435,7 @@
                           $reg_apt = pg_fetch_array($consulta_apt);
 
 
-                          $total_rows_apertura = pg_fetch_all($consulta_apt);
+                          $total_rows_apertura = pg_fetch_all($consulta_apt) ?: 0;
                           /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
 */
@@ -504,7 +507,7 @@
                       $consulta_solic = pg_query($dbconn, "SELECT * FROM public.guardias $filtro1");
 
                       $reg_01 = pg_fetch_array($consulta_solic);
-                      $total_rows_pag = pg_fetch_all($consulta_solic);
+                      $total_rows_pag = pg_fetch_all($consulta_solic) ?: 0;
                       if ($total_rows_pag != 0) {
                         do {
 
@@ -515,7 +518,7 @@
                           $consulta_obs1 = pg_query($dbconn, "SELECT guardias.id, guardias.fecha_inicio_g, guardias.usuario_salida_id, guardias.usuario_entrada_id, personal.cedula, personal.organismos_id FROM public.guardias $filtro ");
                           $reg_obs = pg_fetch_array($consulta_obs1);
 
-                          $total_rows_pag = pg_fetch_all($consulta_obs1);
+                          $total_rows_pag = pg_fetch_all($consulta_obs1) ?: 0;
                           if ($total_rows_pag != 0) {
 
                             //impresion de los datos.
@@ -530,7 +533,7 @@
                               $consulta_solicitudes = pg_query($dbconn, "SELECT solicitudes.id, solicitudes.tiempo_apertura_sol, solicitudes.hora_sol, solicitudes.guardias_id, solicitudes.fecha_creacion_sol, motivo_solicitud.nombre_motivo, personal.p_nombre, personal.p_apellido FROM public.solicitudes $filtro_solic");
                               $reg_solic = pg_fetch_array($consulta_solicitudes);
 
-                              $total_rows_pag = pg_fetch_all($consulta_solicitudes);
+                              $total_rows_pag = pg_fetch_all($consulta_solicitudes) ?: 0;
                           /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
 */
@@ -609,7 +612,7 @@
                     $consulta_solicitudes1 = pg_query($dbconn, "SELECT numero_solicitud, fecha_solicitud, hora_solicitud, motivo_solicitud, despachador, guardias_id FROM public.reporte_solicitudes $filtro_solic1");
                     $reg_solic1 = pg_fetch_array($consulta_solicitudes1);
 
-                    $total_rows_pag1 = pg_fetch_all($consulta_solicitudes1);
+                    $total_rows_pag1 = pg_fetch_all($consulta_solicitudes1) ?: 0;
                           /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
 */
@@ -708,7 +711,7 @@
                           $consulta_obs2 = pg_query($dbconn, "SELECT * FROM public.observaciones $filtro_obs2 ");
                           $reg_obs = pg_fetch_array($consulta_obs2);
 
-                          $total_rows_pag = pg_fetch_all($consulta_obs2);
+                          $total_rows_pag = pg_fetch_all($consulta_obs2) ?: 0;
 
                           /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
@@ -807,7 +810,7 @@
                           $consulta_estadisticas = pg_query($dbconn, "SELECT * FROM public.estadisticas_solicitud $filtro_estadisticas ");
                           $reg_estd = pg_fetch_array($consulta_estadisticas);
 
-                          $total_rows_est = pg_fetch_all($consulta_estadisticas);
+                          $total_rows_est = pg_fetch_all($consulta_estadisticas) ?: 0;
                           /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
 */
@@ -894,7 +897,7 @@
                               $consulta_bienes = pg_query($dbconn, "SELECT * FROM public.control_bienes $filtro2 ");
                               $reg_pag = pg_fetch_array($consulta_bienes);
 
-                              $total_rows_pag = pg_fetch_all($consulta_bienes);
+                              $total_rows_pag = pg_fetch_all($consulta_bienes) ?: 0;
                               /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
 */
@@ -915,6 +918,8 @@
                                   $array = explode(",", $cadena);
 
                                   foreach ($array as $id) {
+                                    $id = trim($id);
+                                    if (!ctype_digit($id)) { continue; } // lista vacia o con valores no numericos
                                     $formato1 = $formato1 . ' ' . $id;
 
                                     // Cunsulta el ID de los Bienes registrados
@@ -1000,7 +1005,7 @@
 
                           $reg_cierre = pg_fetch_array($consulta_cierre1);
 
-                          $total_rows_cierre = pg_fetch_all($consulta_cierre1);
+                          $total_rows_cierre = pg_fetch_all($consulta_cierre1) ?: 0;
                           /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
 */
@@ -1070,7 +1075,7 @@
                       $consulta_salida = pg_query($dbconn, "SELECT * FROM public.personal_grupos_guardia $filtro1");
                       $reg_salida = pg_fetch_array($consulta_salida);
 
-                      $total_row_salida = pg_fetch_all($consulta_salida);
+                      $total_row_salida = pg_fetch_all($consulta_salida) ?: 0;
                       /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
 */

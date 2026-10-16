@@ -42,16 +42,16 @@
                   <div class="col-md-3 col-sm-3"></div>
                   <div class="col-md-6 col-sm-6" align="center">
                     <?php
-                    if ($_GET['msg'] == "1") {
+                    if (($_GET['msg'] ?? '') == "1") {
                       echo '<div class="alert alert-danger alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>El grupo ya existe!!!</strong></div>';
                     }
-                    if ($_GET['msg'] == "2") {
+                    if (($_GET['msg'] ?? '') == "2") {
                       echo '<div class="alert alert-success alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Grupo registrado con EXITO!!!</strong></div>';
-                    } elseif ($_GET['msg'] == "3") {
+                    } elseif (($_GET['msg'] ?? '') == "3") {
                       echo '<div class="alert alert-secondary alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Grupo NO registrado</strong></div>';
@@ -127,7 +127,7 @@
                             $consulta_pag = pg_query($dbconn, "SELECT * FROM public.grupos_guardia $filtro ");
                             $row = pg_fetch_array($consulta_pag);
 
-                            $total_rows_pag = pg_fetch_all($consulta_pag);
+                            $total_rows_pag = pg_fetch_all($consulta_pag) ?: 0;
 
                             ?>
                             <table id="datatable" class="table table-striped table-bordered" style="width:100%">

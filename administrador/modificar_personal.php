@@ -9,7 +9,7 @@ if (!isset($_SESSION['tipo_rol_id'])) {
   if ($_SESSION['tipo_rol_id'] != 1) {
     header('location: ../index.php?error=op');
   } else {
-    if ($_POST['usuario'] == $usuario && $_POST['contrasena'] == $clave) {
+    if (($_POST['usuario'] ?? '') == ($usuario ?? '') && ($_POST['contrasena'] ?? '') == ($clave ?? '')) {
 
       // Identificador unico de registro a modificar
       $cedula1 = $_REQUEST['id'];
@@ -82,34 +82,34 @@ if (!isset($_SESSION['tipo_rol_id'])) {
                     </div>
                     <div align="center">
                       <?php
-                      if ($_GET['msg'] == "1") {
+                      if (($_GET['msg'] ?? '') == "1") {
                         echo '<div class="alert alert-danger alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Deberas de completar todos los campo!!!</strong></div>';
                       }
-                      if ($_GET['msg'] == "2") {
+                      if (($_GET['msg'] ?? '') == "2") {
                         echo '<div class="alert alert-success alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Datos personales actualizado con EXISTO!</strong></div>';
                       }
-                      if ($_GET['msg'] == "3") {
+                      if (($_GET['msg'] ?? '') == "3") {
                         echo '<div class="alert alert-success alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Datos del pariente actualizado con EXISTO!</strong></div>';
                       }
-                      if ($_GET['msg'] == "4") {
+                      if (($_GET['msg'] ?? '') == "4") {
                         echo '<div class="alert alert-success alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Datos de usuario actualizado con EXISTO!</strong></div>';
-                      } if ($_GET['msg'] == "5") {
+                      } if (($_GET['msg'] ?? '') == "5") {
                         echo '<div class="alert alert-secondary alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>NO se pudo actualizar los datos!</strong></div>';
-                      } if ($_GET['msg'] == "6") {
+                      } if (($_GET['msg'] ?? '') == "6") {
                         echo '<div class="alert alert-danger alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Número de cédula de familiar ya EXISTE!!!</strong></div>';
-                      } elseif ($_GET['msg'] == "7") {
+                      } elseif (($_GET['msg'] ?? '') == "7") {
                         echo '<div class="alert alert-danger alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Nombre de usuario ya EXISTE!!!</strong></div>';

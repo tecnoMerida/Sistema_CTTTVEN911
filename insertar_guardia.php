@@ -12,7 +12,7 @@ session_start();
             if($_SESSION['tipo_rol_id'] != 2){
                 header('location: administrador/principal.php?error=no');
             }else {
-                if ($_POST['usuario'] == $usuario && $_POST['contrasena'] == $clave) {
+                if (($_POST['usuario'] ?? '') == ($usuario ?? '') && ($_POST['contrasena'] ?? '') == ($clave ?? '')) {
 
 
 
@@ -141,9 +141,16 @@ if(isset($_POST)){ // Asignamos valores a las variables del POST
             $fecha_sol = $_POST['fecha_sol'];
             $hora_sol = $_POST['hora_sol'];
             $hora_cierre_sol = date('H:i:s');
-            $tiempo_respuesta1 = $_POST['tiempo_respuesta_sol'];
-            $tiempo_respuesta2 = $_POST['tiempo_respuesta_sol1'];
+            $tiempo_respuesta1 = $_POST['tiempo_respuesta_sol'] ?? '';
+            $tiempo_respuesta2 = $_POST['tiempo_respuesta_sol1'] ?? '';
             $tiempo_respuesta = '' . $tiempo_respuesta1 . ':' . $tiempo_respuesta2 . '';
+            if ($tiempo_respuesta1 === '' && $tiempo_respuesta2 === '') {
+              // El formulario de cierre actual (form_registro_cierre_solicitud01.php) ya no envia
+              // estos campos: se calcula igual que en insertar_guardia_desp.php
+              $horax7 = date_diff(new DateTime(date('H:i:s')), new DateTime($hora_sol ?: 'now'));
+              $tiempo_respuesta = $horax7->format('%H:%I:%s');
+              $tiempo_respuesta_sol = 1;
+            }
             $sector_sol = strtoupper($_POST['sector_sol']);
             $punto_referencia_sol = strtoupper($_POST['punto_referencia_sol']);
             $parroquias_id = $_POST['parroquias_id'];

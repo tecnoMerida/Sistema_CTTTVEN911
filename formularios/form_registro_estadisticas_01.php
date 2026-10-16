@@ -125,7 +125,7 @@ $a=0;
 
 while ($rm = mysqli_fetch_array($consulta1)) {
 
-    $a = $rm["total"] + $a;
+    $a = (int) $rm["total"] + (int) ($a ?? 0);
     $e = $rm["estatus"];
 //    $total .= $rm["id"];
     $texto = $estatuspg[$e];

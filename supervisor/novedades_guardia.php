@@ -11,19 +11,19 @@ session_start();
             if($_SESSION['tipo_rol_id'] != 2 && $_SESSION['tipo_rol_id'] != 1){
                 header('location: ../index.php?error=op');
             }else {
-                if ($_POST['usuario'] == $usuario && $_POST['contrasena'] == $clave) {
+                if (($_POST['usuario'] ?? '') == ($usuario ?? '') && ($_POST['contrasena'] ?? '') == ($clave ?? '')) {
 
 // Conexion con la base de datos
 require_once '../config/conexion1.php';
 
-$organismo_id = $_REQUEST['organismo_id'];
-$fecha_entrada1 = $_REQUEST['fecha_entrada'];
-   $now = new DateTime($fecha_entrada1);
-   $fecha_entrada=$now->format('Ymd');
+$organismo_id = (($_REQUEST['organismo_id'] ?? '') !== '' ? (int) $_REQUEST['organismo_id'] : '');
+$fecha_entrada1 = $_REQUEST['fecha_entrada'] ?? '';
+   $now = new DateTime($fecha_entrada1 ?: 'now');
+   $fecha_entrada = $fecha_entrada1 !== '' ? $now->format('Ymd') : '';
 
-$fecha_salida1 = $_REQUEST['fecha_salida'];
-   $now = new DateTime($fecha_salida1);
-   $fecha_salida=$now->format('Ymd');
+$fecha_salida1 = $_REQUEST['fecha_salida'] ?? '';
+   $now = new DateTime($fecha_salida1 ?: 'now');
+   $fecha_salida = $fecha_salida1 !== '' ? $now->format('Ymd') : '';
 ?>
 
 <!-- ***** Membrete ***** -->
@@ -87,7 +87,7 @@ $fecha_salida1 = $_REQUEST['fecha_salida'];
                 <form class="form-inline" id="consul_guardia" name="form_consul" method="POST" action="">
               <?php
               // Consulta valor enviado por el submit para mostrar en nombre del organismo
-                $organismos_consulta = pg_query($dbconn,"SELECT * FROM public.organismos WHERE id = $organismo_id ");
+                $organismos_consulta = pg_query($dbconn,"SELECT * FROM public.organismos WHERE id = " . (int) $organismo_id);
                 $reg_consulta=pg_fetch_array($organismos_consulta);
 
                 // Genera una consulta y muestra una lista desplegable de los organismos

@@ -9,7 +9,7 @@ session_start();
             if($_SESSION['tipo_rol_id'] != 4 && $_SESSION['tipo_rol_id'] != 1){
                 header('location: ../index.php?error=op');
             }else {
-                if ($_POST['usuario'] == $usuario && $_POST['contrasena'] == $clave) {
+                if (($_POST['usuario'] ?? '') == ($usuario ?? '') && ($_POST['contrasena'] ?? '') == ($clave ?? '')) {
                   
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////                                               /////////////////////////////////////
@@ -21,14 +21,14 @@ include_once '../config/conexion2_bd.php';
 
 ///////////////////      Realizar Busqueda Y CONSULTA del "BOTON CONSULTAR"       //////////////////////////////////
 
-if (isset($_POST['consultar'])) {
-  $sol = $_POST['numero_solicitud'];
+if (isset($_POST['consultar']) && $conexion2) {
+  $sol = (int) $_POST['numero_solicitud'];
   $consulta1 = "SELECT * FROM solicitud WHERE id = $sol ";  
   $resultado1=mysqli_query($conexion2, $consulta1);
 
    }
 
-$sol = ($_REQUEST['numero_solicitud']);
+$sol = (int) ($_REQUEST['numero_solicitud'] ?? 0);
 ?>
 
 <!-- ***** Membrete ***** -->
@@ -139,10 +139,10 @@ $sol = ($_REQUEST['numero_solicitud']);
                       <tbody>
             <?php
                // Realiza la conexion y busqueda del boton Buscar
-                $registros = mysqli_query($conexion2,"SELECT * FROM solicitud WHERE id = $sol ");
+                $registros = ($conexion2 && $sol > 0) ? mysqli_query($conexion2, "SELECT * FROM solicitud WHERE id = $sol ") : false;
 
-                $reg = mysqli_fetch_assoc($registros);
-                $total_rows = mysqli_num_rows($registros);
+                $reg = $registros ? mysqli_fetch_assoc($registros) : null;
+                $total_rows = $registros ? mysqli_num_rows($registros) : 0;
                 
                 if( $total_rows != 0){
  
@@ -169,18 +169,18 @@ $sol = ($_REQUEST['numero_solicitud']);
                 } while ( $reg = mysqli_fetch_array ($registros) );
                             mysqli_free_result($registros);
                   } else { ?>
-                   <script type="text/javascript">alert(" Número de solicitud NO válido ");</script>
+                   <script type="text/javascript"><?php if ($conexion2 && $sol > 0) { ?>alert(" Número de solicitud NO válido ");<?php } ?></script>
               <?php
                   $mensage1 = 'Número de solicitud NO válido';
 
                   // si no existen datos muestra mensaje
-                  echo "<td colspan='5' align='center' >no se obtuvieron resultados</td></tr>"; 
+                  echo $conexion2 ? "<td colspan='5' align='center' >no se obtuvieron resultados</td></tr>" : "<td colspan='5' align='center' >Sin conexión con el sistema externo Emergencias 911 (" . HOSTMYSQL . "). Verifique la red.</td></tr>"; 
                 }  
             ?>
                       </tbody>
                     </table>
             <?php
-                mysqli_close($conexion2);
+                if ($conexion2) { mysqli_close($conexion2); }
             ?>  
 <!-- /////////////////////////////////      FIN TABLA CONSULTA      ////////////////////////////////////-->
                   </div>

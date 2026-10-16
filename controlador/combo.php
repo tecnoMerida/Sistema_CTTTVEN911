@@ -28,7 +28,7 @@ require_once '../config/conexion1.php';
 /*******************************	Inicio Consulta Municipio 		************************************/
 	if ($_SERVER['REQUEST_METHOD'] == "POST"){
 
-		if($_POST['action'] == 'consultar') {
+		if(($_POST['action'] ?? '') == 'consultar') {
 
 			$html = "";
 
@@ -71,7 +71,7 @@ require_once '../config/conexion1.php';
 /*******************************	Inicio Consulta Parroquia 		************************************/
 	if ($_SERVER['REQUEST_METHOD'] == "POST"){
 
-		if($_POST['action'] == 'consultar') {
+		if(($_POST['action'] ?? '') == 'consultar') {
 
 			$html = "";
 

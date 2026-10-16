@@ -9,9 +9,10 @@ if (!isset($_SESSION['tipo_rol_id'])) {
   if ($_SESSION['tipo_rol_id'] != 1) {
     header('location: ../index.php?error=op');
   } else {
-    if ($_POST['usuario'] == $usuario && $_POST['contrasena'] == $clave) {
+    if (($_POST['usuario'] ?? '') == ($usuario ?? '') && ($_POST['contrasena'] ?? '') == ($clave ?? '')) {
 
-        $id = $_REQUEST['id'];
+        $id = (int) ($_REQUEST['id'] ?? 0);
+        if ($id <= 0) { header('Location: organismo.php'); exit; }
 
       // Conexion a la Base de Datos
       include_once '../config/conexion1.php';

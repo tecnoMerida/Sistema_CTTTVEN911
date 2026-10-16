@@ -27,7 +27,7 @@
                            <div align="center">
                                <?php
 
-                                if ($_GET[msg] == "2") {
+                                if (($_GET['msg'] ?? '') == "2") {
                                     echo '<div class="alert alert-success alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Usuario Registrado con EXITO!!!</strong></div>';

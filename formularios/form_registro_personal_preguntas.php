@@ -26,16 +26,16 @@
                  </div>
                  <div align="center">
                    <?php
-                    if ($_GET['msg'] == "1") {
+                    if (($_GET['msg'] ?? '') == "1") {
                       echo '<div class="alert alert-danger alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>El Usuario ya Existe!!!</strong></div>';
                     }
-                    if ($_GET['msg'] == "2") {
+                    if (($_GET['msg'] ?? '') == "2") {
                       echo '<div class="alert alert-success alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Pariente Registrado con EXITO!!!</strong></div>';
-                    } elseif ($_GET['msg'] == "3") {
+                    } elseif (($_GET['msg'] ?? '') == "3") {
                       echo '<div class="alert alert-secondary alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Preguntas de Seguridad NO registradas</strong></div>';

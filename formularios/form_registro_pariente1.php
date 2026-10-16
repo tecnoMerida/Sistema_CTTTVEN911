@@ -19,18 +19,18 @@
                 </div>
               <div align="center">
               <?php
-                  if ($_GET[msg] == "4") {
+                  if (($_GET['msg'] ?? '') == "4") {
               echo '<div class="alert alert-danger alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>No puedes realizar este registro, número de cédula ya Existe!!!</strong></div>';
               } 
-              if ($_GET[msg] == "5") {
+              if (($_GET['msg'] ?? '') == "5") {
               echo '<div class="alert alert-success alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Familiar Registrado con EXITO!!!</strong></div>';
 
               }
-              elseif ($_GET[msg] == "6") {
+              elseif (($_GET['msg'] ?? '') == "6") {
               echo '<div class="alert alert-secondary alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Familiar NO registrado</strong></div>';

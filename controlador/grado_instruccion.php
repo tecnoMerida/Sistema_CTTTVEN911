@@ -27,8 +27,4 @@ require_once 'config/conexion1.php';
       }
 
       echo $html;
-
-    }
-
-  }
 ?>

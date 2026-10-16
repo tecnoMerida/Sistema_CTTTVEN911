@@ -9,7 +9,7 @@ session_start();
             if($_SESSION['tipo_rol_id'] != 1){
                 header('location: ../index.php?error=op');
             }else {
-                if ($_POST['usuario'] == $usuario && $_POST['contrasena'] == $clave) {
+                if (($_POST['usuario'] ?? '') == ($usuario ?? '') && ($_POST['contrasena'] ?? '') == ($clave ?? '')) {
 
 // Conexion con la base de datos
 require_once '../config/conexion1.php';
@@ -112,7 +112,7 @@ if ($buscar != ''){ $cargo = $buscar; $filtro1 = "WHERE nombre_cargo LIKE '$carg
         $consulta_pag = pg_query($dbconn,"SELECT * FROM public.personal $filtro ");
             $reg_pag = pg_fetch_array($consulta_pag);
 
-            $total_rows_pag = pg_fetch_all($consulta_pag);        
+            $total_rows_pag = pg_fetch_all($consulta_pag) ?: 0;        
 
 ?>                      
                     <table id="datatable" class="table table-striped table-bordered" style="width:100%">

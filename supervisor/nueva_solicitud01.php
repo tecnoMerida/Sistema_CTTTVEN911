@@ -9,7 +9,7 @@ if (!isset($_SESSION['tipo_rol_id'])) {
   if ($_SESSION['tipo_rol_id'] != 2 && $_SESSION['tipo_rol_id'] != 1) {
     header('location: ../index.php?error=op');
   } else {
-    if ($_POST['usuario'] == $usuario && $_POST['contrasena'] == $clave) {
+    if (($_POST['usuario'] ?? '') == ($usuario ?? '') && ($_POST['contrasena'] ?? '') == ($clave ?? '')) {
 
       // ZONA HORARIA
       date_default_timezone_set('America/Caracas');
@@ -95,16 +95,16 @@ if (!isset($_SESSION['tipo_rol_id'])) {
                       <div class="col-md-3 col-sm-3"></div>
                       <div class="col-md-6 col-sm-6" align="center">
                         <?php
-                        if ($_GET['msg'] == "1") {
+                        if (($_GET['msg'] ?? '') == "1") {
                           echo '<div class="alert alert-danger alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>El Registro ya Existe!!!</strong></div>';
                         }
-                        if ($_GET['msg'] == "2") {
+                        if (($_GET['msg'] ?? '') == "2") {
                           echo '<div class="alert alert-success alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Bienes registrado con EXITO!!!</strong></div>';
-                        } elseif ($_GET['msg'] == "3") {
+                        } elseif (($_GET['msg'] ?? '') == "3") {
                           echo '<div class="alert alert-secondary alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Bienes NO registrado</strong></div>';

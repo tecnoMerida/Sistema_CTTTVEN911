@@ -9,7 +9,7 @@ session_start();
             if($_SESSION['tipo_rol_id'] != 3 && $_SESSION['tipo_rol_id'] != 1){
                 header('location: ../index.php?error=op');
             }else {
-                if ($_POST['usuario'] == $usuario && $_POST['contrasena'] == $clave) {
+                if (($_POST['usuario'] ?? '') == ($usuario ?? '') && ($_POST['contrasena'] ?? '') == ($clave ?? '')) {
 
 // Conexion a la BASE DE DATOS
 include_once '../config/conexion1.php';
@@ -89,7 +89,7 @@ $cedula = $regid['cedula'];
 
                     <div class="" align="center">
               <?php
-                  if ($_GET['msg'] == "1") {
+                  if (($_GET['msg'] ?? '') == "1") {
               echo '<div class="alert alert-danger alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Usuario sin permiso de acceso</strong></div>';

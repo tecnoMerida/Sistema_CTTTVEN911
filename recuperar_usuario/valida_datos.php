@@ -110,12 +110,12 @@
 
           <div class="" align="center">
               <?php
-              if ($_GET['msg'] == "1") {
+              if (($_GET['msg'] ?? '') == "1") {
                 echo '<div class="alert alert-danger alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Alguno de los datos no coinciden</strong></div>';
               }
-              if ($_GET['msg'] == "2") {
+              if (($_GET['msg'] ?? '') == "2") {
                 echo '<div class="alert alert-primary alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Datos usuario Validos!!!</strong></div>';

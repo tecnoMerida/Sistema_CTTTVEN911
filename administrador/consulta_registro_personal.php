@@ -9,7 +9,7 @@ session_start();
             if($_SESSION['tipo_rol_id'] != 1){
                 header('location: ../index.php?error=op');
             }else {
-                if ($_POST['usuario'] == $usuario && $_POST['contrasena'] == $clave) {
+                if (($_POST['usuario'] ?? '') == ($usuario ?? '') && ($_POST['contrasena'] ?? '') == ($clave ?? '')) {
 
   include_once '../config/conexion1.php';
 ///////////////////      Realizar Busqueda Y CONSULTA del "BOTON CONSULTAR"       //////////////////////////////////
@@ -101,7 +101,7 @@ $cedula11 = $_REQUEST['cedula_consultada'];
                   <div class="col-md-2 col-sm-2 "></div>
                   <div align="center" class="col-md-8 col-sm-8 ">
               <?php
-                  if ($_GET['msg'] == "1") {
+                  if (($_GET['msg'] ?? '') == "1") {
 
               echo '<div class="alert alert-danger alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>

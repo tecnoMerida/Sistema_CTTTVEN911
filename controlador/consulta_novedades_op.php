@@ -72,7 +72,7 @@ WHERE personal_datos.id=(SELECT MAX(id) FROM  public.personal_datos);
                               $consulta_bienes = pg_query($dbconn, "SELECT * FROM public.control_bienes $filtro ");
                               $reg_pag = pg_fetch_array($consulta_bienes);
 
-                              $total_rows_pag = pg_fetch_all($consulta_bienes);
+                              $total_rows_pag = pg_fetch_all($consulta_bienes) ?: 0;
                               /*
                             <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
                             */
@@ -93,6 +93,8 @@ WHERE personal_datos.id=(SELECT MAX(id) FROM  public.personal_datos);
                                   $array = explode(",", $cadena);
 
                                   foreach ($array as $id) {
+                                    $id = trim($id);
+                                    if (!ctype_digit($id)) { continue; } // lista vacia o con valores no numericos
                                     $formato1 = $formato1 . ' ' . $id;
 
                                     // Cunsulta el ID de los Bienes registrados
@@ -175,7 +177,7 @@ WHERE personal_datos.id=(SELECT MAX(id) FROM  public.personal_datos);
                       $consulta_solic = pg_query($dbconn, "SELECT * FROM public.guardias $filtro1");
 
 
-                      $total_rows_pag = pg_fetch_all($consulta_solic);
+                      $total_rows_pag = pg_fetch_all($consulta_solic) ?: 0;
                       if ($total_rows_pag != 0) {
 
 
@@ -188,7 +190,7 @@ $consulta_obs1 = pg_query($dbconn,"SELECT solicitudes.id, solicitudes.guardias_i
 
 while ($reg_solic = pg_fetch_array($consulta_obs1)) {
 
-                      $total_rows_pag = pg_fetch_all($consulta_obs1);
+                      $total_rows_pag = pg_fetch_all($consulta_obs1) ?: 0;
 
 
 /*
@@ -212,8 +214,7 @@ while ($reg_solic = pg_fetch_array($consulta_obs1)) {
                               echo "<td>" . $hora . "</td>\n";
                               echo "<td>" . strtoupper($reg_solic[6]) . " " . strtoupper($reg_solic[7]) . "</td>\n";
                               echo "<td><a href=ver_solicitudes.php?id=" . $reg_solic[0] . " target='_blank'><button class='btn btn-success' type='submit' action='' value='VER'>VER</button></a></td></tr>\n";
-                            } while ($reg_solic = pg_fetch_array($consulta_solicitudes));
-                            pg_free_result($consulta_solicitudes);
+                            } while (false); // una fila por vuelta: el while exterior ya recorre $consulta_obs1
 
                           }
 
@@ -275,7 +276,7 @@ while ($reg_solic = pg_fetch_array($consulta_obs1)) {
                           $consulta_obs2 = pg_query($dbconn, "SELECT * FROM public.observaciones $filtro_obs2 ");
                           $reg_obs = pg_fetch_array($consulta_obs2);
 
-                          $total_rows_pag = pg_fetch_all($consulta_obs2);
+                          $total_rows_pag = pg_fetch_all($consulta_obs2) ?: 0;
                           /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
 */
@@ -369,7 +370,7 @@ while ($reg_solic = pg_fetch_array($consulta_obs1)) {
                               $consulta_bienes = pg_query($dbconn, "SELECT * FROM public.control_bienes $filtro2 ");
                               $reg_pag = pg_fetch_array($consulta_bienes);
 
-                              $total_rows_pag = pg_fetch_all($consulta_bienes);
+                              $total_rows_pag = pg_fetch_all($consulta_bienes) ?: 0;
                               /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
 */
@@ -390,6 +391,8 @@ while ($reg_solic = pg_fetch_array($consulta_obs1)) {
                                   $array = explode(",", $cadena);
 
                                   foreach ($array as $id) {
+                                    $id = trim($id);
+                                    if (!ctype_digit($id)) { continue; } // lista vacia o con valores no numericos
                                     $formato1 = $formato1 . ' ' . $id;
 
                                     // Cunsulta el ID de los Bienes registrados

@@ -45,8 +45,9 @@
                 </thead>
                 <tbody>
                   <?php
+                  $datos = $datos1 = $datos3 = ''; // datos del grafico (se llenan mas abajo)
                   /**********************************     FILTRO DE BUSQUEDA      ********************************/
-                  if ($organismo_id == '' and $personal_ven == '' and $fecha_entrada == '' and $fecha_salida == '') {
+                  if ($organismo_id == '' and $personal_ven == ''and $fecha_entrada == '' and $fecha_salida == '') {
                   } else {
                     if ($personal_ven != '' and $fecha_entrada != '' and $fecha_salida != '') {
                       $fecha_e = $fecha_entrada;
@@ -64,7 +65,7 @@
                       $consulta_solic = pg_query($dbconn, "SELECT solicitudes.id, solicitudes.guardias_id, solicitudes.fecha_creacion_sol, motivo_solicitud.nombre_motivo, estatus_solicitud.tipo_estatus, personal.p_nombre, personal.p_apellido FROM solicitudes $filtro1");
 
                       while($reg_solic = pg_fetch_array($consulta_solic)){
-                      $total_rows_pag = pg_fetch_all($consulta_solic);
+                      $total_rows_pag = pg_fetch_all($consulta_solic) ?: 0;
 
                           /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
@@ -85,8 +86,7 @@
                               echo "<td>" . $hora . "</td>\n";
                               echo "<td>" . strtoupper($reg_solic[5]) . " " . strtoupper($reg_solic[6]) . "</td>\n";
                               echo "<td><a href=ver_solicitudes.php?id=" . $reg_solic[0] . " target='_blank'><button class='btn btn-success' type='submit' action='' value='VER'>VER</button></a></td></tr>\n";
-                            } while ($reg_solic = pg_fetch_array($consulta_solicitudes));
-                            pg_free_result($consulta_solicitudes);
+                            } while (false); // una fila por vuelta: el while exterior ya recorre $consulta_solic
                           }
                         }
 
@@ -130,9 +130,9 @@
 
 
                       
-                        $a = $graf_solic["total"] + $a;
+                        $a = (int) $graf_solic["total"] + (int) ($a ?? 0);
                         $e = $rm["id"];
-                        $c = $graf_solic["nombre_motivo"] + $c;
+                        $c = (int) $graf_solic["nombre_motivo"] + (int) ($c ?? 0);
 
                         $texto = $estatuspg[$a];
                         $total .= $texto;

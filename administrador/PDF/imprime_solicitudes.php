@@ -37,9 +37,14 @@ if ($id != 0){
 
     //consulta 5 - sector solicitud
     $sector = $reg['sector_sol'];
-            $result_sector = pg_query($dbconn, "SELECT * FROM public.sectores WHERE id = $sector");
-                          
-                $reg_sector=pg_fetch_array($result_sector);
+            // sector_sol guarda el id del sector (registros nuevos) o su nombre (registros viejos)
+            if (ctype_digit((string) $sector)) {
+              $result_sector = pg_query($dbconn, "SELECT * FROM public.sectores WHERE id = $sector");
+              $reg_sector = pg_fetch_array($result_sector);
+            } else {
+              $reg_sector = ['nombre_sector' => (string) $sector];
+
+            }
 
     //consulta 5 - parroquia solicitud
     $parroquia = $reg['parroquias_id'];
@@ -72,10 +77,12 @@ if ($id != 0){
                 $reg_operador=pg_fetch_array($result_operador);
 
     //consulta 10 - organismos en sitio
-                   $cadena = $reg['solicitudes.id'];
+                   $cadena = ''; // bloque de depuracion inactivo: los organismos en sitio se dibujan mas abajo con $reg[0]
                     $array = explode(",", $cadena);
 
                         foreach( $array as $id ){
+                          $id = trim($id);
+                          if (!ctype_digit($id)) { continue; }
                           $formato1 = $formato1.' '.$id;
                         
                       // Cunsulta el ID de los Bienes registrados
@@ -90,7 +97,7 @@ if ($id != 0){
                           do
                             { 
 
-                    	echo "".strtoupper($reg1[nombre_org]).", ";
+                    	echo "".strtoupper($reg1['nombre_org']).", ";
 
                             } while ( $reg1 = pg_fetch_array ($consulta1));
                             pg_free_result($consulta1);
@@ -308,7 +315,7 @@ $pdf ->Cell(60,7,utf8_decode('Organismos en sitio:'),0,0);
                           do
                             { 
 
-						$greeting .= strtoupper($reg1[nombre_org]);
+						$greeting .= strtoupper($reg1['nombre_org']);
 
 
                             } while ( $reg1 = pg_fetch_array ($consulta1));

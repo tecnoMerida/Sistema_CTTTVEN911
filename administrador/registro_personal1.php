@@ -9,7 +9,7 @@ if (!isset($_SESSION['tipo_rol_id'])) {
   if ($_SESSION['tipo_rol_id'] != 1) {
     header('location: ../index.php?error=op');
   } else {
-    if ($_POST['usuario'] == $usuario && $_POST['contrasena'] == $clave) {
+    if (($_POST['usuario'] ?? '') == ($usuario ?? '') && ($_POST['contrasena'] ?? '') == ($clave ?? '')) {
 
       extract($_POST);
 

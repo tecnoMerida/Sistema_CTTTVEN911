@@ -535,6 +535,8 @@ $minuto_efectivo = date('i', strtotime($h_7_7));
       $array = explode(",", $cadena);
 
       foreach ($array as $id) {
+        $id = trim($id);
+        if (!ctype_digit($id)) { continue; } // lista vacia o con valores no numericos
         $formato1 = $formato1 . ' ' . $id;
 
         // Cunsulta el ID de los Bienes registrados

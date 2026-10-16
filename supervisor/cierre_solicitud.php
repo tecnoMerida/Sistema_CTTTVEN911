@@ -12,7 +12,7 @@ if (!isset($_SESSION['tipo_rol_id'])) {
   if ($_SESSION['tipo_rol_id'] != 2 && $_SESSION['tipo_rol_id'] != 1) {
     header('location: ../index.php?error=op');
   } else {
-    if ($_POST['usuario'] == $usuario && $_POST['contrasena'] == $clave) {
+    if (($_POST['usuario'] ?? '') == ($usuario ?? '') && ($_POST['contrasena'] ?? '') == ($clave ?? '')) {
 
       // Conexion a la base de datos
       include_once '../config/conexion1.php';
@@ -168,7 +168,7 @@ if (!isset($_SESSION['tipo_rol_id'])) {
                             FROM public.solicitudes $filtro");
                             $reg_pag = pg_fetch_array($consulta_pag);
 
-                            $total_rows_pag = pg_fetch_all($consulta_pag);
+                            $total_rows_pag = pg_fetch_all($consulta_pag) ?: 0;
 
                             ?>
                             <table id="datatable" class="table table-striped table-bordered" style="width:100%">

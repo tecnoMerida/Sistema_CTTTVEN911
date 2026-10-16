@@ -131,9 +131,9 @@
               $resp = pg_query($dbconn, $sql) or die("Error de consulta " . __FILE__);
               while ($rm = pg_fetch_array($resp)) {
 
-                $a = $rm["total"] + $a;
+                $a = (int) $rm["total"] + (int) ($a ?? 0);
                 $e = $rm["id"];
-                $c = $rm["tipo_estatus"] + $c;
+                $c = (int) $rm["tipo_estatus"] + (int) ($c ?? 0);
 
 
                 $texto = $estatuspg[$e];
@@ -411,9 +411,9 @@ ORDER BY estatus_solicitud.id ";
 
                 while ($rm2024 = pg_fetch_array($resp2024)) {
 
-                  $a24 = $rm2024["total"] + $a24;
+                  $a24 = (int) $rm2024["total"] + (int) ($a24 ?? 0);
                   $e24 = $rm2024["id"];
-                  $c24 = $rm2024["tipo_estatus"] + $c24;
+                  $c24 = (int) $rm2024["tipo_estatus"] + (int) ($c24 ?? 0);
                   $portotal = $regid_total['total'];
 
 

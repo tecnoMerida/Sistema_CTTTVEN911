@@ -17,18 +17,18 @@
                 </div>
                 <div align="center">
               <?php
-                  if ($_GET[msg] == "7") {
+                  if (($_GET['msg'] ?? '') == "7") {
               echo '<div class="alert alert-danger alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Deberas de completar todos los datos!!!</strong></div>';
               } 
-              if ($_GET[msg] == "8") {
+              if (($_GET['msg'] ?? '') == "8") {
               echo '<div class="alert alert-success alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Usuario Actualizado con EXITO!!!</strong></div>';
 
               }
-              elseif ($_GET[msg] == "9") {
+              elseif (($_GET['msg'] ?? '') == "9") {
               echo '<div class="alert alert-secondary alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>El Usuario NO pudo ser Actualizado!!!</strong></div>';

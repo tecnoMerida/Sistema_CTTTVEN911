@@ -151,17 +151,17 @@ $cedula11 = $_REQUEST['cedula_consultada'];
 
                     <div class="" align="center">
                         <?php
-                        if ($_GET['msg'] == "1") {
+                        if (($_GET['msg'] ?? '') == "1") {
                             echo '<div class="alert alert-danger alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>La contraseña NO coinciden!!!</strong></div>';
                         }
-                        if ($_GET['msg'] == "2") {
+                        if (($_GET['msg'] ?? '') == "2") {
                             echo '<div class="alert alert-danger alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Contraseña NO restablecida!!!</strong></div>';
                         }
-                        if ($_GET['msg'] == "3") {
+                        if (($_GET['msg'] ?? '') == "3") {
                             echo '<div class="alert alert-primary alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Contraseña restablicida con EXITO!!!</strong></div>';

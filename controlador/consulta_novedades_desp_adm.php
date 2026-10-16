@@ -61,7 +61,7 @@
                               $consulta_bienes = pg_query($dbconn, "SELECT * FROM public.control_bienes $filtro2 ");
                               $reg_pag = pg_fetch_array($consulta_bienes);
 
-                              $total_rows_pag = pg_fetch_all($consulta_bienes);
+                              $total_rows_pag = pg_fetch_all($consulta_bienes) ?: 0;
                               /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
 */
@@ -82,6 +82,8 @@
                                   $array = explode(",", $cadena);
 
                                   foreach ($array as $id) {
+                                    $id = trim($id);
+                                    if (!ctype_digit($id)) { continue; } // lista vacia o con valores no numericos
                                     $formato1 = $formato1 . ' ' . $id;
 
                                     // Cunsulta el ID de los Bienes registrados
@@ -170,7 +172,7 @@
                           $reg_apt = pg_fetch_array($consulta_apt);
 
 
-                          $total_rows_apertura = pg_fetch_all($consulta_apt);
+                          $total_rows_apertura = pg_fetch_all($consulta_apt) ?: 0;
                           /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
 */
@@ -242,7 +244,7 @@
                       $consulta_solic = pg_query($dbconn, "SELECT * FROM public.guardias $filtro1");
 
                       $reg_01 = pg_fetch_array($consulta_solic);
-                      $total_rows_pag = pg_fetch_all($consulta_solic);
+                      $total_rows_pag = pg_fetch_all($consulta_solic) ?: 0;
                       if ($total_rows_pag != 0) {
                         do {
 
@@ -253,7 +255,7 @@
                           $consulta_obs1 = pg_query($dbconn, "SELECT guardias.id, guardias.fecha_inicio_g, guardias.usuario_salida_id, guardias.usuario_entrada_id, personal.cedula, personal.organismos_id FROM public.guardias $filtro ");
                           $reg_obs = pg_fetch_array($consulta_obs1);
 
-                          $total_rows_pag = pg_fetch_all($consulta_obs1);
+                          $total_rows_pag = pg_fetch_all($consulta_obs1) ?: 0;
                           if ($total_rows_pag != 0) {
 
                             //impresion de los datos.
@@ -268,7 +270,7 @@
                               $consulta_solicitudes = pg_query($dbconn, "SELECT solicitudes.id, solicitudes.tiempo_apertura_sol, solicitudes.hora_sol, solicitudes.guardias_id, solicitudes.fecha_creacion_sol, motivo_solicitud.nombre_motivo, personal.p_nombre, personal.p_apellido FROM public.solicitudes $filtro_solic");
                               $reg_solic = pg_fetch_array($consulta_solicitudes);
 
-                              $total_rows_pag = pg_fetch_all($consulta_solicitudes);
+                              $total_rows_pag = pg_fetch_all($consulta_solicitudes) ?: 0;
                               /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
 */
@@ -348,7 +350,7 @@
                               $consulta_solicitudes1 = pg_query($dbconn, "SELECT numero_solicitud, fecha_solicitud, hora_solicitud, motivo_solicitud, despachador, guardias_id FROM public.reporte_solicitudes  $filtro_solic1");
                               $reg_solic1 = pg_fetch_array($consulta_solicitudes1);
 
-                              $total_rows_pag1 = pg_fetch_all($consulta_solicitudes1);
+                              $total_rows_pag1 = pg_fetch_all($consulta_solicitudes1) ?: 0;
                               /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
 */
@@ -447,7 +449,7 @@
                           $consulta_obs2 = pg_query($dbconn, "SELECT * FROM public.observaciones $filtro_obs2 ");
                           $reg_obs = pg_fetch_array($consulta_obs2);
 
-                          $total_rows_pag = pg_fetch_all($consulta_obs2);
+                          $total_rows_pag = pg_fetch_all($consulta_obs2) ?: 0;
                           /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
 */
@@ -543,7 +545,7 @@
                               $consulta_bienes = pg_query($dbconn, "SELECT * FROM public.control_bienes $filtro2 ");
                               $reg_pag = pg_fetch_array($consulta_bienes);
 
-                              $total_rows_pag = pg_fetch_all($consulta_bienes);
+                              $total_rows_pag = pg_fetch_all($consulta_bienes) ?: 0;
                               /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
 */
@@ -564,6 +566,8 @@
                                   $array = explode(",", $cadena);
 
                                   foreach ($array as $id) {
+                                    $id = trim($id);
+                                    if (!ctype_digit($id)) { continue; } // lista vacia o con valores no numericos
                                     $formato1 = $formato1 . ' ' . $id;
 
                                     // Cunsulta el ID de los Bienes registrados
@@ -649,7 +653,7 @@
 
                           $reg_cierre = pg_fetch_array($consulta_cierre1);
 
-                          $total_rows_cierre = pg_fetch_all($consulta_cierre1);
+                          $total_rows_cierre = pg_fetch_all($consulta_cierre1) ?: 0;
                           /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
 */

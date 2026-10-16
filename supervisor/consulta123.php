@@ -2,16 +2,16 @@
 // Conexion con la base de datos
 require_once '../config/conexion1.php';
 
-$organismo_id = $_REQUEST['organismo_id'];
-$personal_ven = $_REQUEST['personal_ven'];
+$organismo_id = (($_REQUEST['organismo_id'] ?? '') !== '' ? (int) $_REQUEST['organismo_id'] : '');
+$personal_ven = (($_REQUEST['personal_ven'] ?? '') !== '' ? (int) $_REQUEST['personal_ven'] : '');
 
-$fecha_entrada1 = $_REQUEST['fecha_entrada'];
-   $now = new DateTime($fecha_entrada1);
-   $fecha_entrada=$now->format('Ymd');
+$fecha_entrada1 = $_REQUEST['fecha_entrada'] ?? '';
+   $now = new DateTime($fecha_entrada1 ?: 'now');
+   $fecha_entrada = $fecha_entrada1 !== '' ? $now->format('Ymd') : '';
 
-$fecha_salida1 = $_REQUEST['fecha_salida'];
-   $now = new DateTime($fecha_salida1);
-   $fecha_salida=$now->format('Ymd');
+$fecha_salida1 = $_REQUEST['fecha_salida'] ?? '';
+   $now = new DateTime($fecha_salida1 ?: 'now');
+   $fecha_salida = $fecha_salida1 !== '' ? $now->format('Ymd') : '';
 ?>
 
 <!-- ***** Membrete ***** -->
@@ -45,7 +45,7 @@ $fecha_salida1 = $_REQUEST['fecha_salida'];
                 /* ******************************* */
 
               // Consulta valor enviado por el submit para mostrar en nombre del organismo
-                $organismos_consulta = pg_query($dbconn,"SELECT * FROM public.organismos WHERE id = $organismo_id ");
+                $organismos_consulta = pg_query($dbconn,"SELECT * FROM public.organismos WHERE id = " . (int) $organismo_id);
                 $reg_consulta=pg_fetch_array($organismos_consulta);
 
                 // Genera una consulta y muestra una lista desplegable de los organismos

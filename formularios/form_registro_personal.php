@@ -26,12 +26,12 @@
                  </div>
                  <div align="center">
                    <?php
-                    if ($_GET['msg'] == "1") {
+                    if (($_GET['msg'] ?? '') == "1") {
                       echo '<div class="alert alert-danger alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>El Número de Cédula ya Existe!!!</strong></div>';
                     } 
-                    if ($_GET['msg'] == "3") {
+                    if (($_GET['msg'] ?? '') == "3") {
                       echo '<div class="alert alert-secondary alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Personal NO registrado</strong></div>';

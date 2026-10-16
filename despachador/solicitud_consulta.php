@@ -9,7 +9,7 @@ session_start();
             if($_SESSION['tipo_rol_id'] != 3 && $_SESSION['tipo_rol_id'] != 1){
                 header('location: ../index.php?error=op');
             }else {
-                if ($_POST['usuario'] == $usuario && $_POST['contrasena'] == $clave) {
+                if (($_POST['usuario'] ?? '') == ($usuario ?? '') && ($_POST['contrasena'] ?? '') == ($clave ?? '')) {
 
 // Conexion a la base de datos
 include_once '../config/conexion1.php';
@@ -107,12 +107,12 @@ $organismos1 = $reg_organismo['id'];
                     <div class="col-md-3 col-sm-3"></div>
                     <div class="col-md-6 col-sm-6" align="center">
               <?php
-                  if ($_GET['msg'] == "1") {
+                  if (($_GET['msg'] ?? '') == "1") {
               echo '<div class="alert alert-danger alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>La solicitud ya existe!!!</strong></div>';
               }
-              elseif ($_GET['msg'] == "2") {
+              elseif (($_GET['msg'] ?? '') == "2") {
               echo '<div class="alert alert-secondary alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Solicitud NO registrada, verifique los datos</strong></div>';
@@ -126,17 +126,16 @@ $organismos1 = $reg_organismo['id'];
 <!--      CONEXION CON BASE DE DATOS         -->
 <?php
 // traer datos del resultado de BUSQUEDA y VER_USUARIO
-  $sol = $_REQUEST['id'];
-  $sol =$_GET['id'];
+  $sol = (int) ($_REQUEST['id'] ?? 0);
 
 // Conexion con la base de dato
 include_once '../config/config_bd.php';
   include_once '../config/conexion2_bd.php';
 
 // CONSULTA TABLA PERSONAL_171 UNIDO CON TABLAS GRUPOS_GUARDIA Y GRUPOS_ORGANISMOS
-$consulta = mysqli_query($mysql,"SELECT * FROM solicitud WHERE id = $sol ");
+$consulta = ($mysql && $sol > 0) ? mysqli_query($mysql, "SELECT * FROM solicitud WHERE id = $sol ") : false;
 
-$fila= mysqli_fetch_array($consulta);
+$fila = $consulta ? mysqli_fetch_array($consulta) : null;
 ?>
 <!--      FIN CONEXION CON BASE DE DATOS          -->
 <!-- Inicio Formulario RESULTADO DE CONSULTA DE SOLICITUD -->
@@ -144,7 +143,7 @@ $fila= mysqli_fetch_array($consulta);
 
                         <!-- **************************************** -->
 
-                        <?php require '../formularios/form_registro_consulta_solicitud.php'; ?>
+                        <?php if ($fila) { require '../formularios/form_registro_consulta_solicitud.php'; } else { echo '<div class="alert alert-warning">' . ($mysql ? 'No se encontró la solicitud indicada.' : 'Sin conexión con el sistema externo Emergencias 911 (' . HOSTMYSQL . '). Verifique la red.') . '</div>'; } ?>
 
                         <!-- **************************************** -->
 

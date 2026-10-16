@@ -9,7 +9,7 @@ session_start();
             if($_SESSION['tipo_rol_id'] != 1){
                 header('location: ../index.php?error=op');
             }else {
-                if ($_POST['usuario'] == $usuario && $_POST['contrasena'] == $clave) {
+                if (($_POST['usuario'] ?? '') == ($usuario ?? '') && ($_POST['contrasena'] ?? '') == ($clave ?? '')) {
 ?>
 <!--	//////////////////////////////////			MEMBRETE			/////////////////////////////////////////	-->
 <!DOCTYPE html PUBLIC ?-//W3C//DTD XHTML 1.0 Transitional//EN? ?http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd?&gt;>
@@ -100,24 +100,24 @@ width: 100%;
           <div align="center">
           <div class="col-md-12 col-sm-12" style="display: inline-block; background-color: #CDCDCD;">
                                       <?php
-                  if ($_GET[error] == "no") {
+                  if (($_GET['error'] ?? '') == "no") {
               echo '<div class="alert alert-danger alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>No puedes realizar este registro</strong></div>';
               } 
-              if ($_GET[msg] == "2") {
+              if (($_GET['msg'] ?? '') == "2") {
               echo '<div class="alert alert-success alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Solicitud del "Sistema Emergencias 171" registrada con EXITO!!!</strong></div>';
 
               }
-              if ($_GET[msg] == "3") {
+              if (($_GET['msg'] ?? '') == "3") {
               echo '<div class="alert alert-success alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Observaciones de guardia registrada con EXITO!!!</strong></div>';
 
               }
-              elseif ($_GET[msg] == "4") {
+              elseif (($_GET['msg'] ?? '') == "4") {
               echo '<div class="alert alert-success alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Observaciones al personal realizada con EXITO!!!</strong></div>';

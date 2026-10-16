@@ -9,7 +9,7 @@ if (!isset($_SESSION['tipo_rol_id'])) {
   if ($_SESSION['tipo_rol_id'] != 1) {
     header('location: ../index.php?error=op');
   } else {
-    if ($_POST['usuario'] == $usuario && $_POST['contrasena'] == $clave) {
+    if (($_POST['usuario'] ?? '') == ($usuario ?? '') && ($_POST['contrasena'] ?? '') == ($clave ?? '')) {
 
 require_once '../config/config_bd.php';
 require_once '../config/conexion1.php';
@@ -432,7 +432,7 @@ GROUP BY (municipios.id)";
                         <td>
                           <p><i class="fa fa-square blue"></i>Efectivas </p>
                         </td>
-                        <td><?php $porcentaje = $campos['total_efectivo'] * 100 / $total;
+                        <td><?php $porcentaje = $campos['total_efectivo'] * 100 / max(1, (int) $total);
                             $porcentaje = round($porcentaje, 0);
                             echo $porcentaje . "%"; ?></td>
                       </tr>
@@ -440,7 +440,7 @@ GROUP BY (municipios.id)";
                         <td>
                           <p><i class="fa fa-square green"></i>No Efectivas </p>
                         </td>
-                        <td><?php $porcentaje = $campos['total_no_efectivo'] * 100 / $total;
+                        <td><?php $porcentaje = $campos['total_no_efectivo'] * 100 / max(1, (int) $total);
                             $porcentaje = round($porcentaje, 0);
                             echo $porcentaje . "%"; ?></td>
                       </tr>
@@ -448,7 +448,7 @@ GROUP BY (municipios.id)";
                         <td>
                           <p><i class="fa fa-square purple"></i>Sin Despacho </p>
                         </td>
-                        <td><?php $porcentaje = $campos['total_sin_despacho'] * 100 / $total;
+                        <td><?php $porcentaje = $campos['total_sin_despacho'] * 100 / max(1, (int) $total);
                             $porcentaje = round($porcentaje, 0);
                             echo $porcentaje . "%"; ?></td>
                       </tr>
@@ -456,7 +456,7 @@ GROUP BY (municipios.id)";
                         <td>
                           <p><i class="fa fa-square aero"></i>Repetida </p>
                         </td>
-                        <td><?php $porcentaje = $campos['total_repetida'] * 100 / $total;
+                        <td><?php $porcentaje = $campos['total_repetida'] * 100 / max(1, (int) $total);
                             $porcentaje = round($porcentaje, 0);
                             echo $porcentaje . "%"; ?></td>
                       </tr>
@@ -464,7 +464,7 @@ GROUP BY (municipios.id)";
                         <td>
                           <p><i class="fa fa-square red"></i>Sabotaje </p>
                         </td>
-                        <td><?php $porcentaje = $campos['total_sabotaje'] * 100 / $total;
+                        <td><?php $porcentaje = $campos['total_sabotaje'] * 100 / max(1, (int) $total);
                             $porcentaje = round($porcentaje, 0);
                             echo $porcentaje . "%"; ?></td>
                       </tr>
@@ -472,7 +472,7 @@ GROUP BY (municipios.id)";
                         <td>
                           <p><i class="fa fa-square blue"></i>Información </p>
                         </td>
-                        <td><?php $porcentaje = $campos['total_informacion'] * 100 / $total;
+                        <td><?php $porcentaje = $campos['total_informacion'] * 100 / max(1, (int) $total);
                             $porcentaje = round($porcentaje, 0);
                             echo $porcentaje . "%"; ?></td>
                       </tr>
@@ -480,7 +480,7 @@ GROUP BY (municipios.id)";
                         <td>
                           <p><i class="fa fa-square black"></i>Abandonada </p>
                         </td>
-                        <td><?php $porcentaje = $campos['total_abandonada'] * 100 / $total;
+                        <td><?php $porcentaje = $campos['total_abandonada'] * 100 / max(1, (int) $total);
                             $porcentaje = round($porcentaje, 0);
                             echo $porcentaje . "%"; ?></td>
                       </tr>

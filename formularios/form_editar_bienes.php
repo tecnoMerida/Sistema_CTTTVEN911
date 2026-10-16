@@ -38,20 +38,20 @@
 
                   	<div class="col-md-12 col-sm-12" align="center">
 							<?php
-                  if ($_GET['msg'] == "1") {
+                  if (($_GET['msg'] ?? '') == "1") {
               echo '<div class="alert alert-danger alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Deberas de Completar todos los campo!!!</strong></div>';
                     
               } 
-              if ($_GET['msg'] == "2") {
+              if (($_GET['msg'] ?? '') == "2") {
               echo '<div class="alert alert-success alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Datos bienes actualizado con EXITO!</strong></div>';
                     
 
               }
-              elseif ($_GET['msg'] == "3") {
+              elseif (($_GET['msg'] ?? '') == "3") {
               echo '<div class="alert alert-secondary alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>NO se pudo actualizar los datos!</strong></div>';

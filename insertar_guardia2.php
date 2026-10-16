@@ -9,7 +9,7 @@ session_start();
             if($_SESSION['tipo_rol_id'] != 2){
                 header('location: administrador/principal.php?error=no');
             }else {
-                if ($_POST['usuario'] == $usuario && $_POST['contrasena'] == $clave) {
+                if (($_POST['usuario'] ?? '') == ($usuario ?? '') && ($_POST['contrasena'] ?? '') == ($clave ?? '')) {
 
 // ZONA HORARIA
 date_default_timezone_set('America/Caracas');

@@ -26,20 +26,20 @@
                            </div>
                            <div align="center">
                                <?php
-                                if ($_GET['msg'] == "1") {
+                                if (($_GET['msg'] ?? '') == "1") {
                                     echo '<div class="alert alert-danger alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>El Número de Cédula ya Existe!!!</strong></div>';
                                 }
-                                if ($_GET['msg'] == "2") {
+                                if (($_GET['msg'] ?? '') == "2") {
                                     echo '<div class="alert alert-success alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Datos Laborales Registrados con EXITO!!!</strong></div>';
-                                } if ($_GET['msg'] == "3") {
+                                } if (($_GET['msg'] ?? '') == "3") {
                                     echo '<div class="alert alert-secondary alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Datos Laboral NO registrado</strong></div>';
-                                } elseif ($_GET['msg'] == "4") {
+                                } elseif (($_GET['msg'] ?? '') == "4") {
                                   echo '<div class="alert alert-danger alert-dismissible msn1">
                               <button type="button" class="close" data-dismiss="alert">&times;</button>
                               <strong>El Número de Cédula de familiar ya EXISTE!!!</strong></div>';
