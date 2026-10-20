@@ -1,6 +1,6 @@
-nbproject
-npm-debug.log
-node_modules
-.sass-cache
-OJO
-production
+config/config_bd.php 
+config/conexion1.php 
+config/conexion2_bd.php 
+Thumbs.db 
+.DS_Store 
+*.log 

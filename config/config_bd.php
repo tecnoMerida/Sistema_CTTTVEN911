@@ -4,10 +4,8 @@
 	define("PORT" , "5432");
 	define("USER", "postgres");
 	define("USERMYSQL", "sistema1");
-	define("PASSWORD","123456789+");
+	define("PASSWORD","123456"); // <--- CAMBIA ESTO
 	define("PASSWORDMYSQL","sistema12021");
 	define("DATABASE", "ven911_2025");
 	define("DATABASEMYSQL", "911a2021");
-	
 ?>
-
