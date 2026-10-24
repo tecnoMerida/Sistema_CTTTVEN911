@@ -1,0 +1,384 @@
+/****** Menù Panel Izquierdo / Derecha ******/
+#margen_buho{
+    /*background-image: url("production/images/logo_171.png");*/
+    margin-left: 10px;
+    background-repeat: no-repeat;
+}
+
+#buho{
+    width: 50px;
+    height: 50px;
+}
+
+/* ==============================================================
+   1. BARRA LATERAL (SIDEBAR): DEGRADADO GRIS A NEGRO
+   ============================================================== */
+body,
+.left_col,
+.nav-md .container.body .col-md-3.left_col,
+.nav-sm .container.body .col-md-3.left_col,
+.col-md-3.left_col {
+    background: linear-gradient(180deg, #3d4248 0%, #292d32 30%, #1a1c1e 65%, #0e0f10 100%) !important;
+}
+
+.left_col.scroll-view {
+    background: transparent !important;
+}
+
+.nav_title {
+    background: #3d4248 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.nav-sm .navbar.nav_title {
+    background: #3d4248 !important;
+}
+
+.nav-sm ul.nav.child_menu {
+    background: #181a1c !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* ==============================================================
+   BOTÓN DASHBOARD EN LA BARRA LATERAL (SIDEBAR)
+   ============================================================== */
+#principal1 {
+    padding: 10px 14px 4px 14px;
+    text-align: center;
+    margin: 0;
+}
+
+.btn-dashboard-sidebar {
+    background: linear-gradient(135deg, #1abb9c 0%, #16a085 100%) !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    font-size: 12.5px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.8px !important;
+    padding: 8px 12px !important;
+    border: none !important;
+    border-radius: 6px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.35) !important;
+    transition: all 0.25s ease !important;
+    text-decoration: none !important;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.btn-dashboard-sidebar:hover {
+    background: linear-gradient(135deg, #20c997 0%, #1abc9c 100%) !important;
+    color: #ffffff !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 5px 14px rgba(26, 187, 156, 0.45) !important;
+    text-decoration: none !important;
+}
+
+.btn-dashboard-sidebar:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+}
+
+.btn-dashboard-sidebar i {
+    font-size: 15px !important;
+    color: #ffffff !important;
+}
+
+#title_menu {
+    text-align: center;
+    padding: 4px 10px 8px 10px;
+    margin: 0;
+}
+
+#title_menu a {
+    color: #ECF0F1 !important;
+    font-family: 'Copperplate Gothic', 'Segoe UI', Arial, sans-serif !important;
+    font-size: 15px !important;
+    font-weight: bold !important;
+    letter-spacing: 1.5px !important;
+    text-decoration: none !important;
+    display: inline-block;
+}
+
+#title_menu a:hover {
+    color: #1abb9c !important;
+}
+
+/* Modo barra lateral colapsada */
+.nav-sm #principal1 {
+    padding: 8px 6px 4px 6px !important;
+}
+
+.nav-sm .btn-dashboard-sidebar {
+    padding: 8px 4px !important;
+    justify-content: center !important;
+}
+
+.nav-sm .btn-dashboard-sidebar span {
+    display: none !important;
+}
+
+.nav-sm #title_menu {
+    display: none !important;
+}
+
+/* ==============================================================
+   2. BARRA SUPERIOR (NAVBAR): DEGRADADO GRIS A NEGRO
+   ============================================================== */
+.nav_menu,
+.top_nav,
+.main_container .top_nav {
+    background: linear-gradient(90deg, #3a3f45 0%, #25282c 45%, #141618 80%, #0c0d0e 100%) !important;
+    border-bottom: 1px solid #141618 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
+    margin-left: -5px;
+}
+
+.top_nav {
+    padding-bottom: 0px;
+}
+
+#banner_superior {
+    width: 100%;
+    background: #ffffff;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+#banner_superior iframe {
+    border: none;
+    width: 100%;
+    height: 92px;
+    padding: 0;
+    padding-bottom: 0;
+    margin: 0;
+    display: block;
+    overflow: hidden;
+    background: #ffffff;
+}
+
+.navbar-right {
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+}
+
+/* Toggle del Menu Hamburguesa */
+.nav.toggle {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+}
+
+#menu_toggle {
+    color: #ffffff !important;
+    cursor: pointer;
+    text-decoration: none !important;
+}
+
+#menu_toggle i {
+    color: #ffffff !important;
+    font-size: 24px !important;
+    transition: color 0.2s ease;
+}
+
+#menu_toggle:hover i {
+    color: #e0e0e0 !important;
+}
+
+/* ==============================================================
+   3. TIPOGRAFIA / LETRAS DE COLOR BLANCO
+   ============================================================== */
+/* Titulos y cabecera del menu */
+.site_title,
+.site_title *,
+#title_menu,
+#title_menu *,
+#principal1,
+#principal1 * {
+    color: #ffffff !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+/* Info del Perfil en Sidebar */
+.profile_info span {
+    color: #ffffff !important;
+    opacity: 0.95 !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+}
+
+.profile_info h2 {
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    font-size: 15px !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Titulos de Seccion (General, etc) */
+.menu_section h3 {
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.8px !important;
+    text-transform: uppercase !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9) !important;
+}
+
+/* Enlaces del Sidebar y sus Iconos */
+.nav.side-menu > li > a,
+.nav.side-menu > li > a i,
+.nav.side-menu > li > a span,
+.nav.child_menu > li > a,
+.nav.child_menu > li > a i,
+.nav.child_menu > li > a span {
+    color: #ffffff !important;
+    font-size: 13px !important;
+}
+
+/* Hover en items del menu lateral */
+.nav.side-menu > li > a:hover {
+    background: rgba(255, 255, 255, 0.12) !important;
+    color: #ffffff !important;
+}
+.nav.side-menu > li > a:hover i,
+.nav.side-menu > li > a:hover span {
+    color: #ffffff !important;
+}
+
+/* Item activo en menu lateral */
+.nav.side-menu > li.active > a {
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.08) 100%) !important;
+    color: #ffffff !important;
+    box-shadow: inset 4px 0 0 #ffffff !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
+}
+.nav.side-menu > li.active > a i,
+.nav.side-menu > li.active > a span {
+    color: #ffffff !important;
+}
+
+/* Submenus (Child menu) */
+.nav.child_menu {
+    background: rgba(0, 0, 0, 0.35) !important;
+}
+.nav.child_menu li:hover,
+.nav.child_menu li.active {
+    background-color: rgba(255, 255, 255, 0.14) !important;
+}
+.nav-md ul.nav.child_menu li:before {
+    background: #ffffff !important;
+}
+.nav-md ul.nav.child_menu li:after {
+    border-left: 1px solid rgba(255, 255, 255, 0.35) !important;
+}
+
+/* Usuario en Barra Superior */
+.top_nav .navbar-nav > li > a,
+.top_nav .user-profile,
+.top_nav .user-profile b,
+.top_nav .user-profile span,
+.top_nav li a i {
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.top_nav .user-profile img {
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+}
+
+/* Dropdown del perfil de usuario en la barra superior */
+.top_nav .dropdown-menu.dropdown-usermenu {
+    background: #181a1c !important;
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    border-radius: 6px !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7) !important;
+    margin-top: 8px !important;
+    padding: 6px 0 !important;
+}
+.top_nav .dropdown-menu.dropdown-usermenu .dropdown-item,
+.top_nav .dropdown-menu.dropdown-usermenu li a {
+    color: #ffffff !important;
+    padding: 10px 18px !important;
+    font-size: 13px !important;
+    display: block !important;
+    transition: background 0.2s ease;
+}
+.top_nav .dropdown-menu.dropdown-usermenu .dropdown-item:hover,
+.top_nav .dropdown-menu.dropdown-usermenu li a:hover {
+    background: rgba(255, 255, 255, 0.14) !important;
+    color: #ffffff !important;
+}
+.top_nav .dropdown-menu.dropdown-usermenu .dropdown-item i,
+.top_nav .dropdown-menu.dropdown-usermenu li a i {
+    color: #ffffff !important;
+}
+
+/* ==============================================================
+   4. BOTON REDISEÑADO: CERRAR SESION / CERRAR GUARDIA
+   ============================================================== */
+.sidebar-footer {
+    background: #0e0f10 !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
+    padding: 8px 10px !important;
+    height: auto !important;
+    width: 230px !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.sidebar-footer a.cerrar,
+.sidebar-footer a.btn-cerrar-sesion,
+.sidebar-footer a {
+    background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 50%, #8e0000 100%) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.22) !important;
+    border-radius: 8px !important;
+    padding: 10px 14px !important;
+    font-weight: 700 !important;
+    font-size: 13px !important;
+    letter-spacing: 0.6px !important;
+    text-transform: uppercase !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    width: 100% !important;
+    float: none !important;
+    box-shadow: 0 4px 12px rgba(183, 28, 28, 0.5) !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.7) !important;
+    transition: all 0.25s ease-in-out !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
+    margin: 0 !important;
+}
+
+.sidebar-footer a.cerrar:hover,
+.sidebar-footer a.btn-cerrar-sesion:hover,
+.sidebar-footer a:hover {
+    background: linear-gradient(135deg, #f44336 0%, #d32f2f 50%, #b71c1c 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 6px 18px rgba(244, 67, 54, 0.7) !important;
+    transform: translateY(-2px) !important;
+    border-color: rgba(255, 255, 255, 0.4) !important;
+    text-decoration: none !important;
+}
+
+.sidebar-footer a.cerrar:active,
+.sidebar-footer a.btn-cerrar-sesion:active,
+.sidebar-footer a:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 2px 6px rgba(183, 28, 28, 0.6) !important;
+}
+
+.sidebar-footer a i,
+.sidebar-footer a span.fa {
+    font-size: 15px !important;
+    color: #ffffff !important;
+    margin: 0 !important;
+}

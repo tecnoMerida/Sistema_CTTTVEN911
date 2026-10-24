@@ -1,0 +1,162 @@
+<?php
+  $id = intval($_REQUEST['id'] ?? ($_GET['id'] ?? 0));
+
+require_once('../../config/conexion1.php');
+require('plantilla.php');
+
+if (!$id) {
+    die("ID no especificado.");
+}
+
+	///////////////////////////////////				CONSULTAS			//////////////////////////////
+	//consulta 1
+    $result = pg_query($dbconn, "SELECT * FROM public.estadisticas_solicitud WHERE id = $id");
+    $reg = ($result && pg_num_rows($result) > 0) ? pg_fetch_array($result) : null;
+    if (!$reg) {
+        die("Estadísticas no encontradas.");
+    }
+
+    // consulta 2 - registro de guardia
+    $guardia = intval($reg['guardia_id'] ?? 0);
+    $result_guardia = $guardia ? pg_query($dbconn, "SELECT * FROM public.guardias WHERE id = $guardia") : null;
+    $reg_guardia = ($result_guardia && pg_num_rows($result_guardia) > 0) ? pg_fetch_array($result_guardia) : [];
+
+    //consulta 3 - DIRECTOR
+    $coordinador1 = pg_query($dbconn, "SELECT * FROM director WHERE cargo_dir LIKE '%DIRECTOR%' ");        
+    $coord1 = ($coordinador1 && pg_num_rows($coordinador1) > 0) ? pg_fetch_array($coordinador1) : [];
+
+// Fecha Entrada
+$dato = $reg_guardia['fecha_inicio_g'] ?? null;
+$fecha = $dato ? date('d-m-Y', strtotime($dato)) : '';
+$hora = $dato ? date('H:i:s', strtotime($dato)) : '';
+
+    //consulta 3 - personal en registros de guardia
+    $usuario_entrada = intval($reg_guardia['usuario_entrada_id'] ?? 0);
+    $result_personal = $usuario_entrada ? pg_query($dbconn, "SELECT * FROM public.personal WHERE cedula = $usuario_entrada") : null;
+    $reg_persona = ($result_personal && pg_num_rows($result_personal) > 0) ? pg_fetch_array($result_personal) : [];
+
+    //consulta 4 - cargos de personal en registros de guardia
+    $cargo = intval($reg_persona['cargos_id'] ?? 0);
+    $result_cargo = $cargo ? pg_query($dbconn, "SELECT * FROM public.cargos WHERE id = $cargo") : null;
+    $reg_cargo = ($result_cargo && pg_num_rows($result_cargo) > 0) ? pg_fetch_array($result_cargo) : [];
+
+    //consulta 5 - organismo de personal en registros de guardia
+    $organismo = intval($reg_persona['organismos_id'] ?? 0);
+    $result_org = $organismo ? pg_query($dbconn, "SELECT * FROM public.organismos WHERE id = $organismo") : null;
+    $reg_org = ($result_org && pg_num_rows($result_org) > 0) ? pg_fetch_array($result_org) : [];
+
+    //consulta 6 - estatus de solicitudes
+    $consulta = pg_query($dbconn, "SELECT * FROM estatus_solicitud ORDER BY id");
+    $result1 = ($consulta) ? (pg_fetch_assoc($consulta) ?: []) : []; // Efectivo 
+    $result2 = ($consulta) ? (pg_fetch_assoc($consulta) ?: []) : []; // No Efectivo
+    $result3 = ($consulta) ? (pg_fetch_assoc($consulta) ?: []) : []; // Sin Despacho 
+    $result4 = ($consulta) ? (pg_fetch_assoc($consulta) ?: []) : []; // Repetida
+    $result5 = ($consulta) ? (pg_fetch_assoc($consulta) ?: []) : []; // Sabotaje
+    $result6 = ($consulta) ? (pg_fetch_assoc($consulta) ?: []) : []; // Informacion
+    $result7 = ($consulta) ? (pg_fetch_assoc($consulta) ?: []) : []; // Abandonada
+
+$pdf = new PDF('P','mm','A4');
+$pdf->AddPage();
+$title = 'Reporte estadisticas diarias';
+$pdf->SetTitle($title);
+
+
+$pdf->SetFont('Arial','B',14);
+$pdf->SetX(20);
+$pdf->Cell(170,10,utf8_decode('Control Estadistico Diario'),0,1,'C');
+
+require('directivo_2.php'); 
+
+
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(77,6,utf8_decode('han  sido  contabilizados   y   registrados '),0,1);
+$pdf->SetX(20);
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(170,6,utf8_decode('el  total  de  llamadas  atendidas  por  los  operadores  de  llamadas  que  se  encontraban'),0,1);
+$pdf->SetX(20);
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(74,6,utf8_decode('de guardia, cumpliendo labores para el '),0,0);
+$pdf->SetFont('Arial','B',12);
+$pdf ->Cell(94,6,utf8_decode(' Centro de Comandos, Control y Comunicaciones '),0,1);
+$pdf->SetX(20);
+$pdf->SetFont('Arial','B',12);
+$pdf ->Cell(40,6,utf8_decode('VEN 9-1-1 Mérida.'),0,0);
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(55,6,utf8_decode('Quedadon registradas en el '),0,0);
+$pdf->SetFont('Arial','B',12);
+$pdf ->Cell(67,6,utf8_decode('"Sistema Libro Digital de Novedades '),0,1);
+$pdf->SetX(20);
+$pdf->SetFont('Arial','B',12);
+$pdf ->Cell(46,6,utf8_decode('del C.C.C.T. VEN 9-1-1"'),0,0);
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(47,6,utf8_decode(', en el grupo de guardia '),0,0);
+//$pdf->SetX(20);
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(10,6,utf8_decode('Nº : '),0,0);
+$pdf->SetFont('Arial','B',12);
+$pdf ->Cell(6,6,utf8_decode(''.$reg_guardia['grupos_guardia_id'].''),0,0,'C');
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(8,6,utf8_decode(', por: '),0,0);
+$pdf->SetFont('Arial','B',12);
+$pdf ->Cell(60,6,utf8_decode(''.strtoupper($reg_persona['p_nombre'] ?? '').' '.strtoupper($reg_persona['p_apellido'] ?? '').', '),0,1,'C');
+$pdf->SetX(20);
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(70,6,utf8_decode('titular de la cédula de identidad Nº: V- '),0,0);
+$pdf->SetFont('Arial','B',12);
+$pdf ->Cell(24,6,utf8_decode(''.($reg_persona['cedula'] ?? '').''),0,0,'C');
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(48,6,utf8_decode(', cumpliendo funciones de: '),0,0);
+$pdf->SetFont('Arial','B',12);
+$pdf ->Cell(38,6,utf8_decode(''.strtoupper($reg_org['nombre_oganismos'] ?? '').'.'),0,1,'C');
+$pdf->SetX(20);
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(20,6,utf8_decode('Llamadas  de  tipo :'),0,1);        
+
+$pdf->SetX(20);
+$pdf ->Cell(140,6,utf8_decode(''),0,1);
+
+$pdf->SetX(50);
+$pdf->SetFont('Arial','B',14);
+$pdf ->Cell(60,7,utf8_decode(''.strtoupper($result1['tipo_estatus'] ?? 'EFECTIVO').''),1,0,'C');
+$pdf ->Cell(50,7,utf8_decode(''.($reg['efectivo'] ?? 0).''),1,1,'C');
+$pdf->SetX(50);
+$pdf ->Cell(60,7,utf8_decode(''.strtoupper($result2['tipo_estatus'] ?? 'NO EFECTIVO').''),1,0,'C');
+$pdf ->Cell(50,7,utf8_decode(''.($reg['no_efectivo'] ?? 0).''),1,1,'C');
+$pdf->SetX(50);
+$pdf ->Cell(60,7,utf8_decode(''.strtoupper($result3['tipo_estatus'] ?? 'SIN DESPACHO').''),1,0,'C');
+$pdf ->Cell(50,7,utf8_decode(''.($reg['sin_despacho'] ?? 0).''),1,1,'C');
+$pdf->SetX(50);
+$pdf ->Cell(60,7,utf8_decode(''.strtoupper($result4['tipo_estatus'] ?? 'REPETIDA').''),1,0,'C');
+$pdf ->Cell(50,7,utf8_decode(''.($reg['repetida'] ?? 0).''),1,1,'C');
+$pdf->SetX(50);
+$pdf ->Cell(60,7,utf8_decode(''.strtoupper($result5['tipo_estatus'] ?? 'SABOTAJE').''),1,0,'C');
+$pdf ->Cell(50,7,utf8_decode(''.($reg['sabotaje'] ?? 0).''),1,1,'C');
+$pdf->SetX(50);
+$pdf ->Cell(60,7,utf8_decode(''.strtoupper($result6['tipo_estatus'] ?? 'INFORMACION').''),1,0,'C');
+$pdf ->Cell(50,7,utf8_decode(''.($reg['informacion'] ?? 0).''),1,1,'C');
+$pdf->SetX(50);
+$pdf ->Cell(60,7,utf8_decode(''.strtoupper($result7['tipo_estatus'] ?? 'ABANDONADA').''),1,0,'C');
+$pdf ->Cell(50,7,utf8_decode(''.($reg['abandonada'] ?? 0).''),1,1,'C');
+$pdf->SetX(50);
+$pdf ->Cell(60,7,utf8_decode('TOTAL'),1,0,'C');
+$pdf ->Cell(50,7,utf8_decode(''.($reg['total_solici'] ?? 0).''),1,1,'C');
+
+$pdf->SetX(20);
+$pdf->Cell(170,8,utf8_decode(''),0,1);
+
+$pdf->SetX(20);
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(75,6,utf8_decode('Quedadon  registrada  la  solicitud  Nº : '),0,0);
+$pdf->SetFont('Arial','B',12);
+$pdf ->Cell(34,6,utf8_decode(''.$reg['mayor_rele'].''),0,0,'C');
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(61,6,utf8_decode('como  la  de  mayor  relevancia. '),0,1);
+
+$pdf->SetX(20);
+$pdf->Cell(170,8,utf8_decode(''),0,1);
+
+require('directivo.php');
+
+$pdf->Output();
+
+?>

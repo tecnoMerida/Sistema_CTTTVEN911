@@ -1,0 +1,13 @@
+--
+-- PostgreSQL database cluster dump
+--
+
+-- Started on 2026-10-09 11:12:16 -04
+
+\restrict LpY2znIwujGzVsfErIE5krMRf9S5IS9iZWdejehchJtzJ7toX9RjxcUvhBk8k0I
+
+SET default_transaction_read_only = off;
+
+SET client_encoding = 'SQL_ASCII';
+SET standard_conforming_strings = on;
+

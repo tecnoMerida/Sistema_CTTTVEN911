@@ -1,0 +1,210 @@
+/*  ************* ESTILOS PARA TABLAS Y CONSULTAS **************** */
+
+*{
+	margin: 0;
+	padding: 0;
+}
+
+body {
+    font-family: 'Arial';
+}
+
+/*	***************************************	CONSULTA DE PERSONAL		*******************************************	*/
+
+/* Formulario Consulta Personal*/
+.consul_pers{
+    margin: 0;
+    padding-top: 3%;
+}
+
+/* diseño al contenido*/
+
+#content_consulta1 {
+	padding-top: 15%;
+	align-content: center;	
+	width: 90%;
+	max-width: 1000px;
+	margin: 20px auto;
+	box-shadow: 0 0 10px rgba(0,0,0,.1);
+}
+ 
+#content_consulta1 .content_consulta1 {
+		padding: 10px;
+	}
+
+.content_consulta1 {
+	width: 95%;
+	max-width:1000px;
+	margin: auto;
+}
+
+/* tabla consulta de personal */
+table#tabla_pers{
+	 margin: 0;
+    padding-top: 3%;
+}
+
+table.tabla_pers b{
+    font-size: 14px;
+}
+
+
+/* Formulario Consulta Solicitudes*/
+
+form#consul_solic {
+	
+    margin: 5% auto;
+    padding-left: 25%;
+    align: left;
+    min-height: 100px;
+    position: relative;
+ 
+}
+
+/* Tabla Consulta Solicitudes*/
+table.tabla_consulta1{
+    max-height: 100px;
+    position: relative; 
+    z-index:1;
+
+}
+
+/* Tabla Consulta Guardias*/
+table.tabla_guardia1{
+    padding: 30px 90px;
+    text-align: center;
+    min-height: 100%;
+    position: relative; z-index:1;
+    left: 1%;
+
+}
+
+tr:nth-child(even){
+    background: #e5e5e5;
+}
+
+/* *************************                  MENU CONSULTA DE GUARDIAS                  ********************************* */
+
+
+header.sup {
+    background: #CCCCCC;
+    color: #000000;
+    text-align: center;
+    font-weight: normal;
+    list-style: none;
+    height: 4%;
+    line-height: 10%;
+    width: 100%;
+
+}
+
+ul.sup {
+    margin: 0;
+    padding: 1% 1%;
+    width: 100%;
+    margin: auto;
+    height: 30px;
+}
+
+li.sup {
+    list-style-type: none;
+    float: left;
+    display: block;
+    width: 14%;
+    line-height: 30px;
+    font: bold 22px verdana, sans-serif;
+}
+
+header.sup li a{
+    display: block;
+    font-weight: normal;
+    overflow: hidden;
+    color: black;
+}
+
+
+header.desp {
+    background: #CCCCCC;
+    color: #000000;
+    text-align: center;
+    font-weight: normal;
+    list-style: none;
+    height: 5%;
+    line-height: 10%;
+    width: 100%;
+
+}
+
+ul.desp {
+    margin: auto;
+    padding-left: 25%;
+    width: 100%;
+    height: 30px;
+}
+
+li.desp {
+    list-style-type: none;
+    float: left;
+    display: block;
+    width: 14%;
+    line-height: 30px;
+    font: bold 22px verdana, sans-serif;
+}
+
+header.desp li a{
+    display: block;
+    font-weight: normal;
+    overflow: hidden;
+    color: black;
+}
+
+
+/*		********************************		CONSULTAS ORGANISMOS Y GRUPO			**********************************	*/
+/* tabla consulta de personal */
+
+div#tabla_grupo1{
+	float: left;
+	 margin: 0 auto;
+    padding: 0;
+    position: relative;
+}
+
+table#tabla_grupo1{
+	 margin: 0 auto;
+    padding-top: 0;
+}
+
+table.tabla_grupo1 b{
+    font-size: 14px;
+}
+
+/*============ Paginador =============*/
+.paginador ul{
+    padding: 15px;
+    list-style: none;
+    background: #C0C0C0;
+    margin-top: 15px;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    justify-content: flex-end;
+}
+.paginador a, .pageSelected{
+    color: #428bca;
+    border: 1px solid #ddd;
+    padding: 5px;
+    display: inline-block;
+    font-size: 14px;
+    text-align: center;
+    width: 35px;
+}
+.paginador a:hover{
+    background: #e5e5e5;
+}
+.pageSelected{
+    color: #FFF;
+    background: #428bca;
+    border: 1px solid #428bca;
+}

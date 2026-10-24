@@ -1,0 +1,145 @@
+# Documentacion del sistema Libro Digital de Novedades 9-1-1
+
+## Proposito de este archivo
+
+Este documento proporciona contexto a personas y asistentes de IA que revisen este repositorio. Resume de que trata la aplicacion, como esta organizada, que cambios ya se realizaron y que aspectos podrian mejorarse.
+
+La lista de mejoras es informativa. No autoriza por si sola a cambiar reglas de negocio, tecnologias, datos ni flujos operativos. Antes de una modificacion, revisar el codigo relacionado y confirmar su alcance.
+
+## Que hace el sistema
+
+El proyecto corresponde al **Libro Digital de Novedades 9-1-1** asociado a la Coordinacion de Operaciones del VEN 911 en Merida. Su objetivo funcional es registrar y consultar novedades y solicitudes, documentar al personal asignado a las guardias y dar seguimiento a operaciones atendidas por organismos de seguridad y prevencion.
+
+El manual de usuario disponible es de octubre de 2021. El comportamiento actual debe confirmarse con el codigo y, cuando aplique, con usuarios del sistema: el manual puede no reflejar cambios posteriores.
+
+## Funciones identificadas
+
+A partir de los nombres de paginas, formularios y consultas se identifican estas areas:
+
+- Inicio de sesion, recuperacion de acceso y administracion de cuentas.
+- Administracion de personal, grupos de guardia y organismos.
+- Asignacion de personal, apertura y cierre de guardias.
+- Registro, consulta, seguimiento y cierre de solicitudes y novedades.
+- Observaciones de guardia y de personal.
+- Inventario y control de bienes al recibir y entregar una guardia.
+- Consultas historicas, estadisticas y reportes.
+- Bitacora de operaciones.
+- Calendario, contactos y manuales de usuario.
+
+Esta lista describe funciones observadas en el repositorio; no sustituye una validacion de los flujos operativos vigentes.
+
+## Perfiles de usuario observados
+
+El codigo de autenticacion enruta por identificadores numericos de rol. Los nombres e IDs siguientes se deducen del codigo y deben verificarse contra la base de datos antes de modificar permisos.
+
+| ID observado | Perfil | Areas asociadas |
+| --- | --- | --- |
+| 1 | Administrador | Usuarios, personal, organismos, grupos, bienes, consultas e informes |
+| 2 | Supervisor | Personal de guardia, apertura/cierre, observaciones e informes |
+| 3 | Despachador | Novedades, solicitudes y operaciones relacionadas con el despacho |
+| 4 | Operador | Solicitudes y consultas relacionadas con su operacion |
+
+Las restricciones del menu no son suficientes para proteger una accion. Los permisos deben comprobarse en el servidor, tanto en paginas como en endpoints.
+
+## Tecnologias y arquitectura actual
+
+- Backend: PHP procedural, con HTML y logica de acceso/datos a menudo mezclados en las mismas paginas.
+- Base de datos principal observada: PostgreSQL, accedido mediante funciones `pg_*`.
+- Hay configuracion adicional para MySQL, pero no se ha confirmado si sigue en uso ni que parte del sistema depende de ella.
+- Interfaz: plantilla Gentelella y dependencias locales como Bootstrap, jQuery y Font Awesome.
+- Recursos frontend propios: `src/js/` y `src/scss/`.
+- No se ha identificado una arquitectura backend MVC o por paquetes; los directorios funcionales y por perfil organizan gran parte de las paginas.
+
+No reemplazar estas tecnologias ni introducir un framework como parte de una mejora rutinaria. Cualquier cambio de plataforma requiere una solicitud y evaluacion separadas.
+
+## Mapa del repositorio
+
+- `index.php`: pantalla de acceso.
+- `cookie/`: autenticacion, manejo de sesion, redirecciones y salida.
+- `config/`: configuracion y conexiones a bases de datos.
+- `administrador/`: pantallas del perfil administrador.
+- `supervisor/`: pantallas de supervisores y gestion de guardias.
+- `despachador/`: pantallas relacionadas con despacho y seguimiento.
+- `operador/`: pantallas de operadores.
+- `controlador/`: consultas auxiliares, opciones y datos para formularios.
+- `insert_*.php` e `insertar_*.php`: endpoints que procesan escrituras y acciones.
+- `menu/` y `plantillas/`: partes compartidas de la interfaz.
+- `Manuales/`: manuales de usuario en PDF.
+- `vendors/`, `build/`, `css/`, `js/`, `images/`: librerias y recursos de interfaz.
+- `tests/lint_php.sh`: prueba estatica de sintaxis para archivos PHP.
+
+## Flujo tecnico general observado
+
+1. El usuario envia sus credenciales desde `index.php`.
+2. `cookie/cookie.php` consulta la base de datos, inicia datos de sesion, registra el acceso en la bitacora y redirige segun el rol.
+3. Las paginas de cada area incluyen menus y plantillas, y algunas validan rol y datos de `POST`.
+4. Los formularios llaman paginas PHP que consultan o modifican PostgreSQL.
+5. Algunas operaciones escriben tambien en la bitacora.
+
+Este flujo es una descripcion general; los detalles varian entre paginas y endpoints.
+
+## Cambios ya realizados en este espacio de trabajo
+
+- En `controlador/grado_instruccion.php` se quitaron dos llaves de cierre sobrantes que producian un error de sintaxis PHP. No se cambio la consulta ni el resultado esperado.
+- Se agrego `tests/lint_php.sh`, un script Bash que recorre los archivos `.php` y ejecuta el linter incluido en PHP.
+- La prueba se ejecuto correctamente sobre 292 archivos PHP usando PHP 8.5.4 disponible localmente.
+- Antes de esos cambios se creo una copia comprimida del proyecto fuera de la carpeta del repositorio: `../Sistema_CTTTVEN911-master-backup-20261012.tar.gz`.
+- En esa revision no se cambio la logica de negocio ni las tecnologias.
+
+El resultado de sintaxis solo corresponde a la copia y al entorno revisados entonces. No garantiza que el sistema funcione contra una base real ni confirma compatibilidad con la version PHP de produccion.
+
+## Oportunidades de mejora identificadas
+
+Son observaciones de una inspeccion parcial. Deben confirmarse antes de implementar cambios.
+
+### Seguridad
+
+- Se encontraron credenciales de bases de datos escritas directamente en archivos de configuracion. No incluir sus valores en documentacion, logs, ejemplos ni conversaciones. Considerarlas expuestas y coordinar su rotacion con quien administre los ambientes.
+- En el acceso se observa SHA-1 para contrasenas y consultas SQL concatenadas con valores recibidos. Evaluar consultas parametrizadas y migracion compatible a `password_hash`/`password_verify`.
+- Revisar controles de sesion y autorizacion: regeneracion de ID, expiracion, cookies seguras bajo HTTPS y permisos comprobados en cada accion del servidor.
+- Revisar proteccion CSRF en formularios y escape de datos antes de mostrarlos en HTML.
+- El bloqueo de cuenta observado utiliza cookies del navegador; verificar si existe tambien un control fiable del lado del servidor.
+- Evitar mostrar errores internos de base de datos al usuario; registrar detalles tecnicos sin exponer informacion sensible.
+
+### Integridad y confiabilidad
+
+- Revisar si las operaciones que escriben en varias tablas necesitan transacciones para evitar registros parciales.
+- En flujos revisados se consulta el ID maximo despues de insertar. Comprobar concurrencia y considerar mecanismos de PostgreSQL como `RETURNING` sin cambiar el comportamiento funcional.
+- Definir y probar validaciones del lado del servidor, reglas de estado, campos requeridos y manejo de errores.
+- Comprobar que la bitacora identifique de forma fiable al actor y la operacion, y que sus escrituras sean consistentes con la accion auditada.
+
+### Mantenimiento y pruebas
+
+- Hay paginas con logica repetida y SQL mezclado con la presentacion. Se puede extraer codigo comun gradualmente, conservando rutas y resultados.
+- Revisar archivos antiguos, copias y nombres parecidos antes de eliminarlos; primero confirmar referencias y uso.
+- Ampliar las pruebas desde sintaxis hacia pruebas de consultas y flujos con datos de prueba anonimizados, sin conectar pruebas destructivas a produccion.
+- Corregir o complementar el README principal: actualmente describe sobre todo la plantilla Gentelella, no el sistema VEN 911.
+
+## Informacion aun no confirmada
+
+- No se encontro un archivo SQL con el esquema de la base de datos en la copia revisada.
+- No se confirmo que MySQL siga activo ni cual es su funcion.
+- La version local de PHP observada fue 8.5.4; no se conoce la version de produccion.
+- No se identifico una suite de pruebas funcionales, un entorno local completo ni datos anonimizados para pruebas.
+- Los roles, transiciones de guardia y reglas exactas deben cotejarse con los datos y usuarios actuales.
+
+No asumir que una consulta puede probarse o que una operacion es segura sin conocer el esquema, las restricciones y el entorno de destino.
+
+## Instrucciones para futuras IAs
+
+- Usa este archivo como contexto inicial, pero verifica las afirmaciones en el codigo vigente antes de actuar.
+- El usuario quiere comprender y mejorar este sistema gradualmente. No ejecutar una reescritura global ni implementar automaticamente toda la lista de oportunidades.
+- Conserva la logica de negocio, las rutas y las tecnologias existentes salvo que el usuario autorice expresamente un cambio.
+- Antes de editar, explica el comportamiento afectado, el riesgo y una validacion concreta. Haz cambios pequenos y ejecuta una prueba enfocada.
+- No accedas, publiques ni reproduzcas credenciales. No uses datos reales para pruebas; no conectes acciones de escritura a produccion.
+- Si falta el esquema o una regla operativa necesaria, marca la incertidumbre y pide solo el dato que bloquea la decision.
+- Para comprobar sintaxis PHP desde la raiz del proyecto: `./tests/lint_php.sh`.
+
+## Referencias
+
+- [Manual de usuario](Manuales/Manual_Usuario_Libro_Digital_de_Novedades.pdf)
+- [Pantalla de acceso](index.php)
+- [Autenticacion y redireccion por perfil](cookie/cookie.php)
+- [Conexion PostgreSQL](config/conexion1.php)
+- [Controlador de grados de instruccion](controlador/grado_instruccion.php)
+- [Prueba de sintaxis PHP](tests/lint_php.sh)

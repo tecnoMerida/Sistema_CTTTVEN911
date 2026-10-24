@@ -1,0 +1,132 @@
+<?php
+  $id = intval($_REQUEST['id'] ?? ($_GET['id'] ?? 0));
+
+require_once('../../config/conexion1.php');
+require('plantilla.php');
+
+if (!$id) {
+    die("ID no especificado.");
+}
+
+	///////////////////////////////////				CONSULTAS			////////////////////////////
+	//consulta 1
+    $result = pg_query($dbconn, "SELECT * FROM public.guardias WHERE id = $id");
+    $reg = $result ? pg_fetch_array($result) : null;
+    if (!$reg) {
+        die("Guardia no encontrada.");
+    }
+
+    $dato = $reg['fecha_inicio_g'] ?? ($reg[1] ?? null);
+    $fecha = $dato ? date('d-m-Y', strtotime($dato)) : '';
+    $hora = $dato ? date('H:i:s', strtotime($dato)) : '';
+
+    //consulta 2
+    $usuario_entrada = intval($reg['usuario_entrada_id'] ?? 0);
+    $result_personal = $usuario_entrada ? pg_query($dbconn, "SELECT * FROM public.personal WHERE cedula = $usuario_entrada") : null;
+    $reg_persona = ($result_personal && pg_num_rows($result_personal) > 0) ? pg_fetch_array($result_personal) : [];
+
+    //consulta 3
+    $cargo = intval($reg_persona['cargos_id'] ?? 0);
+    $result_cargo = $cargo ? pg_query($dbconn, "SELECT * FROM public.cargos WHERE id = $cargo") : null;
+    $reg_cargo = ($result_cargo && pg_num_rows($result_cargo) > 0) ? pg_fetch_array($result_cargo) : [];
+
+    //consulta 4
+    $organismo = intval($reg_persona['organismos_id'] ?? 0);
+    $result_org = $organismo ? pg_query($dbconn, "SELECT * FROM public.organismos WHERE id = $organismo") : null;
+    $reg_org = ($result_org && pg_num_rows($result_org) > 0) ? pg_fetch_array($result_org) : [];
+
+    //consulta 5
+    $coordinador1 = pg_query($dbconn, "SELECT * FROM director WHERE cargo_dir LIKE '%DIRECTOR%' ");        
+    $coord1 = ($coordinador1 && pg_num_rows($coordinador1) > 0) ? pg_fetch_array($coordinador1) : [];
+
+$pdf = new PDF('P','mm','A4');
+$pdf->AddPage();
+$title = 'Reporte apertura de guardia';
+$pdf->SetTitle($title);
+
+$pdf->SetFont('Arial','B',14);
+$pdf->SetX(20);
+$pdf->Cell(170,20,utf8_decode('Apertura de Guardia'),0,1,'C');
+
+require('directivo_2.php'); 
+
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(77,6,utf8_decode(' es  realizada   la  recepción  y   apertura'),0,1);
+$pdf->SetX(20);
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(60,6,utf8_decode('de  guardia,  bajo  el  número : '),0,0);
+$pdf->SetFont('Arial','B',12);
+$pdf ->Cell(25,6,utf8_decode(''.$reg['id'].''),0,0,'C');
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(10,6,utf8_decode('del'),0,0);
+$pdf->SetFont('Arial','B',12);
+$pdf ->Cell(75,6,utf8_decode('"Libro  Digital  de  Novedades  9-1-1"'),0,1);
+$pdf->SetX(20);
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(55,6,utf8_decode(', con  el  grupo  de  guardia :'),0,0);
+$pdf->SetFont('Arial','B',12);
+$pdf ->Cell(15,6,utf8_decode(''.$reg['grupos_guardia_id'].''),0,0,'C');
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(36,6,utf8_decode(', por  el  ciudadano(a) '),0,0);
+$pdf->SetFont('Arial','B',12);
+$pdf ->Cell(62,6,utf8_decode(''.strtoupper($reg_persona['p_nombre'] ?? '').' '.strtoupper($reg_persona['p_apellido'] ?? '').''),0,0,'C');
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(2,6,utf8_decode(','),0,1);
+$pdf->SetX(20);
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(75,6,utf8_decode('titular  de  la  cédula  de  identidad  Nº :'),0,0);
+$pdf->SetFont('Arial','B',12);
+$pdf ->Cell(40,6,utf8_decode(''.($reg_persona['cedula'] ?? '').''),0,0,'C');
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(55,6,utf8_decode(', y cumpliendo  funciones de'),0,1);
+$pdf->SetX(20);
+
+if(($reg_org['id'] ?? 0) != 5 AND ($reg_org['id'] ?? 0) != 9 ) {
+        $pdf->SetFont('Arial','B',12);
+        $pdf ->Cell(40,6,utf8_decode(''.strtoupper($reg_cargo['nombre_cargo'] ?? '').''),0,0,'C');
+        $pdf->SetFont('Arial','',12);
+        $pdf ->Cell(12,6,utf8_decode(', para '),0,0);
+        $pdf->SetFont('Arial','B',12);
+        $pdf ->Cell(65,6,utf8_decode(''.strtoupper($reg_org['nombre_oganismos'] ?? '').''),0,0,'C');
+        $pdf->SetFont('Arial','',12);
+        $pdf ->Cell(8,6,utf8_decode('y el'),0,0);
+        $pdf->SetFont('Arial','B',12);
+        $pdf ->Cell(45,6,utf8_decode(' Centro Comandos Control'),0,1);
+        $pdf->SetX(20);
+        $pdf->SetFont('Arial','B',12);
+        $pdf ->Cell(117,6,utf8_decode(' y Telecomunicaciones VEN 9-1-1 Mérida.'),0,1);
+    } else {
+
+        $pdf->SetFont('Arial','B',12);
+        $pdf ->Cell(30,6,utf8_decode(''.strtoupper($reg_org['nombre_oganismos'] ?? '').''),0,0,'C');
+        $pdf->SetFont('Arial','',12);
+        $pdf ->Cell(18,6,utf8_decode(' para  el '),0,0);
+        $pdf->SetFont('Arial','B',12);
+        $pdf ->Cell(90,6,utf8_decode(' Centro Comandos Control y Telecomunicaciones VEN 9-1-1'),0,1);
+        $pdf->SetX(20);
+        $pdf->SetFont('Arial','B',12);
+        $pdf ->Cell(117,6,utf8_decode('Mérida.'),0,1);
+    }
+
+$pdf->SetX(20);
+$pdf->Cell(170,7,utf8_decode(''),0,1);
+
+$pdf->SetFont('Arial','',12);
+$pdf->SetX(20);
+$pdf->Cell(170,6,utf8_decode('Dando   por   registrada   la  recepción  y   apertura   de  guardia   correspondiente  con  la '),0,1);
+$pdf->SetX(20);
+$pdf->Cell(170,6,utf8_decode('siguiente descripción: '),0,1);
+$pdf->SetFont('Arial','B',12);
+$pdf->SetX(20);
+$pdf->MultiCell(170,8,utf8_decode(''.strtoupper($reg['apertura_g']).'.'),0,1);
+
+$pdf->SetX(20);
+$pdf->Cell(170,8,utf8_decode(''),0,1);
+$pdf->SetX(20);
+$pdf->Cell(170,8,utf8_decode(''),0,1);
+
+require('directivo.php');
+
+$pdf->Output();
+
+?>

@@ -1,0 +1,8 @@
+<?php
+	require_once('lib/mpdf.php');
+
+	$mpdf = new mPDF('c','A4');
+	$mpdf->writenHTML('HOLA MUNDO');
+	$mpdf->Output('reporte1.pdf','I');	
+	
+?>

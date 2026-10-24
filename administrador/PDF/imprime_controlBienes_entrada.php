@@ -1,0 +1,143 @@
+<?php
+  $id = intval($_REQUEST['id'] ?? ($_GET['id'] ?? 0));
+
+require_once('../../config/conexion1.php');
+require('plantilla.php');
+
+if (!$id) {
+    die("ID no especificado.");
+}
+
+	///////////////////////////////////				CONSULTAS			//////////////////////////////
+	//consulta 1
+	$consulta_bienes1 = pg_query($dbconn, "SELECT control_bienes.id, control_bienes.fecha_creacion, control_bienes.grupo_personal_id, control_bienes.materiales_recibe, control_bienes.materiales_entrega, personal_grupos_guardia.grupos_guardia_id, personal_datos.personal_cedula_sup, personal.cedula, personal.p_nombre, personal.p_apellido, personal.organismos_id, personal.cargos_id FROM public.control_bienes INNER JOIN public.personal_grupos_guardia ON personal_grupos_guardia.id = control_bienes.grupo_personal_id INNER JOIN public.personal_datos ON personal_datos.personal_grupos_guardia_id = personal_grupos_guardia.id INNER JOIN public.personal ON personal.cedula = personal_datos.personal_cedula_sup WHERE control_bienes.id = $id ");
+	
+	$reg = ($consulta_bienes1 && pg_num_rows($consulta_bienes1) > 0) ? pg_fetch_array($consulta_bienes1) : null;
+	if (!$reg) {
+	    die("Control de bienes no encontrado.");
+	}
+
+// Fecha Entrada
+$dato = $reg['fecha_creacion'] ?? null;
+$fecha = $dato ? date('d-m-Y', strtotime($dato)) : '';
+$hora = $dato ? date('H:i:s', strtotime($dato)) : '';
+
+    // Consulta 2
+    $cargo = intval($reg['cargos_id'] ?? 0);
+    $result_cargo = $cargo ? pg_query($dbconn, "SELECT * FROM public.cargos WHERE id = $cargo") : null;
+    $reg_cargo = ($result_cargo && pg_num_rows($result_cargo) > 0) ? pg_fetch_array($result_cargo) : [];
+
+    // Consulta 3
+    $organismo = intval($reg['organismos_id'] ?? 0);
+    $result_org = $organismo ? pg_query($dbconn, "SELECT * FROM public.organismos WHERE id = $organismo") : null;
+    $reg_org = ($result_org && pg_num_rows($result_org) > 0) ? pg_fetch_array($result_org) : [];
+
+    //consulta 4
+    $coordinador1 = pg_query($dbconn, "SELECT * FROM director WHERE cargo_dir LIKE '%DIRECTOR%' ");        
+    $coord1 = ($coordinador1 && pg_num_rows($coordinador1) > 0) ? pg_fetch_array($coordinador1) : [];
+
+
+$pdf = new PDF('P','mm','A4');
+$pdf->AddPage();
+$title = 'Reporte control bienes';
+$pdf->SetTitle($title);
+
+
+$pdf->SetFont('Arial','B',14);
+$pdf->SetX(20);
+$pdf->Cell(170,10,utf8_decode('Control de Bienes Muebles Entrada'),0,1,'C');
+
+require('directivo_2.php'); 
+
+
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(77,6,utf8_decode('verificando  los  materiales  y  equipos '),0,1);
+$pdf->SetX(20);
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(170,6,utf8_decode('que son  parte de los  bienes nacionales del  Ministerio del Poder Popular  de Relaciones '),0,1);
+$pdf->SetX(20);
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(170,6,utf8_decode('Interiores,  Justicia  y  Paz.,  asignada a  la  Coordinación Operaciones.'),0,1);
+$pdf->SetX(20);
+/*$pdf ->Cell(40,6,utf8_decode('Emergencias 9-1-1 .'),0,0);
+$pdf->SetFont('Arial','',12);*/
+$pdf->Cell(170,8,utf8_decode(''),0,1);
+$pdf->SetX(20);
+$pdf ->Cell(110,6,utf8_decode('Bienes que son verificados en el grupo de guardia número: '),0,0);
+$pdf->SetFont('Arial','B',12);
+$pdf ->Cell(15,6,utf8_decode(''.$reg['grupos_guardia_id'].''),0,0,'C');
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(15,6,utf8_decode(', por: '),0,1);
+$pdf->SetX(20);
+$pdf->SetFont('Arial','B',12);
+$pdf ->Cell(60,6,utf8_decode(''.strtoupper($reg['p_nombre']).' '.strtoupper($reg['p_apellido']).''),0,0,'C');
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(75,6,utf8_decode(', titular de la cédula de identidad Nº V-: '),0,0);
+$pdf->SetFont('Arial','B',12);
+$pdf ->Cell(35,6,utf8_decode(''.$reg['cedula'].''),0,1,'C');
+$pdf->SetX(20);
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(50,6,utf8_decode(', ubicados en el área del: '),0,0);
+if(($reg_org['id'] ?? 0) != 5 AND ($reg_org['id'] ?? 0) != 9 ) {
+
+        $pdf->SetFont('Arial','B',12);
+        $pdf ->Cell(45,6,utf8_decode(''.strtoupper($reg_cargo['nombre_cargo'] ?? '').''),0,0,'C');
+        $pdf->SetFont('Arial','',12);
+        $pdf ->Cell(10,6,utf8_decode(', de '),0,0);
+        $pdf->SetFont('Arial','B',12);
+        $pdf ->Cell(65,6,utf8_decode(''.strtoupper($reg_org['nombre_oganismos'] ?? '').''),0,1,'C');
+        $pdf->SetX(20);
+        $pdf->SetFont('Arial','',12);
+        $pdf ->Cell(75,6,utf8_decode(', al  momento  de  entrada. '),0,1);
+
+    } else {
+
+        $pdf->SetFont('Arial','B',12);
+        $pdf ->Cell(45,6,utf8_decode(''.strtoupper($reg_org['nombre_oganismos'] ?? '').''),0,0,'C');
+        $pdf->SetFont('Arial','',12);
+        $pdf ->Cell(75,6,utf8_decode(', al  momento  de  entrada. '),0,0);
+        $pdf ->Cell(1,6,utf8_decode(''),0,1);        
+
+    }
+$pdf->SetX(20);
+$pdf ->Cell(140,6,utf8_decode(''),0,1);
+
+$pdf->SetX(20);
+$pdf->SetFont('Arial','B',12);
+$pdf ->Cell(45,7,utf8_decode(' Nombre '),1,0,'C');
+$pdf->SetFont('Arial','B',12);
+$pdf ->Cell(60,7,utf8_decode(' Código '),1,0,'C');
+$pdf->SetFont('Arial','B',12);
+$pdf ->Cell(60,7,utf8_decode(' Serial '),1,1,'C');
+
+    $cadena = $reg['materiales_recibe'] ?? '';
+    $array = array_filter(array_map('trim', explode(",", $cadena)));
+
+    foreach( $array as $item_id ){
+        if (is_numeric($item_id) && intval($item_id) > 0) {
+            $consulta1 = pg_query($dbconn, "SELECT * FROM bienes WHERE id = " . intval($item_id));
+            if ($consulta1 && pg_num_rows($consulta1) > 0) {
+                while ($reg1 = pg_fetch_array($consulta1)) {
+                    $pdf->SetX(20);
+                    $pdf->SetFont('Arial','B',12);
+                    $pdf ->Cell(45,7,utf8_decode(''.strtoupper($reg1['nombre_b'] ?? '').''),1,0,'C');
+                    $pdf->SetFont('Arial','B',12);
+                    $pdf ->Cell(60,7,utf8_decode(''.($reg1['codigo_b'] ?? '').''),1,0,'C');
+                    $pdf->SetFont('Arial','B',12);
+                    $pdf ->Cell(60,7,utf8_decode(''.($reg1['serial_b'] ?? '').''),1,1,'C');
+                }
+                pg_free_result($consulta1);
+            }
+        }
+    }
+
+
+
+$pdf->SetX(20);
+$pdf->Cell(170,8,utf8_decode(''),0,1);
+
+require('directivo.php');
+
+$pdf->Output();
+
+?>

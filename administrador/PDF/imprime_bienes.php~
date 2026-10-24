@@ -1,0 +1,274 @@
+<?php
+
+  $id_bienes = $_REQUEST['id_bienes'];
+  $id_bienes = $_GET['id_bienes'];
+
+require_once('../../config/conexion_bd.php');
+require('fpdf123/fpdf.php');
+
+
+class PDF extends FPDF
+{
+ 
+
+// Cabecera de página
+function Header()
+{
+    // Logo
+    $this->Image('../../imagenes/Escudo_Gobernacion.png',15,8,20);
+    $this->Image('../../imagenes/SEG.png',55,15,105);
+    $this->Image('../../imagenes/logo_171.png',179,8,18);
+    // Arial bold 15
+    $this->SetFont('Arial','',12);
+
+    // Título
+
+// ZONA HORARIA
+date_default_timezone_set('America/Caracas');
+setlocale(LC_ALL,"es_ES");
+
+    $week_days = array ("Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado");  
+    $months = array ("", "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");  
+    $year_now = date ("Y");  
+    $month_now = date ("n");  
+    $day_now = date ("j");  
+    $week_day_now = date ("w");  
+//    $date = $week_days[$week_day_now] . ", " . $day_now . " de " . $months[$month_now] . " de " . $year_now;
+    $date = $day_now . " de " . $months[$month_now] . " de " . $year_now;
+    
+	// Movernos a la Izquierda
+    $this->SetFont('Arial','B',12);
+    $this->Cell(10);    
+    $this->Cell(10,80,utf8_decode('SC/171/180/'.$year_now.''),0,0);
+
+    // Movernos a la derecha
+    $this->SetFont('Arial','',12);
+    $this->Cell(80);
+    $this->Cell(80,80,utf8_decode('Mérida, '.$date.''),0,0,'R');
+    // Salto de línea
+    $this->Ln(45);
+
+    // Movernos al Centro
+    $this->Cell(10);
+    $this->Cell(170,5,utf8_decode('REPÚBLICA BOLIVARIANA DE VENEZUELA'),0,1,'C');
+    $this->Cell(10);
+    $this->Cell(170,5,utf8_decode('GOBERNACIÓN DEL ESTADO BOLIVARIANO DE MÉRIDA'),0,1,'C');
+    $this->Cell(10);
+    $this->Cell(170,5,utf8_decode('REPÚBLICA BOLIVARIANA DE VENEZUELA'),0,1,'C');    
+    $this->Ln(1);
+}
+
+// Pie de página
+function Footer()
+{
+    // Posición: a 1,5 cm del final
+    $this->SetY(-30);
+    // Arial italic 8
+    $this->SetFont('Arial','I',8);
+
+    // Direccion 
+    $this->Cell(0,10,utf8_decode('_______________________________________________________________________________________'),0,1,'C');
+    $this->Cell(0,5,utf8_decode('Av. Los Proceres, santa Barbara oeste, edificio inpradem, Piso 1, Oficina Direccion de Seguridad Ciudadana'),0,1,'C');
+    $this->Cell(0,5,utf8_decode('tlfs: 0274-2610212 / 0274-2664493 / Web: 171.merida.gob.ve '),0,0,'C');
+    // Posición: a 1,5 cm del final
+    $this->SetY(-10);
+    // Número de página
+    $this->Cell(0,5,utf8_decode('Página ').$this->PageNo().'/{nb}',0,0,'C');
+}
+}
+
+
+	///////////////////////////////////				CONSULTAS			//////////////////////////////////////////////
+	//consulta 1
+	$bienes = mysqli_query($conexion, "SELECT * FROM inventario_bienes WHERE id_bienes= $id_bienes ");		
+	$reg = mysqli_fetch_array($bienes);
+
+
+	$fecha_a = $reg['fecha_sistema'];
+   $now1 = new DateTime($fecha_a);
+   $fecha_a1=$now1->format('d-m-Y');
+
+	//consulta 2
+	$consulta = mysqli_query($conexion,"SELECT * FROM grupos_organismos WHERE id_organismo = $organismo");
+	$reg1= mysqli_fetch_array($consulta);
+
+	//consulta 3
+	$personal = mysqli_query($conexion, "SELECT * FROM personal_171 WHERE (id_grupo= $grupo AND id_asignado= 1) AND id_organismo= 4 ");		
+	$reg2 = mysqli_fetch_array($personal);
+
+	//consulta 4
+	$coordinador = mysqli_query($conexion, "SELECT * FROM administrador_coord WHERE cargo LIKE '%Coordinador%' ");		
+	$coord1 = mysqli_fetch_array($coordinador);
+
+	//consulta 5
+	$coordinador1 = mysqli_query($conexion, "SELECT * FROM administrador_coord WHERE cargo LIKE '%Director%' ");		
+	$coord2 = mysqli_fetch_array($coordinador1);
+
+
+
+$pdf = new PDF('P','mm','A4');
+$pdf->AddPage();
+$title = 'Reporte Inventario Bienes';
+$pdf->SetTitle($title);
+
+$pdf->SetFont('Arial','B',14);
+$pdf->SetX(20);
+$pdf->Cell(170,10,utf8_decode('Inventario de bienes muebles'),0,1,'C');
+
+$pdf->SetFont('Arial','',12);
+$y = $pdf->GetY();
+$pdf->SetY($y+10);
+
+$pdf->SetX(20);
+$pdf->Cell(30,6,utf8_decode('Quien suscribe:'),0,0);
+$pdf->SetFont('Arial','B',12);
+$pdf->Cell(80,6,utf8_decode(''.$coord1['grado_instruccion_coord'].' '.$coord1 ['p_apellido_coord'].' '.$coord1 ['s_apellido_coord'].', '.$coord1['p_nombre_coord'].' '.$coord1['s_nombre_coord'].''),0,0,'C');
+$pdf->SetFont('Arial','',12);
+$pdf->Cell(60,6,utf8_decode(' Venezolana,  mayor   de   edad,'),0,1,'C'); 
+$pdf->SetX(20);
+$pdf->Cell(96,6,utf8_decode('titular  de  la  cedula  de  identidad   numero:   V-'),0,0);
+$pdf->SetFont('Arial','B',12);
+$pdf->Cell(26,6,utf8_decode(''.$coord1['cedula'].''),0,0,'C');
+$pdf->SetFont('Arial','',12);
+$pdf->Cell(48,6,utf8_decode(',  en   mi   condicion   de'),0,1);
+$pdf->SetX(20);
+$pdf->SetFont('Arial','B',12);
+$pdf->Cell(34,6,utf8_decode(''.$coord1['cargo'].'(a)'),0,0,'C');
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(136,6,utf8_decode('del Sistema de Atención de Emergencias Mérida 171/911, hago constar'),0,1);
+$pdf->SetX(20);
+$pdf ->Cell(170,6,utf8_decode('que el presente equipo forma parte de los bienes de la Gobernacion del Estado Bolivariano'),0,1);
+$pdf->SetX(20);
+$pdf ->Cell(60,6,utf8_decode('de   Mérida,   asignada    a   la '),0,0);
+$pdf->SetFont('Arial','B',12);
+$pdf ->Cell(110,6,utf8_decode('  Coordinacion    del   Sistema     de    Atención    de '),0,1);
+$pdf->SetX(20);
+$pdf ->Cell(50,6,utf8_decode(''.$reg['coordinacion'].'.'),0,1,'C');
+$pdf->SetX(20);
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(140,6,utf8_decode('Equipo o herramienta que tiene las siguientes caracteristicas:'),0,1);
+
+$pdf->SetX(20);
+$pdf ->Cell(140,6,utf8_decode(''),0,1);
+
+$pdf->SetX(40);
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(45,7,utf8_decode('Marca: '),1,0);
+$pdf->SetFont('Arial','B',12);
+$pdf ->Cell(70,7,utf8_decode(''.$reg['marca'].''),1,1,'C');
+
+$pdf->SetX(40);
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(45,7,utf8_decode('Modelo: '),1,0);
+$pdf->SetFont('Arial','B',12);
+$pdf ->Cell(70,7,utf8_decode(''.$reg[',modelo'].''),1,1,'C');
+
+$pdf->SetX(40);
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(45,7,utf8_decode('Colores: '),1,0);
+$pdf->SetFont('Arial','B',12);
+$pdf ->Cell(70,7,utf8_decode(''.$reg['colores'].''),1,1,'C');
+
+$pdf->SetX(40);
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(45,7,utf8_decode('Serial: '),1,0);
+$pdf->SetFont('Arial','B',12);
+$pdf ->Cell(70,7,utf8_decode(''.$reg['serial'].''),1,1,'C');
+
+$pdf->SetX(40);
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(45,7,utf8_decode('Codigo Asignado: '),1,0);
+$pdf->SetFont('Arial','B',12);
+$pdf ->Cell(70,7,utf8_decode(''.$reg['cod_asignado'].''),1,1,'C');
+
+$pdf->SetX(40);
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(45,7,utf8_decode('Descripcion: '),1,0);
+$pdf->SetFont('Arial','B',12);
+$pdf ->Cell(70,7,utf8_decode(''.$reg['descripcion'].''),1,1,'C');
+
+$fecha_i = $reg['fecha_ingreso'];
+   $now1 = new DateTime($fecha_i);
+   $fecha_i1=$now1->format('d-m-Y');
+$pdf->SetX(40);
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(45,7,utf8_decode('Fecha de Ingreso: '),1,0);
+$pdf->SetFont('Arial','B',12);
+$pdf ->Cell(70,7,utf8_decode(''.$fecha_i1.''),1,1,'C');
+
+$pdf->SetX(40);
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(45,7,utf8_decode('Ubicacion: '),1,0);
+$pdf->SetFont('Arial','B',12);
+$pdf ->Cell(70,7,utf8_decode(''.$reg['ubicacion'].''),1,1,'C');
+
+$pdf->SetX(40);
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(45,7,utf8_decode('Asignacion: '),1,0);
+$pdf->SetFont('Arial','B',12);
+$pdf ->Cell(70,7,utf8_decode(''.$reg['asignacion'].''),1,1,'C');
+
+$pdf->SetX(40);
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(45,7,utf8_decode('Estado: '),1,0);
+$pdf->SetFont('Arial','B',12);
+if($reg['estado'] == 1) {
+		$pdf ->Cell(70,7,utf8_decode('Nuevo'),1,1,'C');
+	}
+	elseif($reg['estado'] == 2) {
+		$pdf ->Cell(70,7,utf8_decode('Bueno'),1,1,'C');
+	}
+	elseif($reg['estado'] == 3) {
+		$pdf ->Cell(70,7,utf8_decode('Regular'),1,1,'C'); 
+	}
+	elseif($reg['estado'] == 4) {
+		$pdf ->Cell(70,7,utf8_decode('Mado/Dañado'),1,1,'C'); 
+	}
+	elseif($reg['estado'] == 5) {
+		$pdf ->Cell(70,7,utf8_decode('Fuera de Servicio'),1,1,'C');	
+	}
+	elseif($reg['estado'] == 6) {
+		$pdf ->Cell(70,7,utf8_decode('Reparacion'),1,1,'C');
+		}
+	else {
+		$pdf ->Cell(70,7,utf8_decode('Desincorporado'),1,1,'C');
+	}
+
+$fecha_i2 = $reg['f_estado'];
+   $now2 = new DateTime($fecha_i2);
+   $fecha_i22=$now2->format('d-m-Y');
+$pdf->SetX(40);
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(45,7,utf8_decode('Fecha de Estado: '),1,0);
+$pdf->SetFont('Arial','B',12);
+$pdf ->Cell(70,7,utf8_decode(''.$fecha_i22.''),1,1,'C');
+
+$pdf->SetX(40);
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(45,7,utf8_decode('Observaciones: '),1,0);
+$pdf->SetFont('Arial','B',12);
+$pdf ->MultiCell(115,7,utf8_decode(''.$reg['observaciones'].''),1,1);
+
+
+$pdf->SetX(20);
+$pdf->Cell(170,8,utf8_decode(''),0,1);
+$pdf->SetX(20);
+$pdf->Cell(170,8,utf8_decode(''),0,1);
+
+$pdf->SetFont('Arial','B',12);
+$pdf->SetX(60);
+$pdf->Cell(85,10,utf8_decode('__________________________'),0,1,'C');
+$pdf->SetX(60);
+$pdf->Cell(85,7,utf8_decode(''.$coord1['grado_instruccion_coord'].' '.$coord1['p_apellido_coord'].' '.$coord1['s_apellido_coord'].', '.$coord1['p_nombre_coord'].' '.$coord1['s_nombre_coord'].' '),0,1,'C');
+$pdf->SetX(20);
+$pdf->Cell(170,7,utf8_decode('JEFE DEL DPTO DEL SISTEMA A ATENCION DE EMERGENCIAS MÉRIDA 1-7-1/9-1-1'),0,1,'C');;
+$pdf->SetFont('Arial','',8);
+$pdf->SetX(40);
+$pdf->MultiCell(140,5,utf8_decode(''.$coord1['decreto_coord'].''),0,1);
+
+$pdf->SetFont('Arial','B',12);
+$pdf->SetX(60);
+$pdf->Cell(85,7,utf8_decode('Firma y Sello'),0,1,'C');
+$pdf->Output();
+
+?>

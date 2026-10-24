@@ -1,0 +1,68 @@
+<?php
+
+	require('cookie2.php');
+
+?>
+<!DOCTYPE html PUBLIC ?-//W3C//DTD XHTML 1.0 Transitional//EN? ?http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd?&gt;>
+<html lang="es-español" xmlns=?http://www.w3.org/1999/xhtml?&gt;>
+<link rel="shortcut icon" href="../imagenes/logo 171.ico">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html" charset="UTF-8"/>
+      <meta http-equiv="X-AU-Compatible" content="IE=edge,chrome=1">
+      <meta name="description" content="">
+      <meta name="viewport" content="width=device-width" media="screen"/>
+<title>Libro Digital Novedades 1-7-1 / 9-1-1</title>
+   </head>
+   <body <?php echo "style='background-color:$color'"; ?>>
+
+
+          <?php
+            //busqueda y muestra de los elementos de la base de datos
+            while ($resultado   = $consulta->fetch_array(MYSQLI_ASSOC)){
+                $fecha = array();
+                $fecha = explode("-" ,$resultado['fecha']);
+                $fecha[0] = $fecha[0]%1000;
+                $resultado['estado'] == '0' ? $estado = 'Abierta': $estado = 'Cerrada';
+                $resultado['estado'] == '0' ? $icono = 'fa fa-folder': $icono = 'fa fa-check';
+                $resultado['estado'] == '0' ? $title = 'Cerrar': $title = 'Abrir';
+                $resultado['estado'] == '0' ? $enlace = "<a title=\"".$title."\" href=\"scripts/scriptCloseSuggestion.php?id=".$resultado['id_sugerencia']."\"><i class=\"".$icono."\"></a>": $enlace = "<i class=\"".$icono."\">";
+
+//elementos en la tabla html
+                echo "<tr>
+                  <td>".$resultado['nombre']." ".$resultado['apellido']."</td>
+                  <td>".$estado."</td>
+                  <td>
+
+<button class=\"waves-effect waves-light btn modal-trigger\" href=\"#".$resultado['id_sugerencia']."\">Ver</button></td>
+                  <td>".$enlace."</td>
+                </tr>";
+            }
+            ?>
+            
+<a title="Cerrar" href="scripts/scriptCloseSuggestion.php?id=1"><i class="fa fa-folder"></i></a>
+
+    
+	<br>
+			<form method="post" action="cookie_libro171.php" >
+			<label for="color">Escoge tu color de fondo</label>
+			<select name="color">
+				<option value="#C0D9D9">Light Blue</option>
+				<option value="#D9D9F3">Quartz</option>
+				<option value="#E6E8FA">Silver</option>
+				<option value="#D8BFD8">Thistle</option>
+				<option value="#ADEAEA">Turquoise</option>
+				<option value="#D8D8BF">Wheat</option>
+			</select>
+			<input type="submit" value="Cambiar Color!" />
+		</form>
+	<br>
+	<a href="salir_cookie.php"><button>Salir</button></a>
+   </body>
+   </html>
+<!--  **************************************************  -->
+<!--  *************D.E.P.P. TELEINFORMATICA*************  -->
+<!--  ***********T.S.U. Gilbert H. Gonzalez M.**********  -->
+<!--  **********Tecnico Operador de Telematica**********  -->
+<!--  ***********gilbertgonzalez5@outlook.com***********  -->
+<!--  ********Gobernacion del Estado Merida 2019********  -->
+<!--  **************************************************  -->
