@@ -1,0 +1,144 @@
+/* Menu desplegable
+------------------------------------------------------*/
+
+#menubloque {
+/*background:#CCCCCC;*/
+background:#AAAAAA;
+width: 100%;
+height: 40px;
+
+text-align: center;
+padding-left: 50px;
+
+border: 0;
+margin: 0;
+
+font-family:'Trebuchet MS',Arial,Verdana,Sans-Serif;
+font-size: 16px;
+color: #FFFFFF;
+font-weight: bold;
+
+    float: left;
+	 position: inherit;
+  	 z-index: 1000;
+
+	box-shadow: 0 0 10px rgba(0,0,0,.1);
+}
+
+/* menu pagajoso*/
+nav.menu-pegajoso {
+	background: #CCCCCC;	
+	position: fixed; /*Fixed ya que queremos que la posición sea en relación al navegador*/
+	z-index: 1000;
+	top: 0; /*El valor 0 indica que va a quedar arriba de todo*/
+	left: 0; /*Para que el menu se ubique siempre en la parte izquierda de la pantalla*/
+	width: 100%; /*100% para que ocupe todo el ancho del navegador*/
+}
+
+#menudesplegable li {
+margin: 0;
+list-style: none;
+padding: 0;
+}
+#menudesplegable {
+margin: 0;
+padding: 0;
+}
+#menudesplegable ul {
+float: left;
+list-style: none;
+margin: 0;
+padding: 0;
+}
+
+ul.menu_usuario{
+float: right;
+}
+
+#menudesplegable a {
+    display: block;
+    text-decoration: none;
+    font-weight: normal;
+    overflow: hidden;
+    color: #000000;
+}
+#menudesplegable li a, #menudesplegable li a:link, #menudesplegable li a:visited {
+color: #000000;
+display: block;
+font-weight: normal;
+padding: 9px 15px 8px;
+text-transform: none;
+margin: 0;
+}
+/* cambia de color con sursor por encima */
+#menudesplegable li a:active, #menudesplegable li a:hover {
+color: #ffffff; /* color letra con cursor por encima*/
+background: #A8A8A8;
+text-decoration: none;
+margin: 0;
+padding: 9px 15px 8px;
+}
+#menudesplegable li li a:link, #menudesplegable li li a, #menudesplegable li li a:visited {
+color: #000;
+font-weight: normal;
+text-transform: none;
+background: #bbbbbb;
+width: 150px;
+float: none;
+margin: 0;
+padding: 7px 10px;
+border-bottom: 1px solid #FFF;
+border-left: 1px solid #FFF;
+border-right: 1px solid #FFF;
+}
+
+/* cambia color con cursor por encima */
+#menudesplegable li li a:hover, #menudesplegable li li a:active {
+/*background: #70DBDB;*/
+background: #A8A8A8;
+color: #ffffff; /* cambia color de letras con cursor por encima*/
+padding: 7px 10px;
+}
+#menudesplegable li {
+float: left;
+padding: 0;
+}
+#menudesplegable li ul a {
+width: 140px;
+text-align: middle;
+}
+#menudesplegable li ul {
+position: absolute;
+margin: 0;
+z-index: 9999;
+left: -999em;
+height: auto;
+width: 170px;
+padding: 0;
+}
+
+/* resaltar y colorear cuando el cursor pasa por encima */
+#menubloque .current_page_item a {
+    background: #CCCCCC repeat-x left top;
+}
+
+#menubloque a:hover {
+    text-decoration: none;
+    height: 30px;
+    background: #FFFFFF repeat-x left top;
+}
+
+#menudesplegable li:hover, #menudesplegable li.sfhover {
+position: static;
+}
+#menudesplegable li ul ul {
+margin: -33px 0px 0px 170px;
+}
+#menudesplegable li:hover ul ul, #nav li:hover ul ul ul, #nav li.sfhover ul ul, #nav li.sfhover ul ul ul {
+left: -999em;
+}
+#menudesplegable li:hover ul, #menudesplegable li li:hover ul, #nav li li.sfhover ul,#menudesplegable li li li:hover ul, #menudesplegable li.sfhover ul, #menudesplegable li li li.sfhover ul {
+left: auto;
+}
+/* Fin menu desplegable ---------------------------*/
+

@@ -1,0 +1,229 @@
+<?php
+
+  $id_apertura = $_REQUEST['id_apertura'];
+  $id_apertura = $_GET['id_apertura'];
+
+require_once('../../config/conexion_bd.php');
+require('fpdf123/fpdf.php');
+
+
+class PDF extends FPDF
+{
+ 
+
+// Cabecera de página
+function Header()
+{
+    // Logo
+    $this->Image('../../imagenes/Escudo_Gobernacion.png',15,8,20);
+    $this->Image('../../imagenes/SEG.png',55,15,105);
+    $this->Image('../../imagenes/logo_171.png',179,8,18);
+    // Arial bold 15
+    $this->SetFont('Arial','',12);
+
+    // Título
+
+// ZONA HORARIA
+date_default_timezone_set('America/Caracas');
+setlocale(LC_ALL,"es_ES");
+
+    $week_days = array ("Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado");  
+    $months = array ("", "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");  
+    $year_now = date ("Y");  
+    $month_now = date ("n");  
+    $day_now = date ("j");  
+    $week_day_now = date ("w");  
+//    $date = $week_days[$week_day_now] . ", " . $day_now . " de " . $months[$month_now] . " de " . $year_now;
+    $date = $day_now . " de " . $months[$month_now] . " de " . $year_now;
+    
+	// Movernos a la Izquierda
+    $this->SetFont('Arial','B',12);
+    $this->Cell(10);    
+    $this->Cell(10,80,utf8_decode('SC/171/180/'.$year_now.''),0,0);
+
+    // Movernos a la derecha
+    $this->SetFont('Arial','',12);
+    $this->Cell(80);
+    $this->Cell(80,80,utf8_decode('Mérida, '.$date.''),0,0,'R');
+    // Salto de línea
+    $this->Ln(45);
+
+    // Movernos al Centro
+    $this->Cell(10);
+    $this->Cell(170,5,utf8_decode('REPÚBLICA BOLIVARIANA DE VENEZUELA'),0,1,'C');
+    $this->Cell(10);
+    $this->Cell(170,5,utf8_decode('GOBERNACIÓN DEL ESTADO BOLIVARIANO DE MÉRIDA'),0,1,'C');
+    $this->Cell(10);
+    $this->Cell(170,5,utf8_decode('REPÚBLICA BOLIVARIANA DE VENEZUELA'),0,1,'C');    
+    $this->Ln(1);
+}
+
+// Pie de página
+function Footer()
+{
+    // Posición: a 1,5 cm del final
+    $this->SetY(-30);
+    // Arial italic 8
+    $this->SetFont('Arial','I',8);
+
+    // Direccion 
+    $this->Cell(0,10,utf8_decode('_______________________________________________________________________________________'),0,1,'C');
+    $this->Cell(0,5,utf8_decode('Av. Los Proceres, santa Barbara oeste, edificio inpradem, Piso 1, Oficina Direccion de Seguridad Ciudadana'),0,1,'C');
+    $this->Cell(0,5,utf8_decode('tlfs: 0274-2610212 / 0274-2664493 / Web: 171.merida.gob.ve '),0,0,'C');
+    // Posición: a 1,5 cm del final
+    $this->SetY(-10);
+    // Número de página
+    $this->Cell(0,5,utf8_decode('Página ').$this->PageNo().'/{nb}',0,0,'C');
+}
+}
+
+
+	///////////////////////////////////				CONSULTAS			//////////////////////////////////////////////
+	//consulta 1
+	$apertura = mysqli_query($conexion, "SELECT * FROM apertura_guardia WHERE id_apertura= $id_apertura ");		
+	$reg = mysqli_fetch_array($apertura);
+
+	$organismo = $reg['id_organismo'];
+	$grupo= $reg['id_grupo'];	
+	
+	$fecha_a = $reg['fecha_sistema'];
+   $now1 = new DateTime($fecha_a);
+   $fecha_a1=$now1->format('d-m-Y');
+
+	//consulta 2
+	$consulta = mysqli_query($conexion,"SELECT * FROM grupos_organismos WHERE id_organismo = $organismo");
+	$reg1= mysqli_fetch_array($consulta);
+
+	//consulta 3
+	$personal = mysqli_query($conexion, "SELECT * FROM personal_171 WHERE (id_grupo= $grupo AND id_asignado= 1) AND id_organismo= 4 ");		
+	$reg2 = mysqli_fetch_array($personal);
+
+	//consulta 4
+	$coordinador = mysqli_query($conexion, "SELECT * FROM administrador_coord WHERE cargo LIKE '%Coordinador%' ");		
+	$coord1 = mysqli_fetch_array($coordinador);
+
+	//consulta 5
+	$coordinador1 = mysqli_query($conexion, "SELECT * FROM administrador_coord WHERE cargo LIKE '%Director%' ");		
+	$coord2 = mysqli_fetch_array($coordinador1);
+
+
+
+$pdf = new PDF('P','mm','A4');
+$pdf->AddPage();
+$title = 'Reporte Apertura de Guardia';
+$pdf->SetTitle($title);
+
+$pdf->SetFont('Arial','B',14);
+$pdf->SetX(20);
+$pdf->Cell(170,20,utf8_decode('Apertura y Recepcion de Guardia'),0,1,'C');
+
+$pdf->SetFont('Arial','',12);
+$y = $pdf->GetY();
+$pdf->SetY($y+10);
+$pdf->SetX(20);
+$pdf ->Cell(135,6,utf8_decode('Quines suscribimos los abajo firmantes hacemos constar que la fecha'),0,0);
+$pdf->SetFont('Arial','B',12);
+$pdf->Cell(35,6,utf8_decode(''.$fecha_a1.''),0,1,'C');
+$pdf->SetX(20);
+$pdf->SetFont('Arial','',12);
+$pdf->Cell(15,6,utf8_decode('y hora: '),0,0);
+$pdf->SetFont('Arial','B',12);
+$pdf->Cell(30,6,utf8_decode(''.$reg['hora_sistema'].' HLV.,'),0,0,'C');
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(125,6,utf8_decode(' es realizada  la apertura y recepcion de guardia, bajo el numero:'),0,1);
+$pdf->SetX(20);
+$pdf->SetFont('Arial','B',12);
+$pdf ->Cell(25,6,utf8_decode(''.$reg['id_apertura'].''),0,0,'C');
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(10,6,utf8_decode('del'),0,0);
+$pdf->SetFont('Arial','B',12);
+$pdf ->Cell(80,6,utf8_decode('"Libro Digital de Novedades 1-7-1/9-1-1'),0,0);
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(55,6,utf8_decode(', con  el  grupo de  guardia '),0,1);
+$pdf->SetX(20);
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(40,6,utf8_decode('identificado como: '),0,0);
+$pdf->SetFont('Arial','B',12);
+$pdf ->Cell(15,6,utf8_decode(''.$reg['id_grupo'].''),0,0,'C');
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(58,6,utf8_decode(', y cumpliendo funciones de'),0,0);
+$pdf->SetFont('Arial','B',12);
+if($organismo != 4) {
+		$pdf ->Cell(45,6,utf8_decode(' Despachador'),0,0,'C');
+	}else {
+		$pdf ->Cell(45,6,utf8_decode(''.$reg1['nombre_organismo'].''),0,0,'C');
+		}
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(12,6,utf8_decode('para '),0,1);
+
+$pdf->SetX(20);
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(0.5,6,utf8_decode(''),0,0);
+
+$pdf->SetFont('Arial','B',12);
+if($organismo != 4) {
+		$pdf ->Cell(50,6,utf8_decode(''.$reg1['nombre_organismo'].''),1,0,'C');
+		$pdf->SetFont('Arial','',12);
+		$pdf ->Cell(6,6,utf8_decode('y'),0,0);
+	}else {
+		$pdf ->Cell(0.5,6,utf8_decode(''),0,0,'C');
+		}
+
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(6,6,utf8_decode('el '),0,0);
+$pdf->SetFont('Arial','B',12);
+$pdf ->Cell(117,6,utf8_decode('Sistema de Atencion de Emergencias Mérida 1-7-1/9-1-1.'),0,1);
+
+$pdf->SetX(20);
+$pdf->Cell(170,7,utf8_decode(''),0,1);
+
+$pdf->SetFont('Arial','',12);
+$pdf->SetX(20);
+$pdf->Cell(170,6,utf8_decode('Dando   por   registrada   la  apertura  y   recepcion   de  guardia   correspondiente  con  la '),0,1);
+$pdf->SetX(20);
+$pdf->Cell(170,6,utf8_decode('siguiente descripcion: '),0,1);
+$pdf->SetFont('Arial','B',12);
+$pdf->SetX(20);
+$pdf->MultiCell(170,8,utf8_decode(''.$reg['materiales_recibe'].'.'),0,1);
+
+$pdf->SetX(20);
+$pdf->Cell(170,8,utf8_decode(''),0,1);
+
+$pdf->SetFont('Arial','B',12);
+$pdf->SetXY(20,180);
+$pdf->Cell(85,10,utf8_decode('__________________________'),0,0,'C');
+$pdf->Cell(85,10,utf8_decode('__________________________'),0,1,'C');
+$pdf->SetX(20);
+$pdf->Cell(85,7,utf8_decode(''.$reg2['grado_instruccion'].' '.$reg2['p_nombre'].' '.$reg2['p_apellido'].''),0,0,'C');
+$pdf->Cell(85,7,utf8_decode(''.$coord1['grado_instruccion_coord'].' '.$coord1['p_apellido_coord'].' '.$coord1['s_apellido_coord'].', '.$coord1['p_nombre_coord'].' '.$coord1['s_apellido_coord'].''),0,1,'C');
+$pdf->SetX(20);
+if($organismo != 4) {
+		$pdf ->Cell(40,7,utf8_decode(' Despachador'),0,0,'R');
+	}else {
+		$pdf ->Cell(40,7,utf8_decode(''.$reg1['nombre_organismo'].''),0,0,'R');
+		}
+$pdf->Cell(45,7,utf8_decode(' de Guardia'),0,0,'L');
+$pdf->Cell(85,7,utf8_decode('Jefe Dto. del Sist. A. Emerg. Merida 1-7-1'),0,1,'C');
+$pdf->SetFont('Arial','',8);
+$pdf->SetX(115);
+$pdf->MultiCell(70,5,utf8_decode(''.$coord1['decreto_coord'].''),0,1);
+
+$pdf->SetFont('Arial','B',12);
+$pdf->Cell(170,8,utf8_decode(''),0,1);
+$pdf->SetX(20);
+$pdf->Cell(170,8,utf8_decode(''),0,1);
+$pdf->SetX(60);
+$pdf->Cell(85,10,utf8_decode('__________________________'),0,1,'C');
+$pdf->SetX(60);
+$pdf->Cell(85,7,utf8_decode(''.$coord2['grado_instruccion_coord'].' '.$coord2['p_nombre_coord'].' '.$coord2['s_nombre_coord'].' '.$coord2['p_apellido_coord'].' '.$coord2['s_apellido_coord'].''),0,1,'C');
+$pdf->SetX(60);
+$pdf->Cell(85,7,utf8_decode('Director E.P.P. Seguridad Ciudadana del Estado Merida'),0,1,'C');
+$pdf->SetFont('Arial','',8);
+$pdf->SetX(20);
+$pdf->Cell(170,5,utf8_decode(''.$coord2['decreto_coord'].''),0,1,'C');
+$pdf->SetFont('Arial','B',12);
+$pdf->SetX(60);
+$pdf->Cell(85,7,utf8_decode('Firma y Sello'),0,1,'C');
+$pdf->Output();
+
+?>

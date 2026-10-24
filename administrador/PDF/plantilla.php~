@@ -1,0 +1,60 @@
+<?php
+
+require('fpdf123/fpdf.php');
+
+class PDF extends FPDF
+{
+ 
+
+// Cabecera de página
+function Header()
+{
+    // Logo
+    $this->Image('../../imagenes/SEG.CIUDADANA.png',10,8,85);
+    $this->Image('../../imagenes/logo_171.png',179,8,18);
+    // Arial bold 15
+    $this->SetFont('Arial','',12);
+    // Movernos a la derecha
+    $this->Cell(80);
+    // Título
+
+// ZONA HORARIA
+date_default_timezone_set('America/Caracas');
+setlocale(LC_ALL,"es_ES");
+
+    $week_days = array ("Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado");  
+    $months = array ("", "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");  
+    $year_now = date ("Y");  
+    $month_now = date ("n");  
+    $day_now = date ("j");  
+    $week_day_now = date ("w");  
+//    $date = $week_days[$week_day_now] . ", " . $day_now . " de " . $months[$month_now] . " de " . $year_now;
+    $date = $day_now . " de " . $months[$month_now] . " de " . $year_now;
+    
+    $this->Cell(108,60,utf8_decode('Merida, '.$date.''),0,0,'R');
+    // Salto de línea
+    $this->Ln(40);
+}
+
+// Pie de página
+function Footer()
+{
+    // Posición: a 1,5 cm del final
+    $this->SetY(-30);
+    // Arial italic 8
+    $this->SetFont('Arial','I',8);
+
+    // Direccion 
+    $this->Cell(0,10,utf8_decode('_______________________________________________________________________________________'),0,1,'C');
+    $this->Cell(0,5,utf8_decode('Av. Los Proceres, santa Barbara oeste, edificio inpradem, Piso 1, Oficina Direccion de Seguridad Ciudadana'),0,1,'C');
+    $this->Cell(0,5,utf8_decode('tlfs: 0274-2610212 / 0274-2664493 / Web: 171.merida.gob.ve '),0,0,'C');
+    // Posición: a 1,5 cm del final
+    $this->SetY(-10);
+    // Número de página
+    $this->Cell(0,5,utf8_decode('Página ').$this->PageNo().'/{nb}',0,0,'C');
+}
+}
+
+$pdf->Output();
+
+?>
