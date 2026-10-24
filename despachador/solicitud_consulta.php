@@ -1,9 +1,13 @@
 <?php
 require('../cookie/cookie.php');
 
+<<<<<<< HEAD
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+=======
+session_start();
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
   if(!isset($_SESSION['tipo_rol_id'])){
                 header ("Location: ../index.php?error=fuera");
         }else{
@@ -98,6 +102,11 @@ $organismos1 = $reg_organismo['id'];
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
 
+<<<<<<< HEAD
+=======
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                     </ul>
                     <div class="clearfix"></div>
                   </div>
@@ -107,13 +116,21 @@ $organismos1 = $reg_organismo['id'];
                     <div class="col-md-3 col-sm-3"></div>
                     <div class="col-md-6 col-sm-6" align="center">
               <?php
+<<<<<<< HEAD
                   $msg = $_GET['msg'] ?? '';
                   if ($msg == "1") {
+=======
+                  if (($_GET['msg'] ?? '') == "1") {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
               echo '<div class="alert alert-danger alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>La solicitud ya existe!!!</strong></div>';
               }
+<<<<<<< HEAD
               elseif ($msg == "2") {
+=======
+              elseif (($_GET['msg'] ?? '') == "2") {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
               echo '<div class="alert alert-secondary alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Solicitud NO registrada, verifique los datos</strong></div>';
@@ -127,17 +144,27 @@ $organismos1 = $reg_organismo['id'];
 <!--      CONEXION CON BASE DE DATOS         -->
 <?php
 // traer datos del resultado de BUSQUEDA y VER_USUARIO
+<<<<<<< HEAD
   $sol = $_REQUEST['id'];
   $sol = $_GET['id'] ?? '';
+=======
+  $sol = (int) ($_REQUEST['id'] ?? 0);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 // Conexion con la base de dato
 include_once '../config/config_bd.php';
   include_once '../config/conexion2_bd.php';
 
 // CONSULTA TABLA PERSONAL_171 UNIDO CON TABLAS GRUPOS_GUARDIA Y GRUPOS_ORGANISMOS
+<<<<<<< HEAD
 $consulta = mysqli_query($mysql,"SELECT * FROM solicitud WHERE id = $sol ");
 
 $fila= mysqli_fetch_array($consulta);
+=======
+$consulta = ($mysql && $sol > 0) ? mysqli_query($mysql, "SELECT * FROM solicitud WHERE id = $sol ") : false;
+
+$fila = $consulta ? mysqli_fetch_array($consulta) : null;
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 ?>
 <!--      FIN CONEXION CON BASE DE DATOS          -->
 <!-- Inicio Formulario RESULTADO DE CONSULTA DE SOLICITUD -->
@@ -145,7 +172,11 @@ $fila= mysqli_fetch_array($consulta);
 
                         <!-- **************************************** -->
 
+<<<<<<< HEAD
                         <?php require '../formularios/form_registro_consulta_solicitud.php'; ?>
+=======
+                        <?php if ($fila) { require '../formularios/form_registro_consulta_solicitud.php'; } else { echo '<div class="alert alert-warning">' . ($mysql ? 'No se encontró la solicitud indicada.' : 'Sin conexión con el sistema externo Emergencias 911 (' . HOSTMYSQL . '). Verifique la red.') . '</div>'; } ?>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
                         <!-- **************************************** -->
 

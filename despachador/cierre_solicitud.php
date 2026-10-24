@@ -3,9 +3,13 @@ date_default_timezone_set("America/Caracas");
 
 require('../cookie/cookie.php');
 
+<<<<<<< HEAD
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+=======
+session_start();
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 if (!isset($_SESSION['tipo_rol_id'])) {
   header("Location: ../index.php?error=fuera");
 } else {
@@ -20,6 +24,7 @@ if (!isset($_SESSION['tipo_rol_id'])) {
 
       // Consulta al grupo del personal de guardia
       $consulta1 = pg_query($dbconn, "SELECT * FROM public.personal_grupos_guardia WHERE id=(SELECT MAX(id) FROM  personal_grupos_guardia)");
+<<<<<<< HEAD
       $reg_01 = $consulta1 ? pg_fetch_array($consulta1) : false;
 
       $fecha_inicio = $reg_01 ? ($reg_01['fecha_asig'] ?? '') : '';
@@ -45,6 +50,29 @@ if (!isset($_SESSION['tipo_rol_id'])) {
         $reg_id = $ultimo1 ? pg_fetch_array($ultimo1) : false;
         $grupos01 = $reg_id ? ($reg_id['id'] ?? '') : '';
       }
+=======
+      $reg_01 = pg_fetch_array($consulta1);
+
+      $fecha_inicio = $reg_01['fecha_asig'];
+      $personal_guardia = $reg_01['id'];
+      $grupos_guardia = $reg_01['grupos_guardia_id'];
+
+      // Consulta al personal de guardia
+      $personal_usuario = $_SESSION['personal_cedula'];
+      $consulta_pers = pg_query($dbconn, "SELECT * FROM public.personal WHERE cedula = $personal_usuario ");
+      $regid = pg_fetch_array($consulta_pers);
+
+      $cedula_personal = $regid['cedula'];
+
+      // Consulta datos del personal de guardia
+      $ultimo1 = pg_query($dbconn, "SELECT id, fecha_inicio_g::timestamp::date, grupos_guardia_id, usuario_entrada_id  
+      FROM public.guardias
+      WHERE usuario_entrada_id = $cedula_personal
+      AND fecha_inicio_g::timestamp::date = (SELECT MAX(fecha_inicio_g::timestamp::date) FROM guardias) order by id DESC");
+      $reg_id = pg_fetch_array($ultimo1);
+
+      $grupos01 = $reg_id['id'];
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 ?>
 
@@ -133,6 +161,11 @@ if (!isset($_SESSION['tipo_rol_id'])) {
                       <ul class="nav navbar-right panel_toolbox">
                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                         </li>
+<<<<<<< HEAD
+=======
+                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                       </ul>
                       <div class="clearfix"></div>
                     </div>
@@ -147,13 +180,18 @@ if (!isset($_SESSION['tipo_rol_id'])) {
                             <!-- ***********************     FIN FORMULARIO BUSQUEDA DE BIENES     **************************** -->
                             <?php
                             /**********************************     FILTRO DE BUSQUEDA      ********************************/
+<<<<<<< HEAD
                             $buscar = $_REQUEST['buscar'] ?? '';
+=======
+
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                             if ($buscar == '') {
                               $filtro = "INNER JOIN public.solicitante ON solicitante.id = solicitudes.solicitante_id
                               INNER JOIN public.motivo_solicitud ON solicitante.motivo_solicitud_id = motivo_solicitud.id
                               INNER JOIN public.organismos_solicitud ON solicitante.organismos_solicitud_id = organismos_solicitud.id
                               WHERE solicitudes.fecha_sol = '$fecha_inicio' AND solicitudes.estatus_solicitud_id = 5 ORDER BY fecha_creacion_sol ASC";
                             } else {
+<<<<<<< HEAD
                               $id = $buscar;
                               if (is_numeric($id)) {
                                 $filtro1 = "WHERE id = $id ";
@@ -168,6 +206,18 @@ if (!isset($_SESSION['tipo_rol_id'])) {
                                 }
                               } else {
                                 $filtro = "WHERE false";
+=======
+                              if ($buscar != '') {
+                                $id = $buscar;
+                                $filtro1 = "WHERE id = $id ";
+                                $consulta = pg_query($dbconn, "SELECT id, tiempo_apertura_sol, fecha_sol, hora_sol, solicitante_id, fecha_creacion_sol FROM public.solicitudes $filtro1 ");
+                                $reg01 = pg_fetch_array($consulta);
+
+                                if ($reg01) {
+                                  $id = $reg01['id'];
+                                  $filtro = "WHERE id = '$id' ";
+                                }
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                               }
                             }
                             /********************************     FIN FILTRO BUSQUEDA     ************************************/
@@ -176,9 +226,15 @@ if (!isset($_SESSION['tipo_rol_id'])) {
                             $consulta_pag = pg_query($dbconn, "SELECT solicitudes.id, solicitudes.tiempo_apertura_sol, solicitudes.fecha_sol, solicitudes.hora_sol, solicitudes.solicitante_id, solicitudes.estatus_solicitud_id, solicitudes.fecha_creacion_sol,
                             solicitante.p_nombre_sol, solicitante.p_apellido_sol, solicitante.telefono_celular_sol, solicitante.motivo_solicitud_id, organismos_solicitud.nombre_org, motivo_solicitud.nombre_motivo
                             FROM public.solicitudes $filtro");
+<<<<<<< HEAD
                             $reg_pag = $consulta_pag ? pg_fetch_array($consulta_pag) : false;
 
                             $total_rows_pag = $consulta_pag ? pg_fetch_all($consulta_pag) : false;
+=======
+                            $reg_pag = pg_fetch_array($consulta_pag);
+
+                            $total_rows_pag = pg_fetch_all($consulta_pag) ?: 0;
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
                             ?>
                             <table id="datatable" class="table table-striped table-bordered" style="width:100%">
@@ -199,15 +255,23 @@ if (!isset($_SESSION['tipo_rol_id'])) {
                                 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
 
                                 <?php
+<<<<<<< HEAD
                                 if ($total_rows_pag !== false && !empty($total_rows_pag) && $reg_pag !== false) {
 
                                   //impresion de los datos.
                                   while ($reg_pag) {
+=======
+                                if ($total_rows_pag != 0) {
+
+                                  //impresion de los datos.
+                                  do {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
                                     // COMPARACION DE VALORES PARA INDICAR COLORES
                                     // MODIFICADO 18-06/2024 7:00:00 am
 
                                     $fecha_y_hora = date("H:i:s");
+<<<<<<< HEAD
                                     $fecha_hora = !empty($reg_pag['hora_sol']) ? $reg_pag['hora_sol'] : $fecha_y_hora;
 
                                     // OPERACION DE RESTA DE HORAS
@@ -228,6 +292,27 @@ if (!isset($_SESSION['tipo_rol_id'])) {
                                     $time2 = date("H:i:s", $marca_tiempo2);
 
                                     $marca_tiempo3 = mktime(0, 15, 0, 5, 24, 2024);
+=======
+                                    $fecha_hora = date($reg_pag['hora_sol']);
+
+                                    // OPERACION DE RESTA DE HORAS
+                                    $horaInicio = $fecha_hora;
+                                    $horaTermino = $fecha_y_hora;
+                                    $datex7 = new DateTime($horaTermino);
+                                    $datex77 = new DateTime($horaInicio);
+                                    $horax7 = date_diff($datex7, $datex77);
+
+                                    $hx7x7 = $horax7->format('%H:%I:%s'); 
+
+                                    // VALORES A COMPARAR
+                                    $marca_tiempo1 = mktime(0, 5, 0, 5, 24,2024);
+                                    $time1 = date("H:i:s", $marca_tiempo1);
+
+                                    $marca_tiempo2 = mktime(0, 10, 0, 5, 24,2024);
+                                    $time2 = date("H:i:s", $marca_tiempo2);
+
+                                    $marca_tiempo3 = mktime(0, 15, 0, 5, 24,2024);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                                     $time3 = date("H:i:s", $marca_tiempo3);
 
                                     if ($hx7x7 <= $time1){
@@ -241,6 +326,7 @@ if (!isset($_SESSION['tipo_rol_id'])) {
                                     // MUESTRA LOS VALORES DE LA CONSULTAS
 
                                     echo "<tr class='". $clase ."' align='center'><td>" . $reg_pag['id'] . "</td>\n";
+<<<<<<< HEAD
                                     echo "<td>" . strtoupper($reg_pag['fecha_sol'] ?? '') . "</td>\n";
                                     echo "<td>" . strtoupper($reg_pag['hora_sol'] ?? '') . ", ".$hx7x7."</td>\n";
                                     $id_solicitante = $reg_pag['solicitante_id'] ?? '';
@@ -268,6 +354,23 @@ if (!isset($_SESSION['tipo_rol_id'])) {
                                     echo "<td><a href=cierre_solicitud1.php?id=" . $reg_pag['id'] ."&apertura=".$hx7x7."><button class='btn btn-primary' type='button' value='EDITAR'>EDITAR</button></a></td>\n";
                                     $reg_pag = pg_fetch_array($consulta_pag);
                                   }
+=======
+                                    echo "<td>" . strtoupper($reg_pag['fecha_sol']) . "</td>\n";
+                                    echo "<td>" . strtoupper($reg_pag['hora_sol']) . ", ".$hx7x7."</td>\n";
+                                    $id_solicitante = $reg_pag['solicitante_id'];
+                                    // consulta Tabla de Solicitante
+                                    $consulta_org = pg_query($dbconn, "SELECT id, p_nombre_sol, p_apellido_sol, motivo_solicitud_id FROM public.solicitante WHERE id = '$id_solicitante' ");
+                                    $reg1 = pg_fetch_array($consulta_org);
+                                    echo "<td>" . strtoupper($reg1['p_nombre_sol']) . " " . strtoupper($reg1['p_apellido_sol']) . "</td>\n";
+                                    $motivo = $reg1['motivo_solicitud_id'];
+                                    // consulta Tabla de Motivos
+                                    $consulta_motivo = pg_query($dbconn, "SELECT * FROM public.motivo_solicitud WHERE id = $motivo ");
+                                    $reg_motivo = pg_fetch_array($consulta_motivo);
+                                    echo "<td>" . strtoupper($reg_motivo['nombre_motivo']) . "</td>\n";
+                                    echo "<td>" . strtoupper($reg_pag['nombre_org']) . "</td>\n";
+                                    echo "<td><a href=cierre_solicitud1.php?id=" . $reg_pag['id'] ."&apertura=".$hx7x7." target='_blank'><button class='btn btn-primary' type='submit' action='' value='EDITAR'>EDITAR</button></a></td>\n";
+                                  } while ($reg_pag = pg_fetch_array($consulta_pag));
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                                   pg_free_result($consulta_pag);
                                 } else {
                                   // si no existen datos muestra mensaje

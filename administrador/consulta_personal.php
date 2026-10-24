@@ -1,9 +1,13 @@
 <?php
 require('../cookie/cookie.php');
 
+<<<<<<< HEAD
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+=======
+session_start();
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
   if(!isset($_SESSION['tipo_rol_id'])){
                 header ("Location: ../index.php?error=fuera");
         }else{
@@ -52,6 +56,11 @@ require_once '../config/conexion1.php';
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
+<<<<<<< HEAD
+=======
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                     </ul>
                     <div class="clearfix"></div>
                   </div>
@@ -66,7 +75,10 @@ require_once '../config/conexion1.php';
 <!-- ***********************     FIN FORMULARIO BUSQUEDA DE BIENES     **************************** -->
 <?php
 /**********************************     FILTRO DE BUSQUEDA      ********************************/
+<<<<<<< HEAD
 $buscar = $_REQUEST['buscar'] ?? '';
+=======
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 if ($buscar == ''){ $filtro = 'ORDER BY fecha_creacion ASC'; }else{
 if ($buscar != ''){ $cargo = $buscar; $filtro1 = "WHERE nombre_cargo LIKE '$cargo%' ";
             $consulta = pg_query($dbconn,"SELECT * FROM public.cargos $filtro1 ");
@@ -86,6 +98,7 @@ if ($buscar != ''){ $cargo = $buscar; $filtro1 = "WHERE nombre_cargo LIKE '$carg
                       $filtro = "WHERE organismos_id = '$id' ";
                       }else{
                           $grupo = $buscar;
+<<<<<<< HEAD
                           if (is_numeric($grupo)) {
                               $filtro1 = "WHERE id = $grupo ";
                               $consulta = pg_query($dbconn,"SELECT * FROM public.grupos_guardia $filtro1 ");
@@ -93,6 +106,11 @@ if ($buscar != ''){ $cargo = $buscar; $filtro1 = "WHERE nombre_cargo LIKE '$carg
                           } else {
                               $reg03 = false;
                           }
+=======
+                          $filtro1 = "WHERE id = $grupo ";
+            $consulta = pg_query($dbconn,"SELECT * FROM public.grupos_guardia $filtro1 ");
+            $reg03 = pg_fetch_array($consulta);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
             
                     if ($reg03) {
                       $id = $reg03['id'];
@@ -117,7 +135,11 @@ if ($buscar != ''){ $cargo = $buscar; $filtro1 = "WHERE nombre_cargo LIKE '$carg
         $consulta_pag = pg_query($dbconn,"SELECT * FROM public.personal $filtro ");
             $reg_pag = pg_fetch_array($consulta_pag);
 
+<<<<<<< HEAD
             $total_rows_pag = pg_fetch_all($consulta_pag);        
+=======
+            $total_rows_pag = pg_fetch_all($consulta_pag) ?: 0;        
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 ?>                      
                     <table id="datatable" class="table table-striped table-bordered" style="width:100%">
@@ -154,7 +176,11 @@ if ($buscar != ''){ $cargo = $buscar; $filtro1 = "WHERE nombre_cargo LIKE '$carg
                 $reg1 = pg_fetch_array($consulta_org);
               echo "<td>".strtoupper($reg1['nombre_oganismos'])."</td>\n";
               echo "<td>".strtoupper($reg_pag['grupo_guardia_id'])."</td>\n";
+<<<<<<< HEAD
               echo "<td><a href=modificar_personal.php?id=".$reg_pag['cedula']."><button class='btn btn-primary' type='button' value='EDITAR'>EDITAR</button></a></td>\n";
+=======
+              echo "<td><a href=modificar_personal.php?id=".$reg_pag['cedula']." target='_blank'><button class='btn btn-primary' type='submit' action='' value='EDITAR'>EDITAR</button></a></td>\n";
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
               echo "<td><a href=PDF/imprime_personal.php?id=".$reg_pag['cedula']." target='_blank'><button class='btn btn-success' type='submit' action='' value='IMPRIMIR'>IMPRIMIR</button></a></td></tr>\n";
 
             } while ($reg_pag = pg_fetch_array($consulta_pag));

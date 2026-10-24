@@ -1,9 +1,13 @@
 <?php
 require('../cookie/cookie.php');
 
+<<<<<<< HEAD
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+=======
+session_start();
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
   if(!isset($_SESSION['tipo_rol_id'])){
                 header ("Location: ../index.php?error=fuera");
         }else{
@@ -27,6 +31,10 @@ if (session_status() === PHP_SESSION_NONE) {
 <!-- ****** ESTILOS PROPIOS ****** -->
 	  <link href="../css/Estilos.css" rel="stylesheet" media="screen"/>
 	  <link href="../css/estilo_imagenes.css" rel="stylesheet" media="screen" />
+<<<<<<< HEAD
+=======
+     <link href="../css/estilo_menu.css" rel="stylesheet" media="screen" />
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
     <!-- Bootstrap -->
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -43,7 +51,10 @@ if (session_status() === PHP_SESSION_NONE) {
     <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
+<<<<<<< HEAD
     <link href="../css/estilo_menu.css" rel="stylesheet" media="screen" />
+=======
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
     <title>Libro Digital de Novedades 9-1-1</title>
    </head>
@@ -102,24 +113,40 @@ width: 100%;
           <div align="center">
           <div class="col-md-12 col-sm-12" style="display: inline-block; background-color: #CDCDCD;">
                                       <?php
+<<<<<<< HEAD
                   if ($_GET[error] == "no") {
+=======
+                  if (($_GET['error'] ?? '') == "no") {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
               echo '<div class="alert alert-danger alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>No puedes realizar este registro</strong></div>';
               } 
+<<<<<<< HEAD
               if ($_GET[msg] == "2") {
+=======
+              if (($_GET['msg'] ?? '') == "2") {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
               echo '<div class="alert alert-success alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Solicitud del "Sistema Emergencias 171" registrada con EXITO!!!</strong></div>';
 
               }
+<<<<<<< HEAD
               if ($_GET[msg] == "3") {
+=======
+              if (($_GET['msg'] ?? '') == "3") {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
               echo '<div class="alert alert-success alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Observaciones de guardia registrada con EXITO!!!</strong></div>';
 
               }
+<<<<<<< HEAD
               elseif ($_GET[msg] == "4") {
+=======
+              elseif (($_GET['msg'] ?? '') == "4") {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
               echo '<div class="alert alert-success alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Observaciones al personal realizada con EXITO!!!</strong></div>';

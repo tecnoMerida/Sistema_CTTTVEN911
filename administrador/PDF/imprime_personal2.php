@@ -1,6 +1,10 @@
 <?php
   $cedula = $_REQUEST['id'];
+<<<<<<< HEAD
   $cedula = $_GET['id'] ?? '';
+=======
+  $cedula =$_GET['id'];
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
   
 require_once('../../config/conexion1.php');
 require('plantilla.php');
@@ -138,7 +142,12 @@ $pdf->Cell(170,8,utf8_decode(''),0,1);
 
 $require('directivo.php');
 */
+<<<<<<< HEAD
 if (isset($pdf) && $pdf instanceof FPDF) {
     $pdf->Output();
 }
+=======
+$pdf->Output();
+
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 ?>

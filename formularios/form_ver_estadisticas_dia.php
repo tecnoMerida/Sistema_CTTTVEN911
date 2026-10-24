@@ -12,6 +12,7 @@
                 $result7 = pg_fetch_assoc($consulta); // Informacion
                 $result8 = pg_fetch_assoc($consulta); // Abandonada
 
+<<<<<<< HEAD
                 $estatuspg = array();
                 $consulta_est = pg_query($dbconn, "SELECT * FROM estatus_solicitud ORDER BY id");
                 if ($consulta_est) {
@@ -21,6 +22,8 @@
                 }
                 $estatuspg24 = $estatuspg;
 
+=======
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                 /************************************************* */
                 /*  modificado 29-02-2024
                 /*  Consulta a los estatus de las solicitudes
@@ -137,6 +140,7 @@
 	GROUP BY estatus_solicitud.id, solicitudes.estatus_solicitud_id
   ORDER BY estatus_solicitud.id ";
 
+<<<<<<< HEAD
               $a = 0;
               $c = 0;
               $total = "";
@@ -154,15 +158,36 @@
 
                 $texto = $estatuspg[$e] ?? $rm["tipo_estatus"];
                 $total .= $texto;
+=======
+              $resp = pg_query($dbconn, $sql) or die("Error de consulta " . __FILE__);
+              while ($rm = pg_fetch_array($resp)) {
+
+                $a = (int) $rm["total"] + (int) ($a ?? 0);
+                $e = $rm["id"];
+                $c = (int) $rm["tipo_estatus"] + (int) ($c ?? 0);
+
+
+                $texto = $estatuspg[$e];
+                $total .= $texto;
+
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                 $total .= ",";
                 $datos .= "'" . $rm["total"] . "'";
                 $datos .= ",";
 
+<<<<<<< HEAD
                 $total1 .= $rm["tipo_estatus"];
+=======
+
+                $texto1 = $tipopg[$c];
+                $total1 .= $texto1;
+
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                 $total1 .= ",";
                 $datos1 .= "'" . $rm["tipo_estatus"] . "'";
                 $datos1 .= ",";
 
+<<<<<<< HEAD
                 $total2 .= $texto . ',';
                 if ($rm["id"] == 1) {
                   $color .= '"blue",';
@@ -182,6 +207,66 @@
                   $color .= '"black",';
                 }
               }
+=======
+
+
+                if ($rm["id"] == 1) {
+                  $texto2 = $estatuspg[$e];
+                  $total2 .= $texto2;
+
+                  $total2 .= ',';
+                  $color .= '"blue"';
+                  $color .= ',';
+                } else if ($rm["id"] == 2) {
+                  $texto2 = $estatuspg[$e];
+                  $total2 .= $texto2;
+
+                  $total2 .= ',';
+                  $color .= '"green"';
+                  $color .= ',';
+                } else if ($rm["id"] == 3) {
+                  $texto2 = $estatuspg[$e];
+                  $total2 .= $texto2;
+
+                  $total2 .= ',';
+                  $color .= '"purple"';
+                  $color .= ',';
+                } else if ($rm["id"] == 4) {
+                  $texto2 = $estatuspg[$e];
+                  $total2 .= $texto2;
+
+                  $total2 .= ',';
+                  $color .= '"aero"';
+                  $color .= ',';
+                } else if ($rm["id"] == 5) {
+                  $texto2 = $estatuspg[$e];
+                  $total2 .= $texto2;
+
+                  $total2 .= ',';
+                  $color .= '"red"';
+                  $color .= ',';
+                } else if ($rm["id"] == 6) {
+                  $texto2 = $estatuspg[$e];
+                  $total2 .= $texto2;
+
+                  $total2 .= ',';
+                  $color .= '"#34495E"';
+                  $color .= ',';
+                } else if ($rm["id"] == 7) {
+                  $texto2 = $estatuspg[$e];
+                  $total2 .= $texto2;
+
+                  $total2 .= ',';
+                  $color .= '"#3498DB"';
+                  $color .= ',';
+                } else if ($rm["id"] == 8) {
+                  $texto2 = $estatuspg[$e];
+                  $total2 .= $texto2;
+
+                  $total2 .= ',';
+                  $color .= '"black"';
+                }
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 
 
@@ -220,6 +305,10 @@ if ($e == 1) {
   echo $color;
 }
 */
+<<<<<<< HEAD
+=======
+              }
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
               //echo $color.'""';
               ?>
@@ -299,58 +388,98 @@ if ($e == 1) {
                             <td>
                               <p><i class="fa fa-square blue"></i>Efectivas </p>
                             </td>
+<<<<<<< HEAD
                             <td><?php 
                                 $tot_total = (int)($regid_total['total'] ?? 0);
                                 $porcentaje1 = ($tot_total > 0) ? round(($regid1['total1'] ?? 0) * 100 / $tot_total, 0) : 0;
+=======
+                            <td><?php $porcentaje1 = $regid1['total1'] * 100 / $regid_total['total'];
+                                $porcentaje1 = round($porcentaje1, 0);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                                 echo $porcentaje1 . "%"; ?></td>
                           </tr>
                           <tr>
                             <td>
                               <p><i class="fa fa-square green"></i>No Efectivas </p>
                             </td>
+<<<<<<< HEAD
                             <td><?php $porcentaje = ($tot_total > 0) ? round(($regid2['total2'] ?? 0) * 100 / $tot_total, 0) : 0;
+=======
+                            <td><?php $porcentaje = $regid2['total2'] * 100 / $regid_total['total'];
+                                $porcentaje = round($porcentaje, 0);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                                 echo $porcentaje . "%"; ?></td>
                           </tr>
                           <tr>
                             <td>
                               <p><i class="fa fa-square purple"></i>Sin Despacho </p>
                             </td>
+<<<<<<< HEAD
                             <td><?php $porcentaje = ($tot_total > 0) ? round(($regid3['total3'] ?? 0) * 100 / $tot_total, 0) : 0;
+=======
+                            <td><?php $porcentaje = $regid3['total3'] * 100 / $regid_total['total'];
+                                $porcentaje = round($porcentaje, 0);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                                 echo $porcentaje . "%"; ?></td>
                           </tr>
                           <tr>
                             <td>
                               <p><i class="fa fa-square aero"></i>Repetida </p>
                             </td>
+<<<<<<< HEAD
                             <td><?php $porcentaje = ($tot_total > 0) ? round(($regid4['total4'] ?? 0) * 100 / $tot_total, 0) : 0;
+=======
+                            <td><?php $porcentaje = $regid4['total4'] * 100 / $regid_total['total'];
+                                $porcentaje = round($porcentaje, 0);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                                 echo $porcentaje . "%"; ?></td>
                           </tr>
                           <tr>
                             <td>
                               <p><i class="fa fa-square red"></i>Pendiente </p>
                             </td>
+<<<<<<< HEAD
                             <td><?php $porcentaje = ($tot_total > 0) ? round(($regid8['total8'] ?? 0) * 100 / $tot_total, 0) : 0;
+=======
+                            <td><?php $porcentaje = $regid8['total8'] * 100 / $regid_total['total'];
+                                $porcentaje = round($porcentaje, 0);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                                 echo $porcentaje . "%"; ?></td>
                           </tr>
                           <tr>
                             <td>
                               <p><i class="fa fa-square black"></i>Sabotaje </p>
                             </td>
+<<<<<<< HEAD
                             <td><?php $porcentaje = ($tot_total > 0) ? round(($regid5['total5'] ?? 0) * 100 / $tot_total, 0) : 0;
+=======
+                            <td><?php $porcentaje = $regid5['total5'] * 100 / $regid_total['total'];
+                                $porcentaje = round($porcentaje, 0);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                                 echo $porcentaje . "%"; ?></td>
                           </tr>
                           <tr>
                             <td>
                               <p><i class="fa fa-square blue"></i>Información </p>
                             </td>
+<<<<<<< HEAD
                             <td><?php $porcentaje = ($tot_total > 0) ? round(($regid6['total6'] ?? 0) * 100 / $tot_total, 0) : 0;
+=======
+                            <td><?php $porcentaje = $regid6['total6'] * 100 / $regid_total['total'];
+                                $porcentaje = round($porcentaje, 0);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                                 echo $porcentaje . "%"; ?></td>
                           </tr>
                           <tr>
                             <td>
                               <p><i class="fa fa-square dark gray"></i>Abandonada </p>
                             </td>
+<<<<<<< HEAD
                             <td><?php $porcentaje = ($tot_total > 0) ? round(($regid7['total7'] ?? 0) * 100 / $tot_total, 0) : 0;
+=======
+                            <td><?php $porcentaje = $regid7['total7'] * 100 / $regid_total['total'];
+                                $porcentaje = round($porcentaje, 0);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                                 echo $porcentaje . "%"; ?></td>
                           </tr>
                         </table>
@@ -372,6 +501,7 @@ WHERE solicitudes.fecha_sol >= '$fecha' AND solicitudes.hora_sol >= '$hora'
 GROUP BY estatus_solicitud.id, solicitudes.estatus_solicitud_id
 ORDER BY estatus_solicitud.id ";
 
+<<<<<<< HEAD
                 $a24 = 0;
                 $c24 = 0;
                 $total2024 = "";
@@ -380,23 +510,41 @@ ORDER BY estatus_solicitud.id ";
                 $color2024 = "";
                 $datos1_2024 = "";
 
+=======
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                 $resp2024 = pg_query($dbconn, $sql2024) or die("Error de consulta " . __FILE__);
 
 
                 while ($rm2024 = pg_fetch_array($resp2024)) {
 
+<<<<<<< HEAD
                   $a24 += (int)$rm2024["total"];
                   $e24 = $rm2024["id"];
                   $portotal = (int)($regid_total['total'] ?? 0);
 
 
                   $texto2024 = $estatuspg24[$e24] ?? $rm2024["tipo_estatus"];
+=======
+                  $a24 = (int) $rm2024["total"] + (int) ($a24 ?? 0);
+                  $e24 = $rm2024["id"];
+                  $c24 = (int) $rm2024["tipo_estatus"] + (int) ($c24 ?? 0);
+                  $portotal = $regid_total['total'];
+
+
+                  $texto2024 = $estatuspg24[$e24];
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                   $total2024 .= $texto2024;
 
                   $total2024 .= ",";
                   $datos2024 .= "{ label: ['" . $rm2024["tipo_estatus"] . "'] , value: [";
+<<<<<<< HEAD
                   $porcentaje = ($portotal > 0) ? ($rm2024['total'] * 100 / $portotal) : 0;
                   $datos2024 .= "" . $porcentaje . "";
+=======
+                  $porcentaje = $rm2024['total'] * 100 / $portotal;
+                  $datos2024 .= "" . $porcentaje . "";
+                  //  $datos2024 .= "" .$rm2024["total"]. "";
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                   $datos2024 .= "] },";
 
 

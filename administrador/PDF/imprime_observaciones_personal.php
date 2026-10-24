@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
   $id = intval($_REQUEST['id'] ?? ($_GET['id'] ?? 0));
   $fecha1 = $_REQUEST['fecha'] ?? ($_GET['fecha'] ?? '');
 
@@ -8,10 +9,21 @@ require('plantilla.php');
 if (!$id) {
     die("ID no especificado.");
 }
+=======
+  $id = $_REQUEST['id'];
+  $id = $_GET['id'];
+ $fecha1 = $_REQUEST['fecha'];
+
+require_once('../../config/conexion1.php');
+//require('fpdf123/fpdf.php');
+
+require('plantilla.php');
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 if ($fecha1 != ''){
 	///////////////////////////////////				CONSULTAS			////////////////////////////
 	//consulta 1
+<<<<<<< HEAD
     $result = pg_query($dbconn, "SELECT personal_guardias.fecha_ingreso_g, personal_guardias.descripcion, observaciones_entrada.tipo_obse_e, personal.cedula, personal.p_nombre, personal.p_apellido, personal.grupo_guardia_id, personal.organismos_id, personal.cargos_id FROM public.personal_guardias INNER JOIN observaciones_entrada ON observaciones_entrada.id = personal_guardias.observaciones_entrada_id INNER JOIN personal ON personal.cedula = personal_guardias.personal_cedula WHERE personal_guardias.id = $id");
 
     $reg = ($result && pg_num_rows($result) > 0) ? pg_fetch_array($result) : null;
@@ -37,6 +49,32 @@ $hora = $dato ? date('H:i:s', strtotime($dato)) : '';
     //consulta 4
     $coordinador1 = pg_query($dbconn, "SELECT * FROM director WHERE cargo_dir LIKE '%DIRECTOR%' ");        
     $coord1 = ($coordinador1 && pg_num_rows($coordinador1) > 0) ? pg_fetch_array($coordinador1) : [];
+=======
+            $result = pg_query($dbconn, "SELECT personal_guardias.fecha_ingreso_g, personal_guardias.descripcion, observaciones_entrada.tipo_obse_e, personal.cedula, personal.p_nombre, personal.p_apellido, personal.grupo_guardia_id, personal.organismos_id, personal.cargos_id FROM public.personal_guardias INNER JOIN observaciones_entrada ON observaciones_entrada.id = personal_guardias.observaciones_entrada_id INNER JOIN personal ON personal.cedula = personal_guardias.personal_cedula WHERE personal_guardias.id = $id");
+
+               $reg=pg_fetch_array($result);
+
+// Fecha Entrada
+$dato = $reg['fecha_ingreso_g'];
+$fecha = date('d-m-Y',strtotime($dato));
+$hora = date('H:i:s',strtotime($dato));
+
+    // Consulta 2
+            $cargo = $reg['cargos_id'];
+            $result_cargo = pg_query($dbconn, "SELECT * FROM public.cargos WHERE id = $cargo");
+
+               $reg_cargo=pg_fetch_array($result_cargo);
+
+    // Consulta 3
+            $organismo = $reg['organismos_id'];
+            $result_org = pg_query($dbconn, "SELECT * FROM public.organismos WHERE id = $organismo");
+
+               $reg_org=pg_fetch_array($result_org);
+
+        //consulta 4
+        $coordinador1 = pg_query($dbconn, "SELECT * FROM director WHERE cargo_dir LIKE '%DIRECTOR%' ");        
+        $coord1 = pg_fetch_array($coordinador1);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 $pdf = new PDF('P','mm','A4');
 $pdf->AddPage();
@@ -74,11 +112,19 @@ $pdf->SetFont('Arial','',12);
 $pdf ->Cell(15,7,utf8_decode('como: '),0,0);
 $pdf->SetFont('Arial','B',12);
 $pdf ->Cell(45,7,utf8_decode(''.strtoupper($reg_cargo['nombre_cargo']).''),0,0,'C');
+<<<<<<< HEAD
 if(($reg_org['id'] ?? 0) != 5 AND ($reg_org['id'] ?? 0) != 9 ) {
         $pdf->SetFont('Arial','',12);
         $pdf ->Cell(5,7,utf8_decode(' de '),0,0,'C');
         $pdf->SetFont('Arial','B',12);
         $pdf ->Cell(75,7,utf8_decode(''.strtoupper($reg_org['nombre_oganismos'] ?? '').''),0,0,'C');
+=======
+if($reg_org['id'] != 5 AND $reg_org['id'] != 9 ) {
+        $pdf->SetFont('Arial','',12);
+        $pdf ->Cell(5,7,utf8_decode(' de '),0,0,'C');
+        $pdf->SetFont('Arial','B',12);
+        $pdf ->Cell(75,7,utf8_decode(''.strtoupper($reg_org['nombre_oganismos']).''),0,0,'C');
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
         $pdf->SetFont('Arial','',12);
         $pdf ->Cell(30,7,utf8_decode(', añadiendo la '),0,1);
         $pdf->SetX(20);
@@ -96,7 +142,11 @@ $pdf ->Cell(140,6,utf8_decode(''),0,1);
 
 $pdf->SetX(35);
 $pdf->SetFont('Arial','B',12);
+<<<<<<< HEAD
 $pdf ->MultiCell(140,7,utf8_decode(''.strtoupper($reg['descripcion'] ?? '').''),1,1);
+=======
+$pdf ->MultiCell(140,7,utf8_decode(''.strtoupper($reg['descripcion']).''),1,1);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 
 $pdf->SetX(20);
@@ -121,6 +171,7 @@ $pdf->Cell(170,8,utf8_decode(''),0,1);
         // Consulta 2
         $result = pg_query($dbconn, "SELECT personal_guardias.fecha_salida_g, personal_guardias.descripcion, observaciones_salida.tipo_obse_s, personal.cedula, personal.p_nombre, personal.p_apellido, personal.grupo_guardia_id, personal.organismos_id, personal.cargos_id FROM public.personal_guardias INNER JOIN observaciones_salida ON observaciones_salida.id = personal_guardias.observaciones_salida_id INNER JOIN personal ON personal.cedula = personal_guardias.personal_cedula WHERE personal_guardias.id = $id");
 
+<<<<<<< HEAD
         $reg = ($result && pg_num_rows($result) > 0) ? pg_fetch_array($result) : null;
         if (!$reg) {
             die("Registro no encontrado.");
@@ -144,6 +195,26 @@ $hora = $dato ? date('H:i:s', strtotime($dato)) : '';
     // Consulta 4
     $coordinador1 = pg_query($dbconn, "SELECT * FROM director WHERE cargo_dir LIKE '%DIRECTOR%' ");        
     $coord1 = ($coordinador1 && pg_num_rows($coordinador1) > 0) ? pg_fetch_array($coordinador1) : [];
+=======
+            $reg=pg_fetch_array($result);
+                              
+// Fecha Entrada
+$dato = $reg['fecha_salida_g'];
+$fecha = date('d-m-Y',strtotime($dato));
+$hora = date('H:i:s',strtotime($dato));
+
+    // Consulta 2
+            $cargo = $reg['cargos_id'];
+            $result_cargo = pg_query($dbconn, "SELECT * FROM public.cargos WHERE id = $cargo");
+
+               $reg_cargo=pg_fetch_array($result_cargo);
+
+    // Consulta 3
+            $organismo = $reg['organismos_id'];
+            $result_org = pg_query($dbconn, "SELECT nombre_oganismos FROM public.organismos WHERE id = $organismo");
+
+               $reg_org=pg_fetch_array($result_org);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 $pdf = new PDF('P','mm','A4');
 $pdf->AddPage();
@@ -180,12 +251,21 @@ $pdf->SetX(20);
 $pdf->SetFont('Arial','',12);
 $pdf ->Cell(15,7,utf8_decode('como: '),0,0);
 $pdf->SetFont('Arial','B',12);
+<<<<<<< HEAD
 $pdf ->Cell(45,7,utf8_decode(''.strtoupper($reg_cargo['nombre_cargo'] ?? '').''),0,0,'C');
 if(($reg_org['id'] ?? 0) != 5 AND ($reg_org['id'] ?? 0) != 9 ) {
         $pdf->SetFont('Arial','',12);
         $pdf ->Cell(5,7,utf8_decode(' de '),0,0,'C');
         $pdf->SetFont('Arial','B',12);
         $pdf ->Cell(75,7,utf8_decode(''.strtoupper($reg_org['nombre_oganismos'] ?? '').''),0,0,'C');
+=======
+$pdf ->Cell(45,7,utf8_decode(''.strtoupper($reg_cargo['nombre_cargo']).''),0,0,'C');
+if($reg_org['id'] != 5 AND $reg_org['id'] != 9 ) {
+        $pdf->SetFont('Arial','',12);
+        $pdf ->Cell(5,7,utf8_decode(' de '),0,0,'C');
+        $pdf->SetFont('Arial','B',12);
+        $pdf ->Cell(75,7,utf8_decode(''.strtoupper($reg_org['nombre_oganismos']).''),0,0,'C');
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
         $pdf->SetFont('Arial','',12);
         $pdf ->Cell(30,7,utf8_decode(', añadiendo la '),0,1);
         $pdf->SetX(20);

@@ -19,13 +19,22 @@
                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                    </li>
 
+<<<<<<< HEAD
+=======
+                                   <li><a class="close-link"><i class="fa fa-close"></i></a>
+                                   </li>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                                </ul>
                                <div class="clearfix"></div>
                            </div>
                            <div align="center">
                                <?php
 
+<<<<<<< HEAD
                                 if ($_GET[msg] == "2") {
+=======
+                                if (($_GET['msg'] ?? '') == "2") {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                                     echo '<div class="alert alert-success alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Usuario Registrado con EXITO!!!</strong></div>';

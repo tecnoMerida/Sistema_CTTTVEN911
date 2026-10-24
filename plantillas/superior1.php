@@ -12,6 +12,10 @@
 <!-- ****** ESTILOS PROPIOS ****** -->
 	  <link href="../css/Estilos.css" rel="stylesheet" media="screen"/>
 	  <link href="../css/estilo_imagenes.css" rel="stylesheet" media="screen" />
+<<<<<<< HEAD
+=======
+     <link href="../css/estilo_menu.css" rel="stylesheet" media="screen" />
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
     <!-- Bootstrap -->
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
@@ -28,7 +32,10 @@
     <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
+<<<<<<< HEAD
     <link href="../css/estilo_menu.css" rel="stylesheet" media="screen" />
+=======
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 
 

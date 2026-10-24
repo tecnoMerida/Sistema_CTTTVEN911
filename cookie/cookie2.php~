@@ -1,5 +1,6 @@
 <?php
 include_once '../database.php';
+<<<<<<< HEAD
 
 	extract($_POST);
 
@@ -24,15 +25,46 @@ include_once '../database.php';
             
             case 3:
                 header('location: ../Despachador/PC/Apertura_Guardia_PC.php');
+=======
+
+	extract($_POST);
+
+
+/*    if(isset($_GET['cerrar_sesion'])){
+        session_unset(); 
+
+        // destroy the session 
+        session_destroy(); 
+    }
+*/
+/*    
+    if(isset($_SESSION['nombre_organismo'])){
+        switch($_SESSION['nombre_organismo']){
+            case 1:
+                header('location: ../Despachador/BM/Apertura_Guardia_BM.php');
+            break;
+
+            case 2:
+            header('location: ../Despachador/PM/Apertura_Guardia_PM.php');
+            break;
+            
+            case 3:
+                header('location: ../Despachador/PC/Apertura_Guardia_PC.php');
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
             break;
              
             case 4:
              	header('location: ../Supervisor/grupo_guardia_entrada.php');
+<<<<<<< HEAD
             break;
+=======
+            break;
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 		
             case 6:
              	header('location: ../Administrador/select_accion.php');
             break;
+<<<<<<< HEAD
             
             default:
         }
@@ -74,25 +106,38 @@ include_once '../database.php';
             
             case 3:
                 header('location: ../Despachador/PC/Apertura_Guardia_PC.php');
-            break;
-             
-            case 4:
-             	header('location: ../Supervisor/grupo_guardia_entrada.php');
-            break;
+=======
             
-            case 6:
-                header('location: ../Administrador/select_accion.php');
-            break;
-             
-                default:
-            }
+            default:
         }
-			if($row == true) {
-				$rol = $row[3];
-				$_SESSION['id_usuario'] = $rol;
+    }
+*/
+    if(isset($_POST['usuario_acceso']) && isset($_POST['clave_acceso'])){
+    	    session_start();
+
+			$_SESSION["verificado"] = "si";
+        $username = addslashes($_POST['usuario_acceso']);
+				$_SESSION['usuario_acceso'] = $username;
+        $password = addslashes($_POST['clave_acceso']);
+				$_SESSION['clave_acceso'] = $password;
 
 
-				switch($rol) {
+        $db = new Database();
+       $query = $db->connect()->prepare('SELECT * FROM registro_usuario WHERE usuario_acceso = :usuario_acceso AND clave_acceso = :clave_acceso ');
+        $query->execute(['usuario_acceso' => $username, 'clave_acceso' => $password]);
+        $row = $query->fetch(PDO::FETCH_NUM);
+
+    	  $query1 = $db->connect()->prepare('SELECT * FROM administrador WHERE usuario_acceso = :usuario_acceso AND clave_acceso = :clave_acceso');
+        $query1->execute(['usuario_acceso' => $username, 'clave_acceso' => $password]);
+        $row1 = $query1->fetch(PDO::FETCH_NUM);
+        
+        
+        if($row1 == true){
+            $rol = $row1[3];
+            $_SESSION['rol'] = $rol;
+
+            switch($rol){
+            
             case 1:
                 header('location: ../Despachador/BM/Apertura_Guardia_BM.php');
             break;
@@ -103,21 +148,86 @@ include_once '../database.php';
             
             case 3:
                 header('location: ../Despachador/PC/Apertura_Guardia_PC.php');
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
             break;
              
             case 4:
              	header('location: ../Supervisor/grupo_guardia_entrada.php');
+<<<<<<< HEAD
             break;
             
             case 6:
                 header('location: ../Administrador/select_accion.php');
+            break;
+             
+                default:
+            }
+=======
+            break;
+            
+            case 6:
+                header('location: ../Administrador/select_accion.php');
+            break;
+             
+                default:
+            }
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
+        }
+			if($row == true) {
+				$rol = $row[3];
+				$_SESSION['id_usuario'] = $rol;
+
+
+				switch($rol) {
+<<<<<<< HEAD
+            case 1:
+                header('location: ../Despachador/BM/Apertura_Guardia_BM.php');
+            break;
+
+            case 2:
+            header('location: ../Despachador/PM/Apertura_Guardia_PM.php');
+            break;
+            
+            case 3:
+                header('location: ../Despachador/PC/Apertura_Guardia_PC.php');
+=======
+            case 1:
+                header('location: ../Despachador/BM/Apertura_Guardia_BM.php');
+            break;
+
+            case 2:
+            header('location: ../Despachador/PM/Apertura_Guardia_PM.php');
+            break;
+            
+            case 3:
+                header('location: ../Despachador/PC/Apertura_Guardia_PC.php');
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
+            break;
+             
+            case 4:
+             	header('location: ../Supervisor/grupo_guardia_entrada.php');
+<<<<<<< HEAD
+            break;
+            
+            case 6:
+                header('location: ../Administrador/select_accion.php');
+=======
+            break;
+            
+            case 6:
+                header('location: ../Administrador/select_accion.php');
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
             break;
 				
 						default:
 					}
 				}
 			else {
+<<<<<<< HEAD
         // no existe el usuario
+=======
+        // no existe el usuario
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
          	?>
 	<meta charset="utf-8">
 	<script type="text/javascript">
@@ -125,6 +235,7 @@ include_once '../database.php';
 	location.href="../INDEX.php?error=si";
 	</script>
 	<?php
+<<<<<<< HEAD
         }
         
     }
@@ -134,11 +245,23 @@ include_once '../database.php';
 
 	if(isset($_POST)){
 		if (isset($_COOKIE['contador'])){
+=======
+        }
+        
+    }
+		
+		$_COOKIE3 = $_POST['usuario_acceso'];
+	$fecha = date("d/m/Y | H:i:s ");
+
+	if(isset($_POST)){
+		if (isset($_COOKIE['contador'])){
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 			setcookie("contador", $_COOKIE['contador']+1, time()+120);
 //				echo "Número de visitas: ".$_COOKIE['contador'];
 					if($_COOKIE['contador'] >= 1) {
 //						echo"<br>";
 //						echo"Qué alegría verte de nuevo por aquí ".$_COOKIE3." !!!<br>";
+<<<<<<< HEAD
 					}	
 					
 				if(isset($_COOKIE['fecha'])){
@@ -156,22 +279,51 @@ include_once '../database.php';
 	<meta charset="utf-8">
 	<script type="text/javascript">
 	 	alert('Bienvenido al "Libro Digital de Novedades 171/911" \n Esta es tu primer inicio de sesion en nuestra página');
+=======
+					}	
+					
+				if(isset($_COOKIE['fecha'])){
+//					echo "Hola de nuevo, tu última visita fue el ".$_COOKIE['fecha'];
+				}
+
+			} else {
+				setcookie("contador", 1, time()+120);
+				$usuario = $_POST['usuario_acceso'];
+				setcookie("usuario", $usuario, time()+120);
+				echo "Bienvenido a 'Libro Digital de Novedades 171/911' ".$_SESSION['usuario_acceso']."";
+				setcookie("fecha", $fecha, time()+120);
+
+?>
+	<meta charset="utf-8">
+	<script type="text/javascript">
+	 	alert('Bienvenido al "Libro Digital de Novedades 171/911" \n Esta es tu primer inicio de sesion en nuestra página');
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
   </script>
 
 <?php
 
 }
 	}
+<<<<<<< HEAD
 
 /*
 	if(isset($_POST)){
 
 if (isset($_COOKIE['contador'])){
 	setcookie("contador", $_COOKIE['contador']+1, time()+120);
+=======
+
+/*
+	if(isset($_POST)){
+
+if (isset($_COOKIE['contador'])){
+	setcookie("contador", $_COOKIE['contador']+1, time()+120);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 	echo "Número de visitas: ".$_COOKIE['contador'];
 		if($_COOKIE['contador'] >= 1) {
 				echo"<br>";
 				echo"Qué alegría verte de nuevo por aquí ".$_COOKIE3." !!!";		
+<<<<<<< HEAD
 		}
 					
 		if(isset($_COOKIE['fecha'])){
@@ -209,10 +361,50 @@ if(isset($_COOKIE['fecha'])){
 
 if (isset($_COOKIE['contador'])){
 	setcookie("contador", $_COOKIE['contador']+1, time()+120);
+=======
+		}
+					
+		if(isset($_COOKIE['fecha'])){
+		echo "Hola de nuevo, tu última visita fue el ".$_COOKIE['fecha'];
+	}
+
+} else {
+	setcookie("contador", 1, time()+120);
+
+		$usuario = $_POST['usuario'];
+		setcookie("usuario", $usuario, time()+120);
+		echo "Bienvenido a 'Libro Digital de Novedades 171/911' ".$usuario;
+
+		setcookie("fecha", $fecha, time()+120);
+		echo "Esta es tu primera visita a nuestra página";
+
+}
+	}
+*/
+/*
+	if (isset($_COOKIE3)) {
+				echo "La cookie tiene el valor: ".$_COOKIE3;
+			} else {
+				echo "La cookie NO ha podido ser encontrada...!!";
+			}
+
+
+setcookie("fecha", $fecha, time()+120);
+if(isset($_COOKIE['fecha'])){
+	echo "Hola de nuevo, tu última visita fue el ".$_COOKIE['fecha'];
+} else {
+	echo "Esta es tu primera visita a nuestra página";
+}
+
+
+if (isset($_COOKIE['contador'])){
+	setcookie("contador", $_COOKIE['contador']+1, time()+120);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 	echo "Número de visitas: ".$_COOKIE['contador'];
 		if($_COOKIE['contador'] >= 1) {
 				echo"<br>";
 				echo"Qué alegría verte de nuevo por aquí ".$_COOKIE3." !!!";		
+<<<<<<< HEAD
 		}
 } else {
 	setcookie("contador", 1, time()+120);
@@ -229,6 +421,24 @@ if(isset($_POST['color'])){
 		} else {
 			$color = 'white';
 		}
+=======
+		}
+} else {
+	setcookie("contador", 1, time()+120);
+	echo "Bienvenido al 'Libro Digital de Novedades 171/911'";
+}
+*/
+/*
+if(isset($_POST['color'])){
+	$color = $_POST['color'];
+	setcookie("color", $color, time()+8000000);
+} else {
+		if(isset($_COOKIE['color'])) {
+			$color = $_COOKIE['color'];
+		} else {
+			$color = 'white';
+		}
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 	}
 */
 	?>

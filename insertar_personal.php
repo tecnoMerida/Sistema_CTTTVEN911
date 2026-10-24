@@ -1,9 +1,13 @@
 <?php
 require('cookie/cookie.php');
 
+<<<<<<< HEAD
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+=======
+session_start();
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
   if(!isset($_SESSION['tipo_rol_id'])){
                 header ("Location: index.php?error=fuera");
         }else{
@@ -17,8 +21,13 @@ if (session_status() === PHP_SESSION_NONE) {
 date_default_timezone_set('America/Caracas');
 
 // Traer datos por metodo POST
+<<<<<<< HEAD
 	$accion = $_GET['ac'] ?? '';
 	extract($_POST, EXTR_SKIP);
+=======
+	$accion = $_GET['ac'];
+	extract ($_POST);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 // Conexion con la base de datos
 	require_once 'config/conexion1.php';
@@ -62,7 +71,11 @@ date_default_timezone_set('America/Caracas');
 								$consulta = pg_query($dbconn,"SELECT * FROM personal WHERE cedula = '$cedula' ");
 								$result1 = pg_fetch_array($consulta);
 				
+<<<<<<< HEAD
 							if ($result1 !== false && !empty($result1)){
+=======
+							if($result1 != 0){
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 				
 								header("Location: administrador/registro_personal.php?msg=1");
 				
@@ -188,7 +201,11 @@ if(!empty($_POST))
 				// consulta si el número de cédula del familiar existe
 				$consulta = pg_query($dbconn,"SELECT * FROM public.parantesco_personal WHERE cedula_p = $cedula_p ");
 				$result = pg_fetch_array($consulta);
+<<<<<<< HEAD
 		  if ($result !== false && !empty($result)){
+=======
+		  if($result != 0){
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 		  
 					header("Location: administrador/registro_personal4.php?msg=4");
 		  
@@ -197,7 +214,11 @@ if(!empty($_POST))
 		  // Consulta si el número de cédula del personal ya tiene registro alguno
 					$consulta = pg_query($dbconn,"SELECT * FROM public.parantesco_personal WHERE personal_cedula = $personal_cedula ");
 					$result1 = pg_fetch_array($consulta);
+<<<<<<< HEAD
 			if ($result1 !== false && !empty($result1)){
+=======
+			if($result1 != 0){
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 						header("Location: administrador/registro_personal4.php?msg=1");
 
@@ -255,7 +276,11 @@ if(!empty($_POST))
 
 /*	  $consulta = pg_query($dbconn,"SELECT * FROM public.parantesco_personal WHERE cedula_p = $cedula_p ");
 	  $result1 = pg_fetch_array($consulta);
+<<<<<<< HEAD
 if ($result1 !== false && !empty($result1)){
+=======
+if($result1 != 0){
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 		  header("Location: administrador/modificar_personal.php?id=$personal_cedula&msg=6");
 

@@ -20,7 +20,11 @@ $mese = array();
 
 
 	// Conexión a base de datos.
+<<<<<<< HEAD
 	extract($_POST, EXTR_SKIP);
+=======
+	extract ($_POST);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 require_once '../config/conexion1.php';
 
 
@@ -33,7 +37,11 @@ require_once '../config/conexion1.php';
 			$html = "";
 
 			// Creación y/o formación de la consulta.
+<<<<<<< HEAD
 			$id = $_POST['id'] ?? '';
+=======
+			$id = $_POST['id'];
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 			$sql = "SELECT * FROM public.municipios WHERE estados_id = $id ";
 
 			// Ejecución y resultado de la consulta.
@@ -76,7 +84,11 @@ require_once '../config/conexion1.php';
 			$html = "";
 
 			// Creación y/o formación de la consulta.
+<<<<<<< HEAD
 			$id1 = $_POST['id'] ?? '';
+=======
+			$id1 = $_POST['id'];
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 			$sql1 = "SELECT * FROM public.parroquias WHERE municipios_id = $id1 ";
 
 			// Ejecución y resultado de la consulta.

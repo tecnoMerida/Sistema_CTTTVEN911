@@ -1,9 +1,13 @@
 <?php
 require('../cookie/cookie.php');
 
+<<<<<<< HEAD
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+=======
+session_start();
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 if (!isset($_SESSION['tipo_rol_id'])) {
   header("Location: ../index.php?error=fuera");
 } else {
@@ -84,6 +88,11 @@ if (!isset($_SESSION['tipo_rol_id'])) {
                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                         </li>
 
+<<<<<<< HEAD
+=======
+                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                       </ul>
                       <div class="clearfix"></div>
                     </div>
@@ -93,6 +102,7 @@ if (!isset($_SESSION['tipo_rol_id'])) {
                       <div class="col-md-3 col-sm-3"></div>
                       <div class="col-md-6 col-sm-6" align="center">
                         <?php
+<<<<<<< HEAD
                         $msg = $_GET['msg'] ?? '';
                         if ($msg == "1") {
                           echo '<div class="alert alert-danger alert-dismissible msn1">
@@ -103,6 +113,18 @@ if (!isset($_SESSION['tipo_rol_id'])) {
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Solicitud registrada con EXITO!!!</strong></div>';
                         } elseif ($msg == "3") {
+=======
+                        if (($_GET['msg'] ?? '') == "1") {
+                          echo '<div class="alert alert-danger alert-dismissible msn1">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>La Solicitud ya Existe!!!</strong></div>';
+                        }
+                        if (($_GET['msg'] ?? '') == "2") {
+                          echo '<div class="alert alert-success alert-dismissible msn1">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Solicitud registrada con EXITO!!!</strong></div>';
+                        } elseif (($_GET['msg'] ?? '') == "3") {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                           echo '<div class="alert alert-secondary alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Solicitud NO registrado</strong></div>';
@@ -164,6 +186,7 @@ if (!isset($_SESSION['tipo_rol_id'])) {
                                   <textarea id="respuesta2" class="protocolo01" readonly></textarea>
                                 </div>
                               </div>
+<<<<<<< HEAD
 
                               <!-- ************************************************** -->
                               <!-- ***** Panel Lateral de Cuadrante de Paz Activo ***** -->
@@ -206,6 +229,8 @@ if (!isset($_SESSION['tipo_rol_id'])) {
                                 </div>
                               </div>
                               <!-- ************************************************** -->
+=======
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                             </div>
                           </div>
                         </div>

@@ -47,6 +47,9 @@
     <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js"></script>
   
+<<<<<<< HEAD
   <?php require_once dirname(__DIR__) . '/chatbot/widget.php'; ?>
+=======
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
   </body>
 </html>

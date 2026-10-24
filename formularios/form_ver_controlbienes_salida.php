@@ -52,7 +52,11 @@
                     $array = explode(", ", $cadena);
 
                         foreach( $array as $id ){
+<<<<<<< HEAD
                           $formato1 = ($formato1 ?? '') . ' '.$id;
+=======
+                          $formato1 = $formato1.' '.$id;
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                         
                       // Cunsulta el ID de los Bienes registrados
                     $consulta1 = pg_query($dbconn, "SELECT * FROM bienes WHERE id = $id");

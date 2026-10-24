@@ -10,23 +10,40 @@
                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                     </li>
 
+<<<<<<< HEAD
+=======
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                   </ul>
                   <div class="clearfix"></div>
                 </div>
                 <div align="center">
               <?php
+<<<<<<< HEAD
                   if ($_GET[msg] == "7") {
+=======
+                  if (($_GET['msg'] ?? '') == "7") {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
               echo '<div class="alert alert-danger alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Deberas de completar todos los datos!!!</strong></div>';
               } 
+<<<<<<< HEAD
               if ($_GET[msg] == "8") {
+=======
+              if (($_GET['msg'] ?? '') == "8") {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
               echo '<div class="alert alert-success alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Usuario Actualizado con EXITO!!!</strong></div>';
 
               }
+<<<<<<< HEAD
               elseif ($_GET[msg] == "9") {
+=======
+              elseif (($_GET['msg'] ?? '') == "9") {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
               echo '<div class="alert alert-secondary alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>El Usuario NO pudo ser Actualizado!!!</strong></div>';

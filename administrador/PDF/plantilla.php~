@@ -18,7 +18,11 @@ function Header()
     $this->Cell(80);
     // Título
 
+<<<<<<< HEAD
 // ZONA HORARIA
+=======
+// ZONA HORARIA
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 date_default_timezone_set('America/Caracas');
 setlocale(LC_ALL,"es_ES");
 

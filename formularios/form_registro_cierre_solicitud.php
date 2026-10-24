@@ -330,15 +330,24 @@ while ($reg = pg_fetch_array($result)) {
                 </div>
 
                 <div class="field item form-group">
+<<<<<<< HEAD
                 <!-- // Seleccion del Cuadrante y Organismo de Paz //-->
                 <label class="col-form-label col-md-3 col-sm-3  label-align" for="cboCuadrantes"><i class="fa fa-shield text-primary"></i> Cuadrante de Paz</label>
                 <div class="col-md-3 col-sm-3">
                         <select class="form-control" name="organismo_cuadrante" id="cboOrganismo" title="Organismo responsable del cuadrante">
+=======
+
+                <!-- // Seleccion del Sector donde ocurrio el evento //-->
+                <label class="col-form-label col-md-3 col-sm-3  label-align" for="cboSectores">Cuadrante</label>
+                <div class="col-md-3 col-sm-3">
+                        <select class="form-control" name="" id="cboOrganismo" title="Este campo deberá de reflejar el nombre del organísmo" disabled>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                             <option value="0">-Nombre Organismo-</option>
                         </select>
                     </div>
 
                 <div class="col-md-3 col-sm-3">
+<<<<<<< HEAD
                         <select class="form-control" name="cuadrante" id="cboCuadrantes" title="Número del cuadrante de paz">
                             <option value="0">-Número Cuadrante-</option>
                         </select>
@@ -354,6 +363,13 @@ while ($reg = pg_fetch_array($result)) {
                       <span id="info-cuadrante-comuna" class="d-block small text-muted mt-1"></span>
                     </div>
                   </div>
+=======
+                        <select class="form-control" name="" id="cboCuadrantes" title="Este campo deberá de reflejar el número del cuadrante del sector" disabled>
+                            <option value="0">-Número Cuadrante-</option>
+                        </select>
+                </div>
+
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                 </div>
 
                 <div class="field item form-group">

@@ -1,6 +1,11 @@
 
+<<<<<<< HEAD
 function(){
 
+=======
+function(){
+
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 var input = document.getElementById('usuario_acceso');
 input.oninvalid = function(event) {
     event.target.setCustomValidity('intenta probar desbloqueando Mayús');

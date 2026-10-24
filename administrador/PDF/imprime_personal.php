@@ -1,17 +1,26 @@
 <?php
+<<<<<<< HEAD
   $cedula = intval($_REQUEST['id'] ?? ($_GET['id'] ?? 0));
+=======
+  $cedula = $_REQUEST['id'];
+  $cedula = $_GET['id'];
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 require_once('../../config/conexion1.php');
 require('plantilla.php');
 
+<<<<<<< HEAD
 if (!$cedula) {
     die("Cédula no especificada.");
 }
+=======
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
     ///////////////////////////////////             CONSULTAS           //////////////////////////////
 
     //consulta 1.
     $personal = pg_query($dbconn, "SELECT * FROM public.personal WHERE cedula = $cedula ");     
+<<<<<<< HEAD
     $reg = ($personal && pg_num_rows($personal) > 0) ? pg_fetch_array($personal) : null;
     if (!$reg) {
         die("Personal no encontrado.");
@@ -34,6 +43,26 @@ if (!$cedula) {
     //consulta 3
     $coordinador1 = pg_query($dbconn, "SELECT * FROM director WHERE cargo_dir LIKE '%DIRECTOR%' ");        
     $coord1 = ($coordinador1 && pg_num_rows($coordinador1) > 0) ? pg_fetch_array($coordinador1) : [];
+=======
+    $reg = pg_fetch_array($personal);
+    $grado = $reg['grado_instruccion_id'];
+    $cargos = $reg['cargos_id'];
+    $organismo = $reg['organismos_id'];
+
+    $gradoinst = pg_query($dbconn, "SELECT * FROM public.grado_instruccion WHERE id = $grado ");     
+    $reg03 = pg_fetch_array($gradoinst);
+
+    $cargos1 = pg_query($dbconn, "SELECT * FROM public.cargos WHERE id = $cargos ");     
+    $reg04 = pg_fetch_array($cargos1);
+
+    //consulta 2
+    $consultaorg = pg_query($dbconn,"SELECT * FROM public.organismos WHERE id = $organismo ");
+    $reg05= pg_fetch_array($consultaorg);
+
+    //consulta 3
+    $coordinador1 = pg_query($dbconn, "SELECT * FROM director WHERE cargo_dir LIKE '%DIRECTOR%' ");        
+    $coord1 = pg_fetch_array($coordinador1);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
     //consulta 4
 /*    $coordinador = pg_query($dbconn, "SELECT * FROM director WHERE cargo_dir LIKE '%Coordinador%' ");      

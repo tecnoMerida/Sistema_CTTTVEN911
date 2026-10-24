@@ -1,9 +1,13 @@
 <?php
 require('../cookie/cookie.php');
 
+<<<<<<< HEAD
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+=======
+session_start();
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 if (!isset($_SESSION['tipo_rol_id'])) {
   header("Location: ../index.php?error=fuera");
 } else {
@@ -16,12 +20,23 @@ if (!isset($_SESSION['tipo_rol_id'])) {
       // Conexion con la base de datos
       require_once '../config/conexion1.php';
 
+<<<<<<< HEAD
       $organismo_id = $_REQUEST['organismo_id'] ?? '';
       $fecha_entrada1 = $_REQUEST['fecha_entrada'] ?? '';
       $fecha_entrada = !empty($fecha_entrada1) ? (new DateTime($fecha_entrada1))->format('Ymd') : '';
 
       $fecha_salida1 = $_REQUEST['fecha_salida'] ?? '';
       $fecha_salida = !empty($fecha_salida1) ? (new DateTime($fecha_salida1))->format('Ymd') : '';
+=======
+      $organismo_id = (($_REQUEST['organismo_id'] ?? '') !== '' ? (int) $_REQUEST['organismo_id'] : '');
+      $fecha_entrada1 = $_REQUEST['fecha_entrada'] ?? '';
+      $now = new DateTime($fecha_entrada1 ?: 'now');
+      $fecha_entrada = $fecha_entrada1 !== '' ? $now->format('Ymd') : '';
+
+      $fecha_salida1 = $_REQUEST['fecha_salida'] ?? '';
+      $now = new DateTime($fecha_salida1 ?: 'now');
+      $fecha_salida = $fecha_salida1 !== '' ? $now->format('Ymd') : '';
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 ?>
 
       <!-- ***** Menu Navegacion Panel Derecho ***** -->
@@ -58,6 +73,11 @@ if (!isset($_SESSION['tipo_rol_id'])) {
                   <ul class="nav navbar-right panel_toolbox">
                     <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                     </li>
+<<<<<<< HEAD
+=======
+                    <li><a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                   </ul>
                   <div class="clearfix"></div>
                 </div>
@@ -65,12 +85,17 @@ if (!isset($_SESSION['tipo_rol_id'])) {
                 <div class="col-md-12 center-margin">
                   <form class="form-inline" id="consul_guardia" name="form_consul" method="POST" action="">
                     <?php
+<<<<<<< HEAD
                     if (!empty($organismo_id) && is_numeric($organismo_id)) {
                         $organismos_consulta = pg_query($dbconn, "SELECT * FROM public.organismos WHERE id = $organismo_id ");
                         $reg_consulta = $organismos_consulta ? pg_fetch_array($organismos_consulta) : false;
                     } else {
                         $reg_consulta = false;
                     }
+=======
+                    $organismos_consulta = pg_query($dbconn, "SELECT * FROM public.organismos WHERE id = " . (int) $organismo_id);
+                    $reg_consulta = pg_fetch_array($organismos_consulta);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
                     $organismos = pg_query($dbconn, "SELECT * FROM public.organismos ORDER BY id ASC");
                     if (!$organismos) {
@@ -81,7 +106,19 @@ if (!isset($_SESSION['tipo_rol_id'])) {
                     <div class="form-group col-md-3">
                       <label for="ex3" class="control-label "></label>
                       <select class="form-control" name="organismo_id" id="organismo_id" title="Seleccione el organismo a consultar" required>
+<<<<<<< HEAD
                         <option value="<?php echo (!empty($reg_consulta) && isset($reg_consulta[0])) ? $reg_consulta[0] : ''; ?>"><?php echo (!empty($reg_consulta) && isset($reg_consulta[1])) ? strtoupper($reg_consulta[1]) : '-Seleccione Organismo-'; ?></option>
+=======
+                        <option value="<?php if ($reg_consulta == '') {
+                                          echo '';
+                                        } else {
+                                          echo $reg_consulta[0];
+                                        } ?>"><?php if ($reg_consulta == '') {
+                                                echo '-Seleccione Organismo-';
+                                              } else {
+                                                echo strtoupper($reg_consulta[1]);
+                                              } ?></option>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                         <?php
                         while ($reg_org = pg_fetch_array($organismos)) {
                         ?>
@@ -117,6 +154,7 @@ if (!isset($_SESSION['tipo_rol_id'])) {
 
               <div>
                 <?php
+<<<<<<< HEAD
                 if (!empty($organismo_id)) {
                     if ($organismo_id != 5 && $organismo_id != 4){
                       require '../controlador/consulta_novedades_desp_adm.php';
@@ -126,6 +164,15 @@ if (!isset($_SESSION['tipo_rol_id'])) {
                       require '../controlador/consulta_novedades_sup_adm.php';
                     }
                 }
+=======
+                if ($organismo_id != 5 && $organismo_id != 4){
+                  require '../controlador/consulta_novedades_desp_adm.php';
+              } elseif ($organismo_id != 1 && $organismo_id != 2 && $organismo_id != 3 && $organismo_id != 5){
+                  require '../controlador/consulta_novedades_op_adm.php';
+              } else {
+                  require '../controlador/consulta_novedades_sup_adm.php';
+              }
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                 ?>
               </div>
 

@@ -366,7 +366,11 @@ $result3 = pg_query($dbconn, "SELECT parroquias.nombre_parroquia, municipios.nom
                     $array = explode(",", $cadena);
 
                         foreach( $array as $id ){
+<<<<<<< HEAD
                           $formato1 = ($formato1 ?? '') . ' '.$id;
+=======
+                          $formato1 = $formato1.' '.$id;
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                         
                       // Cunsulta el ID de los Bienes registrados
                     $consulta1 = pg_query($dbconn, "SELECT solicitudes_organismos_solicitud.organismos_solicitud_id, organismos_solicitud.nombre_org FROM public.solicitudes_organismos_solicitud INNER JOIN public.organismos_solicitud ON organismos_solicitud.id = solicitudes_organismos_solicitud.organismos_solicitud_id WHERE solicitudes_organismos_solicitud.solicitudes_id = $id");
@@ -411,7 +415,11 @@ $result3 = pg_query($dbconn, "SELECT parroquias.nombre_parroquia, municipios.nom
                     $array = explode(",", $cadena);
 
                         foreach( $array as $id ){
+<<<<<<< HEAD
                           $formato1 = ($formato1 ?? '') . ' '.$id;
+=======
+                          $formato1 = $formato1.' '.$id;
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                         
                       // Cunsulta el ID de los Bienes registrados
                     $consulta1 = pg_query($dbconn, "SELECT solicitudes_organismos_solicitud.organismos_solicitud_id, organismos_solicitud.nombre_org FROM public.solicitudes_organismos_solicitud INNER JOIN public.organismos_solicitud ON organismos_solicitud.id = solicitudes_organismos_solicitud.organismos_solicitud_id WHERE solicitudes_organismos_solicitud.solicitudes_id = $id");

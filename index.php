@@ -107,19 +107,29 @@
 
             <div class="" align="center">
               <?php
+<<<<<<< HEAD
               $error = $_GET['error'] ?? '';
               if ($error === "op") {
+=======
+              $_GET['error'] = $_GET['error'] ?? '';
+              if (($_GET['error'] ?? '') == "op") {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                 echo '<div class="alert alert-danger alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Usuario sin permiso de acceso</strong></div>';
               }
+<<<<<<< HEAD
               if ($error === "bloqueo") {
+=======
+              if (($_GET['error'] ?? '') == "bloqueo") {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                 echo '<a href="recuperar_usuario/valida_datos.php">Recupera contraseña</a>';
                 echo '<div class="alert alert-warning alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Usuario Bloqueado</strong></div>';
                     
               }
+<<<<<<< HEAD
               if ($error === "si") {
                 echo '<div class="alert alert-secondary alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -129,6 +139,19 @@
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Introduce usuario y contaseña</strong></div>';
               }
+=======
+              if (($_GET['error'] ?? '') == "si") {
+                echo '<div class="alert alert-secondary alert-dismissible msn1">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>usuario o contraseña incorrectos<br/>intentalo de nuevo</strong></div>';
+              } elseif (($_GET['error'] ?? '') == "fuera") { {
+                  echo '<div class="alert alert-danger alert-dismissible msn1">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Introduce usuario y contaseña</strong></div>';
+                }
+              }
+
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
               ?>
             </div>
 

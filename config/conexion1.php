@@ -1,9 +1,16 @@
 <?php
 // detalles de la conexion
+<<<<<<< HEAD
 $conn_string = "host=localhost port=5432 dbname=ven911 user=postgres password=XTAE5qxIn4o options='--client_encoding=UTF8'";
 
 // establecemos una conexion con el servidor postgresSQL
 $dbconn = pg_connect($conn_string) or die ("Errror al conectar con la base de datos! pg 1");
+=======
+$conn_string = "host=127.0.0.1 port=5432 dbname=ven911_2025 user=postgres password=123456 options='--client_encoding=UTF8'";
+
+// establecemos una conexion con el servidor postgresSQL
+$dbconn = pg_connect($conn_string) or die ("Error al conectar con la base de datos! pg 1");
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 // Revisamos el estado de la conexion en caso de errores. 
 if (!$dbconn) {
@@ -13,10 +20,13 @@ if (!$dbconn) {
 }
 
 
+<<<<<<< HEAD
 
 
 
 
+=======
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 /*
 class gbd
 {

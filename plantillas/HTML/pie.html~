@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿<!DOCTYPE html>
 <html lang="en-espa�ol">
 
@@ -17,3 +18,24 @@
         </section>
 </body>
 </html>
+=======
+﻿<!DOCTYPE html>
+<html lang="en-espa�ol">
+
+<head>
+    <link href="" rel="">
+    <meta charset="UTF-8">
+    <meta content="width=device-width" name="viewport">
+    <link href="../css/estilo_imagenes.css" rel="stylesheet" media="screen" />
+    <title>Fecha y Hora</title>
+</head>
+
+<body id="pie">
+    <section class="pie">
+        <div align="right">
+                <img src="../imagenes/Headers.png" id="bandera" title="Sistema Atension de Emergencias Merida 1-7-1"/>
+        </div>
+        </section>
+</body>
+</html>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885

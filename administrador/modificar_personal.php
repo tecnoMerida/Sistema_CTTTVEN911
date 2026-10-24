@@ -1,9 +1,13 @@
 <?php
 require('../cookie/cookie.php');
 
+<<<<<<< HEAD
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+=======
+session_start();
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 if (!isset($_SESSION['tipo_rol_id'])) {
   header("Location: ../index.php?error=fuera");
 } else {
@@ -15,7 +19,11 @@ if (!isset($_SESSION['tipo_rol_id'])) {
 
       // Identificador unico de registro a modificar
       $cedula1 = $_REQUEST['id'];
+<<<<<<< HEAD
       $cedula1 = $_GET['id'] ?? '';
+=======
+      $cedula1 = $_GET['id'];
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
       // Conexion a la base de datos
       include_once '../config/conexion1.php';
@@ -77,27 +85,45 @@ if (!isset($_SESSION['tipo_rol_id'])) {
                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                         </li>
 
+<<<<<<< HEAD
+=======
+                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                       </ul>
                       <div class="clearfix"></div>
                     </div>
                     <div align="center">
                       <?php
+<<<<<<< HEAD
                       $msg = $_GET['msg'] ?? '';
                       if ($msg == "1") {
+=======
+                      if (($_GET['msg'] ?? '') == "1") {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                         echo '<div class="alert alert-danger alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Deberas de completar todos los campo!!!</strong></div>';
                       }
+<<<<<<< HEAD
                       if ($msg == "2") {
+=======
+                      if (($_GET['msg'] ?? '') == "2") {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                         echo '<div class="alert alert-success alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Datos personales actualizado con EXISTO!</strong></div>';
                       }
+<<<<<<< HEAD
                       if ($msg == "3") {
+=======
+                      if (($_GET['msg'] ?? '') == "3") {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                         echo '<div class="alert alert-success alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Datos del pariente actualizado con EXISTO!</strong></div>';
                       }
+<<<<<<< HEAD
                       if ($msg == "4") {
                         echo '<div class="alert alert-success alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -111,6 +137,21 @@ if (!isset($_SESSION['tipo_rol_id'])) {
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Número de cédula de familiar ya EXISTE!!!</strong></div>';
                       } elseif ($msg == "7") {
+=======
+                      if (($_GET['msg'] ?? '') == "4") {
+                        echo '<div class="alert alert-success alert-dismissible msn1">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Datos de usuario actualizado con EXISTO!</strong></div>';
+                      } if (($_GET['msg'] ?? '') == "5") {
+                        echo '<div class="alert alert-secondary alert-dismissible msn1">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>NO se pudo actualizar los datos!</strong></div>';
+                      } if (($_GET['msg'] ?? '') == "6") {
+                        echo '<div class="alert alert-danger alert-dismissible msn1">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Número de cédula de familiar ya EXISTE!!!</strong></div>';
+                      } elseif (($_GET['msg'] ?? '') == "7") {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                         echo '<div class="alert alert-danger alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Nombre de usuario ya EXISTE!!!</strong></div>';

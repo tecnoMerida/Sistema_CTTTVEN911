@@ -23,7 +23,11 @@ function Header()
 
     // Título
 
+<<<<<<< HEAD
 // ZONA HORARIA
+=======
+// ZONA HORARIA
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 date_default_timezone_set('America/Caracas');
 setlocale(LC_ALL,"es_ES");
 
@@ -79,7 +83,11 @@ function Footer()
 
 
 	///////////////////////////////////				CONSULTAS			//////////////////////////////////////////////
+<<<<<<< HEAD
 	//consulta 1
+=======
+	//consulta 1
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 	$observaciones = mysqli_query($conexion, "SELECT * FROM observaciones WHERE id_notas= $id_notas ");		
 	$reg = mysqli_fetch_array($observaciones);
 
@@ -91,7 +99,11 @@ function Footer()
    $fecha_a1=$now1->format('d-m-Y');
 
 	//consulta 2
+<<<<<<< HEAD
 	$consulta = mysqli_query($conexion,"SELECT * FROM grupos_organismos WHERE id_organismo = $organismo");
+=======
+	$consulta = mysqli_query($conexion,"SELECT * FROM grupos_organismos WHERE id_organismo = $organismo");
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 	$reg1= mysqli_fetch_array($consulta);
 
 	//consulta 3

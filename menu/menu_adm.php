@@ -2,6 +2,7 @@
 <style>
   .SLDN{
     width: 30px;
+<<<<<<< HEAD
     height: 30px;
     border-radius: 60%;
     z-index: 1;
@@ -105,6 +106,44 @@
     </div>
 
     <div class="clearfix"></div>
+=======
+height: 30px;
+/*border-image-outset: 20px;*/
+border-radius: 60%;
+z-index:1;
+
+}
+
+#title_menu{
+  font-size:10; 
+  border: 0; 
+  font-family:Copperplate Gothic;
+  text-align: center;
+  margin-top: -30px;
+}
+
+#principal1{
+  font-size: 10;
+  color: #ffffff;
+  border: 0;
+  font-family:Copperplate Gothic;
+  text-align: center;
+  margin-top: -5px;
+}
+
+ </style> 
+<div class="col-md-3 left_col">
+          <div class="left_col scroll-view">
+            <div id="principal1" align="center">
+            <a href="../administrador/principal.php" class="site_title" title="Ir a la página principal del sistema"><small><span> &nbsp Inicio</span></small></a>
+            </div>
+
+          <div  id="title_menu" align="center">
+              <a href="../administrador/principal.php" class="site_title" title="Ir a la página principal del sistema"><small><span>SLDN 911</span></small></a>
+            </div>
+
+            <div class="clearfix"></div>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
             <!-- menu profile quick info -->
             <div class="profile clearfix">
@@ -159,6 +198,7 @@
                   <li><a><i class="fa fa-edit"></i> Módulo Seguridad <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="../administrador/novedades_guardia.php">Novedades Guardia</a></li>
+<<<<<<< HEAD
                       <li><a href="../administrador/registro_actividades.php">Registro de Actividades</a></li>
                       <li><a href="../administrador/estadisticas.php">Estadísticas</a></li>
                     </ul>
@@ -166,6 +206,12 @@
                   <li><a href="../administrador/respaldo_bd.php"><i class="fa fa-database"></i> Respaldo Base de Datos</a></li>
                   <li><a href="../administrador/registro_actividades.php"><i class="fa fa-history"></i> Registro de Actividades</a></li>
                   <li><a href="../administrador/permisos_usuario.php"><i class="fa fa-key"></i> Permisos de Usuario</a></li>
+=======
+                      <li><a href="../administrador/registro_eventos.php">Registro de Eventos</a></li>
+                      <li><a href="../administrador/estadisticas.php">Estadísticas</a></li>
+                    </ul>
+                  </li>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                   <li><a><i class="fa fa-info-circle
                     "></i> Ayuda <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
@@ -301,6 +347,7 @@
                     </ul>
                 </li>
 
+<<<<<<< HEAD
                 <!-- Módulo CUPAZ en el panel principal -->
                 <li><a><i class="fa fa-shield"></i> CUPAZ <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
@@ -308,6 +355,8 @@
                   </ul>
                 </li>
 
+=======
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
             </ul>
 
               </div>
@@ -322,8 +371,15 @@
 
             <!-- /menu footer buttons -->
             <div class="sidebar-footer hidden-small">
+<<<<<<< HEAD
               <a class="cerrar btn-cerrar-sesion" title="Cerrar Sesión" href="../cookie/logout.php">
                 <i class="fa fa-power-off"></i> <span>Cerrar Sesión</span>
+=======
+              <a data-toggle="tooltip" data-placement="top" class="cerrar" title="Cerrar Sesión" href="../cookie/logout.php">
+                <span class="fa fa-power-off" aria-hidden="true"></span>
+                Cerrar Sesión<span class="glyphicon glyphicon" aria-hidden="true"></span>
+                <span class="fa fa-power-off" aria-hidden="true"></span>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
               </a>
             </div>
             <!-- /menu footer buttons -->

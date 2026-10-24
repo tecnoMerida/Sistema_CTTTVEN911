@@ -1,6 +1,7 @@
 <?php /********* Seleccion el estatus de la Solicitud ***********/
 
   // Consulta a la Base de Datos
+<<<<<<< HEAD
   $cedula_val = !empty($cedula) ? $cedula : 0;
   $consulta1 = pg_query($dbconn, "SELECT personal.cedula, personal.cargos_id, bienes.id, bienes.nombre_b, bienes.codigo_b FROM personal INNER JOIN bienes ON bienes.ubicacion_bienes_id = personal.cargos_id WHERE cedula = '$cedula_val' ORDER BY id");
 
@@ -19,6 +20,39 @@
       // si no existen datos muestra mensaje
       echo "<div class='alert alert-info text-center'>No se obtuvieron resultados de bienes asignados</div>"; 
   }
+=======
+   $consulta1 = pg_query($dbconn, "SELECT personal.cedula, personal.cargos_id, bienes.id, bienes.nombre_b, bienes.codigo_b FROM personal INNER JOIN bienes ON bienes.ubicacion_bienes_id = personal.cargos_id WHERE cedula = $cedula ORDER BY id");
+
+      $reg1 = pg_fetch_assoc($consulta1);
+         if (!$reg1) {
+              echo "Ocurrió un error.\n";
+              exit;
+            }
+
+        $total_rows1 = pg_num_rows($consulta1);
+
+
+            if( $total_rows1 != 0){
+ 
+                     //impresion de los datos.
+                          do
+                            { 
+
+                            echo '<div class="field item form-group">';
+                            echo '<div class="col-md-12 col-sm-12 checkbox">';
+                            echo '<label class="col-form-label col-md-7 col-sm-7  label-align">'.$reg1['nombre_b'].' ('.$reg1['codigo_b'].')</label>';
+                            echo '<div class="col-md-2 col-sm-2">';
+                            echo '<label> <input type="checkbox" class="flat" name="materiales_recibe[]" id="materiales_recibe" value="'.$reg1['id'].'" checked="" > </label>';
+                            echo '<input type="hidden" name="materiales_id[]" id="" value="'.$reg1['id'].'" required />';
+
+                            echo '</div></div></div>';
+                              } while ( $reg1 = pg_fetch_array ($consulta1));
+                            pg_free_result($consulta1);
+                        }else { 
+                        // si no existen datos muestra mensaje
+                        echo "<td colspan='5' align='center' >no se obtuvieron resultados</td>"; 
+                        }
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
                       ?>
 

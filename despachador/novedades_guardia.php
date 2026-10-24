@@ -1,9 +1,13 @@
 <?php
 require('../cookie/cookie.php');
 
+<<<<<<< HEAD
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+=======
+session_start();
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
   if(!isset($_SESSION['tipo_rol_id'])){
                 header ("Location: ../index.php?error=fuera");
         }else{
@@ -16,6 +20,7 @@ if (session_status() === PHP_SESSION_NONE) {
 // Conexion con la base de datos
 require_once '../config/conexion1.php';
 
+<<<<<<< HEAD
 $personal_cedula = $_SESSION['personal_cedula'] ?? '';
 $registro_per = false;
 if (!empty($personal_cedula)) {
@@ -38,6 +43,23 @@ if (!empty($fecha_salida1)) {
    $now = new DateTime($fecha_salida1);
    $fecha_salida = $now->format('Ymd');
 }
+=======
+$personal_cedula = $_SESSION['personal_cedula'];
+$consulta_per = pg_query($dbconn, "SELECT cedula, organismos_id, grupo_guardia_id FROM public.personal WHERE cedula = $personal_cedula");
+$registro_per = pg_fetch_array($consulta_per);
+
+
+
+
+$organismo_id = (($_REQUEST['organismo_id'] ?? '') !== '' ? (int) $_REQUEST['organismo_id'] : '');
+$fecha_entrada1 = $_REQUEST['fecha_entrada'] ?? '';
+   $now = new DateTime($fecha_entrada1 ?: 'now');
+   $fecha_entrada = $fecha_entrada1 !== '' ? $now->format('Ymd') : '';
+
+$fecha_salida1 = $_REQUEST['fecha_salida'] ?? '';
+   $now = new DateTime($fecha_salida1 ?: 'now');
+   $fecha_salida = $fecha_salida1 !== '' ? $now->format('Ymd') : '';
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 ?>
 
 <!-- ***** Membrete ***** -->
@@ -79,6 +101,11 @@ if (!empty($fecha_salida1)) {
                 <ul class="nav navbar-right panel_toolbox">
                   <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                   </li>
+<<<<<<< HEAD
+=======
+                  <li><a class="close-link"><i class="fa fa-close"></i></a>
+                  </li>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                 </ul>
                 <div class="clearfix"></div>
               </div>
@@ -87,6 +114,7 @@ if (!empty($fecha_salida1)) {
                 <form class="form-inline" id="consul_guardia" name="form_consul" method="POST" action="">
               <?php
               // Consulta valor enviado por el submit para mostrar en nombre del organismo
+<<<<<<< HEAD
                 $reg_consulta = '';
                 if (!empty($organismo_id)) {
                   $organismos_consulta = pg_query($dbconn, "SELECT * FROM public.organismos WHERE id = '$organismo_id' ");
@@ -104,6 +132,18 @@ if (!empty($fecha_salida1)) {
                   echo "Ocurrió un error.\n";
                   exit;
                 }
+=======
+                $organismos_consulta = pg_query($dbconn,"SELECT * FROM public.organismos WHERE id = " . (int) $organismo_id);
+                $reg_consulta=pg_fetch_array($organismos_consulta);
+
+                // Genera una consulta y muestra una lista desplegable de los organismos
+                $org = $registro_per['organismos_id'];
+                $organismos = pg_query($dbconn,"SELECT * FROM public.organismos WHERE id = $org");
+                    if (!$organismos) {
+                          echo "Ocurrió un error.\n";
+                          exit;
+                      }
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
               ?>
                   <div class="form-group col-md-3">
                     <label for="ex3" class="control-label "></label>

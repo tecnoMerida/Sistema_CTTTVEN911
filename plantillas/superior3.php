@@ -13,6 +13,10 @@
 <!-- ****** ESTILOS PROPIOS ****** -->
 	  <link href="../css/Estilos.css" rel="stylesheet" media="screen"/>
 	  <link href="../css/estilo_imagenes.css" rel="stylesheet" media="screen" />
+<<<<<<< HEAD
+=======
+     <link href="../css/estilo_menu.css" rel="stylesheet" media="screen" />
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
     <!-- Bootstrap -->
     <link href="cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     <link href="../vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -36,7 +40,10 @@
     <link href="../vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
+<<<<<<< HEAD
     <link href="../css/estilo_menu.css" rel="stylesheet" media="screen" />
+=======
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
    	<!--jQuery library file Multiselect-->
      <link href="../vendors/Select/font-awesome.min.css" rel="stylesheet" />

@@ -1,9 +1,13 @@
 <?php
 require('../cookie/cookie.php');
 
+<<<<<<< HEAD
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+=======
+session_start();
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
   if(!isset($_SESSION['tipo_rol_id'])){
                 header ("Location: ../index.php?error=fuera");
         }else{
@@ -42,6 +46,10 @@ $hora = date('H:i:s', strtotime($fecha_inicio));
 <!-- ***** Membrete ***** -->
 <?php require_once '../plantillas/superior3.php'; ?>
 <!-- ***** Membrete ***** -->
+<<<<<<< HEAD
+=======
+<?php require_once '../plantillas/inferior_graficos.php'; ?>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 
   <style type="text/css">
@@ -89,6 +97,11 @@ $hora = date('H:i:s', strtotime($fecha_inicio));
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
 
+<<<<<<< HEAD
+=======
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                     </ul>
                     <div class="clearfix"></div>
                   </div>
@@ -133,6 +146,9 @@ $hora = date('H:i:s', strtotime($fecha_inicio));
 
 
 
+<<<<<<< HEAD
   <?php require_once '../plantillas/inferior_graficos.php'; ?>
+=======
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
   </body>
 </html>

@@ -1,9 +1,13 @@
 <?php
 require('../cookie/cookie.php');
 
+<<<<<<< HEAD
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+=======
+session_start();
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
   if(!isset($_SESSION['tipo_rol_id'])){
                 header ("Location: ../index.php?error=fuera");
         }else{
@@ -102,14 +106,23 @@ $ultimo_control_bienes_fecha = $reg_id2['fecha_creacion'];
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
 
+<<<<<<< HEAD
+=======
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                     </ul>
                     <div class="clearfix"></div>
                   </div>
 
                     <div class="" align="center">
               <?php
+<<<<<<< HEAD
                   $msg = $_GET['msg'] ?? '';
                   if ($msg == "1") {
+=======
+                  if (($_GET['msg'] ?? '') == "1") {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
               echo '<div class="alert alert-danger alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Usuario sin permiso de acceso</strong></div>';

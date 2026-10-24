@@ -1,16 +1,26 @@
 <?php
+<<<<<<< HEAD
   $id = intval($_REQUEST['id'] ?? ($_GET['id'] ?? 0));
+=======
+  $id = $_REQUEST['id'];
+  $id = $_GET['id'];
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 require_once('../../config/conexion1.php');
 require('plantilla.php');
 
+<<<<<<< HEAD
 if (!$id) {
     die("ID no especificado.");
 }
+=======
+
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
     ///////////////////////////////////             CONSULTAS           /////////////////////////////
     //consulta 1
     $result = pg_query($dbconn, "SELECT * FROM public.personal_grupos_guardia WHERE id = $id");
+<<<<<<< HEAD
     $reg = ($result && pg_num_rows($result) > 0) ? pg_fetch_array($result) : null;
     if (!$reg) {
         die("Grupo de guardia no encontrado.");
@@ -31,6 +41,25 @@ if (!$id) {
     //consulta 6 - DIRECTOR
     $coordinador1 = pg_query($dbconn, "SELECT * FROM director WHERE cargo_dir LIKE '%DIRECTOR%' ");        
     $coord1 = ($coordinador1 && pg_num_rows($coordinador1) > 0) ? pg_fetch_array($coordinador1) : [];
+=======
+    $reg = pg_fetch_array($result);
+
+    $grupo = $reg['grupos_guardia_id'];
+
+    // Fecha Entrada
+    $dato = $reg['fecha_asig'];
+    $fecha = date('d-m-Y',strtotime($dato));
+    $hora = date('H:i:s',strtotime($dato));
+
+    // Fecha Salida
+    $dato = $reg['fecha_fin'];
+    $fecha_fin = date('d-m-Y',strtotime($dato));
+    $hora_fin = date('H:i:s',strtotime($dato));
+
+    //consulta 6 - DIRECTOR
+    $coordinador1 = pg_query($dbconn, "SELECT * FROM director WHERE cargo_dir LIKE '%DIRECTOR%' ");        
+    $coord1 = pg_fetch_array($coordinador1);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 
 $pdf = new PDF('P','mm','A4');

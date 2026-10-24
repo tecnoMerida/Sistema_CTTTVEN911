@@ -1,9 +1,13 @@
 <?php
 require('cookie/cookie.php');
 
+<<<<<<< HEAD
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+=======
+session_start();
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
   if(!isset($_SESSION['tipo_rol_id'])){
                 header ("Location: index.php?error=fuera");
         }else{
@@ -14,8 +18,13 @@ if (session_status() === PHP_SESSION_NONE) {
                 if (($_POST['usuario'] ?? '') == ($usuario ?? '') && ($_POST['contrasena'] ?? '') == ($clave ?? '')) {
 
 // Traer datos por metodo POST
+<<<<<<< HEAD
 	$accion = $_GET['ac'] ?? '';
 	extract($_POST, EXTR_SKIP);
+=======
+	$accion = $_GET['ac'];
+	extract ($_POST);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 // Conexion con la base de datos
 require_once 'config/conexion1.php';
@@ -30,7 +39,11 @@ require_once 'config/conexion1.php';
 				$consulta = pg_query($dbconn,"SELECT * FROM organismos WHERE nombre_oganismos = '$nombre_oganismos' ");
 				$result1 = pg_fetch_array($consulta);
 
+<<<<<<< HEAD
 			if ($result1 !== false && !empty($result1)){
+=======
+			if($result1 > 0){
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 				header("Location: administrador/organismo.php?msg=1");
 			}else{
@@ -81,7 +94,11 @@ require_once 'config/conexion1.php';
 				$consulta1 = pg_query($dbconn,"SELECT * FROM organismos WHERE nombre_oganismos = '$nombre_oganismos'");
 				$result2 = pg_fetch_array($consulta1);
 
+<<<<<<< HEAD
 			if ($result2 !== false && !empty($result2)){
+=======
+			if($result2 > 0){
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 				header("Location: administrador/modificar_organismo.php?id=$id&msg=1");
 			}else{
@@ -90,7 +107,11 @@ require_once 'config/conexion1.php';
 					$consulta1 = pg_query($dbconn,"SELECT * FROM organismos WHERE id = $id");
 					$result2 = pg_fetch_array($consulta1);
 
+<<<<<<< HEAD
                     if ($result2 !== false && !empty($result2)) {
+=======
+                    if ($result2 > 0) {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
                         if (isset($_POST['id'])) {					
                             // Actualiza datos del registro de Pariente
@@ -133,7 +154,11 @@ require_once 'config/conexion1.php';
 					$consulta1 = pg_query($dbconn,"SELECT * FROM grupos_guardia WHERE nombre_grupo = '$nombre_grupo'");
 					$result2 = pg_fetch_array($consulta1);
 	
+<<<<<<< HEAD
 				if ($result2 !== false && !empty($result2)){
+=======
+				if($result2 > 0){
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 	
 					header("Location: administrador/grupos.php?msg=1");
 				}else{
@@ -182,7 +207,11 @@ require_once 'config/conexion1.php';
 					$consulta1 = pg_query($dbconn,"SELECT * FROM grupos_guardia WHERE nombre_grupo = '$nombre_grupo'");
 					$result2 = pg_fetch_array($consulta1);
 	
+<<<<<<< HEAD
 				if ($result2 !== false && !empty($result2)){
+=======
+				if($result2 > 0){
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 	
 					header("Location: administrador/modificar_grupos.php?id=$id&msg=1");
 				}else{
@@ -191,7 +220,11 @@ require_once 'config/conexion1.php';
 						$consulta1 = pg_query($dbconn,"SELECT * FROM grupos_guardia WHERE id = $id");
 						$result2 = pg_fetch_array($consulta1);
 	
+<<<<<<< HEAD
 						if ($result2 !== false && !empty($result2)) {
+=======
+						if ($result2 > 0) {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 	
 							if (isset($_POST['id'])) {					
 								// Actualiza datos del registro de Pariente

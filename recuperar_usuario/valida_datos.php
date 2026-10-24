@@ -11,7 +11,11 @@
   
     $result = pg_num_rows($resultado1);
   
+<<<<<<< HEAD
         if ($result !== false && !empty($result)){
+=======
+        if($result != 0 ){
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
             header("Location: valida_pregunta.php?cedula=$cedula");
         }else{
             header("Location: valida_datos.php?msg=1");
@@ -110,13 +114,21 @@
 
           <div class="" align="center">
               <?php
+<<<<<<< HEAD
               $msg = $_GET['msg'] ?? '';
               if ($msg == "1") {
+=======
+              if (($_GET['msg'] ?? '') == "1") {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                 echo '<div class="alert alert-danger alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Alguno de los datos no coinciden</strong></div>';
               }
+<<<<<<< HEAD
               if ($msg == "2") {
+=======
+              if (($_GET['msg'] ?? '') == "2") {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                 echo '<div class="alert alert-primary alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Datos usuario Validos!!!</strong></div>';

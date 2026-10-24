@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
 (function(){
 
 var input = document.getElementById('usuario_acceso');
@@ -24,6 +25,32 @@ if (input) {
 }
 
 })();
+=======
+function(){
+
+var input = document.getElementById('usuario_acceso');
+input.oninvalid = function(event) {
+    event.target.setCustomValidity('intenta probar desbloqueando Mayús');
+}
+
+
+
+var input = document.getElementById('usuario_acceso');
+var form  = document.getElementById('form');
+var elem               = document.createElement('div');
+    elem.id            = 'notify';
+    elem.style.display = 'none';
+    form.appendChild(elem);
+    
+    input.addEventListener('input', function(event){
+    if ( 'block' === elem.style.display ) {
+        input.className = '';
+        elem.style.display = 'none';
+    }
+});
+
+}
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 $(function(){
 // *******************************

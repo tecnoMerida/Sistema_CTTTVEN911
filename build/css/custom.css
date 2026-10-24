@@ -802,7 +802,11 @@
   content: "\e260"; }
 
 .left_col {
+<<<<<<< HEAD
   background: linear-gradient(180deg, #3d4248 0%, #292d32 30%, #1a1c1e 65%, #0e0f10 100%); }
+=======
+  background: #2A3F54; }
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 .container {
   width: 100%;
@@ -986,8 +990,13 @@
 
 .nav_menu {
   float: left;
+<<<<<<< HEAD
   background: linear-gradient(90deg, #3a3f45 0%, #25282c 45%, #141618 80%, #0c0d0e 100%);
   border-bottom: 1px solid #141618;
+=======
+  background: #EDEDED;
+  border-bottom: 1px solid #D9DEE4;
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
   margin-bottom: 10px;
   width: 100%;
   position: relative; }
@@ -1031,7 +1040,11 @@ body .container.body .right_col {
 .nav_title {
   width: 230px;
   float: left;
+<<<<<<< HEAD
   background: #3d4248;
+=======
+  background: #2A3F54;
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
   border-radius: 0;
   height: 57px;
   padding: 0px; }
@@ -1152,7 +1165,11 @@ body .container.body .right_col {
 
 body {
   color: #73879C;
+<<<<<<< HEAD
   background: linear-gradient(180deg, #3d4248 0%, #292d32 30%, #1a1c1e 65%, #0e0f10 100%);
+=======
+  background: #2A3F54;
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
   font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
   font-size: 13px;
   font-weight: 400;
@@ -2242,11 +2259,18 @@ span.right {
   bottom: 0px;
   clear: both;
   display: block;
+<<<<<<< HEAD
   padding: 8px 10px;
   position: fixed;
   width: 230px;
   background: #0e0f10;
   border-top: 1px solid rgba(255, 255, 255, 0.12); }
+=======
+  padding: 5px 0 0 0;
+  position: fixed;
+  width: 230px;
+  background: #2A3F54; }
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 .sidebar-footer a {
   padding: 7px 0 3px;
@@ -4969,5 +4993,8 @@ ul.notifications {
 
 .calendar-exibit .calendar-table {
   padding: 0 0 4px 0; }
+<<<<<<< HEAD
 
 .close-link { display: none !important; }
+=======
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885

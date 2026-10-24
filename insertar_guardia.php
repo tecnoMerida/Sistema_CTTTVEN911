@@ -4,9 +4,13 @@ date_default_timezone_set('America/Caracas');
 
 require('cookie/cookie.php');
 
+<<<<<<< HEAD
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+=======
+session_start();
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
   if(!isset($_SESSION['tipo_rol_id'])){
                 header ("Location: index.php?error=fuera");
         }else{
@@ -14,15 +18,24 @@ if (session_status() === PHP_SESSION_NONE) {
             if($_SESSION['tipo_rol_id'] != 2){
                 header('location: administrador/principal.php?error=no');
             }else {
+<<<<<<< HEAD
                 $post_usuario = $_POST['usuario'] ?? '';
                 $post_clave = $_POST['contrasena'] ?? '';
                 if ($post_usuario == ($usuario ?? '') && $post_clave == ($clave ?? '')) {
+=======
+                if (($_POST['usuario'] ?? '') == ($usuario ?? '') && ($_POST['contrasena'] ?? '') == ($clave ?? '')) {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 
 
 // Traer datos por metodo POST
+<<<<<<< HEAD
 	$accion = $_GET['ac'] ?? '';
 	extract ($_POST, EXTR_SKIP);
+=======
+	$accion = $_GET['ac'];
+	extract ($_POST);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 // Conexion con la base de datos
 require_once 'config/conexion1.php';
@@ -46,6 +59,7 @@ if(isset($_POST)){ // Asignamos valores a las variables del POST
               $fecha_sol = $_POST['fecha_sol'];
               $hora_sol = $_POST['hora_sol'];
               $hora_cierre_sol = $_POST['hora_cierre_sol'];
+<<<<<<< HEAD
               $sector_sol = strtoupper($_POST['sector_sol'] ?? '');
               $punto_referencia_sol = strtoupper($_POST['punto_referencia_sol'] ?? '');
               
@@ -86,6 +100,14 @@ if(isset($_POST)){ // Asignamos valores a las variables del POST
               $guardias_id = $_POST['guardias_id'];
               $estatus_solicitud_id = $_POST['estatus_solicitud_id'];
               $fecha_creacion_sol = date("Y/n/j H:i:s");
+=======
+              $sector_sol = strtoupper($_POST['sector_sol']);
+              $punto_referencia_sol = strtoupper($_POST['punto_referencia_sol']);
+              $parroquias_id = $_POST['parroquias_id'];
+              $guardias_id = $_POST['guardias_id'];
+              $estatus_solicitud_id = $_POST['estatus_solicitud_id'];
+              $fecha_creacion_sol = date("Y/n/j H:m:s");
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
               // Tabla "Solicitud Atensión"
               $detalles_solicitud = strtoupper($_POST['detalles_solicitud']);
@@ -125,8 +147,13 @@ if(isset($_POST)){ // Asignamos valores a las variables del POST
               $solicitante_id = $reg01['id'];
 
 
+<<<<<<< HEAD
               // Inserta Nuevo registro de solicitudes con Cuadrante de Paz
               $solicitud = "INSERT INTO public.solicitudes(tiempo_apertura_sol, fecha_sol, hora_sol, hora_cierre_sol, sector_sol, punto_referencia_sol, parroquias_id, solicitante_id, guardias_id, estatus_solicitud_id, fecha_creacion_sol, cuadrante, organismo_cuadrante, telefono_cuadrante) VALUES ('$tiempo_apertura_sol','$fecha_sol','$hora_sol','$hora_cierre_sol','$sector_sol','$punto_referencia_sol','$parroquias_id','$solicitante_id','$guardias_id','$estatus_solicitud_id','$fecha_creacion_sol','$cuadrante','$organismo_cuadrante','$telefono_cuadrante')";
+=======
+              // Inserta Nuevo registro de solicitudes
+              $solicitud = "INSERT INTO public.solicitudes(tiempo_apertura_sol, fecha_sol, hora_sol, hora_cierre_sol, sector_sol, punto_referencia_sol, parroquias_id, solicitante_id, guardias_id, estatus_solicitud_id, fecha_creacion_sol) VALUES ('$tiempo_apertura_sol','$fecha_sol','$hora_sol','$hora_cierre_sol','$sector_sol','$punto_referencia_sol','$parroquias_id','$solicitante_id','$guardias_id','$estatus_solicitud_id','$fecha_creacion_sol')";
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
               $result2 = pg_query($dbconn, $solicitud) or die('ERROR AL INSERTAR DATOS: ' . pg_last_error());
 
@@ -179,9 +206,22 @@ if(isset($_POST)){ // Asignamos valores a las variables del POST
             $fecha_sol = $_POST['fecha_sol'];
             $hora_sol = $_POST['hora_sol'];
             $hora_cierre_sol = date('H:i:s');
+<<<<<<< HEAD
             $tiempo_respuesta1 = $_POST['tiempo_respuesta_sol'];
             $tiempo_respuesta2 = $_POST['tiempo_respuesta_sol1'];
             $tiempo_respuesta = '' . $tiempo_respuesta1 . ':' . $tiempo_respuesta2 . '';
+=======
+            $tiempo_respuesta1 = $_POST['tiempo_respuesta_sol'] ?? '';
+            $tiempo_respuesta2 = $_POST['tiempo_respuesta_sol1'] ?? '';
+            $tiempo_respuesta = '' . $tiempo_respuesta1 . ':' . $tiempo_respuesta2 . '';
+            if ($tiempo_respuesta1 === '' && $tiempo_respuesta2 === '') {
+              // El formulario de cierre actual (form_registro_cierre_solicitud01.php) ya no envia
+              // estos campos: se calcula igual que en insertar_guardia_desp.php
+              $horax7 = date_diff(new DateTime(date('H:i:s')), new DateTime($hora_sol ?: 'now'));
+              $tiempo_respuesta = $horax7->format('%H:%I:%s');
+              $tiempo_respuesta_sol = 1;
+            }
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
             $sector_sol = strtoupper($_POST['sector_sol']);
             $punto_referencia_sol = strtoupper($_POST['punto_referencia_sol']);
             $parroquias_id = $_POST['parroquias_id'];
@@ -287,9 +327,14 @@ if(isset($_POST)){ // Asignamos valores a las variables del POST
                   $tiempo_respuesta = ''.$tiempo_resp.':'.$tiempo_resp1.'';
                 $organismos = '';
                     if (isset ($_POST['organismos'])){
+<<<<<<< HEAD
                         $formato1 = '';
                         foreach( $_POST['organismos'] as $id ){
                           $formato1 = ($formato1 ?? '') . ' '.$id;
+=======
+                        foreach( $_POST['organismos'] as $id ){
+                          $formato1 = $formato1.' '.$id;
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                         }
                     $organismos = implode(', ', $_POST['organismos']);
                     }

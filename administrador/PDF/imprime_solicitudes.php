@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
   $id = $_REQUEST['id'] ?? ($_GET['id'] ?? 0);
   $num_sol = $_REQUEST['sol'] ?? '';
 
@@ -7,10 +8,21 @@ require_once('plantilla.php');
 
 if (!empty($id) && is_numeric($id)){
     $id = intval($id);
+=======
+  $id = $_REQUEST['id'];
+  $id = $_GET['id'];
+  $num_sol = $_REQUEST['sol'];
+
+require_once('../../config/conexion1.php');
+require('plantilla.php');
+
+if ($id != 0){
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 	///////////////////////////////////				CONSULTAS			///////////////////////////
 	//consulta 1 - registro de solicitudes
       $result = pg_query($dbconn, "SELECT solicitudes.id, solicitudes.numero_sol, solicitudes.tiempo_apertura_sol, solicitudes.fecha_sol, solicitudes.hora_sol, solicitudes.hora_cierre_sol, solicitudes.tiempo_respuesta_sol, solicitudes.sector_sol, solicitudes.punto_referencia_sol, solicitudes.parroquias_id, solicitudes.solicitante_id, solicitudes.guardias_id, solicitudes.estatus_solicitud_id, solicitudes.fecha_creacion_sol, solicitudes.tiempo_respuesta, solicitante.id, solicitante.p_nombre_sol, solicitante.p_apellido_sol, solicitante.telefono_celular_sol, solicitante.motivo_solicitud_id, solicitante.organismos_solicitud_id, solicitud_atencion.detalles_solicitud, solicitud_atencion.procedimiento_solicitud, solicitud_atencion.num_fallecidos, solicitud_atencion.num_lesionados, solicitud_atencion.num_heridos, solicitud_atencion.funcionario, solicitud_atencion.amigo171, solicitud_atencion.motos, solicitud_atencion.vehiculos,solicitud_atencion.solicitudes_id, solicitud_atencion.direccion_solicitud, solicitud_atencion.despachador_solicitud, solicitud_atencion.operador_solicitud, solicitud_atencion.num_motos, solicitud_atencion.num_vehiculos FROM public.solicitudes INNER JOIN solicitante ON solicitudes.solicitante_id = solicitante.id INNER JOIN public.solicitud_atencion ON solicitud_atencion.solicitudes_id = solicitudes.id WHERE solicitudes.id = $id");
 
+<<<<<<< HEAD
       $reg = ($result && pg_num_rows($result) > 0) ? pg_fetch_array($result) : null;
       if (!$reg) {
           die("Solicitud no encontrada.");
@@ -25,6 +37,19 @@ if (!empty($id) && is_numeric($id)){
         $result_orgsol = $org_solicitud ? pg_query($dbconn, "SELECT * FROM public.organismos_solicitud WHERE id = $org_solicitud") : null;
 
                 $reg_orgsol = ($result_orgsol && pg_num_rows($result_orgsol) > 0) ? pg_fetch_array($result_orgsol) : [];
+=======
+      $reg=pg_fetch_array($result);
+
+                $dato = $reg['fecha_creacion_sol'];
+                $fecha = date('d-m-Y',strtotime($dato));
+                $hora = date('H:i:s',strtotime($dato));
+
+    //consulta 2 - organismos solicitante
+        $org_solicitud = $reg['organismos_solicitud_id'];
+        $result_orgsol = pg_query($dbconn, "SELECT * FROM public.organismos_solicitud WHERE id = $org_solicitud");
+
+                $reg_orgsol=pg_fetch_array($result_orgsol);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
     // consulta 3 - registro de guardia
     $guardia = $reg['guardias_id'];
@@ -40,9 +65,20 @@ if (!empty($id) && is_numeric($id)){
 
     //consulta 5 - sector solicitud
     $sector = $reg['sector_sol'];
+<<<<<<< HEAD
             $result_sector = pg_query($dbconn, "SELECT * FROM public.sectores WHERE id = $sector");
                           
                 $reg_sector=pg_fetch_array($result_sector);
+=======
+            // sector_sol guarda el id del sector (registros nuevos) o su nombre (registros viejos)
+            if (ctype_digit((string) $sector)) {
+              $result_sector = pg_query($dbconn, "SELECT * FROM public.sectores WHERE id = $sector");
+              $reg_sector = pg_fetch_array($result_sector);
+            } else {
+              $reg_sector = ['nombre_sector' => (string) $sector];
+
+            }
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
     //consulta 5 - parroquia solicitud
     $parroquia = $reg['parroquias_id'];
@@ -75,6 +111,7 @@ if (!empty($id) && is_numeric($id)){
                 $reg_operador=pg_fetch_array($result_operador);
 
     //consulta 10 - organismos en sitio
+<<<<<<< HEAD
     $organismos_en_sitio = [];
     $consulta_org_sitio = pg_query($dbconn, "SELECT solicitudes_organismos_solicitud.organismos_solicitud_id, organismos_solicitud.nombre_org FROM public.solicitudes_organismos_solicitud INNER JOIN public.organismos_solicitud ON organismos_solicitud.id = solicitudes_organismos_solicitud.organismos_solicitud_id WHERE solicitudes_organismos_solicitud.solicitudes_id = $id");
     if ($consulta_org_sitio) {
@@ -82,6 +119,34 @@ if (!empty($id) && is_numeric($id)){
             $organismos_en_sitio[] = strtoupper($r_org['nombre_org']);
         }
     }
+=======
+                   $cadena = ''; // bloque de depuracion inactivo: los organismos en sitio se dibujan mas abajo con $reg[0]
+                    $array = explode(",", $cadena);
+
+                        foreach( $array as $id ){
+                          $id = trim($id);
+                          if (!ctype_digit($id)) { continue; }
+                          $formato1 = $formato1.' '.$id;
+                        
+                      // Cunsulta el ID de los Bienes registrados
+                    $consulta1 = pg_query($dbconn, "SELECT solicitudes_organismos_solicitud.organismos_solicitud_id, organismos_solicitud.nombre_org FROM public.solicitudes_organismos_solicitud INNER JOIN public.organismos_solicitud ON organismos_solicitud.id = solicitudes_organismos_solicitud.organismos_solicitud_id WHERE solicitudes_organismos_solicitud.solicitudes_id = $id");
+                    $reg1 = pg_fetch_assoc($consulta1);
+
+                       $total_rows1 = pg_num_rows($consulta1);
+
+                       if( $total_rows1 != 0){
+ 
+                     //impresion de los datos.
+                          do
+                            { 
+
+                    	echo "".strtoupper($reg1['nombre_org']).", ";
+
+                            } while ( $reg1 = pg_fetch_array ($consulta1));
+                            pg_free_result($consulta1);
+                              }
+                          }
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
     //consulta 11 - personal en registros de guardia
     $usuario_entrada = $reg_guardia['usuario_entrada_id'];
@@ -270,10 +335,44 @@ $pdf ->Cell(60,7,utf8_decode('Tiempo de Respuesta:'),0,0);
 $pdf ->Cell(110,7,utf8_decode(''.$horas.' horas con '.$minutos.' minutos'),0,1,'L');
 
 
+<<<<<<< HEAD
 $pdf->SetX(20);
 $pdf->SetFont('Arial','B',14);
 $pdf ->Cell(60,7,utf8_decode('Organismos en sitio:'),0,0);
 $greeting = implode(", ", $organismos_en_sitio);
+=======
+                   $cadena = $reg[0];
+                    $array = explode(", ", $cadena);
+
+                        foreach( $array as $id ){
+                          $formato1 = $formato1.' '.$id;
+                        
+                      // Cunsulta el ID de los Bienes registrados
+                    $consulta1 = pg_query($dbconn, "SELECT solicitudes_organismos_solicitud.organismos_solicitud_id, organismos_solicitud.nombre_org FROM public.solicitudes_organismos_solicitud INNER JOIN public.organismos_solicitud ON organismos_solicitud.id = solicitudes_organismos_solicitud.organismos_solicitud_id WHERE solicitudes_organismos_solicitud.solicitudes_id = $id");
+                    $reg1 = pg_fetch_assoc($consulta1);
+
+                       $total_rows1 = pg_num_rows($consulta1);
+
+$pdf->SetX(20);
+$pdf->SetFont('Arial','B',14);
+$pdf ->Cell(60,7,utf8_decode('Organismos en sitio:'),0,0);
+
+                       if( $total_rows1 != 0){
+			 
+			 $greeting = '';
+    
+                     //impresion de los datos.
+                          do
+                            { 
+
+						$greeting .= strtoupper($reg1['nombre_org']);
+
+
+                            } while ( $reg1 = pg_fetch_array ($consulta1));
+                            pg_free_result($consulta1);
+                              }
+                          }
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 $pdf ->MultiCell(110,7,utf8_decode(''.$greeting.''),0,1);
 
 $pdf->SetX(20);
@@ -346,6 +445,7 @@ $pdf->Cell(170,8,utf8_decode(''),0,1);
 *   provenientes de la tabla reporte_solicitudes
 *
 */
+<<<<<<< HEAD
 }elseif (!empty($num_sol)){
     //consulta 1 - registro de reporte de solicitudes
     $num_sol_esc = pg_escape_string($dbconn, (string)$num_sol);
@@ -381,6 +481,41 @@ $pdf->Cell(170,8,utf8_decode(''),0,1);
     $reg_org = ($result_org && pg_num_rows($result_org) > 0) ? pg_fetch_array($result_org) : [];
 }else{
     die("Parámetros de solicitud no especificados.");
+=======
+}else{
+    //consulta 1 - registro de reporte de solicitudes
+            $result = pg_query($dbconn, "SELECT * FROM public.reporte_solicitudes WHERE numero_solicitud = $num_sol");
+
+            $reg=pg_fetch_array($result);
+
+        $dato = $reg['fecha_solicitud'];
+        $fecha = date('d-m-Y',strtotime($dato));
+        $hora = $reg['hora_solicitud'];
+
+    // consulta 2 - registro de guardia
+    $guardia = $reg['guardias_id'];
+            $result_guardia = pg_query($dbconn, "SELECT * FROM public.guardias WHERE id = $guardia");
+                          
+                $reg_guardia=pg_fetch_array($result_guardia);
+
+    //consulta 3 - personal en registros de guardia
+    $usuario_entrada = $reg_guardia['usuario_entrada_id'];
+            $result_personal = pg_query($dbconn, "SELECT * FROM public.personal WHERE cedula = $usuario_entrada");
+                          
+                $reg_persona=pg_fetch_array($result_personal);
+
+    //consulta 4 - cargos de personal en registros de guardia
+    $cargo = $reg_persona['cargos_id'];
+            $result_cargo = pg_query($dbconn, "SELECT * FROM public.cargos WHERE id = $cargo");
+                          
+                $reg_cargo=pg_fetch_array($result_cargo);
+
+    //consulta 5 - organismo de personal en registros de guardia
+    $organismo = $reg_persona['organismos_id'];
+            $result_org = pg_query($dbconn, "SELECT * FROM public.organismos WHERE id = $organismo");
+                          
+                $reg_org=pg_fetch_array($result_org);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 /*
     //consulta 6 - parroquia solicitud
     $parroquia = $reg['parroquia'];
@@ -658,4 +793,8 @@ require('directivo.php');
 
 $pdf->Output();
 
+<<<<<<< HEAD
 ?>
+=======
+?>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885

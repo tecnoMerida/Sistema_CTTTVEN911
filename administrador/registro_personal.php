@@ -1,9 +1,13 @@
 <?php
 require('../cookie/cookie.php');
 
+<<<<<<< HEAD
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+=======
+session_start();
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 if (!isset($_SESSION['tipo_rol_id'])) {
   header("Location: ../index.php?error=fuera");
 } else {
@@ -13,7 +17,11 @@ if (!isset($_SESSION['tipo_rol_id'])) {
   } else {
     if (($_POST['usuario'] ?? '') == ($usuario ?? '') && ($_POST['contrasena'] ?? '') == ($clave ?? '')) {
 
+<<<<<<< HEAD
       extract($_GET, EXTR_SKIP);
+=======
+      extract($_GET);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
       // Conexion a la base de datos
       include_once '../config/conexion1.php';
@@ -24,7 +32,11 @@ if (!isset($_SESSION['tipo_rol_id'])) {
 
       $cedula1 = $regid['cedula'];
 
+<<<<<<< HEAD
       $cedula_consultada = $_GET['cedula_consultada'] ?? '';
+=======
+      $cedula_consultada=$_GET['cedula_consultada'];
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 ?>
 
       <!-- ********** MEMBRETE SUPERIOR ********* -->

@@ -1,9 +1,13 @@
 <?php
 require('../cookie/cookie.php');
 
+<<<<<<< HEAD
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+=======
+session_start();
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
   if(!isset($_SESSION['tipo_rol_id'])){
                 header ("Location: ../index.php?error=fuera");
         }else{
@@ -17,21 +21,33 @@ if (session_status() === PHP_SESSION_NONE) {
 ///////////////////      Realizar Busqueda Y CONSULTA del "BOTON CONSULTAR"       //////////////////////////////////
 
 if (isset($_REQUEST['consultar'])) {
+<<<<<<< HEAD
   $cedula = $_REQUEST['cedula_consultada'] ?? '';
+=======
+  $cedula = $_REQUEST['cedula_consultada'];
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
   $consulta1 = "SELECT * FROM personal WHERE cedula = $cedula ";  
   $resultado1 = pg_query($dbconn, $consulta1);
 
   $result = pg_num_rows($resultado1);
 
+<<<<<<< HEAD
       if ($result !== false && !empty($result)){
+=======
+      if($result != 0 ){
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
         header("Location: consulta_registro_personal.php?msg=1");
       }else{
         header("Location: registro_personal.php?cedula_consultada=$cedula");
       }
 }
 
+<<<<<<< HEAD
 $cedula11 = $_REQUEST['cedula_consultada'] ?? '';
+=======
+$cedula11 = $_REQUEST['cedula_consultada'];
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 ?>
 
 <!-- ****** ESTILOS PROPIOS ****** -->
@@ -71,6 +87,11 @@ $cedula11 = $_REQUEST['cedula_consultada'] ?? '';
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
+<<<<<<< HEAD
+=======
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                     </ul>
                     <div class="clearfix"></div>
                   </div>

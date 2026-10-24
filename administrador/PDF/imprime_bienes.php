@@ -1,16 +1,27 @@
 <?php
+<<<<<<< HEAD
   $id = intval($_REQUEST['id'] ?? ($_GET['id'] ?? 0));
+=======
+  $id = $_REQUEST['id'];
+  $id = $_GET['id'];
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 require_once('../../config/conexion1.php');
 require('plantilla.php');
 
+<<<<<<< HEAD
 if (!$id) {
     die("ID de bien no especificado.");
 }
+=======
+
+
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 	///////////////////////////////////				CONSULTAS			//////////////////////////////////////////////
 	//consulta 1
 	$bienes1 = pg_query($dbconn, "SELECT * FROM bienes WHERE id = $id ");		
+<<<<<<< HEAD
 	$reg = ($bienes1 && pg_num_rows($bienes1) > 0) ? pg_fetch_array($bienes1) : null;
 	if (!$reg) {
 	    die("Bien mueble no encontrado.");
@@ -27,6 +38,22 @@ if (!$id) {
 	    //consulta 3
 		$coordinador1 = pg_query($dbconn, "SELECT * FROM director WHERE cargo_dir LIKE '%DIRECTOR%' ");        
 		$coord1 = ($coordinador1 && pg_num_rows($coordinador1) > 0) ? pg_fetch_array($coordinador1) : [];
+=======
+	$reg = pg_fetch_array($bienes1);
+
+
+	$fecha_a = $reg['fecha_creacion'];
+   $now1 = new DateTime($fecha_a);
+   $fecha_a1=$now1->format('d-m-Y');
+
+	//consulta 2
+	$consulta = pg_query($dbconn,"SELECT * FROM organismos WHERE id = $id");
+	$reg1= pg_fetch_array($consulta);
+
+	    //consulta 3
+		$coordinador1 = pg_query($dbconn, "SELECT * FROM director WHERE cargo_dir LIKE '%DIRECTOR%' ");        
+		$coord1 = pg_fetch_array($coordinador1);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 
 $pdf = new PDF('P','mm','A4');
@@ -118,8 +145,14 @@ $pdf ->Cell(45,7,utf8_decode('Descripción: '),1,0);
 $pdf->SetFont('Arial','B',12);
 $pdf ->MultiCell(85,7,utf8_decode(''.strtoupper($reg['descripcion_b']).''),1,1);
 
+<<<<<<< HEAD
 $fecha_i = $reg['fecha_ingreso_b'] ?? null;
    $fecha_i1 = $fecha_i ? (new DateTime($fecha_i))->format('d-m-Y') : '';
+=======
+$fecha_i = $reg['fecha_ingreso_b'];
+   $now1 = new DateTime($fecha_i);
+   $fecha_i1=$now1->format('d-m-Y');
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 $pdf->SetX(40);
 $pdf->SetFont('Arial','',12);
 $pdf ->Cell(45,7,utf8_decode('Fecha de Ingreso: '),1,0);
@@ -198,8 +231,14 @@ if($reg['estado_bien_id'] == 1) {
 		$pdf ->Cell(85,7,utf8_decode('DESINCORPORADO'),1,1,'C');
 	}
 
+<<<<<<< HEAD
 $fecha_i2 = $reg['fecha_estado'] ?? null;
    $fecha_i22 = $fecha_i2 ? (new DateTime($fecha_i2))->format('d-m-Y') : '';
+=======
+$fecha_i2 = $reg['fecha_estado'];
+   $now2 = new DateTime($fecha_i2);
+   $fecha_i22=$now2->format('d-m-Y');
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 $pdf->SetX(40);
 $pdf->SetFont('Arial','',12);
 $pdf ->Cell(45,7,utf8_decode('Fecha de Estado: '),1,0);

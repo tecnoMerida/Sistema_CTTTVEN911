@@ -1,9 +1,13 @@
 <?php
 require('cookie/cookie.php');
 
+<<<<<<< HEAD
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+=======
+session_start();
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 if (!isset($_SESSION['tipo_rol_id'])) {
   header("Location: index.php?error=fuera");
 } else {
@@ -17,8 +21,13 @@ if (!isset($_SESSION['tipo_rol_id'])) {
       date_default_timezone_set('America/Caracas');
 
       // Traer datos por metodo POST
+<<<<<<< HEAD
       $accion = $_GET['ac'] ?? '';
       extract($_POST, EXTR_SKIP);
+=======
+      $accion = $_GET['ac'];
+      extract($_POST);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
       // Conexion con la base de datos
       require_once 'config/conexion1.php';
@@ -41,6 +50,7 @@ if (!isset($_SESSION['tipo_rol_id'])) {
               $fecha_sol = $_POST['fecha_sol'];
               $hora_sol = $_POST['hora_sol'];
               $hora_cierre_sol = $_POST['hora_cierre_sol'];
+<<<<<<< HEAD
               $sector_sol = strtoupper($_POST['sector_sol'] ?? '');
               $punto_referencia_sol = strtoupper($_POST['punto_referencia_sol'] ?? '');
               $solicitante_id = $reg01['id'] ?? 0;
@@ -82,6 +92,23 @@ if (!isset($_SESSION['tipo_rol_id'])) {
               $guardias_id = $_POST['guardias_id'];
               $estatus_solicitud_id = $_POST['estatus_solicitud_id'];
               $fecha_creacion_sol = date("Y/n/j H:i:s");
+=======
+              $sector_sol = strtoupper($_POST['sector_sol']);
+              $punto_referencia_sol = strtoupper($_POST['punto_referencia_sol']);
+              $solicitante_id = $reg01['id'];
+
+              $consulta_sector = pg_query($dbconn, "SELECT * FROM sectores WHERE id = $sector_sol");
+              $reg_prrq = pg_fetch_array($consulta_sector);
+              if ($reg_prrq != 0){
+              $parroquias_id = $reg_prrq['parroquias_id'];
+            }else{
+              $parroquias_id = '00';
+            } 
+
+              $guardias_id = $_POST['guardias_id'];
+              $estatus_solicitud_id = $_POST['estatus_solicitud_id'];
+              $fecha_creacion_sol = date("Y/n/j H:m:s");
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
               // Tabla "Solicitud Atensión"
               $detalles_solicitud = strtoupper($_POST['detalles_solicitud']);
@@ -90,7 +117,11 @@ if (!isset($_SESSION['tipo_rol_id'])) {
               $num_lesionados = 0;
               $num_heridos = 0;
               $funcionario = $_POST['funcionario'];
+<<<<<<< HEAD
               $amigo171 = $_POST['amigo171'];
+=======
+                  $amigo171 = $_POST['amigo171'];
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
               $motos = 0;
               $vehiculos = 0;
               $direccion_solicitud = strtoupper($_POST['direccion_solicitud']);
@@ -104,7 +135,11 @@ if (!isset($_SESSION['tipo_rol_id'])) {
               $nombre_esquema = 'Nuevas Solicitudes';
               $nombre_tabla = 'solicitudes';
               $proceso = 'Insertar';
+<<<<<<< HEAD
               $valor_nuevo = '' . $_POST['tiempo_apertura_sol'] . ', ' . $_POST['fecha_sol'] . ', ' . $_POST['hora_sol'] . ', ' . $_POST['p_nombre_sol'] . ', ' . $_POST['p_apellido_sol'] . ', ' . $_POST['telefono_celular_sol'] . ', ' . $_POST['organismo_solicitante_id'] . ', ' . $_POST['motivo_solicitud_id'] . ', ' . $sector_sol . ', ' . $punto_referencia_sol . ', ' . $parroquias_id . ', ' . $guardias_id . ', ' . $estatus_solicitud_id . ', ' . $direccion_solicitud . ', ' . $operador_solicitud . ', Cuadrante:' . $cuadrante . ', Organismo:' . $organismo_cuadrante . ', Tel:' . $telefono_cuadrante . '';
+=======
+              $valor_nuevo = '' . $_POST['tiempo_apertura_sol'] . ', ' . $_POST['fecha_sol'] . ', ' . $_POST['hora_sol'] . ', ' . $_POST['p_nombre_sol'] . ', ' . $_POST['p_apellido_sol'] . ', ' . $_POST['telefono_celular_sol'] . ', ' . $_POST['organismo_solicitante_id'] . ', ' . $_POST['motivo_solicitud_id'] . ', ' . $_POST['sector_sol'] . ', ' . $_POST['punto_referencia_sol'] . ', ' . $_POST['parroquias_id'] . ', ' . $_POST['guardias_id'] . ', ' . $_POST['estatus_solicitud_id'] . ', ' . $_POST['direccion_solicitud'] . ', ' . $_POST['operador_solicitud'] . '';
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
               // Inserta nuevo registro de solicitante
               $solicitante = "INSERT INTO public.solicitante( p_nombre_sol, p_apellido_sol, telefono_celular_sol, motivo_solicitud_id, organismos_solicitud_id) VALUES ('$p_nombre_sol','$p_apellido_sol','$telefono_celular_sol','$motivo_solicitud_id','$organismos_solicitud_id')";
@@ -120,8 +155,14 @@ if (!isset($_SESSION['tipo_rol_id'])) {
 
               $solicitante_id = $reg01['id'];
 
+<<<<<<< HEAD
               // Inserta Nuevo registro de solicitudes con Cuadrante de Paz
               $solicitud = "INSERT INTO public.solicitudes(tiempo_apertura_sol, fecha_sol, hora_sol, hora_cierre_sol, sector_sol, punto_referencia_sol, parroquias_id, solicitante_id, guardias_id, estatus_solicitud_id, fecha_creacion_sol, cuadrante, organismo_cuadrante, telefono_cuadrante) VALUES ('$tiempo_apertura_sol','$fecha_sol','$hora_sol','$hora_cierre_sol','$sector_sol','$punto_referencia_sol','$parroquias_id','$solicitante_id','$guardias_id','$estatus_solicitud_id','$fecha_creacion_sol','$cuadrante','$organismo_cuadrante','$telefono_cuadrante')";
+=======
+
+              // Inserta Nuevo registro de solicitudes
+              $solicitud = "INSERT INTO public.solicitudes(tiempo_apertura_sol, fecha_sol, hora_sol, hora_cierre_sol, sector_sol, punto_referencia_sol, parroquias_id, solicitante_id, guardias_id, estatus_solicitud_id, fecha_creacion_sol) VALUES ('$tiempo_apertura_sol','$fecha_sol','$hora_sol','$hora_cierre_sol','$sector_sol','$punto_referencia_sol','$parroquias_id','$solicitante_id','$guardias_id','$estatus_solicitud_id','$fecha_creacion_sol')";
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
               $result2 = pg_query($dbconn, $solicitud) or die('ERROR AL INSERTAR DATOS: ' . pg_last_error());
 
@@ -294,7 +335,11 @@ if (!isset($_SESSION['tipo_rol_id'])) {
               $organismos = '';
               if (isset($_POST['organismos'])) {
                 foreach ($_POST['organismos'] as $id) {
+<<<<<<< HEAD
                   $formato1 = ($formato1 ?? '') . ' ' . $id;
+=======
+                  $formato1 = $formato1 . ' ' . $id;
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                 }
                 $organismos = implode(', ', $_POST['organismos']);
               }

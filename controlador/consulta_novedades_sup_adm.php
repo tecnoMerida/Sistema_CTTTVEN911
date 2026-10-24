@@ -8,6 +8,11 @@
       <ul class="nav navbar-right panel_toolbox">
         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
         </li>
+<<<<<<< HEAD
+=======
+        <li><a class="close-link"><i class="fa fa-close"></i></a>
+        </li>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
       </ul>
       <div class="clearfix"></div>
     </div>
@@ -46,7 +51,11 @@
                       $consulta_entrada = pg_query($dbconn, "SELECT id, grupos_guardia_id, fecha_asig FROM public.personal_grupos_guardia WHERE fecha_asig BETWEEN '$fecha_e' AND '$fecha_s' ");
 
                       $reg_01 = pg_fetch_assoc($consulta_entrada);
+<<<<<<< HEAD
                       $total_rows_pag = pg_fetch_all($consulta_entrada);
+=======
+                      $total_rows_pag = pg_fetch_all($consulta_entrada) ?: 0;
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
                                                     /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
@@ -127,7 +136,11 @@
                           $consulta_personal = pg_query($dbconn, "SELECT * FROM public.personal_datos $filtro ");
                           $reg_pag = pg_fetch_array($consulta_personal);
 
+<<<<<<< HEAD
                           $total_rows_pag = pg_fetch_all($consulta_personal);
+=======
+                          $total_rows_pag = pg_fetch_all($consulta_personal) ?: 0;
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
                               /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
@@ -222,7 +235,11 @@
 
                           $reg_pag = pg_fetch_array($consulta_personal);
 
+<<<<<<< HEAD
                           $total_rows_pag = pg_fetch_all($consulta_personal);
+=======
+                          $total_rows_pag = pg_fetch_all($consulta_personal) ?: 0;
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
                               /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
@@ -264,8 +281,14 @@
                           echo "Ocurrió un error en consulta.\n";
                           exit;
                         }
+<<<<<<< HEAD
                         pg_free_result($consulta);
                       }
+=======
+                        break; // PHP 7 cortaba aqui el bucle (liberaba el resultado dentro de el)
+                      }
+                      pg_free_result($consulta);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
                     }
                   }
@@ -321,7 +344,11 @@
                               $consulta_bienes = pg_query($dbconn, "SELECT * FROM public.control_bienes $filtro2 ");
                               $reg_pag = pg_fetch_array($consulta_bienes);
 
+<<<<<<< HEAD
                               $total_rows_pag = pg_fetch_all($consulta_bienes);
+=======
+                              $total_rows_pag = pg_fetch_all($consulta_bienes) ?: 0;
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                               /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
 */
@@ -338,6 +365,7 @@
                                   echo "<td>";
 
 
+<<<<<<< HEAD
                                   $cadena = $reg_pag['materiales_recibe'] ?? '';
                                   $array = array_filter(explode(",", $cadena));
                                   $bienes_txt = [];
@@ -351,6 +379,32 @@
                                     }
                                   }
                                   echo implode(", ", $bienes_txt);
+=======
+                                  $cadena = $reg_pag['materiales_recibe'];
+                                  $array = explode(",", $cadena);
+
+                                  foreach ($array as $id) {
+                                    $id = trim($id);
+                                    if (!ctype_digit($id)) { continue; } // lista vacia o con valores no numericos
+                                    $formato1 = $formato1 . ' ' . $id;
+
+                                    // Cunsulta el ID de los Bienes registrados
+                                    $consulta1 = pg_query($dbconn, "SELECT * FROM bienes WHERE id = $id");
+                                    $reg1 = pg_fetch_assoc($consulta1);
+
+                                    $total_rows1 = pg_num_rows($consulta1);
+
+                                    if ($total_rows1 != 0) {
+
+                                      //impresion de los datos.
+                                      do {
+
+                                        echo "" . strtoupper($reg1['nombre_b']) . ", ";
+                                      } while ($reg1 = pg_fetch_array($consulta1));
+                                      pg_free_result($consulta1);
+                                    }
+                                  }
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
                                   echo "</td>\n";
                                   echo "<td><a href=ver_controlBienes_entrada.php?id=" . $reg_pag['id'] . " target='_blank'><button class='btn btn-success' type='submit' action='' value='VER'>VER</button></a>\n";
@@ -421,7 +475,11 @@
                           $reg_apt = pg_fetch_array($consulta_apt);
 
 
+<<<<<<< HEAD
                           $total_rows_apertura = pg_fetch_all($consulta_apt);
+=======
+                          $total_rows_apertura = pg_fetch_all($consulta_apt) ?: 0;
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                           /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
 */
@@ -493,7 +551,11 @@
                       $consulta_solic = pg_query($dbconn, "SELECT * FROM public.guardias $filtro1");
 
                       $reg_01 = pg_fetch_array($consulta_solic);
+<<<<<<< HEAD
                       $total_rows_pag = pg_fetch_all($consulta_solic);
+=======
+                      $total_rows_pag = pg_fetch_all($consulta_solic) ?: 0;
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                       if ($total_rows_pag != 0) {
                         do {
 
@@ -504,7 +566,11 @@
                           $consulta_obs1 = pg_query($dbconn, "SELECT guardias.id, guardias.fecha_inicio_g, guardias.usuario_salida_id, guardias.usuario_entrada_id, personal.cedula, personal.organismos_id FROM public.guardias $filtro ");
                           $reg_obs = pg_fetch_array($consulta_obs1);
 
+<<<<<<< HEAD
                           $total_rows_pag = pg_fetch_all($consulta_obs1);
+=======
+                          $total_rows_pag = pg_fetch_all($consulta_obs1) ?: 0;
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                           if ($total_rows_pag != 0) {
 
                             //impresion de los datos.
@@ -519,7 +585,11 @@
                               $consulta_solicitudes = pg_query($dbconn, "SELECT solicitudes.id, solicitudes.tiempo_apertura_sol, solicitudes.hora_sol, solicitudes.guardias_id, solicitudes.fecha_creacion_sol, motivo_solicitud.nombre_motivo, personal.p_nombre, personal.p_apellido FROM public.solicitudes $filtro_solic");
                               $reg_solic = pg_fetch_array($consulta_solicitudes);
 
+<<<<<<< HEAD
                               $total_rows_pag = pg_fetch_all($consulta_solicitudes);
+=======
+                              $total_rows_pag = pg_fetch_all($consulta_solicitudes) ?: 0;
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                           /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
 */
@@ -598,7 +668,11 @@
                     $consulta_solicitudes1 = pg_query($dbconn, "SELECT numero_solicitud, fecha_solicitud, hora_solicitud, motivo_solicitud, despachador, guardias_id FROM public.reporte_solicitudes $filtro_solic1");
                     $reg_solic1 = pg_fetch_array($consulta_solicitudes1);
 
+<<<<<<< HEAD
                     $total_rows_pag1 = pg_fetch_all($consulta_solicitudes1);
+=======
+                    $total_rows_pag1 = pg_fetch_all($consulta_solicitudes1) ?: 0;
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                           /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
 */
@@ -697,7 +771,11 @@
                           $consulta_obs2 = pg_query($dbconn, "SELECT * FROM public.observaciones $filtro_obs2 ");
                           $reg_obs = pg_fetch_array($consulta_obs2);
 
+<<<<<<< HEAD
                           $total_rows_pag = pg_fetch_all($consulta_obs2);
+=======
+                          $total_rows_pag = pg_fetch_all($consulta_obs2) ?: 0;
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
                           /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
@@ -796,7 +874,11 @@
                           $consulta_estadisticas = pg_query($dbconn, "SELECT * FROM public.estadisticas_solicitud $filtro_estadisticas ");
                           $reg_estd = pg_fetch_array($consulta_estadisticas);
 
+<<<<<<< HEAD
                           $total_rows_est = pg_fetch_all($consulta_estadisticas);
+=======
+                          $total_rows_est = pg_fetch_all($consulta_estadisticas) ?: 0;
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                           /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
 */
@@ -879,6 +961,7 @@
                           while ($reg_guardia = pg_fetch_array($consulta_bienes1)) {
                             if ($reg_guardia) {
                               $id = $reg_guardia[3];
+<<<<<<< HEAD
                               $filtro2 = is_numeric($id) ? "WHERE id = '$id' " : "WHERE 1=0 ";
                               $consulta_bienes = pg_query($dbconn, "SELECT * FROM public.control_bienes $filtro2 ");
                               if ($consulta_bienes) {
@@ -886,10 +969,29 @@
                                   $dato = $reg_pag['fecha_creacion'] ?? '';
                                   $fecha = $dato ? date('Y-m-d', strtotime($dato)) : '';
                                   $hora = $dato ? date('H:i:s', strtotime($dato)) : '';
+=======
+                              $filtro2 = "WHERE id = '$id' ";
+                              $consulta_bienes = pg_query($dbconn, "SELECT * FROM public.control_bienes $filtro2 ");
+                              $reg_pag = pg_fetch_array($consulta_bienes);
+
+                              $total_rows_pag = pg_fetch_all($consulta_bienes) ?: 0;
+                              /*
+<!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
+*/
+                              if ($total_rows_pag != 0) {
+
+                                //impresion de los datos.
+                                do {
+                                  // MUESTRA LOS VALORES DE LA CONSULTAS
+                                  $dato = $reg_pag['fecha_creacion'];
+                                  $fecha = date('Y-m-d', strtotime($dato));
+                                  $hora = date('H:i:s', strtotime($dato));
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                                   echo "<tr align='center' ><td>" . $fecha . "</td>\n";
                                   echo "<td>" . $hora . "</td>\n";
                                   echo "<td>";
 
+<<<<<<< HEAD
                                   $cadena = $reg_pag['materiales_entrega'] ?? '';
                                   $array = array_filter(explode(",", $cadena));
                                   $bienes_txt = [];
@@ -916,6 +1018,52 @@
                         }
                       }
                       pg_free_result($consulta);
+=======
+
+                                  $cadena = $reg_pag['materiales_entrega'];
+                                  $array = explode(",", $cadena);
+
+                                  foreach ($array as $id) {
+                                    $id = trim($id);
+                                    if (!ctype_digit($id)) { continue; } // lista vacia o con valores no numericos
+                                    $formato1 = $formato1 . ' ' . $id;
+
+                                    // Cunsulta el ID de los Bienes registrados
+                                    $consulta1 = pg_query($dbconn, "SELECT * FROM bienes WHERE id = $id");
+                                    $reg1 = pg_fetch_assoc($consulta1);
+
+                                    $total_rows1 = pg_num_rows($consulta1);
+
+                                    if ($total_rows1 != 0) {
+
+                                      //impresion de los datos.
+                                      do {
+
+                                        echo "" . strtoupper($reg1['nombre_b']) . ", ";
+                                      } while ($reg1 = pg_fetch_array($consulta1));
+                                      pg_free_result($consulta1);
+                                    }
+                                  }
+
+                                  echo "</td>\n";
+                                  echo "<td><a href=ver_controlBienes_salida.php?id=" . $reg_pag['id'] . " target='_blank'><button class='btn btn-success' type='submit' action='' value='VER'>VER</button></a>\n";
+                                  echo "<a href=PDF/imprime_controlBienes_salida.php?id=" . $reg_pag['id'] . " target='_blank'><button class='btn btn-info' type='submit' action='' value='IMPRIMIR'>IMPRIMIR</button></a></td></tr>\n";
+                                } while ($reg_pag = pg_fetch_array($consulta_bienes));
+                                pg_free_result($consulta_bienes);
+                              } else {
+                                // si no existen datos muestra mensaje
+                                //echo "<tr><br/><td colspan='1'></td>";
+                                //echo "<td colspan='4' align='center' ><div class='alert alert-secondary msn1'><strong>No se obtuvieron resultados</strong></div></td>";
+                                //echo "<td colspan='1'></td></tr>";
+                              }
+                            }
+                          }
+                        } else {
+                          echo "Ocurrió un error en consulta.\n";
+                          exit;
+                        }
+                      }
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                     }
                   }
                   /********************************     FIN FILTRO BUSQUEDA     ************************************/
@@ -956,6 +1104,7 @@
                       $organismo = $organismo_id;
                       $filtro1 = "WHERE fecha_fin_g BETWEEN '$fecha_e' AND '$fecha_s' ";
                       $consulta_cierre = pg_query($dbconn, "SELECT * FROM public.guardias $filtro1");
+<<<<<<< HEAD
                       if ($consulta_cierre) {
                         while ($reg01 = pg_fetch_array($consulta_cierre)) {
                           if ($reg01) {
@@ -979,6 +1128,42 @@
                           }
                         }
                         pg_free_result($consulta_cierre);
+=======
+                      while ($reg01 = pg_fetch_array($consulta_cierre)) {
+                        if ($reg01) {
+                          $id = $reg01['id'];
+                          $filtro_cierre = "INNER JOIN personal ON guardias.usuario_salida_id=personal.cedula WHERE guardias.id = $id AND personal.organismos_id = $organismo ";
+                          $consulta_cierre1 = pg_query($dbconn, "SELECT guardias.id, guardias.fecha_fin_g, guardias.cierre_g, guardias.usuario_salida_id, guardias.control_bienes_id, personal.cedula, personal.organismos_id FROM public.guardias $filtro_cierre ");
+
+                          $reg_cierre = pg_fetch_array($consulta_cierre1);
+
+                          $total_rows_cierre = pg_fetch_all($consulta_cierre1) ?: 0;
+                          /*
+<!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
+*/
+                          if ($total_rows_cierre != 0) {
+
+                            //impresion de los datos.
+                            do {
+                              // MUESTRA LOS VALORES DE LA CONSULTAS
+                              $dato = $reg_cierre[1];
+                              $fecha = date('Y-m-d', strtotime($dato));
+                              $hora = date('H:i:s', strtotime($dato));
+                              echo "<tr align='center' ><td>" . $fecha . "</td>\n";
+                              echo "<td>" . $hora . "</td>\n";
+                              echo "<td>" . strtoupper($reg_cierre[2]) . "</td>\n";
+                              echo "<td><a href=ver_cierre_guardia.php?id=" . $reg_cierre['id'] . " target='_blank'><button class='btn btn-success' type='submit' action='' value='VER'>VER</button></a>\n";
+                              echo "<a href=PDF/imprime_cierre_guardia.php?id=" . $reg_cierre['id'] . " target='_blank'><button class='btn btn-info' type='submit' action='' value='IMPRIMIR'>IMPRIMIR</button></a></td></tr>\n";
+                            } while ($reg_cierre = pg_fetch_array($consulta_cierre1));
+                            pg_free_result($consulta_cierre1);
+                          } else {
+                            // si no existen datos muestra mensaje
+                            //echo "<tr><br/><td colspan='1'></td>";
+                            //echo "<td colspan='4' align='center' ><div class='alert alert-secondary msn1'><strong>No se obtuvieron resultados</strong></div></td>";
+                            //echo "<td colspan='1'></td></tr>";
+                          }
+                        }
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                       }
                     }
                   }
@@ -1021,6 +1206,7 @@
                       $organismo = $organismo_id;
                       $filtro1 = "WHERE fecha_fin BETWEEN '$fecha_e' AND '$fecha_s'";
                       $consulta_salida = pg_query($dbconn, "SELECT * FROM public.personal_grupos_guardia $filtro1");
+<<<<<<< HEAD
                       if ($consulta_salida) {
                         while ($reg_salida = pg_fetch_array($consulta_salida)) {
                           $dato = $reg_salida['fecha_fin'] ?? '';
@@ -1033,6 +1219,34 @@
                           echo "<a href=PDF/imprime_guardia_salida.php?id=" . ($reg_salida['id'] ?? '') . " target='_blank'><button class='btn btn-info' type='submit' action='' value='IMPRIMIR'>IMPRIMIR</button></a></td></tr>\n";
                         }
                         pg_free_result($consulta_salida);
+=======
+                      $reg_salida = pg_fetch_array($consulta_salida);
+
+                      $total_row_salida = pg_fetch_all($consulta_salida) ?: 0;
+                      /*
+<!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
+*/
+                      if ($total_row_salida != 0) {
+
+                        //impresion de los datos.
+                        do {
+                          // MUESTRA LOS VALORES DE LA CONSULTAS
+                          $dato = $reg_salida['fecha_fin'];
+                          $fecha = date('Y-m-d', strtotime($dato));
+                          $hora = date('H:i:s', strtotime($dato));
+                          echo "<tr align='center'><td>" . $fecha . "</td>\n";
+                          echo "<td>" . $hora . "</td>\n";
+                          echo "<td>" . $reg_salida['grupos_guardia_id'] . "</td>\n";
+                          echo "<td><a href=ver_salida_guardia.php?id=" . $reg_salida['id'] . " target='_blank'><button class='btn btn-success' type='submit' action='' value='VER'>VER</button></a>\n";
+                          echo "<a href=PDF/imprime_guardia_salida.php?id=" . $reg_salida['id'] . " target='_blank'><button class='btn btn-info' type='submit' action='' value='IMPRIMIR'>IMPRIMIR</button></a></td></tr>\n";
+                        } while ($reg_salida = pg_fetch_array($consulta_salida));
+                        pg_free_result($consulta_salida);
+                      } else {
+                        // si no existen datos muestra mensaje
+                        echo "<tr><br/><td colspan='1'></td>";
+                        echo "<td colspan='4' align='center' ><div class='alert alert-secondary msn1'><strong>No se obtuvieron resultados</strong></div></td>";
+                        echo "<td colspan='1'></td></tr>";
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                       }
                     }
                   }

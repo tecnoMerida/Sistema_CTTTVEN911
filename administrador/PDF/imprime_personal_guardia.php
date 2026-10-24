@@ -1,9 +1,15 @@
 <?php
+<<<<<<< HEAD
   $id = intval($_REQUEST['id'] ?? ($_GET['id'] ?? 0));
+=======
+  $id = $_REQUEST['id'];
+  $id = $_GET['id'];
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 require_once('../../config/conexion1.php');
 require('plantilla.php');
 
+<<<<<<< HEAD
 if (!$id) {
     die("ID no especificado.");
 }
@@ -71,6 +77,106 @@ $hora = $dato ? date('H:i:s', strtotime($dato)) : '';
     // Consulta 3 - DIRECTOR
     $coordinador1 = pg_query($dbconn, "SELECT * FROM director WHERE cargo_dir LIKE '%DIRECTOR%' ");        
     $coord1 = ($coordinador1 && pg_num_rows($coordinador1) > 0) ? pg_fetch_array($coordinador1) : [];
+=======
+
+	///////////////////////////////////				CONSULTAS			////////////////////////////
+	//consulta 1
+        $result = pg_query($dbconn, "SELECT * FROM public.personal_datos WHERE personal_grupos_guardia_id = $id");
+
+                $reg=pg_fetch_array($result);
+
+
+$grupo1 = $reg['personal_grupos_guardia_id'];
+    
+    // Consulta 2
+        $result_grupo = pg_query($dbconn, "SELECT * FROM public.personal_grupos_guardia WHERE id = $grupo1");
+
+                $reg_grupo=pg_fetch_array($result_grupo);
+
+
+// Fecha Entrada
+$dato = $reg_grupo['fecha_asig'];
+$fecha = date('d-m-Y',strtotime($dato));
+$hora = date('H:i:s',strtotime($dato));
+
+
+                // Consulta Supervisor
+                  $supervisor = $reg['personal_cedula_sup'];
+                  $result_personal = pg_query("SELECT * FROM public.personal WHERE cedula = $supervisor"); 
+                  $reg_supervisor = pg_fetch_array($result_personal);
+
+                  // Consulta Auxiliar
+                  $auxiliar = $reg['personal_cedula_aux'];
+                  $aux = pg_query("SELECT * FROM public.personal WHERE cedula = $auxiliar"); 
+                  $reg_aux = pg_fetch_array($aux);
+
+                  // Operadores de Llamadas
+                  $op1 = $reg['personal_cedula_op1'];
+                  $result_op1 = pg_query("SELECT * FROM public.personal WHERE cedula = $op1"); 
+                  $reg_op1 = pg_fetch_array($result_op1);
+
+                  $op2 = $reg['personal_cedula_op2'];
+                  $result_op2 = pg_query("SELECT * FROM public.personal WHERE cedula = $op2"); 
+                  $reg_op2 = pg_fetch_array($result_op2);
+
+                  $op3 = $reg['personal_cedula_op3'];
+                  $result_op3 = pg_query("SELECT * FROM public.personal WHERE cedula = $op3"); 
+                  $reg_op3 = pg_fetch_array($result_op3);
+
+                  $op4 = $reg['personal_cedula_op4'];
+                  $result_op4 = pg_query("SELECT * FROM public.personal WHERE cedula = $op4"); 
+                  $reg_op4 = pg_fetch_array($result_op4);
+
+                  $op5 = $reg['personal_cedula_op5'];
+                  $result_op5 = pg_query("SELECT * FROM public.personal WHERE cedula = $op5"); 
+                  $reg_op5 = pg_fetch_array($result_op5);
+
+                  $op6 = $reg['personal_cedula_op6'];
+                  $result_op6 = pg_query("SELECT * FROM public.personal WHERE cedula = $op6"); 
+                  $reg_op6 = pg_fetch_array($result_op6); 
+
+                  //Despachadores Policia Mérida
+                  $pm1 = $reg['personal_cedula_poli1'];
+                  $result_pm1 = pg_query("SELECT * FROM public.personal WHERE cedula = $pm1"); 
+                  $reg_pm1 = pg_fetch_array($result_pm1);
+
+                  $pm2 = $reg['personal_cedula_poli2'];
+                  $result_pm2 = pg_query("SELECT * FROM public.personal WHERE cedula = $pm2"); 
+                  $reg_pm2 = pg_fetch_array($result_pm2);                                    
+
+                  $pm3 = $reg['personal_cedula_poli3'];
+                  $result_pm3 = pg_query("SELECT * FROM public.personal WHERE cedula = $pm3"); 
+                  $reg_pm3 = pg_fetch_array($result_pm3);
+
+                  //Despachadores Bomberos Mérida
+                  $bm1 = $reg['personal_cedula_bomb1'];
+                  $result_bm1 = pg_query("SELECT * FROM public.personal WHERE cedula = $bm1"); 
+                  $reg_bm1 = pg_fetch_array($result_bm1);
+
+                  $bm2 = $reg['personal_cedula_bomb2'];
+                  $result_bm2 = pg_query("SELECT * FROM public.personal WHERE cedula = $bm2"); 
+                  $reg_bm2 = pg_fetch_array($result_bm2);
+
+                  $bm3 = $reg['personal_cedula_bomb3'];
+                  $result_bm3 = pg_query("SELECT * FROM public.personal WHERE cedula = $bm3"); 
+                  $reg_bm3 = pg_fetch_array($result_bm3); 
+                  
+                  //Despachadores Protección Civíl Mérida
+                  $pc1 = $reg['personal_cedula_pc1'];
+                  $result_pc1 = pg_query("SELECT * FROM public.personal WHERE cedula = $pc1"); 
+                  $reg_pc1 = pg_fetch_array($result_pc1);                                                     
+                  $pc2 = $reg['personal_cedula_pc2'];
+                  $result_pc2 = pg_query("SELECT * FROM public.personal WHERE cedula = $pc2"); 
+                  $reg_pc2 = pg_fetch_array($result_pc2);
+
+                  $pc3 = $reg['personal_cedula_pc3'];
+                  $result_pc3 = pg_query("SELECT * FROM public.personal WHERE cedula = $pc3"); 
+                  $reg_pc3 = pg_fetch_array($result_pc3);
+
+        //consulta 3
+        $coordinador1 = pg_query($dbconn, "SELECT * FROM director WHERE cargo_dir LIKE '%DIRECTOR%' ");        
+        $coord1 = pg_fetch_array($coordinador1);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 $pdf = new PDF('P','mm','A4');
 $pdf->AddPage();

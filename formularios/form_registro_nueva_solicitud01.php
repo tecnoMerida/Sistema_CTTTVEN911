@@ -1,6 +1,9 @@
+<<<<<<< HEAD
 <?php
 require_once dirname(__DIR__) . '/config/cuadrantes_helper.php';
 ?>
+=======
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                           <!--//  
                               //Seccion Primera
                               //"Solicitud"
@@ -208,6 +211,7 @@ require_once dirname(__DIR__) . '/config/cuadrantes_helper.php';
                                   </div>
                                 </div>
 
+<<<<<<< HEAD
                                 <!-- // ========================================== // -->
                                 <!-- // SECCIÓN: UBICACIÓN Y CUADRANTES DE PAZ      // -->
                                 <!-- // ========================================== // -->
@@ -301,10 +305,30 @@ require_once dirname(__DIR__) . '/config/cuadrantes_helper.php';
                                     <select id="cboSectores" class="form-control" name="sector_sol" onchange="alCambiarSector(this.value)" title="Seleccione sector en que sucede el evento de solicitud">
                                       <option value="0">-- Seleccione o Busque Sector --</option>
                                       <?php
+=======
+                                <div class="field item form-group">
+                                  <!-- // Seleccion del Sector donde ocurrio el evento //-->
+                                  <label class="col-form-label col-md-3 col-sm-3  label-align" for="cboSectores">Ubicación<span class="required">
+
+                                    </span></label>
+                                  <div class="col-md-6 col-sm-6">
+                                    <select id="cboSectores" class="form-control" name="sector_sol" title="Seleccione sector en que sucede el evento de solicitud">
+                                      <?php
+                                      /*
+                                        https://www.baulphp.com/buscador-en-select-usando-javascript-bootstrap-5/
+                                      */
+
+                                      // **************************
+                                      // MODIFICADO 03/10/2023
+                                      // **************************
+                                      // Creación y/o formación de la consulta.
+
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                                       $resultado321 = pg_query($dbconn, "SELECT sectores.id, sectores.nombre_sector, parroquias.id, parroquias.nombre_parroquia, municipios.id, municipios.nombre_municipio, estados.id, estados.nombre_estado FROM public.sectores
                                                                 INNER JOIN public.parroquias ON sectores.parroquias_id = parroquias.id
                                                                 INNER JOIN public.municipios ON parroquias.municipios_id = municipios.id
                                                                 INNER JOIN public.estados ON municipios.estados_id = estados.id
+<<<<<<< HEAD
                                                                 WHERE estados.id = 14 ORDER BY municipios.nombre_municipio, parroquias.nombre_parroquia, sectores.nombre_sector ASC");
                                       if ($resultado321) {
                                           while ($resultado = pg_fetch_array($resultado321)) {
@@ -338,10 +362,63 @@ require_once dirname(__DIR__) . '/config/cuadrantes_helper.php';
                                   <div class="col-md-6 col-sm-6">
                                     <select class="form-control" name="organismo_cuadrante" id="cboOrganismo" title="Organismo de seguridad responsable del cuadrante">
                                       <?php echo get_options_organismos_html(''); ?>
+=======
+                                                                WHERE estados.id = 14 ");
+
+                                      if (!$resultado321) {
+                                        echo "Ocurrió un error.\n";
+                                        exit;
+                                      }
+
+                                      $resultado_prrq = pg_fetch_array($resultado321);
+                                      ?>
+
+                                      <option value="00">-Seleccione Sector-</option>
+
+                                      <?php
+                                      // Validar el estatus de ejecución de la consulta.
+                                      while ($resultado = pg_fetch_array($resultado321)) {
+
+                                      ?>
+                                        <option name="id" id="valor" value="<?php echo $resultado[0] ?>"><?php echo strtoupper($resultado[1]) . ", " . strtoupper($resultado[3]) . ", " . strtoupper($resultado[5]); ?></option>
+                                      <?php } ?>
+
                                     </select>
                                   </div>
                                 </div>
 
+
+
+
+                                <div class="field item form-group">
+                                  <!--  // **********************
+                                      // MODIFICADO 05/10/2023
+                                      // ********************** -->
+                                  <!-- // Seleccion del Sector donde ocurrio el evento //-->
+                                  <label class="col-form-label col-md-3 col-sm-3  label-align" for="parroquias_id"></label>
+                                  <div class="col-md-6 col-sm-6">
+                                    <input type="hidden" class="form-control" name="parroquias_id" id="parroquias_id" value="<?php echo $resultado_prrq[2]; ?>" title="Este campo deberá de reflejar el id de la Parroquia">
+                                  </div>
+                                </div>
+
+                                <div class="field item form-group">
+                                  <!-- // Seleccion del Sector donde ocurrio el evento //-->
+                                  <label class="col-form-label col-md-3 col-sm-3  label-align" for="cboSectores">Cuadrante</label>
+                                  <div class="col-md-3 col-sm-3">
+                                    <select class="form-control" name="" id="cboOrganismo" title="Este campo deberá de reflejar el nombre del organísmo" disabled>
+                                      <option value="0">-Nombre Organismo-</option>
+                                    </select>
+                                  </div>
+
+                                  <div class="col-md-3 col-sm-3">
+                                    <select class="form-control" name="" id="cboCuadrantes" title="Este campo deberá de reflejar el número del cuadrante del sector" disabled>
+                                      <option value="0">-Número Cuadrante-</option>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
+                                    </select>
+                                  </div>
+                                </div>
+
+<<<<<<< HEAD
                                 <!-- Inputs ocultos de soporte de Cuadrante -->
                                 <input type="hidden" name="telefono_cuadrante" id="telefono_cuadrante" value="">
                                 <input type="hidden" name="parroquias_id_hidden" id="parroquias_id_hidden" value="0">
@@ -824,6 +901,8 @@ require_once dirname(__DIR__) . '/config/cuadrantes_helper.php';
                                 }
                                 </script>
 
+=======
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
                                 <div class="field item form-group">
                                   <!-- //       ingreso un Lugar o Sitio de Referencia    //-->

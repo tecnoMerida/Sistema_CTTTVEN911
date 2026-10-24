@@ -19,6 +19,11 @@
             <ul class="nav navbar-right panel_toolbox">
               <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
               </li>
+<<<<<<< HEAD
+=======
+              <li><a class="close-link"><i class="fa fa-close"></i></a>
+              </li>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
             </ul>
             <div class="clearfix"></div>
           </div>
@@ -40,17 +45,29 @@
                   <div class="col-md-3 col-sm-3"></div>
                   <div class="col-md-6 col-sm-6" align="center">
                     <?php
+<<<<<<< HEAD
                     $msg = $_GET['msg'] ?? '';
                     if ($msg == "1") {
+=======
+                    if (($_GET['msg'] ?? '') == "1") {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                       echo '<div class="alert alert-danger alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>El grupo ya existe!!!</strong></div>';
                     }
+<<<<<<< HEAD
                     if ($msg == "2") {
                       echo '<div class="alert alert-success alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Grupo registrado con EXITO!!!</strong></div>';
                     } elseif ($msg == "3") {
+=======
+                    if (($_GET['msg'] ?? '') == "2") {
+                      echo '<div class="alert alert-success alert-dismissible msn1">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Grupo registrado con EXITO!!!</strong></div>';
+                    } elseif (($_GET['msg'] ?? '') == "3") {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                       echo '<div class="alert alert-secondary alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Grupo NO registrado</strong></div>';
@@ -103,7 +120,10 @@
                             <!-- ***********************     FIN FORMULARIO BUSQUEDA DE BIENES     **************************** -->
                             <?php
                             /**********************************     FILTRO DE BUSQUEDA      ********************************/
+<<<<<<< HEAD
                             $buscar = $_REQUEST['buscar'] ?? '';
+=======
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                             if ($buscar == '') {
                               $filtro = 'ORDER BY id ASC';
                             } else {
@@ -127,7 +147,11 @@
                             $consulta_pag = pg_query($dbconn, "SELECT * FROM public.grupos_guardia $filtro ");
                             $row = pg_fetch_array($consulta_pag);
 
+<<<<<<< HEAD
                             $total_rows_pag = pg_fetch_all($consulta_pag);
+=======
+                            $total_rows_pag = pg_fetch_all($consulta_pag) ?: 0;
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
                             ?>
                             <table id="datatable" class="table table-striped table-bordered" style="width:100%">

@@ -129,9 +129,15 @@
               $resp = pg_query($dbconn, $sql) or die("Error de consulta " . __FILE__);
               while ($rm = pg_fetch_array($resp)) {
 
+<<<<<<< HEAD
                 $a = $rm["total"] + $a;
                 $e = $rm["id"];
                 $c = $rm["tipo_estatus"] + $c;
+=======
+                $a = (int) $rm["total"] + (int) ($a ?? 0);
+                $e = $rm["id"];
+                $c = (int) $rm["tipo_estatus"] + (int) ($c ?? 0);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 
                 $texto = $estatuspg[$e];

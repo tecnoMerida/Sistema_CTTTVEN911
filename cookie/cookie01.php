@@ -2,12 +2,19 @@
 // conexion a BD
 include '../config/conexion1.php';
 // Recibe datos del Index.php
+<<<<<<< HEAD
 extract($_POST, EXTR_SKIP);
 
 if (isset($_POST['usuario']) && isset($_POST['contrasena'])) {
 	if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+=======
+extract($_POST);
+
+if (isset($_POST['usuario']) && isset($_POST['contrasena'])) {
+	session_start();
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 	$usuario = $_POST['usuario'];
 	$clave = sha1($_POST['contrasena']);

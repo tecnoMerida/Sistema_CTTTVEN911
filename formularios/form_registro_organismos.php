@@ -19,6 +19,11 @@
             <ul class="nav navbar-right panel_toolbox">
               <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
               </li>
+<<<<<<< HEAD
+=======
+              <li><a class="close-link"><i class="fa fa-close"></i></a>
+              </li>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
             </ul>
             <div class="clearfix"></div>
           </div>
@@ -40,16 +45,28 @@
                   <div class="col-md-3 col-sm-3"></div>
                   <div class="col-md-6 col-sm-6" align="center">
                     <?php
+<<<<<<< HEAD
                     if ($_GET[msg] == "1") {
+=======
+                    if (($_GET['msg'] ?? '') == "1") {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                       echo '<div class="alert alert-danger alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>El organismo ya existe!!!</strong></div>';
                     }
+<<<<<<< HEAD
                     if ($_GET[msg] == "2") {
                       echo '<div class="alert alert-success alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Organismo registrado con EXITO!!!</strong></div>';
                     } elseif ($_GET[msg] == "3") {
+=======
+                    if (($_GET['msg'] ?? '') == "2") {
+                      echo '<div class="alert alert-success alert-dismissible msn1">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Organismo registrado con EXITO!!!</strong></div>';
+                    } elseif (($_GET['msg'] ?? '') == "3") {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                       echo '<div class="alert alert-secondary alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Organismo NO registrado</strong></div>';
@@ -97,6 +114,11 @@
                           <ul class="nav navbar-right panel_toolbox">
                             <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                             </li>
+<<<<<<< HEAD
+=======
+                            <li><a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                           </ul>
                           <div class="clearfix"></div>
                         </div>
@@ -134,7 +156,11 @@
                                 $consulta_pag = pg_query($dbconn, "SELECT * FROM public.organismos $filtro ");
                                 $row = pg_fetch_array($consulta_pag);
 
+<<<<<<< HEAD
                                 $total_rows_pag = pg_fetch_all($consulta_pag);
+=======
+                                $total_rows_pag = pg_fetch_all($consulta_pag) ?: 0;
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
                                 ?>
                                 <table id="datatable" class="table table-striped table-bordered" style="width:100%">
@@ -160,7 +186,11 @@
                                         //            while ($row = pg_fetch_row($result)) {
                                         echo "<tr align='center' ><td>" . $row[0] . "</td>";
                                         echo "<td>" . strtoupper($row[1]) . "</td>";
+<<<<<<< HEAD
                                         echo "<td><a href=modificar_organismo.php?id=" . $row[0] . "><button class='btn btn-primary' type='button' value='EDITAR'>EDITAR</button></a></td>\n";
+=======
+                                        echo "<td><a href=modificar_personal.php?id=" . $row[0] . " target='_blank'><button class='btn btn-primary' type='submit' action='' value='EDITAR'>EDITAR</button></a></td>\n";
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                                         echo "</tr><br/>";
                                         //            }
 

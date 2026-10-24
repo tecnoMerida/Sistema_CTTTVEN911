@@ -1,9 +1,13 @@
 <?php
 require('../cookie/cookie.php');
 
+<<<<<<< HEAD
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+=======
+session_start();
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
   if(!isset($_SESSION['tipo_rol_id'])){
                 header ("Location: ../index.php?error=fuera");
         }else{
@@ -52,6 +56,11 @@ require_once '../config/conexion1.php';
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
+<<<<<<< HEAD
+=======
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                     </ul>
                     <div class="clearfix"></div>
                   </div>
@@ -65,10 +74,15 @@ require_once '../config/conexion1.php';
                     </div>
 <!-- ***********************     FIN FORMULARIO BUSQUEDA DE BIENES     **************************** -->
             <?php
+<<<<<<< HEAD
             $por_pagina = 10;
             $pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
             $iniciar = ($pagina - 1) * $por_pagina;
             $buscar = $_REQUEST['buscar'] ?? '';
+=======
+
+            $iniciar = ($_GET['pagina']-1)*$por_pagina;
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 /**********************************     FILTRO DE BUSQUEDA      ********************************/
 if ($buscar == ''){ $filtro = 'ORDER BY id ASC'; }else{
@@ -104,7 +118,11 @@ if ($buscar != ''){ $ubicacion = $buscar; $filtro1 = "WHERE area_ubicacion LIKE 
         $consulta_pag = pg_query($dbconn,"SELECT * FROM public.bienes $filtro ");
             $reg1 = pg_fetch_array($consulta_pag);
 
+<<<<<<< HEAD
             $total_rows_pag = pg_fetch_all($consulta_pag);        
+=======
+            $total_rows_pag = pg_fetch_all($consulta_pag) ?: 0;        
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 ?>                     
                     <table id="datatable" class="table table-striped table-bordered" style="width:100%">
@@ -126,7 +144,11 @@ if ($buscar != ''){ $ubicacion = $buscar; $filtro1 = "WHERE area_ubicacion LIKE 
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
  
             <?php
+<<<<<<< HEAD
                    if( $total_rows_pag !== false && !empty($total_rows_pag)){
+=======
+                   if( $total_rows_pag != 0){
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
  
                      //impresion de los datos.
                         do
@@ -138,7 +160,11 @@ if ($buscar != ''){ $ubicacion = $buscar; $filtro1 = "WHERE area_ubicacion LIKE 
               echo "<td>".strtoupper($reg1['marca_b'])."</td>\n";
               echo "<td>".strtoupper($reg1['serial_b'])."</td>\n";
               echo "<td>".$reg1['fecha_ingreso_b']."</td>\n";
+<<<<<<< HEAD
               echo "<td><a href=modificar_bienes.php?id=".$reg1['id']."><button class='btn btn-primary' type='button' value='EDITAR'>EDITAR</button></a></td>\n";
+=======
+              echo "<td><a href=modificar_bienes.php?id=".$reg1['id']." target='_blank'><button class='btn btn-primary' type='submit' action='' value='EDITAR'>EDITAR</button></a></td>\n";
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
               echo "<td><a href=PDF/imprime_bienes.php?id=".$reg1['id']." target='_blank'><button class='btn btn-success' type='submit' action='' value='IMPRIMIR'>IMPRIMIR</button></a></td></tr>\n";
 //              echo "<br>";
             } while ($reg1 = pg_fetch_array($consulta_pag));

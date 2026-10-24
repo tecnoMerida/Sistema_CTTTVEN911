@@ -1,9 +1,15 @@
 <?php
+<<<<<<< HEAD
   $id = intval($_REQUEST['id'] ?? ($_GET['id'] ?? 0));
+=======
+  $id = $_REQUEST['id'];
+  $id = $_GET['id'];
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 require_once('../../config/conexion1.php');
 require('plantilla.php');
 
+<<<<<<< HEAD
 if (!$id) {
     die("ID no especificado.");
 }
@@ -43,6 +49,46 @@ if (!$id) {
     //consulta 6 - DIRECTOR
     $coordinador1 = pg_query($dbconn, "SELECT * FROM director WHERE cargo_dir LIKE '%DIRECTOR%' ");        
     $coord1 = ($coordinador1 && pg_num_rows($coordinador1) > 0) ? pg_fetch_array($coordinador1) : [];                
+=======
+
+	///////////////////////////////////				CONSULTAS			////////////////////////////
+	//consulta 1
+            $result = pg_query($dbconn, "SELECT * FROM public.observaciones WHERE id = $id");
+
+                $reg=pg_fetch_array($result);
+
+                $dato = $reg['fecha_creacion_obs'];
+                $fecha = date('Y-m-d',strtotime($dato));
+                $hora = date('H:i:s',strtotime($dato)); 
+
+    // consulta 2 - registro de guardia
+    $guardia = $reg['guardias_id'];
+            $result_guardia = pg_query($dbconn, "SELECT * FROM public.guardias WHERE id = $guardia");
+                          
+                $reg_guardia=pg_fetch_array($result_guardia);
+
+    //consulta 3 - personal en registros de guardia
+    $usuario_entrada = $reg_guardia['usuario_entrada_id'];
+            $result_personal = pg_query($dbconn, "SELECT * FROM public.personal WHERE cedula = $usuario_entrada");
+                          
+                $reg_persona=pg_fetch_array($result_personal);
+
+    //consulta 4 - cargos de personal en registros de guardia
+    $cargo = $reg_persona['cargos_id'];
+            $result_cargo = pg_query($dbconn, "SELECT * FROM public.cargos WHERE id = $cargo");
+                          
+                $reg_cargo=pg_fetch_array($result_cargo);
+
+    //consulta 5 - organismo de personal en registros de guardia
+    $organismo = $reg_persona['organismos_id'];
+            $result_org = pg_query($dbconn, "SELECT * FROM public.organismos WHERE id = $organismo");
+                          
+                $reg_org=pg_fetch_array($result_org);
+
+    //consulta 6 - DIRECTOR
+    $coordinador1 = pg_query($dbconn, "SELECT * FROM director WHERE cargo_dir LIKE '%DIRECTOR%' ");        
+    $coord1 = pg_fetch_array($coordinador1);                
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 $pdf = new PDF('P','mm','A4');
 $pdf->AddPage();
@@ -77,22 +123,39 @@ $pdf->SetX(20);
 $pdf->SetFont('Arial','',12);
 $pdf ->Cell(22,6,utf8_decode('ciudadano '),0,0);
 $pdf->SetFont('Arial','B',12);
+<<<<<<< HEAD
 $pdf ->Cell(62,6,utf8_decode(''.strtoupper($reg_persona['p_nombre'] ?? '').' '.strtoupper($reg_persona['p_apellido'] ?? '').''),0,0,'C');
+=======
+$pdf ->Cell(62,6,utf8_decode(''.strtoupper($reg_persona['p_nombre']).' '.strtoupper($reg_persona['p_apellido']).''),0,0,'C');
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 $pdf->SetFont('Arial','',12);
 $pdf ->Cell(86,6,utf8_decode(', titular   de   la   cédula   de   identidad   Nº  :'),0,1);
 $pdf->SetX(20);
 $pdf->SetFont('Arial','B',12);
+<<<<<<< HEAD
 $pdf ->Cell(34,6,utf8_decode(''.($reg_persona['cedula'] ?? '').''),0,0,'C');
 $pdf->SetFont('Arial','',12);
 $pdf ->Cell(55,6,utf8_decode(', y cumpliendo  funciones de'),0,0);
 if(($reg_org['id'] ?? 0) != 5 AND ($reg_org['id'] ?? 0) != 9 ) {
         $pdf->SetFont('Arial','B',12);
         $pdf ->Cell(60,6,utf8_decode(''.strtoupper($reg_cargo['nombre_cargo'] ?? '').''),0,0,'C');
+=======
+$pdf ->Cell(34,6,utf8_decode(''.$reg_persona['cedula'].''),0,0,'C');
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(55,6,utf8_decode(', y cumpliendo  funciones de'),0,0);
+if($reg_org['id'] != 5 AND $reg_org['id'] != 9 ) {
+        $pdf->SetFont('Arial','B',12);
+        $pdf ->Cell(60,6,utf8_decode(''.strtoupper($reg_cargo['nombre_cargo']).''),0,0,'C');
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
         $pdf->SetFont('Arial','',12);
         $pdf ->Cell(21,6,utf8_decode(',        para'),0,1);
         $pdf->SetX(20);
         $pdf->SetFont('Arial','B',12);
+<<<<<<< HEAD
         $pdf ->Cell(59,6,utf8_decode(''.strtoupper($reg_org['nombre_oganismos'] ?? '').''),0,0,'C');
+=======
+        $pdf ->Cell(59,6,utf8_decode(''.strtoupper($reg_org['nombre_oganismos']).''),0,0,'C');
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
         $pdf->SetFont('Arial','',12);
         $pdf ->Cell(12,6,utf8_decode('y   el'),0,0);
         $pdf->SetFont('Arial','B',12);
@@ -103,7 +166,11 @@ if(($reg_org['id'] ?? 0) != 5 AND ($reg_org['id'] ?? 0) != 9 ) {
     } else {
 
         $pdf->SetFont('Arial','B',12);
+<<<<<<< HEAD
         $pdf ->Cell(40,6,utf8_decode(''.strtoupper($reg_org['nombre_oganismos'] ?? '').''),0,0,'C');
+=======
+        $pdf ->Cell(40,6,utf8_decode(''.strtoupper($reg_org['nombre_oganismos']).''),0,0,'C');
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
         $pdf->SetFont('Arial','',12);
         $pdf ->Cell(16,6,utf8_decode('para  el '),0,0);
         $pdf->SetFont('Arial','B',12);

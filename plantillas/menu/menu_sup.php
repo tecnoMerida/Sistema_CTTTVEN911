@@ -2,6 +2,7 @@
 <style>
   .SLDN{
     width: 30px;
+<<<<<<< HEAD
     height: 30px;
     border-radius: 60%;
     z-index: 1;
@@ -106,6 +107,44 @@
     </div>
 
     <div class="clearfix"></div>
+=======
+height: 30px;
+/*border-image-outset: 20px;*/
+border-radius: 60%;
+z-index:1;
+
+}
+
+#title_menu{
+  font-size:10; 
+  border: 0; 
+  font-family:Copperplate Gothic;
+  text-align: center;
+  margin-top: -30px;
+}
+
+#principal1{
+  font-size: 10;
+  color: #ffffff;
+  border: 0;
+  font-family:Copperplate Gothic;
+  text-align: center;
+  margin-top: -5px;
+}
+ </style>
+
+<div class="col-md-3 left_col">
+          <div class="left_col scroll-view">
+          <div id="principal1" align="center">
+            <a href="../../administrador/principal.php" class="site_title" title="Ir a la página principal del sistema"><small><span> &nbsp Principal</span></small></a>
+            </div>
+
+          <div  id="title_menu" align="center">
+              <a href="../../administrador/principal.php" class="site_title" title="Ir a la página principal del sistema"><small><span>Libro Digital Novedades 911</span></small></a>
+            </div>
+
+            <div class="clearfix"></div>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
             <!-- menu profile quick info -->
             <div class="profile clearfix">
@@ -146,11 +185,14 @@
                       <li><a href="estadisticas_dia.php">Estadísticas</a></li>
                     </ul>
                   </li>
+<<<<<<< HEAD
                   <li><a><i class="fa fa-shield"></i> CUPAZ <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="cuadrantes.php">Cuadrantes de Paz <span class="badge badge-success pull-right">240</span></a></li>
                     </ul>
                   </li>
+=======
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                   <li><a><i class="fa fa-info-circle
                     "></i> Ayuda <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
@@ -179,8 +221,15 @@
 
             <!-- /menu footer buttons -->
             <div class="sidebar-footer hidden-small">
+<<<<<<< HEAD
               <a class="cerrar btn-cerrar-sesion" title="Cerrar Guardia" href="estadisticas.php">
                 <i class="fa fa-power-off"></i> <span>Cerrar Guardia</span>
+=======
+              <a data-toggle="tooltip" data-placement="top" class="cerrar" title="Logout" href="estadisticas.php">
+                <span class="fa fa-power-off" aria-hidden="true"></span>
+                Cerrar Guardia<span class="glyphicon glyphicon" aria-hidden="true"></span>
+                <span class="fa fa-power-off" aria-hidden="true"></span>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
               </a>
             </div>
             <!-- /menu footer buttons -->

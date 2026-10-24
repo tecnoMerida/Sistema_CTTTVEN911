@@ -8,6 +8,17 @@
 
 <!-- Validar Select anidado -->
 <script type="text/javascript" src="../js/popper-2.10.3.min.js"></script>
+<<<<<<< HEAD
+=======
+<script language="javascript" src="../js/jquery-1.2.6.min.js"></script>
+<script type="text/javascript" src="../js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="../js/combo1.js"></script>
+
+<!-- Validar Campos -->
+<script src="../js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="../js/valida_campos.js"></script>
+<script type="text/javascript" src="../js/validacion_campos.js"></script>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 <!-- jQuery -->
 <script src="../vendors/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap -->
@@ -84,6 +95,7 @@
     <script src="../vendors/pnotify/dist/pnotify.buttons.js"></script>
     <script src="../vendors/pnotify/dist/pnotify.nonblock.js"></script>
     <script src="../js/popper-2.10.3.min.js"></script>
+<<<<<<< HEAD
     <script type="text/javascript" src="../js/combo1.js?v=<?php echo time(); ?>"></script>
     <script type="text/javascript" src="../js/valida_campos.js"></script>
     <script type="text/javascript" src="../js/validacion_campos.js"></script>
@@ -131,6 +143,20 @@
         $('#motivo_solicitud_id').select2({ width: '100%' });
       }
     });
+=======
+
+
+<script>
+    // search
+        $(document).ready(function(){
+    $('#cboSectores').select2();
+  });
+
+    //Search2
+    $(document).ready(function(){
+    $('#motivo_solicitud_id').select2();
+  });
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
         // Validation
     // Enable dselect on all '.dselect'
@@ -177,7 +203,10 @@ if (toastTrigger) {
 }
 */
 </script>
+<<<<<<< HEAD
 <?php require_once dirname(__DIR__) . '/chatbot/widget.php'; ?>
+=======
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 </body>
 
 </html>

@@ -1,9 +1,13 @@
 <?php
 require('../cookie/cookie.php');
 
+<<<<<<< HEAD
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+=======
+session_start();
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 if (!isset($_SESSION['tipo_rol_id'])) {
   header("Location: ../index.php?error=fuera");
 } else {
@@ -21,6 +25,7 @@ if (!isset($_SESSION['tipo_rol_id'])) {
 
       // Consulta al grupo del personal de guardia
       $consulta1 = pg_query($dbconn, "SELECT * FROM public.personal_grupos_guardia WHERE id=(SELECT MAX(id) FROM  personal_grupos_guardia)");
+<<<<<<< HEAD
       $reg_01 = $consulta1 ? pg_fetch_array($consulta1) : false;
 
       $personal_guardia = $reg_01 ? ($reg_01['id'] ?? '') : '';
@@ -45,6 +50,28 @@ if (!isset($_SESSION['tipo_rol_id'])) {
         $reg_id = $ultimo1 ? pg_fetch_array($ultimo1) : false;
         $grupos01 = $reg_id ? ($reg_id['id'] ?? '') : '';
       }
+=======
+      $reg_01 = pg_fetch_array($consulta1);
+
+      $personal_guardia = $reg_01['id'];
+      $grupos_guardia = $reg_01['grupos_guardia_id'];
+
+      // Consulta al personal de guardia
+      $personal_usuario = $_SESSION['personal_cedula'];
+      $consulta_pers = pg_query($dbconn, "SELECT * FROM public.personal WHERE cedula = $personal_usuario ");
+      $regid = pg_fetch_array($consulta_pers);
+
+      $cedula_personal = $regid['cedula'];
+
+      // Consulta datos del personal de guardia
+      $ultimo1 = pg_query($dbconn, "SELECT id, fecha_inicio_g::timestamp::date, grupos_guardia_id, usuario_entrada_id  
+      FROM public.guardias
+      WHERE usuario_entrada_id = $cedula_personal
+      AND fecha_inicio_g::timestamp::date = (SELECT MAX(fecha_inicio_g::timestamp::date) FROM guardias) order by id DESC");
+      $reg_id = pg_fetch_array($ultimo1);
+
+      $grupos01 = $reg_id['id'];
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 ?>
 
@@ -90,6 +117,11 @@ if (!isset($_SESSION['tipo_rol_id'])) {
                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                         </li>
 
+<<<<<<< HEAD
+=======
+                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                       </ul>
                       <div class="clearfix"></div>
                     </div>
@@ -99,17 +131,29 @@ if (!isset($_SESSION['tipo_rol_id'])) {
                       <div class="col-md-3 col-sm-3"></div>
                       <div class="col-md-6 col-sm-6" align="center">
                         <?php
+<<<<<<< HEAD
                         $msg = $_GET['msg'] ?? '';
                         if ($msg == "1") {
+=======
+                        if (($_GET['msg'] ?? '') == "1") {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                           echo '<div class="alert alert-danger alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>El Registro ya Existe!!!</strong></div>';
                         }
+<<<<<<< HEAD
                         if ($msg == "2") {
                           echo '<div class="alert alert-success alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Bienes registrado con EXITO!!!</strong></div>';
                         } elseif ($msg == "3") {
+=======
+                        if (($_GET['msg'] ?? '') == "2") {
+                          echo '<div class="alert alert-success alert-dismissible msn1">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Bienes registrado con EXITO!!!</strong></div>';
+                        } elseif (($_GET['msg'] ?? '') == "3") {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                           echo '<div class="alert alert-secondary alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Bienes NO registrado</strong></div>';

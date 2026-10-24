@@ -2,6 +2,7 @@
 // Conexion con la base de datos
 require_once '../config/conexion1.php';
 
+<<<<<<< HEAD
 $organismo_id = $_REQUEST['organismo_id'];
 $personal_ven = $_REQUEST['personal_ven'];
 
@@ -12,6 +13,18 @@ $fecha_entrada1 = $_REQUEST['fecha_entrada'];
 $fecha_salida1 = $_REQUEST['fecha_salida'];
    $now = new DateTime($fecha_salida1);
    $fecha_salida=$now->format('Ymd');
+=======
+$organismo_id = (($_REQUEST['organismo_id'] ?? '') !== '' ? (int) $_REQUEST['organismo_id'] : '');
+$personal_ven = (($_REQUEST['personal_ven'] ?? '') !== '' ? (int) $_REQUEST['personal_ven'] : '');
+
+$fecha_entrada1 = $_REQUEST['fecha_entrada'] ?? '';
+   $now = new DateTime($fecha_entrada1 ?: 'now');
+   $fecha_entrada = $fecha_entrada1 !== '' ? $now->format('Ymd') : '';
+
+$fecha_salida1 = $_REQUEST['fecha_salida'] ?? '';
+   $now = new DateTime($fecha_salida1 ?: 'now');
+   $fecha_salida = $fecha_salida1 !== '' ? $now->format('Ymd') : '';
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 ?>
 
 <!-- ***** Membrete ***** -->
@@ -27,6 +40,11 @@ $fecha_salida1 = $_REQUEST['fecha_salida'];
                 <ul class="nav navbar-right panel_toolbox">
                   <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                   </li>
+<<<<<<< HEAD
+=======
+                  <li><a class="close-link"><i class="fa fa-close"></i></a>
+                  </li>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                 </ul>
                 <div class="clearfix"></div>
               </div>
@@ -43,7 +61,11 @@ $fecha_salida1 = $_REQUEST['fecha_salida'];
                 /* ******************************* */
 
               // Consulta valor enviado por el submit para mostrar en nombre del organismo
+<<<<<<< HEAD
                 $organismos_consulta = pg_query($dbconn,"SELECT * FROM public.organismos WHERE id = $organismo_id ");
+=======
+                $organismos_consulta = pg_query($dbconn,"SELECT * FROM public.organismos WHERE id = " . (int) $organismo_id);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                 $reg_consulta=pg_fetch_array($organismos_consulta);
 
                 // Genera una consulta y muestra una lista desplegable de los organismos

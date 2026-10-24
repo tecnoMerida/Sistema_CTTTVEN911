@@ -8,6 +8,11 @@
       <ul class="nav navbar-right panel_toolbox">
         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
         </li>
+<<<<<<< HEAD
+=======
+        <li><a class="close-link"><i class="fa fa-close"></i></a>
+        </li>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
       </ul>
       <div class="clearfix"></div>
     </div>
@@ -59,7 +64,11 @@
                               $consulta_bienes = pg_query($dbconn, "SELECT * FROM public.control_bienes $filtro2 ");
                               $reg_pag = pg_fetch_array($consulta_bienes);
 
+<<<<<<< HEAD
                               $total_rows_pag = pg_fetch_all($consulta_bienes);
+=======
+                              $total_rows_pag = pg_fetch_all($consulta_bienes) ?: 0;
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                               /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
 */
@@ -76,6 +85,7 @@
                                   echo "<td>";
 
 
+<<<<<<< HEAD
                                   $cadena = $reg_pag['materiales_recibe'] ?? '';
                                   $array = array_filter(explode(",", $cadena));
                                   $bienes_txt = [];
@@ -89,6 +99,33 @@
                                     }
                                   }
                                   echo implode(", ", $bienes_txt);
+=======
+                                  $cadena = $reg_pag['materiales_recibe'];
+                                  $array = explode(",", $cadena);
+
+                                  foreach ($array as $id) {
+                                    $id = trim($id);
+                                    if (!ctype_digit($id)) { continue; } // lista vacia o con valores no numericos
+                                    $formato1 = $formato1 . ' ' . $id;
+
+                                    // Cunsulta el ID de los Bienes registrados
+                                    $consulta1 = pg_query($dbconn, "SELECT * FROM bienes WHERE id = $id");
+                                    $reg1 = pg_fetch_assoc($consulta1);
+
+                                    $total_rows1 = pg_num_rows($consulta1);
+
+                                    if ($total_rows1 != 0) {
+
+                                      //impresion de los datos.
+                                      do {
+
+                                        echo "" . strtoupper($reg1['nombre_b']) . ", ";
+                                      } while ($reg1 = pg_fetch_array($consulta1));
+                                      pg_free_result($consulta1);
+                                    }
+                                  }
+
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                                   echo "</td>\n";
                                   echo "<td><a href=ver_controlBienes_entrada.php?id=" . $reg_pag['id'] . " target='_blank'><button class='btn btn-success' type='submit' action='' value='VER'>VER</button></a>\n";
                                   echo "<a href=PDF/imprime_controlBienes_entrada.php?id=" . $reg_pag['id'] . " target='_blank'><button class='btn btn-info' type='submit' action='' value='IMPRIMIR'>IMPRIMIR</button></a></td></tr>\n";
@@ -158,7 +195,11 @@
                           $reg_apt = pg_fetch_array($consulta_apt);
 
 
+<<<<<<< HEAD
                           $total_rows_apertura = pg_fetch_all($consulta_apt);
+=======
+                          $total_rows_apertura = pg_fetch_all($consulta_apt) ?: 0;
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                           /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
 */
@@ -230,7 +271,11 @@
                       $consulta_solic = pg_query($dbconn, "SELECT * FROM public.guardias $filtro1");
 
                       $reg_01 = pg_fetch_array($consulta_solic);
+<<<<<<< HEAD
                       $total_rows_pag = pg_fetch_all($consulta_solic);
+=======
+                      $total_rows_pag = pg_fetch_all($consulta_solic) ?: 0;
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                       if ($total_rows_pag != 0) {
                         do {
 
@@ -241,7 +286,11 @@
                           $consulta_obs1 = pg_query($dbconn, "SELECT guardias.id, guardias.fecha_inicio_g, guardias.usuario_salida_id, guardias.usuario_entrada_id, personal.cedula, personal.organismos_id FROM public.guardias $filtro ");
                           $reg_obs = pg_fetch_array($consulta_obs1);
 
+<<<<<<< HEAD
                           $total_rows_pag = pg_fetch_all($consulta_obs1);
+=======
+                          $total_rows_pag = pg_fetch_all($consulta_obs1) ?: 0;
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                           if ($total_rows_pag != 0) {
 
                             //impresion de los datos.
@@ -256,7 +305,11 @@
                               $consulta_solicitudes = pg_query($dbconn, "SELECT solicitudes.id, solicitudes.tiempo_apertura_sol, solicitudes.hora_sol, solicitudes.guardias_id, solicitudes.fecha_creacion_sol, motivo_solicitud.nombre_motivo, personal.p_nombre, personal.p_apellido FROM public.solicitudes $filtro_solic");
                               $reg_solic = pg_fetch_array($consulta_solicitudes);
 
+<<<<<<< HEAD
                               $total_rows_pag = pg_fetch_all($consulta_solicitudes);
+=======
+                              $total_rows_pag = pg_fetch_all($consulta_solicitudes) ?: 0;
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                               /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
 */
@@ -336,7 +389,11 @@
                               $consulta_solicitudes1 = pg_query($dbconn, "SELECT numero_solicitud, fecha_solicitud, hora_solicitud, motivo_solicitud, despachador, guardias_id FROM public.reporte_solicitudes  $filtro_solic1");
                               $reg_solic1 = pg_fetch_array($consulta_solicitudes1);
 
+<<<<<<< HEAD
                               $total_rows_pag1 = pg_fetch_all($consulta_solicitudes1);
+=======
+                              $total_rows_pag1 = pg_fetch_all($consulta_solicitudes1) ?: 0;
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                               /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
 */
@@ -435,7 +492,11 @@
                           $consulta_obs2 = pg_query($dbconn, "SELECT * FROM public.observaciones $filtro_obs2 ");
                           $reg_obs = pg_fetch_array($consulta_obs2);
 
+<<<<<<< HEAD
                           $total_rows_pag = pg_fetch_all($consulta_obs2);
+=======
+                          $total_rows_pag = pg_fetch_all($consulta_obs2) ?: 0;
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                           /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
 */
@@ -531,7 +592,11 @@
                               $consulta_bienes = pg_query($dbconn, "SELECT * FROM public.control_bienes $filtro2 ");
                               $reg_pag = pg_fetch_array($consulta_bienes);
 
+<<<<<<< HEAD
                               $total_rows_pag = pg_fetch_all($consulta_bienes);
+=======
+                              $total_rows_pag = pg_fetch_all($consulta_bienes) ?: 0;
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                               /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
 */
@@ -548,6 +613,7 @@
                                   echo "<td>";
 
 
+<<<<<<< HEAD
                                   $cadena = $reg_pag['materiales_entrega'] ?? '';
                                   $array = array_filter(explode(",", $cadena));
                                   $bienes_txt = [];
@@ -561,6 +627,33 @@
                                     }
                                   }
                                   echo implode(", ", $bienes_txt);
+=======
+                                  $cadena = $reg_pag['materiales_entrega'];
+                                  $array = explode(",", $cadena);
+
+                                  foreach ($array as $id) {
+                                    $id = trim($id);
+                                    if (!ctype_digit($id)) { continue; } // lista vacia o con valores no numericos
+                                    $formato1 = $formato1 . ' ' . $id;
+
+                                    // Cunsulta el ID de los Bienes registrados
+                                    $consulta1 = pg_query($dbconn, "SELECT * FROM bienes WHERE id = $id");
+                                    $reg1 = pg_fetch_assoc($consulta1);
+
+                                    $total_rows1 = pg_num_rows($consulta1);
+
+                                    if ($total_rows1 != 0) {
+
+                                      //impresion de los datos.
+                                      do {
+
+                                        echo "" . strtoupper($reg1['nombre_b']) . ", ";
+                                      } while ($reg1 = pg_fetch_array($consulta1));
+                                      pg_free_result($consulta1);
+                                    }
+                                  }
+
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                                   echo "</td>\n";
                                   echo "<td><a href=ver_controlBienes_salida.php?id=" . $reg_pag['id'] . " target='_blank'><button class='btn btn-success' type='submit' action='' value='VER'>VER</button></a>\n";
                                   echo "<a href=PDF/imprime_controlBienes_salida.php?id=" . $reg_pag['id'] . " target='_blank'><button class='btn btn-info' type='submit' action='' value='IMPRIMIR'>IMPRIMIR</button></a></td></tr>\n";
@@ -627,7 +720,11 @@
 
                           $reg_cierre = pg_fetch_array($consulta_cierre1);
 
+<<<<<<< HEAD
                           $total_rows_cierre = pg_fetch_all($consulta_cierre1);
+=======
+                          $total_rows_cierre = pg_fetch_all($consulta_cierre1) ?: 0;
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                           /*
 <!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
 */

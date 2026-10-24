@@ -1,9 +1,17 @@
 <?php
+<<<<<<< HEAD
   $id_personal = $_REQUEST['id_personal'];
   $id_personal =$_GET['id_personal'];
 
   
 require_once('../../config/conexion_bd.php');
+=======
+  $id_personal = $_REQUEST['id_personal'];
+  $id_personal =$_GET['id_personal'];
+
+  
+require_once('../../config/conexion_bd.php');
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 require('fpdf123/fpdf.php');
 
 class PDF extends FPDF
@@ -22,7 +30,11 @@ function Header()
 
     // Título
 
+<<<<<<< HEAD
 // ZONA HORARIA
+=======
+// ZONA HORARIA
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 date_default_timezone_set('America/Caracas');
 setlocale(LC_ALL,"es_ES");
 
@@ -76,13 +88,21 @@ function Footer()
 }
 }
 
+<<<<<<< HEAD
 	//consulta 1.
+=======
+	//consulta 1.
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 	$personal = mysqli_query($conexion, "SELECT * FROM personal_171 WHERE id_personal= $id_personal ");		
 	$reg = mysqli_fetch_array($personal);
 	$organismo = $reg['id_organismo'];
 
 	//consulta 2
+<<<<<<< HEAD
 	$consulta = mysqli_query($conexion,"SELECT * FROM grupos_organismos WHERE id_organismo = $organismo");
+=======
+	$consulta = mysqli_query($conexion,"SELECT * FROM grupos_organismos WHERE id_organismo = $organismo");
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 	$reg1= mysqli_fetch_array($consulta);
 
 	//consulta 3

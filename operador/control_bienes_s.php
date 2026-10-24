@@ -1,9 +1,13 @@
 <?php
 require('../cookie/cookie.php');
 
+<<<<<<< HEAD
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+=======
+session_start();
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
   if(!isset($_SESSION['tipo_rol_id'])){
                 header ("Location: ../index.php?error=fuera");
         }else{
@@ -17,6 +21,7 @@ if (session_status() === PHP_SESSION_NONE) {
 include_once '../config/conexion1.php';
 
 $ultimo1 = pg_query($dbconn,"SELECT id, grupos_guardia_id FROM personal_grupos_guardia WHERE id=(SELECT MAX(id) FROM personal_grupos_guardia) ");
+<<<<<<< HEAD
 $reg_id = $ultimo1 ? pg_fetch_array($ultimo1) : false;
 
 $registro1 = $reg_id ? ($reg_id['id'] ?? '') : '';
@@ -29,6 +34,18 @@ if (!empty($personal_usuario)) {
     $regid = $consulta_pers ? pg_fetch_array($consulta_pers) : false;
     $cedula = $regid ? ($regid['cedula'] ?? '') : '';
 } 
+=======
+$reg_id= pg_fetch_array($ultimo1);
+
+$registro1 = $reg_id['id'];
+$grupo = $reg_id['grupos_guardia_id'];
+
+$personal_usuario = $_SESSION['personal_cedula'];
+$consulta_pers = pg_query($dbconn,"SELECT * FROM public.personal WHERE cedula = $personal_usuario ");
+$regid= pg_fetch_array($consulta_pers);
+
+$cedula = $regid['cedula']; 
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 ?>
 
@@ -81,6 +98,11 @@ if (!empty($personal_usuario)) {
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                       </li>
 
+<<<<<<< HEAD
+=======
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                     </ul>
                     <div class="clearfix"></div>
                   </div>

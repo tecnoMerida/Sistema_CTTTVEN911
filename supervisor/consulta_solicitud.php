@@ -1,9 +1,13 @@
 <?php
 require('../cookie/cookie.php');
 
+<<<<<<< HEAD
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+=======
+session_start();
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 if (!isset($_SESSION['tipo_rol_id'])) {
   header("Location: ../index.php?error=fuera");
 } else {
@@ -24,13 +28,22 @@ if (!isset($_SESSION['tipo_rol_id'])) {
 
       ///////////////////      Realizar Busqueda Y CONSULTA del "BOTON CONSULTAR"       //////////////////////////////////
 
+<<<<<<< HEAD
       if (isset($_POST['consultar'])) {
         $sol = $_POST['numero_solicitud'];
+=======
+      if (isset($_POST['consultar']) && $conexion2) {
+        $sol = (int) $_POST['numero_solicitud'];
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
         $consulta1 = "SELECT * FROM solicitud WHERE id = $sol ";
         $resultado1 = mysqli_query($mysql, $consulta1);
       }
 
+<<<<<<< HEAD
       $sol = ($_REQUEST['numero_solicitud']);
+=======
+      $sol = (int) ($_REQUEST['numero_solicitud'] ?? 0);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 ?>
 
       <!-- ***** Membrete ***** -->
@@ -76,6 +89,11 @@ if (!isset($_SESSION['tipo_rol_id'])) {
                       <ul class="nav navbar-right panel_toolbox">
                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                         </li>
+<<<<<<< HEAD
+=======
+                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                       </ul>
                       <div class="clearfix"></div>
                     </div>
@@ -116,6 +134,11 @@ if (!isset($_SESSION['tipo_rol_id'])) {
                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                         </li>
 
+<<<<<<< HEAD
+=======
+                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                       </ul>
                       <div class="clearfix"></div>
                     </div>
@@ -137,10 +160,17 @@ if (!isset($_SESSION['tipo_rol_id'])) {
                         <tbody>
                           <?php
                           // Realiza la conexion y busqueda del boton Buscar
+<<<<<<< HEAD
                           $registros = mysqli_query($mysql, "SELECT * FROM solicitud WHERE id = $sol ");
 
                           $reg = mysqli_fetch_assoc($registros);
                           $total_rows = mysqli_num_rows($registros);
+=======
+                          $registros = ($mysql && $sol > 0) ? mysqli_query($mysql, "SELECT * FROM solicitud WHERE id = $sol ") : false;
+
+                          $reg = $registros ? mysqli_fetch_assoc($registros) : null;
+                          $total_rows = $registros ? mysqli_num_rows($registros) : 0;
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
                           if ($total_rows != 0) {
 
@@ -166,19 +196,31 @@ if (!isset($_SESSION['tipo_rol_id'])) {
                             mysqli_free_result($registros);
                           } else { ?>
                             <script type="text/javascript">
+<<<<<<< HEAD
                               alert(" Número de solicitud NO válido ");
+=======
+                              <?php if ($conexion2 && $sol > 0) { ?>alert(" Número de solicitud NO válido ");<?php } ?>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                             </script>
                           <?php
                             $mensage1 = 'Número de solicitud NO válido';
 
                             // si no existen datos muestra mensaje
+<<<<<<< HEAD
                             echo "<td colspan='5' align='center' >no se obtuvieron resultados</td></tr>";
+=======
+                            echo $conexion2 ? "<td colspan='5' align='center' >no se obtuvieron resultados</td></tr>" : "<td colspan='5' align='center' >Sin conexión con el sistema externo Emergencias 911 (" . HOSTMYSQL . "). Verifique la red.</td></tr>";
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                           }
                           ?>
                         </tbody>
                       </table>
                       <?php
+<<<<<<< HEAD
                       mysqli_close($mysql);
+=======
+                      if ($mysql) { mysqli_close($mysql); }
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                       ?>
                       <!-- /////////////////////////////////      FIN TABLA CONSULTA      ////////////////////////////////////-->
                     </div>

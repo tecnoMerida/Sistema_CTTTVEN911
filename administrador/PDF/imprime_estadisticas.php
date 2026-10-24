@@ -1,9 +1,15 @@
 <?php
+<<<<<<< HEAD
   $id = intval($_REQUEST['id'] ?? ($_GET['id'] ?? 0));
+=======
+  $id = $_REQUEST['id'];
+  $id = $_GET['id'];
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 require_once('../../config/conexion1.php');
 require('plantilla.php');
 
+<<<<<<< HEAD
 if (!$id) {
     die("ID no especificado.");
 }
@@ -54,6 +60,60 @@ $hora = $dato ? date('H:i:s', strtotime($dato)) : '';
     $result5 = ($consulta) ? (pg_fetch_assoc($consulta) ?: []) : []; // Sabotaje
     $result6 = ($consulta) ? (pg_fetch_assoc($consulta) ?: []) : []; // Informacion
     $result7 = ($consulta) ? (pg_fetch_assoc($consulta) ?: []) : []; // Abandonada
+=======
+
+
+
+	///////////////////////////////////				CONSULTAS			//////////////////////////////
+	//consulta 1
+            $result = pg_query($dbconn, "SELECT * FROM public.estadisticas_solicitud WHERE id = $id");
+
+                $reg=pg_fetch_array($result);
+
+    // consulta 2 - registro de guardia
+    $guardia = $reg['guardia_id'];
+            $result_guardia = pg_query($dbconn, "SELECT * FROM public.guardias WHERE id = $guardia");
+                          
+                $reg_guardia=pg_fetch_array($result_guardia);
+
+    //consulta 3 - DIRECTOR
+    $coordinador1 = pg_query($dbconn, "SELECT * FROM director WHERE cargo_dir LIKE '%DIRECTOR%' ");        
+    $coord1 = pg_fetch_array($coordinador1);
+
+// Fecha Entrada
+$dato = $reg_guardia['fecha_inicio_g'];
+$fecha = date('d-m-Y',strtotime($dato));
+$hora = date('H:i:s',strtotime($dato));
+
+    //consulta 3 - personal en registros de guardia
+    $usuario_entrada = $reg_guardia['usuario_entrada_id'];
+            $result_personal = pg_query($dbconn, "SELECT * FROM public.personal WHERE cedula = $usuario_entrada");
+                          
+                $reg_persona=pg_fetch_array($result_personal);
+
+    //consulta 4 - cargos de personal en registros de guardia
+    $cargo = $reg_persona['cargos_id'];
+            $result_cargo = pg_query($dbconn, "SELECT * FROM public.cargos WHERE id = $cargo");
+                          
+                $reg_cargo=pg_fetch_array($result_cargo);
+
+    //consulta 5 - organismo de personal en registros de guardia
+    $organismo = $reg_persona['organismos_id'];
+            $result_org = pg_query($dbconn, "SELECT * FROM public.organismos WHERE id = $organismo");
+                          
+                $reg_org=pg_fetch_array($result_org);
+
+    //consulta 6 - estatus de solicitudes
+                      // Consulta a la Base de Datos
+                          $consulta = pg_query($dbconn, "SELECT * FROM estatus_solicitud ORDER BY id");
+                          $result1 = pg_fetch_assoc($consulta); // Efectivo 
+                          $result2 = pg_fetch_assoc($consulta); // No Efectivo
+                          $result3 = pg_fetch_assoc($consulta); // Sin Despacho 
+                          $result4 = pg_fetch_assoc($consulta); // Repetida
+                          $result5 = pg_fetch_assoc($consulta); // Sabotaje
+                          $result6 = pg_fetch_assoc($consulta); // Informacion
+                          $result7 = pg_fetch_assoc($consulta); // Abandonada
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 $pdf = new PDF('P','mm','A4');
 $pdf->AddPage();
@@ -98,16 +158,28 @@ $pdf ->Cell(6,6,utf8_decode(''.$reg_guardia['grupos_guardia_id'].''),0,0,'C');
 $pdf->SetFont('Arial','',12);
 $pdf ->Cell(8,6,utf8_decode(', por: '),0,0);
 $pdf->SetFont('Arial','B',12);
+<<<<<<< HEAD
 $pdf ->Cell(60,6,utf8_decode(''.strtoupper($reg_persona['p_nombre'] ?? '').' '.strtoupper($reg_persona['p_apellido'] ?? '').', '),0,1,'C');
+=======
+$pdf ->Cell(60,6,utf8_decode(''.strtoupper($reg_persona['p_nombre']).' '.strtoupper($reg_persona['p_apellido']).', '),0,1,'C');
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 $pdf->SetX(20);
 $pdf->SetFont('Arial','',12);
 $pdf ->Cell(70,6,utf8_decode('titular de la cédula de identidad Nº: V- '),0,0);
 $pdf->SetFont('Arial','B',12);
+<<<<<<< HEAD
 $pdf ->Cell(24,6,utf8_decode(''.($reg_persona['cedula'] ?? '').''),0,0,'C');
 $pdf->SetFont('Arial','',12);
 $pdf ->Cell(48,6,utf8_decode(', cumpliendo funciones de: '),0,0);
 $pdf->SetFont('Arial','B',12);
 $pdf ->Cell(38,6,utf8_decode(''.strtoupper($reg_org['nombre_oganismos'] ?? '').'.'),0,1,'C');
+=======
+$pdf ->Cell(24,6,utf8_decode(''.$reg_persona['cedula'].''),0,0,'C');
+$pdf->SetFont('Arial','',12);
+$pdf ->Cell(48,6,utf8_decode(', cumpliendo funciones de: '),0,0);
+$pdf->SetFont('Arial','B',12);
+$pdf ->Cell(38,6,utf8_decode(''.strtoupper($reg_org['nombre_oganismos']).'.'),0,1,'C');
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 $pdf->SetX(20);
 $pdf->SetFont('Arial','',12);
 $pdf ->Cell(20,6,utf8_decode('Llamadas  de  tipo :'),0,1);        
@@ -117,6 +189,7 @@ $pdf ->Cell(140,6,utf8_decode(''),0,1);
 
 $pdf->SetX(50);
 $pdf->SetFont('Arial','B',14);
+<<<<<<< HEAD
 $pdf ->Cell(60,7,utf8_decode(''.strtoupper($result1['tipo_estatus'] ?? 'EFECTIVO').''),1,0,'C');
 $pdf ->Cell(50,7,utf8_decode(''.($reg['efectivo'] ?? 0).''),1,1,'C');
 $pdf->SetX(50);
@@ -140,6 +213,31 @@ $pdf ->Cell(50,7,utf8_decode(''.($reg['abandonada'] ?? 0).''),1,1,'C');
 $pdf->SetX(50);
 $pdf ->Cell(60,7,utf8_decode('TOTAL'),1,0,'C');
 $pdf ->Cell(50,7,utf8_decode(''.($reg['total_solici'] ?? 0).''),1,1,'C');
+=======
+$pdf ->Cell(60,7,utf8_decode(''.strtoupper($result1['tipo_estatus']).''),1,0,'C');
+$pdf ->Cell(50,7,utf8_decode(''.$reg['efectivo'].''),1,1,'C');
+$pdf->SetX(50);
+$pdf ->Cell(60,7,utf8_decode(''.strtoupper($result2['tipo_estatus']).''),1,0,'C');
+$pdf ->Cell(50,7,utf8_decode(''.$reg['no_efectivo'].''),1,1,'C');
+$pdf->SetX(50);
+$pdf ->Cell(60,7,utf8_decode(''.strtoupper($result3['tipo_estatus']).''),1,0,'C');
+$pdf ->Cell(50,7,utf8_decode(''.$reg['sin_despacho'].''),1,1,'C');
+$pdf->SetX(50);
+$pdf ->Cell(60,7,utf8_decode(''.strtoupper($result4['tipo_estatus']).''),1,0,'C');
+$pdf ->Cell(50,7,utf8_decode(''.$reg['repetida'].''),1,1,'C');
+$pdf->SetX(50);
+$pdf ->Cell(60,7,utf8_decode(''.strtoupper($result5['tipo_estatus']).''),1,0,'C');
+$pdf ->Cell(50,7,utf8_decode(''.$reg['sabotaje'].''),1,1,'C');
+$pdf->SetX(50);
+$pdf ->Cell(60,7,utf8_decode(''.strtoupper($result6['tipo_estatus']).''),1,0,'C');
+$pdf ->Cell(50,7,utf8_decode(''.$reg['informacion'].''),1,1,'C');
+$pdf->SetX(50);
+$pdf ->Cell(60,7,utf8_decode(''.strtoupper($result7['tipo_estatus']).''),1,0,'C');
+$pdf ->Cell(50,7,utf8_decode(''.$reg['abandonada'].''),1,1,'C');
+$pdf->SetX(50);
+$pdf ->Cell(60,7,utf8_decode('TOTAL'),1,0,'C');
+$pdf ->Cell(50,7,utf8_decode(''.$reg['total_solici'].''),1,1,'C');
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 $pdf->SetX(20);
 $pdf->Cell(170,8,utf8_decode(''),0,1);

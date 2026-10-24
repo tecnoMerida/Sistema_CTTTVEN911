@@ -8,6 +8,11 @@
       <ul class="nav navbar-right panel_toolbox">
         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
         </li>
+<<<<<<< HEAD
+=======
+        <li><a class="close-link"><i class="fa fa-close"></i></a>
+        </li>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
       </ul>
       <div class="clearfix"></div>
     </div>
@@ -43,6 +48,7 @@
                 </thead>
                 <tbody>
                   <?php
+<<<<<<< HEAD
                   $organismo_id = $organismo_id ?? '';
                   $personal_ven = $personal_ven ?? '';
                   $fecha_entrada = $fecha_entrada ?? '';
@@ -58,6 +64,17 @@
                       $fecha_e = $fecha_entrada;
                       $fecha_s = $fecha_salida;
                       $cedula = $personal_ven;
+=======
+                  $datos = $datos1 = $datos3 = ''; // datos del grafico (se llenan mas abajo)
+                  /**********************************     FILTRO DE BUSQUEDA      ********************************/
+                  if ($organismo_id == '' and $personal_ven == ''and $fecha_entrada == '' and $fecha_salida == '') {
+                  } else {
+                    if ($personal_ven != '' and $fecha_entrada != '' and $fecha_salida != '') {
+                      $fecha_e = $fecha_entrada;
+                      $fecha_s = $fecha_salida;
+                      $cedula = $personal_ven;
+                      //echo $cedula;
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
                       $filtro1 = "INNER JOIN solicitante ON solicitudes.solicitante_id = solicitante.id
                       INNER JOIN solicitud_atencion ON solicitudes.id = solicitud_atencion.solicitudes_id
@@ -68,6 +85,7 @@
                       AND (solicitud_atencion.despachador_solicitud = '$cedula' OR solicitud_atencion.operador_solicitud = '$cedula')";
                       $consulta_solic = pg_query($dbconn, "SELECT solicitudes.id, solicitudes.guardias_id, solicitudes.fecha_creacion_sol, motivo_solicitud.nombre_motivo, estatus_solicitud.tipo_estatus, personal.p_nombre, personal.p_apellido FROM solicitudes $filtro1");
 
+<<<<<<< HEAD
                       if ($consulta_solic && pg_num_rows($consulta_solic) > 0) {
                         while ($reg_solic = pg_fetch_array($consulta_solic)) {
                           $dato = $reg_solic[2] ?? '';
@@ -95,6 +113,56 @@
 
                   if ($organismo_id != '' || $personal_ven != '' || $fecha_entrada != '' || $fecha_salida != '') {
                     if ($personal_ven != '' && $fecha_entrada != '' && $fecha_salida != '') {
+=======
+                      while($reg_solic = pg_fetch_array($consulta_solic)){
+                      $total_rows_pag = pg_fetch_all($consulta_solic) ?: 0;
+
+                          /*
+<!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
+*/
+                          if ($total_rows_pag != 0) {
+
+                            //impresion de los datos.
+                            do {
+
+                              // MUESTRA LOS VALORES DE LA CONSULTAS
+                              $dato = $reg_solic[2];
+                              $fecha = date('Y-m-d', strtotime($dato));
+                              $hora = date('H:i:s', strtotime($dato));
+                              echo "<tr align='center' ><td>" . $reg_solic[0] . "</td>\n";
+                              echo "<td>" . strtoupper($reg_solic[3]) . "</td>\n";
+                              echo "<td>" . strtoupper($reg_solic[4]) . "</td>\n";
+                              echo "<td>" . $fecha . "</td>\n";
+                              echo "<td>" . $hora . "</td>\n";
+                              echo "<td>" . strtoupper($reg_solic[5]) . " " . strtoupper($reg_solic[6]) . "</td>\n";
+                              echo "<td><a href=ver_solicitudes.php?id=" . $reg_solic[0] . " target='_blank'><button class='btn btn-success' type='submit' action='' value='VER'>VER</button></a></td></tr>\n";
+                            } while (false); // una fila por vuelta: el while exterior ya recorre $consulta_solic
+                          }
+                        }
+
+                          /*
+<!--  *****************************   TABLA DE FORMULARIO     *************************************  -->
+*/
+
+
+                      } else {
+                        echo "<tr align='center' ><td colspan='7'>No hay datos a mostrar.\n</td></tr>";
+                        echo $personal_ven.", ".$ver['cedula'];
+                        
+                       // exit;
+                      }
+
+                    }
+                  
+                  /********************************     FIN FILTRO BUSQUEDA     ************************************/
+                  /********************************     CONSULTA DESPUES DEL FILTRO     ***************************/
+
+ 
+                   /**********************************     FILTRO DE BUSQUEDA      ********************************/
+                   if ($organismo_id == '' and $personal_ven == '' and $fecha_entrada == '' and $fecha_salida == '') {
+                  } else {
+                    if ($personal_ven != '' and $fecha_entrada != '' and $fecha_salida != '') {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                       $fecha_e = $fecha_entrada;
                       $fecha_s = $fecha_salida;
                       $cedula = $personal_ven;
@@ -106,6 +174,7 @@
                       INNER JOIN personal ON solicitud_atencion.despachador_solicitud = personal.cedula
                       WHERE (solicitudes.fecha_creacion_sol BETWEEN '$fecha_e 00:00:01' AND '$fecha_s 23:59:59') 
                       AND (solicitud_atencion.despachador_solicitud = '$cedula' OR solicitud_atencion.operador_solicitud = '$cedula')
+<<<<<<< HEAD
                       GROUP BY motivo_solicitud.nombre_motivo";
                       $consulta_solic_graf = pg_query($dbconn, "SELECT motivo_solicitud.nombre_motivo, COUNT(*) AS total FROM solicitudes $filtro2");
 
@@ -123,6 +192,44 @@
                       $datos1 = implode(',', $chart_labels);
                       $datos = implode(',', $chart_data);
                       $datos3 = implode(',', $chart_colors);
+=======
+					            GROUP BY motivo_solicitud.nombre_motivo";
+                      $consulta_solic_graf = pg_query($dbconn, "SELECT motivo_solicitud.nombre_motivo, COUNT(*) AS total FROM solicitudes $filtro2");
+
+                      while($graf_solic = pg_fetch_array($consulta_solic_graf)){
+
+
+                      
+                        $a = (int) $graf_solic["total"] + (int) ($a ?? 0);
+                        $e = $rm["id"];
+                        $c = (int) $graf_solic["nombre_motivo"] + (int) ($c ?? 0);
+
+                        $texto = $estatuspg[$a];
+                        $total .= $texto;
+                        $total .= ",";
+                        $datos .= " " . $graf_solic["total"] . "";
+                        $datos .= ",";
+
+                        $texto1 = $tipopg[$c];
+                        $total1 .= $texto1;
+                        $total1 .= ",";
+                        $datos1 .= "'" . $graf_solic["nombre_motivo"] . "'";
+                        $datos1 .= ",";
+
+
+                        // funcion de colores aleatorios
+                        foreach ($graf_solic as $color) {
+                              $color = substr(str_shuffle('ABCDEF0123456789'), 0, 6);
+                          }
+  
+                        $texto3 = $colorrgb[$a];
+                        $total3 .= $texto3;
+                        $total3 .= ",";
+                        $datos3 .= "'#" . $color . "'";
+                        $datos3 .= ",";
+                      }
+
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                     }
                   }
 
@@ -171,7 +278,11 @@
 					            GROUP BY estatus_solicitud.tipo_estatus";
                       
                       $consulta_solic_tab = pg_query($dbconn, "SELECT estatus_solicitud.tipo_estatus, COUNT(estatus_solicitud.tipo_estatus) AS total_conteo, COUNT(*) AS total_estatus FROM solicitudes $filtro3");
+<<<<<<< HEAD
                       $tab_solic = $consulta_solic_tab ? pg_fetch_all($consulta_solic_tab) : false;
+=======
+                      $tab_solic = pg_fetch_all($consulta_solic_tab);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
                       $filtro4 = "INNER JOIN solicitante ON solicitudes.solicitante_id = solicitante.id
                       INNER JOIN solicitud_atencion ON solicitudes.id = solicitud_atencion.solicitudes_id
@@ -182,7 +293,11 @@
                       AND (solicitud_atencion.despachador_solicitud = '$cedula' OR solicitud_atencion.operador_solicitud = '$cedula')";
 
                       $total_solic_tab = pg_query($dbconn, "SELECT COUNT(*) AS total_estatus FROM solicitudes $filtro4");
+<<<<<<< HEAD
                       $total_solic = $total_solic_tab ? pg_fetch_array($total_solic_tab) : null;                      
+=======
+                      $total_solic = pg_fetch_array($total_solic_tab);                      
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
                         ?>
         <!-- Seccion Tres -->
@@ -204,6 +319,7 @@
 $i = 0;
 echo '<table class="table table-bordered">';
 
+<<<<<<< HEAD
 if (!empty($tab_solic) && is_array($tab_solic)) {
   foreach ($tab_solic as $item) {
     $i++;
@@ -222,6 +338,24 @@ echo '<tr>';
 echo '<td colspan="3">&nbsp;</td>';
 echo '<td style="background-color: rgb(102, 255, 153);">Total</td>';
 echo '<td style="background-color: rgb(102, 255, 153);">' . $tot_est . '</td>';
+=======
+foreach ($tab_solic as $item) {$i++;
+echo '<tr>';
+echo '<td colspan="3">&nbsp;</td>';
+echo '<td>'.$item['tipo_estatus'].'</td>';
+echo '<td>'.$item['total_estatus'].'</td>';
+echo '<td>&nbsp;</td>';
+if($i%3 == 0) {
+echo '</tr><tr>';
+}
+
+echo '</tr>';
+}
+echo '<tr>';
+echo '<td colspan="3">&nbsp;</td>';
+echo '<td style="background-color: rgb(102, 255, 153);">Total</td>';
+echo '<td style="background-color: rgb(102, 255, 153);">'.$total_solic['total_estatus'].'</td>';
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 echo '<td>&nbsp;</td>';
 echo '</tr>';
 echo '</table>';

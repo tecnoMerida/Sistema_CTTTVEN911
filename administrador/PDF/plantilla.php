@@ -1,10 +1,16 @@
 <?php
+<<<<<<< HEAD
 error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE & ~E_WARNING);
 ini_set('display_errors', '0');
 
 require_once('fpdf123/fpdf.php');
 
 if (!class_exists('PDF')) {
+=======
+
+require('fpdf123/fpdf.php');
+
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 class PDF extends FPDF
 {
  
@@ -76,6 +82,9 @@ function Footer()
     $this->Cell(0,5,utf8_decode('Página ').$this->PageNo().'/{nb}',0,0,'C');
 }
 }
+<<<<<<< HEAD
 }
+=======
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 ?>

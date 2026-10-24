@@ -3,8 +3,13 @@
 date_default_timezone_set('America/Caracas');
 
 // Traer datos por metodo POST
+<<<<<<< HEAD
 $accion = $_GET['ac'] ?? '';
 extract($_POST, EXTR_SKIP);
+=======
+$accion = $_GET['ac'];
+extract($_POST);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 // Conexion con la base de datos
 require_once 'config/conexion1.php';
@@ -28,7 +33,11 @@ if (isset($_POST)) {
                 $consulta = pg_query($dbconn, "SELECT * FROM public.usuario WHERE personal_cedula = '$personal_cedula' OR usuario LIKE '%$usuario%' ");
                 $result1 = pg_fetch_array($consulta);
 
+<<<<<<< HEAD
                 if ($result1 !== false && !empty($result1)) {
+=======
+                if ($result1 != 0) {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
                     header("Location: administrador/registro_personal6.php?msg=1");
                 } else {
@@ -79,7 +88,11 @@ if (isset($_POST)) {
                     $consulta = pg_query($dbconn, "SELECT * FROM public.usuario WHERE usuario LIKE '%$usuario%' ");
                     $result1 = pg_fetch_array($consulta);
     
+<<<<<<< HEAD
                     if ($result1 !== false && !empty($result1)) {
+=======
+                    if ($result1 != 0) {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
     
                         header("Location: administrador/modificar_personal.php?id=$personal_cedula&msg=7");
                     } else {
@@ -88,7 +101,11 @@ if (isset($_POST)) {
                     $usuario1 = pg_query($dbconn, "SELECT * FROM public.usuario WHERE personal_cedula = $personal_cedula ");
                     $result_usuario = pg_fetch_array($usuario1);
 
+<<<<<<< HEAD
                     if ($result_usuario !== false && !empty($result_usuario)) {
+=======
+                    if ($result_usuario > 0) {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
                         
                         if (isset($_POST['personal_cedula'])) {
@@ -182,7 +199,11 @@ if (isset($_POST)) {
                         $usuario1 = pg_query($dbconn, "SELECT * FROM  preguntas_usuario WHERE id = $id ");
                         $result_usuario = pg_fetch_array($usuario1);
     
+<<<<<<< HEAD
                         if ($result_usuario !== false && !empty($result_usuario)) {
+=======
+                        if ($result_usuario > 0) {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
     
                             if (isset($_POST['id'])) {
                                 // Actualiza datos del registro de Pariente

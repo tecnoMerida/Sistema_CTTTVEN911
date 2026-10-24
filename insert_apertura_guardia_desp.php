@@ -1,9 +1,13 @@
 <?php
 require('cookie/cookie.php');
 
+<<<<<<< HEAD
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+=======
+session_start();
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
   if(!isset($_SESSION['tipo_rol_id'])){
                 header ("Location: index.php?error=fuera");
         }else{
@@ -17,8 +21,13 @@ if (session_status() === PHP_SESSION_NONE) {
 date_default_timezone_set('America/Caracas');
 
 // Traer datos por metodo POST
+<<<<<<< HEAD
 	$accion = $_GET['ac'] ?? '';
 	extract($_POST, EXTR_SKIP);
+=======
+	$accion = $_GET['ac'];
+	extract($_POST);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 // Conexion con la base de datos
 require_once 'config/conexion1.php';
@@ -36,7 +45,11 @@ if(isset($_POST)){ // Asigna valores a variables provenientes de POST
             $materiales_id = '';
                 if (isset ($_POST['materiales_recibe'])){
                 foreach( $_POST['materiales_recibe'] as $id ){
+<<<<<<< HEAD
                     $formato1 = ($formato1 ?? '') . ' '.$id;
+=======
+                    $formato1 = $formato1.' '.$id;
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                 }
                 $materiales_id = implode(', ', $_POST['materiales_recibe']);
             }

@@ -19,22 +19,39 @@
                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                      </li>
 
+<<<<<<< HEAD
+=======
+                     <li><a class="close-link"><i class="fa fa-close"></i></a>
+                     </li>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                    </ul>
                    <div class="clearfix"></div>
                  </div>
                  <div align="center">
                    <?php
+<<<<<<< HEAD
                     $msg = $_GET['msg'] ?? '';
                     if ($msg == "1") {
+=======
+                    if (($_GET['msg'] ?? '') == "1") {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                       echo '<div class="alert alert-danger alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>El Usuario ya Existe!!!</strong></div>';
                     }
+<<<<<<< HEAD
                     if ($msg == "2") {
                       echo '<div class="alert alert-success alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Pariente Registrado con EXITO!!!</strong></div>';
                     } elseif ($msg == "3") {
+=======
+                    if (($_GET['msg'] ?? '') == "2") {
+                      echo '<div class="alert alert-success alert-dismissible msn1">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <strong>Pariente Registrado con EXITO!!!</strong></div>';
+                    } elseif (($_GET['msg'] ?? '') == "3") {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                       echo '<div class="alert alert-secondary alert-dismissible msn1">
                     <button type="button" class="close" data-dismiss="alert">&times;</button>
                     <strong>Preguntas de Seguridad NO registradas</strong></div>';

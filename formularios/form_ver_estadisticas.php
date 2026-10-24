@@ -210,49 +210,84 @@
                             <td>
                               <p><i class="fa fa-square blue"></i>Efectivas </p>
                             </td>
+<<<<<<< HEAD
                             <td><?php $porcentaje = (!empty($total_solici) && $total_solici > 0) ? round(($efectivo * 100) / $total_solici, 0) : 0;
+=======
+                            <td><?php $porcentaje = $efectivo * 100 / max(1, (int) $total_solici);
+                                $porcentaje = round($porcentaje, 0);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                                 echo $porcentaje . "%"; ?></td>
                           </tr>
                           <tr>
                             <td>
                               <p><i class="fa fa-square green"></i>No Efectivas </p>
                             </td>
+<<<<<<< HEAD
                             <td><?php $porcentaje = (!empty($total_solici) && $total_solici > 0) ? round(($no_efectivo * 100) / $total_solici, 0) : 0;
+=======
+                            <td><?php $porcentaje = $no_efectivo * 100 / max(1, (int) $total_solici);
+                                $porcentaje = round($porcentaje, 0);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                                 echo $porcentaje . "%"; ?></td>
                           </tr>
                           <tr>
                             <td>
                               <p><i class="fa fa-square purple"></i>Sin Despacho </p>
                             </td>
+<<<<<<< HEAD
                             <td><?php $porcentaje = (!empty($total_solici) && $total_solici > 0) ? round(($sin_despacho * 100) / $total_solici, 0) : 0;
+=======
+                            <td><?php $porcentaje = $sin_despacho * 100 / max(1, (int) $total_solici);
+                                $porcentaje = round($porcentaje, 0);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                                 echo $porcentaje . "%"; ?></td>
                           </tr>
                           <tr>
                             <td>
                               <p><i class="fa fa-square aero"></i>Repetida </p>
                             </td>
+<<<<<<< HEAD
                             <td><?php $porcentaje = (!empty($total_solici) && $total_solici > 0) ? round(($repetida * 100) / $total_solici, 0) : 0;
+=======
+                            <td><?php $porcentaje = $repetida * 100 / max(1, (int) $total_solici);
+                                $porcentaje = round($porcentaje, 0);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                                 echo $porcentaje . "%"; ?></td>
                           </tr>
                           <tr>
                             <td>
                               <p><i class="fa fa-square red"></i>Sabotaje </p>
                             </td>
+<<<<<<< HEAD
                             <td><?php $porcentaje = (!empty($total_solici) && $total_solici > 0) ? round(($sabotaje * 100) / $total_solici, 0) : 0;
+=======
+                            <td><?php $porcentaje = $sabotaje * 100 / max(1, (int) $total_solici);
+                                $porcentaje = round($porcentaje, 0);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                                 echo $porcentaje . "%"; ?></td>
                           </tr>
                           <tr>
                             <td>
                               <p><i class="fa fa-square blue"></i>Información </p>
                             </td>
+<<<<<<< HEAD
                             <td><?php $porcentaje = (!empty($total_solici) && $total_solici > 0) ? round(($informacion * 100) / $total_solici, 0) : 0;
+=======
+                            <td><?php $porcentaje = $informacion * 100 / max(1, (int) $total_solici);
+                                $porcentaje = round($porcentaje, 0);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                                 echo $porcentaje . "%"; ?></td>
                           </tr>
                           <tr>
                             <td>
                               <p><i class="fa fa-square black"></i>Abandonada </p>
                             </td>
+<<<<<<< HEAD
                             <td><?php $porcentaje = (!empty($total_solici) && $total_solici > 0) ? round(($abandonada * 100) / $total_solici, 0) : 0;
+=======
+                            <td><?php $porcentaje = $abandonada * 100 / max(1, (int) $total_solici);
+                                $porcentaje = round($porcentaje, 0);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                                 echo $porcentaje . "%"; ?></td>
                           </tr>
                         </table>

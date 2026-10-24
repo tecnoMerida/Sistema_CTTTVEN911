@@ -1,6 +1,10 @@
 <?php
   $id_personal = $_REQUEST['id'];
+<<<<<<< HEAD
   $id_personal = $_GET['id'] ?? '';
+=======
+  $id_personal =$_GET['id'];
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
   
 require_once('../../config/conexion1.php');
@@ -215,7 +219,12 @@ $pdf->SetFont('Arial','B',12);
 $pdf->SetX(60);
 $pdf->Cell(85,7,utf8_decode('Firma y Sello'),0,1,'C');
 */
+<<<<<<< HEAD
 if (isset($pdf) && $pdf instanceof FPDF) {
     $pdf->Output();
 }
+=======
+$pdf->Output();
+
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 ?>

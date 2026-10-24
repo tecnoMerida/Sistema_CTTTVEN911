@@ -36,9 +36,12 @@ $(document).ready(function(){
 $(document).ready(function(){
 
 	$("#cboMunicipio").change(function(){
+<<<<<<< HEAD
 		if (typeof window.alCambiarMunicipio === 'function') {
 			return;
 		}
+=======
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 		if($('#cboMunicipio option:selected').val() == "-1"){
 
@@ -85,6 +88,7 @@ $(document).ready(function(){
 /***************************	Inicio Funcion Parroquias - Sectores - Cuadrantes		************************************/
 
 $(document).ready(function(){
+<<<<<<< HEAD
 	var isUpdatingCuadrante = false;
 
 	// Función para normalizar y seleccionar con precisión el organismo
@@ -384,3 +388,57 @@ $(document).ready(function(){
 	});
 });
 /*****************************	Fin Funcion Parroquias - Sectores - Cuadrantes 		************************************/
+=======
+	$("#cboParroquia").change(function () {
+	 $("#cboParroquia option:selected").each(function () {
+	 elegido=$(this).val();
+	 $.post("../controlador/Sectores.php", { elegido: elegido }, function(data){
+	   $("#cboSectores").html(data);
+
+	   $("#cboSectores").change(function () {
+		 $("#cboSectores option:selected").each(function () {
+			cboSectores = $(this).val();
+		   $.post("../controlador/Cuadrantes.php", { elegido: cboSectores }, function(data){
+			 $("#cboCuadrantes").html(data);
+			 
+		   });     
+		 });
+		})
+	 });     
+	   });
+  })
+});
+/*****************************	Fin Funcion Parroquias - Sectores - Cuadrantes 		************************************/
+
+/**********************	Inicio Funcion Parroquias - Sectores - Cuadrantes	"Cierre Guardia"	************************/
+
+$(document).ready(function(){
+/*	$("#cboParroquia").change(function () {
+	 $("#cboParroquia option:selected").each(function () {
+	 elegido=$(this).val();
+	 $.post("../controlador/Sectores.php", { elegido: elegido }, function(data){
+	   $("#cboSectores").html(data);*/
+
+	   $("#cboSectores").change(function () {
+		 $("#cboSectores option:selected").each(function () {
+			cboSectores = $(this).val();
+		   $.post("../controlador/Cuadrantes.php", { elegido: cboSectores }, function(data){
+			 $("#cboCuadrantes").html(data);
+
+			 $("#cboSectores option:selected").each(function () {
+				cboSectores = $(this).val();
+			   $.post("../controlador/Organismo.php", { elegido: cboSectores }, function(data){
+				 $("#cboOrganismo").html(data);
+				 
+			   });     
+			 });
+
+		   });     
+		 });
+		})
+	 });     
+/*	   });
+  })
+});*/
+/**********************	Fin Funcion Parroquias - Sectores - Cuadrantes 	"Cierre Guardia"	************************/
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885

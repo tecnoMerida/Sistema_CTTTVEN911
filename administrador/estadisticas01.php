@@ -102,6 +102,11 @@ if (isset($_POST['consultar'])) {
                 <ul class="nav navbar-right panel_toolbox">
                   <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                   </li>
+<<<<<<< HEAD
+=======
+                  <li><a class="close-link"><i class="fa fa-close"></i></a>
+                  </li>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                 </ul>
                 <div class="clearfix"></div>
               </div>
@@ -157,6 +162,11 @@ if (isset($_POST['consultar'])) {
                   <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                   </li>
 
+<<<<<<< HEAD
+=======
+                  <li><a class="close-link"><i class="fa fa-close"></i></a>
+                  </li>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                 </ul>
                 <div class="clearfix"></div>
               </div>
@@ -411,49 +421,84 @@ SELECT COUNT(solicitante.motivo_solicitud_id) AS total_motivo , (SELECT COUNT(so
                         <td>
                           <p><i class="fa fa-square blue"></i>Efectivas </p>
                         </td>
+<<<<<<< HEAD
                         <td><?php $porcentaje = ($total > 0) ? round((($campos['total_efectivo'] ?? 0) * 100) / $total, 0) : 0;
+=======
+                        <td><?php $porcentaje = $campos['total_efectivo'] * 100 / max(1, (int) $total);
+                            $porcentaje = round($porcentaje, 0);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                             echo $porcentaje . "%"; ?></td>
                       </tr>
                       <tr>
                         <td>
                           <p><i class="fa fa-square green"></i>No Efectivas </p>
                         </td>
+<<<<<<< HEAD
                         <td><?php $porcentaje = ($total > 0) ? round((($campos['total_no_efectivo'] ?? 0) * 100) / $total, 0) : 0;
+=======
+                        <td><?php $porcentaje = $campos['total_no_efectivo'] * 100 / max(1, (int) $total);
+                            $porcentaje = round($porcentaje, 0);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                             echo $porcentaje . "%"; ?></td>
                       </tr>
                       <tr>
                         <td>
                           <p><i class="fa fa-square purple"></i>Sin Despacho </p>
                         </td>
+<<<<<<< HEAD
                         <td><?php $porcentaje = ($total > 0) ? round((($campos['total_sin_despacho'] ?? 0) * 100) / $total, 0) : 0;
+=======
+                        <td><?php $porcentaje = $campos['total_sin_despacho'] * 100 / max(1, (int) $total);
+                            $porcentaje = round($porcentaje, 0);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                             echo $porcentaje . "%"; ?></td>
                       </tr>
                       <tr>
                         <td>
                           <p><i class="fa fa-square aero"></i>Repetida </p>
                         </td>
+<<<<<<< HEAD
                         <td><?php $porcentaje = ($total > 0) ? round((($campos['total_repetida'] ?? 0) * 100) / $total, 0) : 0;
+=======
+                        <td><?php $porcentaje = $campos['total_repetida'] * 100 / max(1, (int) $total);
+                            $porcentaje = round($porcentaje, 0);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                             echo $porcentaje . "%"; ?></td>
                       </tr>
                       <tr>
                         <td>
                           <p><i class="fa fa-square red"></i>Sabotaje </p>
                         </td>
+<<<<<<< HEAD
                         <td><?php $porcentaje = ($total > 0) ? round((($campos['total_sabotaje'] ?? 0) * 100) / $total, 0) : 0;
+=======
+                        <td><?php $porcentaje = $campos['total_sabotaje'] * 100 / max(1, (int) $total);
+                            $porcentaje = round($porcentaje, 0);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                             echo $porcentaje . "%"; ?></td>
                       </tr>
                       <tr>
                         <td>
                           <p><i class="fa fa-square blue"></i>Información </p>
                         </td>
+<<<<<<< HEAD
                         <td><?php $porcentaje = ($total > 0) ? round((($campos['total_informacion'] ?? 0) * 100) / $total, 0) : 0;
+=======
+                        <td><?php $porcentaje = $campos['total_informacion'] * 100 / max(1, (int) $total);
+                            $porcentaje = round($porcentaje, 0);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                             echo $porcentaje . "%"; ?></td>
                       </tr>
                       <tr>
                         <td>
                           <p><i class="fa fa-square black"></i>Abandonada </p>
                         </td>
+<<<<<<< HEAD
                         <td><?php $porcentaje = ($total > 0) ? round((($campos['total_abandonada'] ?? 0) * 100) / $total, 0) : 0;
+=======
+                        <td><?php $porcentaje = $campos['total_abandonada'] * 100 / max(1, (int) $total);
+                            $porcentaje = round($porcentaje, 0);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                             echo $porcentaje . "%"; ?></td>
                       </tr>
                       <tfoot>
@@ -483,6 +528,11 @@ SELECT COUNT(solicitante.motivo_solicitud_id) AS total_motivo , (SELECT COUNT(so
                   <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                   </li>
 
+<<<<<<< HEAD
+=======
+                  <li><a class="close-link"><i class="fa fa-close"></i></a>
+                  </li>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                 </ul>
                 <div class="clearfix"></div>
               </div>

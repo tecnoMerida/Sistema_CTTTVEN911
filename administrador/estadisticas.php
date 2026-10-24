@@ -1,9 +1,13 @@
 <?php
 require('../cookie/cookie.php');
 
+<<<<<<< HEAD
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+=======
+session_start();
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 if (!isset($_SESSION['tipo_rol_id'])) {
   header("Location: ../index.php?error=fuera");
 } else {
@@ -17,6 +21,7 @@ require_once '../config/config_bd.php';
 require_once '../config/conexion1.php';
 require_once '../controlador/combo.php';
 
+<<<<<<< HEAD
 $consulta = $_POST['consultar'] ?? null;
 $fila_municip = ['id' => '', 'nombre_municipio' => '-Seleccione Municipio-'];
 $meses_nombres = [1 => 'Enero', 2 => 'Febrero', 3 => 'Marzo', 4 => 'Abril', 5 => 'Mayo', 6 => 'Junio', 7 => 'Julio', 8 => 'Agosto', 9 => 'Septiembre', 10 => 'Octubre', 11 => 'Noviembre', 12 => 'Diciembre'];
@@ -33,6 +38,13 @@ if (isset($_POST['consultar']) && !empty($_POST['municipios'])) {
   $municipio = $_POST['municipios'];
   $mes = $_POST['mes'] ?? date('n');
   $aux = $mes;
+=======
+$consulta = $_POST['consultar'];
+
+if (isset($_POST['consultar'])) {
+  $municipio = $_POST['municipios'];
+  $mes = $_POST['mes'];
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
   $anio = date("Y");
   $fecha = date("Y") . "-$mes-01";
   $fecha_fin = new DateTime($fecha);
@@ -41,6 +53,7 @@ if (isset($_POST['consultar']) && !empty($_POST['municipios'])) {
   inner join solicitudes on parroquias.id = solicitudes.parroquias_id 
   WHERE municipios_id = $municipio 
   AND solicitudes.fecha_sol between '" . $fecha . "' AND '" . $fecha_fin . "' ";
+<<<<<<< HEAD
   
   $resultado1 = pg_query($dbconn, $sql);
 
@@ -50,10 +63,25 @@ if (isset($_POST['consultar']) && !empty($_POST['municipios'])) {
       $fila_municip = $m_row;
   }
 }
+=======
+  //echo $sql;
+  $resultado1 = pg_query($dbconn, $sql) or die("error al consultar su municipio");
+
+  $municipio_sql = "select * from municipios where id = $municipio";
+  $resultado = pg_query($dbconn, $municipio_sql) or die("Error consultados los municipios");
+  $fila_municip = pg_fetch_array($resultado);
+}
+
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 ?>
 
 <!-- ***** Menu Navegacion Panel Derecho ***** -->
 <?php require_once '../plantillas/superior3.php';
+<<<<<<< HEAD
+=======
+require_once '../plantillas/inferior_graficos.php';
+
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 ?>
 <!-- ***** Menu Navegacion Panel Derecho ***** -->
 
@@ -88,6 +116,11 @@ if (isset($_POST['consultar']) && !empty($_POST['municipios'])) {
             <ul class="nav navbar-right panel_toolbox">
               <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
               </li>
+<<<<<<< HEAD
+=======
+              <li><a class="close-link"><i class="fa fa-close"></i></a>
+              </li>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
             </ul>
             <div class="clearfix"></div>
           </div>
@@ -142,6 +175,11 @@ if (isset($_POST['consultar']) && !empty($_POST['municipios'])) {
                   <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                   </li>
 
+<<<<<<< HEAD
+=======
+                  <li><a class="close-link"><i class="fa fa-close"></i></a>
+                  </li>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                 </ul>
                 <div class="clearfix"></div>
               </div>
@@ -149,7 +187,13 @@ if (isset($_POST['consultar']) && !empty($_POST['municipios'])) {
                 <div class="col-md-12 col-sm-12" style="display: inline-block; ">
 
                   <?php
+<<<<<<< HEAD
                   if ($ha_consultado) {
+=======
+echo $municipio;
+echo $fecha;
+echo $fecha_fin;
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                   /************  CONSULTA A MUNICIPIOS  ************/
 
 // Consulta Tabla Reporte Solicitudes
@@ -158,8 +202,12 @@ FROM public.reporte_solicitudes
 INNER JOIN municipios ON municipios.id = reporte_solicitudes.municipio
 WHERE reporte_solicitudes.municipio = $municipio AND reporte_solicitudes.fecha_solicitud BETWEEN '" . $fecha . "' and '" . $fecha_fin . "'
 GROUP BY (municipios.id)";
+<<<<<<< HEAD
                   $resp2 = pg_query($dbconn, $sql2);
                   $temp = [];
+=======
+                  $resp2 = pg_query($dbconn, $sql2) or die("<div align='center'><strong> NO EXISTEN DATOS A MOSTRAR </strong></div>");
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 
                   $rondas = pg_num_rows($resp2);
@@ -431,7 +479,11 @@ GROUP BY (municipios.id)";
                   </div>
                   <div class="col-md-4 col-sm-4 ">
                     <?php
+<<<<<<< HEAD
                     $total = (float)($campos["total_solicitudes"] ?? 0);
+=======
+                    $total = $campos["total_solicitudes"];
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
                     ?>
                     <table class="tile_info">
@@ -439,49 +491,84 @@ GROUP BY (municipios.id)";
                         <td>
                           <p><i class="fa fa-square blue"></i>Efectivas </p>
                         </td>
+<<<<<<< HEAD
                         <td><?php $porcentaje = ($total > 0) ? round((($campos['total_efectivo'] ?? 0) * 100) / $total, 0) : 0;
+=======
+                        <td><?php $porcentaje = $campos['total_efectivo'] * 100 / max(1, (int) $total);
+                            $porcentaje = round($porcentaje, 0);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                             echo $porcentaje . "%"; ?></td>
                       </tr>
                       <tr>
                         <td>
                           <p><i class="fa fa-square green"></i>No Efectivas </p>
                         </td>
+<<<<<<< HEAD
                         <td><?php $porcentaje = ($total > 0) ? round((($campos['total_no_efectivo'] ?? 0) * 100) / $total, 0) : 0;
+=======
+                        <td><?php $porcentaje = $campos['total_no_efectivo'] * 100 / max(1, (int) $total);
+                            $porcentaje = round($porcentaje, 0);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                             echo $porcentaje . "%"; ?></td>
                       </tr>
                       <tr>
                         <td>
                           <p><i class="fa fa-square purple"></i>Sin Despacho </p>
                         </td>
+<<<<<<< HEAD
                         <td><?php $porcentaje = ($total > 0) ? round((($campos['total_sin_despacho'] ?? 0) * 100) / $total, 0) : 0;
+=======
+                        <td><?php $porcentaje = $campos['total_sin_despacho'] * 100 / max(1, (int) $total);
+                            $porcentaje = round($porcentaje, 0);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                             echo $porcentaje . "%"; ?></td>
                       </tr>
                       <tr>
                         <td>
                           <p><i class="fa fa-square aero"></i>Repetida </p>
                         </td>
+<<<<<<< HEAD
                         <td><?php $porcentaje = ($total > 0) ? round((($campos['total_repetida'] ?? 0) * 100) / $total, 0) : 0;
+=======
+                        <td><?php $porcentaje = $campos['total_repetida'] * 100 / max(1, (int) $total);
+                            $porcentaje = round($porcentaje, 0);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                             echo $porcentaje . "%"; ?></td>
                       </tr>
                       <tr>
                         <td>
                           <p><i class="fa fa-square red"></i>Sabotaje </p>
                         </td>
+<<<<<<< HEAD
                         <td><?php $porcentaje = ($total > 0) ? round((($campos['total_sabotaje'] ?? 0) * 100) / $total, 0) : 0;
+=======
+                        <td><?php $porcentaje = $campos['total_sabotaje'] * 100 / max(1, (int) $total);
+                            $porcentaje = round($porcentaje, 0);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                             echo $porcentaje . "%"; ?></td>
                       </tr>
                       <tr>
                         <td>
                           <p><i class="fa fa-square blue"></i>Información </p>
                         </td>
+<<<<<<< HEAD
                         <td><?php $porcentaje = ($total > 0) ? round((($campos['total_informacion'] ?? 0) * 100) / $total, 0) : 0;
+=======
+                        <td><?php $porcentaje = $campos['total_informacion'] * 100 / max(1, (int) $total);
+                            $porcentaje = round($porcentaje, 0);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                             echo $porcentaje . "%"; ?></td>
                       </tr>
                       <tr>
                         <td>
                           <p><i class="fa fa-square black"></i>Abandonada </p>
                         </td>
+<<<<<<< HEAD
                         <td><?php $porcentaje = ($total > 0) ? round((($campos['total_abandonada'] ?? 0) * 100) / $total, 0) : 0;
+=======
+                        <td><?php $porcentaje = $campos['total_abandonada'] * 100 / max(1, (int) $total);
+                            $porcentaje = round($porcentaje, 0);
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                             echo $porcentaje . "%"; ?></td>
                       </tr>
                       <tfoot>
@@ -518,6 +605,11 @@ GROUP BY (municipios.id)";
                   <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                   </li>
 
+<<<<<<< HEAD
+=======
+                  <li><a class="close-link"><i class="fa fa-close"></i></a>
+                  </li>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                 </ul>
                 <div class="clearfix"></div>
               </div>
@@ -686,12 +778,15 @@ GROUP BY (municipios.id)";
             </div>
           </div>
         </div>
+<<<<<<< HEAD
         <?php
         } else {
             echo '<div class="alert alert-info text-center"><strong>Por favor, seleccione un Municipio y Mes y haga clic en "Buscar" para visualizar las estadísticas.</strong></div>';
             echo '</div></div></div></div></div>';
         }
         ?>
+=======
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 
 

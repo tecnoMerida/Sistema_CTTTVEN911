@@ -12,23 +12,40 @@
           <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
           </li>
 
+<<<<<<< HEAD
+=======
+          <li><a class="close-link"><i class="fa fa-close"></i></a>
+          </li>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
         </ul>
         <div class="clearfix"></div>
       </div>
     <div align="center">
     <?php
+<<<<<<< HEAD
         if ($_GET[msg] == "4") {
+=======
+        if (($_GET['msg'] ?? '') == "4") {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
     echo '<div class="alert alert-danger alert-dismissible msn1">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
           <strong>No puedes realizar este registro, número de cédula ya Existe!!!</strong></div>';
     } 
+<<<<<<< HEAD
     if ($_GET[msg] == "5") {
+=======
+    if (($_GET['msg'] ?? '') == "5") {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
     echo '<div class="alert alert-success alert-dismissible msn1">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
           <strong>Familiar Registrado con EXITO!!!</strong></div>';
 
     }
+<<<<<<< HEAD
     elseif ($_GET[msg] == "6") {
+=======
+    elseif (($_GET['msg'] ?? '') == "6") {
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
     echo '<div class="alert alert-secondary alert-dismissible msn1">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
           <strong>Familiar NO registrado</strong></div>';

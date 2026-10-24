@@ -1,9 +1,13 @@
 <?php
 require('../cookie/cookie.php');
 
+<<<<<<< HEAD
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+=======
+session_start();
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 if (!isset($_SESSION['tipo_rol_id'])) {
   header("Location: ../index.php?error=fuera");
 } else {
@@ -18,6 +22,7 @@ if (!isset($_SESSION['tipo_rol_id'])) {
       require_once '../config/conexion1.php';
 
       // Consulta al personal de guardia
+<<<<<<< HEAD
       $personal_usuario = $_SESSION['personal_cedula'] ?? '';
       $cedula_personal = '';
       $organismo = '';
@@ -53,11 +58,36 @@ if (!isset($_SESSION['tipo_rol_id'])) {
           }
         }
       }
+=======
+      $personal_usuario = $_SESSION['personal_cedula'];
+      $consulta_pers = pg_query($dbconn, "SELECT * FROM public.personal WHERE cedula = $personal_usuario ") or die("Error L:20");
+      $regid = pg_fetch_array($consulta_pers);
+
+      $cedula_personal = $regid['cedula'];
+      $organismo = $regid['organismos_id'];
+
+      $ultimo1 = pg_query($dbconn, "SELECT id, fecha_inicio_g::timestamp::date, grupos_guardia_id, usuario_entrada_id  
+      FROM public.guardias
+      WHERE usuario_entrada_id = $cedula_personal
+      AND fecha_inicio_g::timestamp::date = (SELECT MAX(fecha_inicio_g::timestamp::date) FROM guardias) order by id DESC")  or die("Error L:28");
+      $reg_id = pg_fetch_array($ultimo1);
+
+      $grupos01 = $reg_id['id'];
+      $cedula_personal1 = $reg_id['usuario_entrada_id'];
+      $grupo = $reg_id['grupos_guardia_id'];
+      $fecha_inicio = $reg_id['fecha_inicio_g'];
+        $fecha = date('Y-m-d', strtotime($fecha_inicio));
+        $hora = date('H:i:s', strtotime($fecha_inicio));
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 ?>
 
       <!-- ***** Membrete ***** -->
       <?php require_once '../plantillas/superior3.php'; ?>
       <!-- ***** Membrete ***** -->
+<<<<<<< HEAD
+=======
+      <?php require_once '../plantillas/inferior_graficos.php'; ?>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
 
 
     
@@ -106,6 +136,11 @@ if (!isset($_SESSION['tipo_rol_id'])) {
 echo $fecha.", ";
 echo $hora.", ";*/
 ?>
+<<<<<<< HEAD
+=======
+                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
                       </ul>
                       <div class="clearfix"></div>
                     </div>
@@ -145,6 +180,9 @@ echo $hora.", ";*/
       </div>
     </div>
     </div>    
+<<<<<<< HEAD
     <?php require_once '../plantillas/inferior_graficos.php'; ?>
+=======
+>>>>>>> 5f8d5d2f542d45352f384fda1a16bbbe7413e885
     </body>
     </html>
