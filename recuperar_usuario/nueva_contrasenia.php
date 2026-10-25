@@ -1,39 +1,36 @@
 <?php
-extract($_REQUEST);
-
-
+// Recuperacion de contraseña (paso 3 de 3). El avance se guarda en la sesion
+// del servidor: no se puede saltar un paso ni cambiar datos de otro usuario.
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 include_once '../config/conexion1.php';
-$cedula = $_REQUEST['cedula'];
 
-$consulta_usuario = "SELECT * FROM usuario WHERE personal_cedula = $cedula ";
-$resultado_usuario = pg_query($dbconn, $consulta_usuario);
-$result_usu = pg_fetch_array($resultado_usuario);
+// Solo se llega aqui despues de responder las preguntas de seguridad (paso 2)
+if (empty($_SESSION['recuperar_cedula']) || ($_SESSION['recuperar_paso'] ?? 0) < 2) {
+    header("Location: valida_datos.php");
+    exit;
+}
+$cedula = (int)$_SESSION['recuperar_cedula'];
 
+$resultado_usuario = pg_query_params($dbconn, "SELECT * FROM usuario WHERE personal_cedula = $1", array($cedula));
+$result_usu = $resultado_usuario ? pg_fetch_array($resultado_usuario) : false;
 
-
+// Paso 3: solo se cambia la contraseña (y se desbloquea la cuenta, como antes).
+// Rol, usuario y demas datos NO se toman del formulario.
 if (isset($_REQUEST['validar'])) {
-    $cedula = $_REQUEST['cedula'];
-    $id1 = $_REQUEST['id'];
-    $usuario1 = $_REQUEST['usuario'];
-    $r01 = sha1($_REQUEST['contrasena']);
-    $r02 = sha1($_REQUEST['contrasena1']);
-    $tipo_rol1 = $_REQUEST['tipo_rol'];
-    $estado_usuario1 = 1;
-    $fecha_creacion1 = $_REQUEST['fecha_creacion'];
-    $preguntas_id1 = $_REQUEST['preguntas_id'];
+    $r01 = sha1($_REQUEST['contrasena'] ?? '');
+    $r02 = sha1($_REQUEST['contrasena1'] ?? '');
 
-
-    if (strcmp($r01, $r02) !== 0) {
+    if (($_REQUEST['contrasena'] ?? '') === '' || strcmp($r01, $r02) !== 0) {
         header("Location: nueva_contrasenia.php?cedula=$cedula&msg=1");
-    } else {
-        $consulta1 = "UPDATE public.usuario
-        SET id=$id1, usuario='$usuario1', contrasena='$r02', tipo_rol_id=$tipo_rol1, estado_usuario_id=$estado_usuario1, personal_cedula=$cedula, fecha_creacion='$fecha_creacion1', preguntas_usuario_id=$preguntas_id1
-        WHERE id = $id1 ";
-        $resultado1 = pg_query($dbconn, $consulta1);
+        exit;
+    }
 
+    $resultado1 = pg_query_params($dbconn, "UPDATE public.usuario SET contrasena = $1, estado_usuario_id = 1 WHERE personal_cedula = $2", array($r02, $cedula));
 
-        if (pg_query($dbconn, $consulta1)) {
-            //              header("Location: nueva_contrasenia.php?cedula=$cedula&msg=3");
+    if ($resultado1 && pg_affected_rows($resultado1) > 0) {
+        unset($_SESSION['recuperar_cedula'], $_SESSION['recuperar_paso']);
 ?>
             <meta charset="utf-8">
             <script type="text/javascript">
@@ -41,14 +38,13 @@ if (isset($_REQUEST['validar'])) {
                 location.href = "../index.php";
             </script>
 <?php
-        } else {
-            header("Location: nueva_contrasenia.php?cedula=$cedula&msg=2");
-        }
+        exit;
+    } else {
+        header("Location: nueva_contrasenia.php?cedula=$cedula&msg=2");
+        exit;
     }
 }
-
-$cedula11 = $_REQUEST['cedula_consultada'];
-
+?>
 ?>
 <!DOCTYPE html>
 <html lang="es-español">
@@ -198,11 +194,6 @@ $cedula11 = $_REQUEST['cedula_consultada'];
                             </div>
 
                             <input type="hidden" name="cedula" value="<?php echo $cedula; ?>">
-                            <input type="hidden" name="id" value="<?php echo $result_usu['id']; ?>">
-                            <input type="hidden" name="tipo_rol" value="<?php echo $result_usu['tipo_rol_id']; ?>">
-                            <input type="hidden" name="estado_usuario" value="<?php echo $result_usu['estado_usuario_id']; ?>">
-                            <input type="hidden" name="fecha_creacion" value="<?php echo $result_usu['fecha_creacion']; ?>">
-                            <input type="hidden" name="preguntas_id" value="<?php echo $result_usu['preguntas_usuario_id']; ?>">
                             <div>
                                 <button type="submit" class="btn btn-dark" name="validar" value="validar">VALIDAR</button>
                             </div></br>

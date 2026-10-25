@@ -118,6 +118,15 @@ Este flujo es una descripcion general; los detalles varian entre paginas y endpo
 
 El resultado de sintaxis solo corresponde a la copia y al entorno revisados entonces. No garantiza que el sistema funcione contra una base real ni confirma compatibilidad con la version PHP de produccion.
 
+#### Limpieza y prueba general (25-10-2026)
+
+- Se eliminaron 66 archivos sin uso, comprobando antes que ningun archivo los referenciara: pruebas (`prueba01.php`, `test_novedades.php`, `supervisor/consulta123.php`), copias y versiones viejas (`insertar_guardia (copia).php`, `insertar_guardia2.php`, `*_old.php`, formularios `*_rev.php` y fechados, `estadisticas01.php`, `ver_solicitudes01.php`, `cookie/cookie01.php`, `cookie/cookie1.php`), JS/CSS/HTML que ninguna pagina carga y 20 respaldos del editor (`*~`, `.swp`). Varios eran accesibles por URL sin sesion. Siguen disponibles en el historial de git.
+- Se conservaron a proposito: `controlador/Organismo.php` (parte de cuadrantes), `administrador/registro_eventos.php` (redirige una URL antigua) y la libreria `administrador/PDF/fpdf123`.
+- `database/instalar_cuadrantes.php` solo se ejecuta por consola (antes cualquiera podia reiniciar la tabla desde el navegador).
+- Prueba de todas las paginas con sesion simulada de cada rol (153 paginas, solo lectura, sin cambios en la base). Errores corregidos: `$_GET[msg]`/`$_GET[error]` sin comillas (fatal en PHP 8: `principal_adm.php` y el ultimo paso del registro de personal), suma de texto en `form_registro_estadisticas.php` (tumbaba `supervisor/estadisticas.php`), ruta de `controlador/grado_instruccion.php`, y `ver_estadisticas.php` / `ver_observaciones_guardia.php` que fallaban si el usuario no habia abierto la guardia.
+- **Recuperacion de contraseña (`recuperar_usuario/`)**: tenia una vulnerabilidad critica sin necesidad de sesion: se podia ir directo al paso 3 y cambiar la contraseña de cualquier usuario, el formulario permitia asignarse rol de administrador (campo oculto `tipo_rol`), las respuestas de seguridad se comparaban con las de todos los usuarios con `LIKE` (una respuesta vacia pasaba) y habia inyeccion SQL. Ahora el avance se guarda en la sesion, las respuestas se comparan exactas con las del propio usuario, el `UPDATE` solo cambia la contraseña y todas las consultas son parametrizadas. Probado contra 8 ataques y con el flujo legitimo.
+- Quedan avisos no bloqueantes de codigo antiguo (indices indefinidos, etc.); en produccion no se muestran al usuario.
+
 ## Oportunidades de mejora identificadas
 
 Son observaciones de una inspeccion parcial. Deben confirmarse antes de implementar cambios.

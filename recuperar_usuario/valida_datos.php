@@ -1,23 +1,29 @@
 <?php
-  include_once '../config/conexion1.php';
-  ///////////////////      Realizar Busqueda Y CONSULTA del "BOTON CONSULTAR"       //////////////////////////////////
-  
-  if (isset($_REQUEST['validar'])) {
-    $cedula = $_REQUEST['cedula'];
-    $correo = strtoupper($_REQUEST['correo_electronico']);
-  
-    $consulta1 = "SELECT * FROM personal WHERE cedula = $cedula AND correo_electronico LIKE '%$correo%' ";  
-    $resultado1 = pg_query($dbconn, $consulta1);
-  
-    $result = pg_num_rows($resultado1);
-  
-        if ($result !== false && !empty($result)){
-            header("Location: valida_pregunta.php?cedula=$cedula");
-        }else{
-            header("Location: valida_datos.php?msg=1");
-        }
-  }
-  
+// Recuperacion de contraseña (paso 1 de 3). El avance se guarda en la sesion
+// del servidor: no se puede saltar un paso ni cambiar datos de otro usuario.
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+include_once '../config/conexion1.php';
+
+// Paso 1: la cedula y el correo deben coincidir con el registro del personal
+if (isset($_REQUEST['validar'])) {
+    $cedula = (int)($_REQUEST['cedula'] ?? 0);
+    $correo = strtoupper(trim($_REQUEST['correo_electronico'] ?? ''));
+
+    $resultado1 = pg_query_params($dbconn, "SELECT cedula FROM personal WHERE cedula = $1 AND upper(trim(correo_electronico)) = $2", array($cedula, $correo));
+
+    if ($cedula > 0 && $correo !== '' && $resultado1 && pg_num_rows($resultado1) > 0) {
+        $_SESSION['recuperar_cedula'] = $cedula;
+        $_SESSION['recuperar_paso'] = 1;
+        header("Location: valida_pregunta.php?cedula=$cedula");
+    } else {
+        unset($_SESSION['recuperar_cedula'], $_SESSION['recuperar_paso']);
+        header("Location: valida_datos.php?msg=1");
+    }
+    exit;
+}
+?>
 ?>
 <!DOCTYPE html>
 <html lang="es-español">

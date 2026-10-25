@@ -31,7 +31,7 @@ $cedula_personal1 = $reg_id['usuario_entrada_id'];
 $grupo = $reg_id['grupos_guardia_id'];
 
 // Consulta registro del personal
-$consulta_personal = pg_query($dbconn,"SELECT * FROM  personal WHERE  cedula = $cedula_personal1");
+$consulta_personal = pg_query($dbconn,"SELECT * FROM  personal WHERE  cedula = " . (int)$cedula_personal1);
 $reg_personal= pg_fetch_array($consulta_personal);
 
 $cedula_personal = $reg_personal['cedula'];

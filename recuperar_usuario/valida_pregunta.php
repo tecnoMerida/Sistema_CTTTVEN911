@@ -1,41 +1,43 @@
 <?php
-  extract($_REQUEST);
+// Recuperacion de contraseña (paso 2 de 3). El avance se guarda en la sesion
+// del servidor: no se puede saltar un paso ni cambiar datos de otro usuario.
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+include_once '../config/conexion1.php';
 
+// Solo se llega aqui despues de validar cedula y correo (paso 1)
+if (empty($_SESSION['recuperar_cedula']) || ($_SESSION['recuperar_paso'] ?? 0) < 1) {
+    header("Location: valida_datos.php");
+    exit;
+}
+$cedula = (int)$_SESSION['recuperar_cedula'];
 
-    include_once '../config/conexion1.php';
-    $cedula = $_REQUEST['cedula'];
+$resultado_usuario = pg_query_params($dbconn, "SELECT * FROM usuario WHERE personal_cedula = $1", array($cedula));
+$result_usu = $resultado_usuario ? pg_fetch_array($resultado_usuario) : false;
 
-    $consulta_usuario = "SELECT * FROM usuario WHERE personal_cedula = $cedula ";  
-    $resultado_usuario = pg_query($dbconn, $consulta_usuario);
-    $result_usu = pg_fetch_array($resultado_usuario);
-    
-    $pregunta_id = $result_usu['preguntas_usuario_id'];
-    $consulta_pregunta = "SELECT * FROM preguntas_usuario WHERE id = $pregunta_id ";  
-    $resultado_pregunta = pg_query($dbconn, $consulta_pregunta);
-    $result_seg = pg_fetch_array($resultado_pregunta);
+$pregunta_id = (int)($result_usu['preguntas_usuario_id'] ?? 0);
+$resultado_pregunta = pg_query_params($dbconn, "SELECT * FROM preguntas_usuario WHERE id = $1", array($pregunta_id));
+$result_seg = $resultado_pregunta ? pg_fetch_array($resultado_pregunta) : false;
 
+// Paso 2: las respuestas deben ser las de ESTE usuario (exactas, sin distinguir mayusculas)
+if (isset($_REQUEST['validar'])) {
+    $r01 = strtoupper(trim($_REQUEST['respuesta_recuperacion_1'] ?? ''));
+    $r02 = strtoupper(trim($_REQUEST['respuesta_recuperacion_2'] ?? ''));
 
+    $correctas = $result_seg && $r01 !== '' && $r02 !== ''
+        && $r01 === strtoupper(trim($result_seg['respuesta_recuperacion_1']))
+        && $r02 === strtoupper(trim($result_seg['respuesta_recuperacion_2']));
 
-
-  if (isset($_REQUEST['validar'])) {
-    $r01 = strtoupper($_REQUEST['respuesta_recuperacion_1']);
-    $r02 = strtoupper($_REQUEST['respuesta_recuperacion_2']);
-    $cedula = $_REQUEST['cedula'];
- 
-    $consulta1 = "SELECT * FROM preguntas_usuario WHERE respuesta_recuperacion_1 LIKE '%$r01%' AND respuesta_recuperacion_2 LIKE '%$r02%' ";  
-    $resultado1 = pg_query($dbconn, $consulta1);
-  
-    $result = pg_num_rows($resultado1);
-  
-        if ($result !== false && !empty($result)){
-          header("Location: nueva_contrasenia.php?cedula=$cedula");
-        }else{
-          header("Location: valida_pregunta.php?cedula=$cedula&msg=1");
-        }
-  }
-  
-  $cedula11 = $_REQUEST['cedula_consultada'];
-
+    if ($correctas) {
+        $_SESSION['recuperar_paso'] = 2;
+        header("Location: nueva_contrasenia.php?cedula=$cedula");
+    } else {
+        header("Location: valida_pregunta.php?cedula=$cedula&msg=1");
+    }
+    exit;
+}
+?>
 ?>
 <!DOCTYPE html>
 <html lang="es-español">

@@ -127,15 +127,22 @@
 	GROUP BY estatus_solicitud.id, solicitudes.estatus_solicitud_id
   ORDER BY estatus_solicitud.id ";
 
+              $a = 0;
+              $total = "";
+              $datos = "";
+              $total1 = "";
+              $datos1 = "";
+              $total2 = "";
+              $color = "";
+
               $resp = pg_query($dbconn, $sql) or die("Error de consulta " . __FILE__);
               while ($rm = pg_fetch_array($resp)) {
 
-                $a = $rm["total"] + $a;
+                $a += (int)$rm["total"];
                 $e = $rm["id"];
-                $c = $rm["tipo_estatus"] + $c;
 
 
-                $texto = $estatuspg[$e];
+                $texto = $estatuspg[$e] ?? $rm["tipo_estatus"];
                 $total .= $texto;
 
                 $total .= ",";
@@ -143,8 +150,7 @@
                 $datos .= ",";
 
 
-                $texto1 = $tipopg[$c];
-                $total1 .= $texto1;
+                $total1 .= $rm["tipo_estatus"];
 
                 $total1 .= ",";
                 $datos1 .= "'" . $rm["tipo_estatus"] . "'";

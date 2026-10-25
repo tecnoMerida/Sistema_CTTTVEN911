@@ -1,5 +1,10 @@
 <?php
 // Script de Instalación / Migración de Cuadrantes de Paz
+// Uso por consola: php database/instalar_cuadrantes.php
+if (PHP_SAPI !== 'cli') {
+    http_response_code(403);
+    exit("Este script solo se ejecuta por consola.\n");
+}
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }

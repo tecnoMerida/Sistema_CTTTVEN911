@@ -1,7 +1,0 @@
-<?php
-	include_once ("MPDF57/mpdf.php");
-
-	$mpdf = new mPDF();
-	$mpdf->WriteHTML('Hola Mundo');
-	$mpdf->Output();
-?>

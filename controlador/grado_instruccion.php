@@ -1,5 +1,5 @@
 <?php
-require_once 'config/conexion1.php';
+require_once __DIR__ . '/../config/conexion1.php';
 
     $html = "";
 
