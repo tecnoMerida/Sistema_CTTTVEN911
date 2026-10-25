@@ -1,7 +1,14 @@
 <?php
-// OBLIGAR A PHP A MOSTRAR EL ERROR REAL (DIAGNÓSTICO)
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
+// ERRORES DE PHP: se registran siempre en el log del servidor y no se muestran
+// al usuario (pueden revelar rutas y datos internos). Para verlos en pantalla
+// durante el desarrollo, definir MOSTRAR_ERRORES en config/conexion_local.php.
+if (file_exists(__DIR__ . '/../config/conexion_local.php')) {
+	require_once __DIR__ . '/../config/conexion_local.php';
+}
+$mostrar_errores = defined('MOSTRAR_ERRORES') && MOSTRAR_ERRORES;
+ini_set('display_errors', $mostrar_errores ? '1' : '0');
+ini_set('display_startup_errors', $mostrar_errores ? '1' : '0');
+ini_set('log_errors', '1');
 error_reporting(E_ALL);
 
 // 1. INICIAR SESIÓN PRIMERO PARA PODER LEER LOS DATOS DEL USUARIO

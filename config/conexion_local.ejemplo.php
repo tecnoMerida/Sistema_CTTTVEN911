@@ -19,3 +19,6 @@ define("HOSTMYSQL", "127.0.0.1");
 define("USERMYSQL", "usuario_mysql");
 define("PASSWORDMYSQL", "clave_mysql");
 define("DATABASEMYSQL", "ven911_2025");
+
+// Mostrar errores de PHP en pantalla (solo en desarrollo; en produccion false)
+define("MOSTRAR_ERRORES", false);

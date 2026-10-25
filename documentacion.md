@@ -100,7 +100,7 @@ Este flujo es una descripcion general; los detalles varian entre paginas y endpo
 - `config/conexion2_bd.php` ya no usa MySQL: abre una conexion PostgreSQL con `search_path = historico, public`. Se conservaron `$conexion2` y `$mysql` para no cambiar el resto del codigo. Las paginas `*/consulta_solicitud.php`, `*/solicitud_consulta.php`, `formularios/form_registro_consulta_solicitud.php` y `formularios/form_registro_estadisticas_01.php` pasaron de `mysqli_*` a `pg_*`; los ids recibidos se convierten a entero y `171_usuarioz` se cita entre comillas.
 - Credenciales: `config/conexion1.php` y `config/config_bd.php` usan `config/conexion_local.php` si existe (ignorado por git, plantilla en `config/conexion_local.ejemplo.php`); si no existe se mantiene la configuracion original.
 - Tablas que faltaban en la base local y se agregaron con scripts versionados: `cuadrantes_de_paz` (`database/cuadrantes_de_paz.sql`), `usuario_permisos` (`database/usuario_permisos.sql`) y las columnas `cuadrante`, `organismo_cuadrante`, `telefono_cuadrante` de `solicitudes` (`database/solicitudes_cuadrante.sql`). Sin esas columnas fallaba el registro de solicitudes nuevas y el dashboard del administrador.
-- Para instalar en otro equipo: restaurar `BaseDeDatos_Plantilla2_Backup/VEN911_13082026_01.sql` en `ven911`, ejecutar los tres `.sql` de `database/` y restaurar `BaseDeDatos_Plantilla1_Backup/ven911_2025.sql` desde Administrador > Respaldo BD (se convierte automaticamente al esquema `historico`), o con `php database/migrar_mysql_a_postgres.php` si se dispone de MySQL.
+- Para instalar en otro equipo: solo estructura con `database/esquema_ven911.sql`; con datos, restaurar `BaseDeDatos_Plantilla2_Backup/VEN911_13082026_01.sql` en `ven911`, ejecutar los tres `.sql` de `database/` y restaurar `BaseDeDatos_Plantilla1_Backup/ven911_2025.sql` desde Administrador > Respaldo BD (se convierte automaticamente al esquema `historico`), o con `php database/migrar_mysql_a_postgres.php` si se dispone de MySQL.
 - `administrador/respaldo_bd.php`: restaura solo en PostgreSQL; el convertidor de volcados MySQL ahora escribe en `historico`, interpreta los escapes de MySQL y toma las credenciales de la configuracion (antes la clave estaba escrita en el codigo). Probado: produce el mismo contenido que la migracion.
 - `administrador/PDF/imprime_personal2.php` e `imprime_personal3.php` siguen usando `mysqli` con tablas (`personal_171`, `administrador_coord`, `grupos_organismos`) que no existen en ninguna base disponible y no estan enlazados desde el menu; no se modificaron.
 
@@ -111,7 +111,10 @@ Este flujo es una descripcion general; los detalles varian entre paginas y endpo
 - Nuevo `config/graficas_helper.php`: cada estatus de solicitud tiene un color fijo (paleta validada para daltonismo) en la grafica y en su leyenda; antes habia colores invalidos (`aero`) y leyendas que no coincidian.
 - `controlador/consulta_estadistica_personal.php` usaba la API de Chart.js 3 y colores aleatorios por barra; ahora usa un solo color, barras ordenadas de mayor a menor.
 
-Pendiente observado y no modificado: `cookie/cookie.php` activa `display_errors`, lo que muestra errores internos al usuario; conviene desactivarlo en produccion.
+#### Errores de PHP y esquema
+
+- `cookie/cookie.php` (incluido por todas las paginas) ya no muestra errores de PHP al usuario: se registran en el log del servidor. Para verlos en pantalla en desarrollo, definir `MOSTRAR_ERRORES` en `true` en `config/conexion_local.php` (en produccion `false` o sin definir).
+- Nuevo `database/esquema_ven911.sql`: estructura completa de `ven911` (esquemas `public` e `historico`, 61 tablas, sin datos). Probado: se restaura sin errores en una base vacia y queda identico a la base local. Si la estructura cambia, regenerarlo con `pg_dump --schema-only --no-owner --no-privileges ven911`.
 
 El resultado de sintaxis solo corresponde a la copia y al entorno revisados entonces. No garantiza que el sistema funcione contra una base real ni confirma compatibilidad con la version PHP de produccion.
 
@@ -144,7 +147,7 @@ Son observaciones de una inspeccion parcial. Deben confirmarse antes de implemen
 
 ## Informacion aun no confirmada
 
-- No se encontro un archivo SQL con el esquema de la base de datos en la copia revisada.
+- El esquema de la base esta en `database/esquema_ven911.sql`.
 - La version local de PHP observada fue 8.5.4; no se conoce la version de produccion.
 - No se identifico una suite de pruebas funcionales, un entorno local completo ni datos anonimizados para pruebas.
 - Los roles, transiciones de guardia y reglas exactas deben cotejarse con los datos y usuarios actuales.
