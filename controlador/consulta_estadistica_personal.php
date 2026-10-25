@@ -107,7 +107,7 @@
                       WHERE (solicitudes.fecha_creacion_sol BETWEEN '$fecha_e 00:00:01' AND '$fecha_s 23:59:59') 
                       AND (solicitud_atencion.despachador_solicitud = '$cedula' OR solicitud_atencion.operador_solicitud = '$cedula')
                       GROUP BY motivo_solicitud.nombre_motivo";
-                      $consulta_solic_graf = pg_query($dbconn, "SELECT motivo_solicitud.nombre_motivo, COUNT(*) AS total FROM solicitudes $filtro2");
+                      $consulta_solic_graf = pg_query($dbconn, "SELECT motivo_solicitud.nombre_motivo, COUNT(*) AS total FROM solicitudes $filtro2 ORDER BY total DESC");
 
                       $chart_labels = [];
                       $chart_data = [];
@@ -116,13 +116,11 @@
                         while ($graf_solic = pg_fetch_array($consulta_solic_graf)) {
                           $chart_labels[] = "'" . addslashes($graf_solic["nombre_motivo"] ?? '') . "'";
                           $chart_data[] = intval($graf_solic["total"] ?? 0);
-                          $chart_colors[] = "'#" . substr(str_shuffle('ABCDEF0123456789'), 0, 6) . "'";
                         }
                         pg_free_result($consulta_solic_graf);
                       }
                       $datos1 = implode(',', $chart_labels);
                       $datos = implode(',', $chart_data);
-                      $datos3 = implode(',', $chart_colors);
                     }
                   }
 
@@ -242,43 +240,28 @@ echo '</table>';
 
 
 <script>
-// Script para grafica en barras
-// Horizontal BAR
-
-var ctx = document.getElementById('myChart').getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: [
-          <?php echo $datos1;  ?>
-        ],
-        datasets: [{
-            label: '# de Solicitudes',
-            data: [
-              <?php echo $datos; ?>
-            ],
-            backgroundColor: [
-              <?php echo $datos3; ?>
-            ],
-            borderColor: [
-              <?php echo $datos3; ?>
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-      indexAxis: 'y',
-        scales: {
-          yAxes:[{ 
-            ticks: { 
-              beginAtZero:true 
-            } 
-        }] 
-
+// Grafica de barras horizontales: solicitudes por motivo (una sola serie)
+$(document).ready(function () {
+    var lienzo = document.getElementById('myChart');
+    if (!lienzo || typeof Chart === 'undefined') { return; }
+    var etiquetas = [<?php echo $datos1; ?>];
+    var myChart = new Chart(lienzo, {
+        type: 'horizontalBar',
+        data: {
+            labels: etiquetas,
+            datasets: [{
+                label: 'Solicitudes',
+                data: [<?php echo $datos; ?>],
+                backgroundColor: LDN_GRAFICAS.paleta[0],
+                hoverBackgroundColor: '#1c5cab'
+            }]
+        },
+        options: {
+            legend: { display: false },
+            aspectRatio: etiquetas.length > 8 ? 1.4 : 2.2
         }
-    }
+    });
 });
-
 </script>
         <!-- Seccion Diez -->
 

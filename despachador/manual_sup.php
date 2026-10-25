@@ -49,6 +49,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 
       <title>Libro Digital de Novedades 1-7-1 / 9-1-1</title>
+   <link href="../css/compacto_inter.css" rel="stylesheet">
    </head>
   <body class="nav-md">
   <style type="text/css">

@@ -45,7 +45,7 @@ Las restricciones del menu no son suficientes para proteger una accion. Los perm
 
 - Backend: PHP procedural, con HTML y logica de acceso/datos a menudo mezclados en las mismas paginas.
 - Base de datos principal observada: PostgreSQL, accedido mediante funciones `pg_*`.
-- Hay configuracion adicional para MySQL, pero no se ha confirmado si sigue en uso ni que parte del sistema depende de ella.
+- MySQL ya no se usa: sus datos historicos se migraron al esquema `historico` de PostgreSQL (ver revision del 25-10-2026).
 - Interfaz: plantilla Gentelella y dependencias locales como Bootstrap, jQuery y Font Awesome.
 - Recursos frontend propios: `src/js/` y `src/scss/`.
 - No se ha identificado una arquitectura backend MVC o por paquetes; los directorios funcionales y por perfil organizan gran parte de las paginas.
@@ -86,6 +86,33 @@ Este flujo es una descripcion general; los detalles varian entre paginas y endpo
 - Antes de esos cambios se creo una copia comprimida del proyecto fuera de la carpeta del repositorio: `../Sistema_CTTTVEN911-master-backup-20261012.tar.gz`.
 - En esa revision no se cambio la logica de negocio ni las tecnologias.
 
+### Revision del 25-10-2026
+
+- `cookie/cookie.php`: la consulta de acceso y el `UPDATE` de bloqueo de usuario usan ahora `pg_query_params` en lugar de concatenar el usuario recibido por formulario o cookie (inyeccion SQL). El flujo y las redirecciones no cambiaron.
+- `cookie/cookie.php`: en la verificacion del despachador la ultima condicion repetia `personal_cedula_pc1`; se corrigio a `personal_cedula_pc3` (columna existente en el respaldo `VEN911_13082026_01.sql`).
+- `index.php`: boton de ojo para mostrar u ocultar la contraseña; se quitaron los `<br>` vacios bajo el banner para evitar scroll.
+- Nuevo `css/compacto_inter.css`: fuente Inter (servida localmente desde `vendors/inter/`, sin depender de internet) y ajustes compactos de paneles, formularios, tablas y menu para distintos tamaños de pantalla. Se carga despues de los estilos de la plantilla en `plantillas/superior*.php`, `index.php`, `recuperar_usuario/*.php`, `despachador/manual_sup.php` y `administrador/principal_adm.php`. Para revertir el cambio visual basta con quitar ese `<link>`.
+- `tests/lint_php.sh` ahora tiene permiso de ejecucion.
+
+#### Base de datos: todo en PostgreSQL
+
+- El sistema trabaja solo con PostgreSQL (base `ven911`). Los datos del "Sistema 171" que estaban en MySQL (`ven911_2025`: `solicitud`, `motivos_hijos`, `motivos_padre`, `171_usuarioz`, `sector`, `amigo171`, etc.) se migraron al esquema `historico` de `ven911` con `database/migrar_mysql_a_postgres.php` (verificado: mismas filas y mismo contenido; 160.028 solicitudes).
+- `config/conexion2_bd.php` ya no usa MySQL: abre una conexion PostgreSQL con `search_path = historico, public`. Se conservaron `$conexion2` y `$mysql` para no cambiar el resto del codigo. Las paginas `*/consulta_solicitud.php`, `*/solicitud_consulta.php`, `formularios/form_registro_consulta_solicitud.php` y `formularios/form_registro_estadisticas_01.php` pasaron de `mysqli_*` a `pg_*`; los ids recibidos se convierten a entero y `171_usuarioz` se cita entre comillas.
+- Credenciales: `config/conexion1.php` y `config/config_bd.php` usan `config/conexion_local.php` si existe (ignorado por git, plantilla en `config/conexion_local.ejemplo.php`); si no existe se mantiene la configuracion original.
+- Tablas que faltaban en la base local y se agregaron con scripts versionados: `cuadrantes_de_paz` (`database/cuadrantes_de_paz.sql`), `usuario_permisos` (`database/usuario_permisos.sql`) y las columnas `cuadrante`, `organismo_cuadrante`, `telefono_cuadrante` de `solicitudes` (`database/solicitudes_cuadrante.sql`). Sin esas columnas fallaba el registro de solicitudes nuevas y el dashboard del administrador.
+- Para instalar en otro equipo: restaurar `BaseDeDatos_Plantilla2_Backup/VEN911_13082026_01.sql` en `ven911`, ejecutar los tres `.sql` de `database/` y restaurar `BaseDeDatos_Plantilla1_Backup/ven911_2025.sql` desde Administrador > Respaldo BD (se convierte automaticamente al esquema `historico`), o con `php database/migrar_mysql_a_postgres.php` si se dispone de MySQL.
+- `administrador/respaldo_bd.php`: restaura solo en PostgreSQL; el convertidor de volcados MySQL ahora escribe en `historico`, interpreta los escapes de MySQL y toma las credenciales de la configuracion (antes la clave estaba escrita en el codigo). Probado: produce el mismo contenido que la migracion.
+- `administrador/PDF/imprime_personal2.php` e `imprime_personal3.php` siguen usando `mysqli` con tablas (`personal_171`, `administrador_coord`, `grupos_organismos`) que no existen en ninguna base disponible y no estan enlazados desde el menu; no se modificaron.
+
+#### Graficas
+
+- Chart.js local actualizado de 2.1.4 a 2.9.4 (misma version mayor, misma API). Se quitaron de `plantillas/superior3.php` las copias por CDN (una sin version fija y una ruta inexistente).
+- Nuevo `js/graficas_tema.js`, cargado en las plantillas inferiores: fuente Inter, rejilla tenue, barras finas, donas con separacion, tooltips con porcentaje y separador de miles, proporcion segun cantidad de categorias.
+- Nuevo `config/graficas_helper.php`: cada estatus de solicitud tiene un color fijo (paleta validada para daltonismo) en la grafica y en su leyenda; antes habia colores invalidos (`aero`) y leyendas que no coincidian.
+- `controlador/consulta_estadistica_personal.php` usaba la API de Chart.js 3 y colores aleatorios por barra; ahora usa un solo color, barras ordenadas de mayor a menor.
+
+Pendiente observado y no modificado: `cookie/cookie.php` activa `display_errors`, lo que muestra errores internos al usuario; conviene desactivarlo en produccion.
+
 El resultado de sintaxis solo corresponde a la copia y al entorno revisados entonces. No garantiza que el sistema funcione contra una base real ni confirma compatibilidad con la version PHP de produccion.
 
 ## Oportunidades de mejora identificadas
@@ -118,7 +145,6 @@ Son observaciones de una inspeccion parcial. Deben confirmarse antes de implemen
 ## Informacion aun no confirmada
 
 - No se encontro un archivo SQL con el esquema de la base de datos en la copia revisada.
-- No se confirmo que MySQL siga activo ni cual es su funcion.
 - La version local de PHP observada fue 8.5.4; no se conoce la version de produccion.
 - No se identifico una suite de pruebas funcionales, un entorno local completo ni datos anonimizados para pruebas.
 - Los roles, transiciones de guardia y reglas exactas deben cotejarse con los datos y usuarios actuales.

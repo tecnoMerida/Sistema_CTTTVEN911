@@ -37,16 +37,15 @@
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
     <link href="../css/estilo_menu.css" rel="stylesheet" media="screen" />
+    <!-- Tipografia Inter y diseño compacto -->
+    <link href="../css/compacto_inter.css" rel="stylesheet">
 
    	<!--jQuery library file Multiselect-->
      <link href="../vendors/Select/font-awesome.min.css" rel="stylesheet" />
      <link href="../vendors/Select/bootstrap-multiselect.css" rel="stylesheet" />
      <script src="../js/jquery-3.5.1.js"></script>
      <script src="../js/jquery-3.1.1.min.js"></script>
-    <!-- Chart.js -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="path/to/Chart.min.js"></script>
+    <!-- Chart.js se carga localmente (2.9.4) al final de la pagina junto con js/graficas_tema.js -->
 
 <!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>-->
 

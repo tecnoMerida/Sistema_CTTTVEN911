@@ -49,7 +49,8 @@ if (isset($_POST['usuario']) && isset($_POST['contrasena'])) {
 		$clave_hash = sha1($clave_plana);
 
 		// Consulta de datos en tabla "usuario"
-		$consulta_usuario = pg_query($dbconn, "SELECT * FROM public.usuario WHERE usuario = '$usuario_login' AND contrasena = '$clave_hash' AND estado_usuario_id = 1");
+		// Consulta parametrizada para evitar inyeccion SQL desde el formulario de acceso
+		$consulta_usuario = pg_query_params($dbconn, "SELECT * FROM public.usuario WHERE usuario = $1 AND contrasena = $2 AND estado_usuario_id = 1", array($usuario_login, $clave_hash));
 
 		try {
 			$cant = pg_num_rows($consulta_usuario);
@@ -148,7 +149,7 @@ if (isset($_POST['usuario']) && isset($_POST['contrasena'])) {
 							$CEDULA = $_SESSION['personal_cedula'];
 							$fecha = date("Y/m/d | H:i:s ");
 
-							$contador_desp = pg_query($dbconn, "SELECT id, personal_cedula_poli1, personal_cedula_poli2, personal_cedula_poli3, personal_cedula_bomb1, personal_cedula_bomb2, personal_cedula_bomb3, personal_cedula_pc1, personal_cedula_pc2, personal_cedula_pc3 FROM public.personal_datos WHERE (id=(SELECT MAX(id) FROM personal_datos) AND personal_cedula_poli1 = $CEDULA) OR (id=(SELECT MAX(id) FROM personal_datos) AND personal_cedula_poli2 = $CEDULA) OR (id=(SELECT MAX(id) FROM personal_datos) AND personal_cedula_poli3 = $CEDULA) OR (id=(SELECT MAX(id) FROM personal_datos) AND personal_cedula_bomb1 = $CEDULA) OR (id=(SELECT MAX(id) FROM personal_datos) AND personal_cedula_bomb2 = $CEDULA) OR (id=(SELECT MAX(id) FROM personal_datos) AND personal_cedula_bomb3 = $CEDULA) OR (id=(SELECT MAX(id) FROM personal_datos) AND personal_cedula_pc1 = $CEDULA) OR (id=(SELECT MAX(id) FROM personal_datos) AND personal_cedula_pc2 = $CEDULA) OR (id=(SELECT MAX(id) FROM personal_datos) AND personal_cedula_pc1 = $CEDULA)");
+							$contador_desp = pg_query($dbconn, "SELECT id, personal_cedula_poli1, personal_cedula_poli2, personal_cedula_poli3, personal_cedula_bomb1, personal_cedula_bomb2, personal_cedula_bomb3, personal_cedula_pc1, personal_cedula_pc2, personal_cedula_pc3 FROM public.personal_datos WHERE (id=(SELECT MAX(id) FROM personal_datos) AND personal_cedula_poli1 = $CEDULA) OR (id=(SELECT MAX(id) FROM personal_datos) AND personal_cedula_poli2 = $CEDULA) OR (id=(SELECT MAX(id) FROM personal_datos) AND personal_cedula_poli3 = $CEDULA) OR (id=(SELECT MAX(id) FROM personal_datos) AND personal_cedula_bomb1 = $CEDULA) OR (id=(SELECT MAX(id) FROM personal_datos) AND personal_cedula_bomb2 = $CEDULA) OR (id=(SELECT MAX(id) FROM personal_datos) AND personal_cedula_bomb3 = $CEDULA) OR (id=(SELECT MAX(id) FROM personal_datos) AND personal_cedula_pc1 = $CEDULA) OR (id=(SELECT MAX(id) FROM personal_datos) AND personal_cedula_pc2 = $CEDULA) OR (id=(SELECT MAX(id) FROM personal_datos) AND personal_cedula_pc3 = $CEDULA)");
 							$existe_regdesp = pg_num_rows($contador_desp);
 
 							if (isset($_COOKIE['usuario'])) {
@@ -247,8 +248,8 @@ if (isset($_POST['usuario']) && isset($_POST['contrasena'])) {
 						if ($contador_fallido >= 3) { 
 							setcookie('block' . $usuario_fallido, 'bloqueado', time() + 60);
 							$estado_usuario_id = 2;
-							$consulta_usuario_bloq = "UPDATE public.usuario SET estado_usuario_id='$estado_usuario_id' WHERE usuario = '$usuario_fallido'";
-							$result = pg_query($dbconn, $consulta_usuario_bloq);
+							// El usuario viene de una cookie del navegador: se envia como parametro
+							$result = pg_query_params($dbconn, "UPDATE public.usuario SET estado_usuario_id = $1 WHERE usuario = $2", array($estado_usuario_id, $usuario_fallido));
 							
 							header('location: ../index.php?error=bloqueo');
 							exit; 

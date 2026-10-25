@@ -47,13 +47,14 @@
  
 <?php
             $motivo=$fila['motivo'];// consulta el motivo de la llamada en "Sistema 911"
-            $registrosm = mysqli_query($conexion2,"SELECT * FROM motivos_padre INNER JOIN motivos_hijos ON motivos_hijos.p_id = motivos_padre.pid WHERE id_motivo = $motivo ");
-            $fila1 = mysqli_fetch_array($registrosm);
+            $registrosm = pg_query($conexion2,"SELECT * FROM motivos_padre INNER JOIN motivos_hijos ON motivos_hijos.p_id = motivos_padre.pid WHERE id_motivo = " . (int)$motivo . " ");
+            $fila1 = pg_fetch_array($registrosm);
 
             
             $motivo_pid = $fila1['pid'];// consulta el motivo de la llamada en "Libro Digital de Novedades 911"
-            $nombre_motivo = utf8_decode($fila1['nom_mot_hijo']);
-            $motivo1 = pg_query($dbconn,"SELECT * FROM motivo_solicitud_grupo INNER JOIN motivo_solicitud ON motivo_solicitud.motivo_grupo_id = motivo_solicitud_grupo.id WHERE motivo_solicitud_grupo.id = $motivo_pid AND motivo_solicitud.nombre_motivo LIKE '%$nombre_motivo%' ") or die("Error L:05 ved");
+            // Los datos historicos ya estan en UTF-8 en PostgreSQL (antes MySQL requeria utf8_decode)
+            $nombre_motivo = pg_escape_string($dbconn, $fila1['nom_mot_hijo'] ?? '');
+            $motivo1 = pg_query($dbconn,"SELECT * FROM motivo_solicitud_grupo INNER JOIN motivo_solicitud ON motivo_solicitud.motivo_grupo_id = motivo_solicitud_grupo.id WHERE motivo_solicitud_grupo.id = " . (int)$motivo_pid . " AND motivo_solicitud.nombre_motivo LIKE '%$nombre_motivo%' ") or die("Error L:05 ved");
             $fila2 = pg_fetch_array($motivo1);
 
 ?>
@@ -120,9 +121,9 @@
           <?php
             $munic = $fila['municipio'];// consulta Municipio de solicitud "Sistema 171"
             $parroq = $fila['parroquia'];
-            //$registromun = mysqli_query($conexion2,"SELECT * FROM `municipios` WHERE id = $munic ");
-            $registromun = mysqli_query($conexion2,"SELECT * FROM municipios INNER JOIN parroquias ON parroquias.id_municipios = municipios.id WHERE municipios.id = $munic AND parroquias.id = $parroq ");
-            $fila6 = mysqli_fetch_array($registromun);
+            //$registromun = pg_query($conexion2,"SELECT * FROM municipios WHERE id = " . (int)$munic . " ");
+            $registromun = pg_query($conexion2,"SELECT * FROM municipios INNER JOIN parroquias ON parroquias.id_municipios = municipios.id WHERE municipios.id = " . (int)$munic . " AND parroquias.id = " . (int)$parroq . " ");
+            $fila6 = pg_fetch_array($registromun);
 
             $munp_id=$fila6[0]+177;
 
@@ -163,8 +164,8 @@
                     </div>
           <?php
             $sector=$fila['sector'];// consulta Sector de solicitud "Sistema 171"
-            $registrosect = mysqli_query($conexion2,"SELECT * FROM `sector` WHERE `id_sector` = $sector ");
-            $fila5 = mysqli_fetch_array($registrosect);
+            $registrosect = pg_query($conexion2,"SELECT * FROM sector WHERE id_sector = " . (int)$sector . " ");
+            $fila5 = pg_fetch_array($registrosect);
 
           ?>
                     <div class="field item form-group"><!-- // Seleccion del Sector donde ocurrio el evento //-->
@@ -213,12 +214,10 @@
 <!-- ************************************************************************************************* -->
             <?php
                 $operad=$fila['operador'];// consulta despachador de solicitud "Sistema 171"
-                $registrop = mysqli_query($conexion2,"SELECT * FROM 171_usuarioz WHERE id = $operad ");
-                $reg_usuario = mysqli_fetch_array($registrop);
+                $registrop = pg_query($conexion2,"SELECT * FROM \"171_usuarioz\" WHERE id = " . (int)$operad . " ");
+                $reg_usuario = pg_fetch_array($registrop);
 
-                $id_operad = $reg_usuario['id_personal'];
-                $registrop = mysqli_query($conexion2,"SELECT * FROM personal_171 WHERE id_personal = $id_operad ");
-                $reg_operad = mysqli_fetch_array($registrop);
+                // La tabla personal_171 no existe en los datos migrados y su resultado no se usaba
             ?>
                     <div class="field item form-group"><!-- // nombre del operador que recibe la llamada // -->
                       <label class="col-form-label col-md-3 col-sm-3  label-align">Operador</label>
@@ -229,8 +228,8 @@
                     </div>
             <?php
                   $desp=$fila['despachador'];// consulta despachador de solicitud "Sistema 171"
-                  $registrosp = mysqli_query($conexion2,"SELECT * FROM 171_usuarioz WHERE id = $desp ");
-                  $reg_usuario2 = mysqli_fetch_array($registrosp);
+                  $registrosp = pg_query($conexion2,"SELECT * FROM \"171_usuarioz\" WHERE id = " . (int)$desp . " ");
+                  $reg_usuario2 = pg_fetch_array($registrosp);
             ?>
                     <div class="field item form-group"><!-- // nombre del despachador que atiende de la novedad // -->
                       <label class="col-form-label col-md-3 col-sm-3  label-align">Despachador</label>

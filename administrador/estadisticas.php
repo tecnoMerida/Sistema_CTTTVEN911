@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . '/../config/graficas_helper.php'; ?>
 <?php
 require('../cookie/cookie.php');
 
@@ -210,7 +211,6 @@ GROUP BY (municipios.id)";
                       $solicitudes .= ",";
                     }
                   }
-                  echo $row;
 
 
 
@@ -275,9 +275,7 @@ GROUP BY (municipios.id)";
                       $datos .= ",";
                     }
                   }
-                  $label = "\"efectivas\",\"no efectivas\",\"sin despacho\",
-                                            \"repetida\",\"sabotaje\",\"informacion\",
-                                            \"abandonada\",\"total_solici\"";
+                  $label = "\"Efectivas\",\"No efectivas\",\"Sin despacho\",\"Repetida\",\"Sabotaje\",\"Información\",\"Abandonada\"";
 
 
                   /***********  FIN CONSULTA MOTIVOS DE SOLICITUDES A MUNICIPIOS  **********/
@@ -300,12 +298,13 @@ GROUP BY (municipios.id)";
                             labels: [<?php echo $r; ?>],
                             datasets: [{
                               label: '# Solicitudes',
-                              backgroundColor: "#26B99A",
+                              backgroundColor: LDN_GRAFICAS.paleta[0],
                               data: [<?php echo $solicitudes; ?>]
                             }]
                           },
 
                           options: {
+                            legend: { display: false },
                             scales: {
                               yAxes: [{
                                 ticks: {
@@ -334,12 +333,13 @@ GROUP BY (municipios.id)";
                             labels: [<?php echo $r_motivo; ?>],
                             datasets: [{
                               label: '# Motivos de Solicitudes',
-                              backgroundColor: "#03586A",
+                              backgroundColor: LDN_GRAFICAS.paleta[0],
                               data: [<?php echo $motivo_solicitudes; ?>]
                             }]
                           },
 
                           options: {
+                            legend: { display: false },
                             scales: {
                               yAxes: [{
                                 ticks: {
@@ -368,24 +368,7 @@ GROUP BY (municipios.id)";
                           labels: [<?php echo $label ?>],
                           datasets: [{
                             data: [<?php echo $datos ?>],
-                            backgroundColor: [
-                              "#3498DB",
-                              "#26B99A",
-                              "#9B59B6",
-                              "#BDC3C7",
-                              "#E74C3C",
-                              "blue",
-                              "black"
-                            ],
-                            hoverBackgroundColor: [
-                              "#49A9EA",
-                              "#36CAAB",
-                              "#B370CF",
-                              "#CFD4D8",
-                              "#E95E4F",
-                              "blue",
-                              "black"
-                            ]
+                            backgroundColor: [<?php foreach ([1, 2, 3, 4, 6, 7, 8] as $id_est) { echo '"' . color_estatus($id_est) . '",'; } ?>]
 
                           }]
                         };
@@ -437,49 +420,49 @@ GROUP BY (municipios.id)";
                     <table class="tile_info">
                       <tr>
                         <td>
-                          <p><i class="fa fa-square blue"></i>Efectivas </p>
+                          <p><?php echo icono_estatus(1); ?> Efectivas </p>
                         </td>
                         <td><?php $porcentaje = ($total > 0) ? round((($campos['total_efectivo'] ?? 0) * 100) / $total, 0) : 0;
                             echo $porcentaje . "%"; ?></td>
                       </tr>
                       <tr>
                         <td>
-                          <p><i class="fa fa-square green"></i>No Efectivas </p>
+                          <p><?php echo icono_estatus(2); ?> No Efectivas </p>
                         </td>
                         <td><?php $porcentaje = ($total > 0) ? round((($campos['total_no_efectivo'] ?? 0) * 100) / $total, 0) : 0;
                             echo $porcentaje . "%"; ?></td>
                       </tr>
                       <tr>
                         <td>
-                          <p><i class="fa fa-square purple"></i>Sin Despacho </p>
+                          <p><?php echo icono_estatus(3); ?> Sin Despacho </p>
                         </td>
                         <td><?php $porcentaje = ($total > 0) ? round((($campos['total_sin_despacho'] ?? 0) * 100) / $total, 0) : 0;
                             echo $porcentaje . "%"; ?></td>
                       </tr>
                       <tr>
                         <td>
-                          <p><i class="fa fa-square aero"></i>Repetida </p>
+                          <p><?php echo icono_estatus(4); ?> Repetida </p>
                         </td>
                         <td><?php $porcentaje = ($total > 0) ? round((($campos['total_repetida'] ?? 0) * 100) / $total, 0) : 0;
                             echo $porcentaje . "%"; ?></td>
                       </tr>
                       <tr>
                         <td>
-                          <p><i class="fa fa-square red"></i>Sabotaje </p>
+                          <p><?php echo icono_estatus(6); ?> Sabotaje </p>
                         </td>
                         <td><?php $porcentaje = ($total > 0) ? round((($campos['total_sabotaje'] ?? 0) * 100) / $total, 0) : 0;
                             echo $porcentaje . "%"; ?></td>
                       </tr>
                       <tr>
                         <td>
-                          <p><i class="fa fa-square blue"></i>Información </p>
+                          <p><?php echo icono_estatus(7); ?> Información </p>
                         </td>
                         <td><?php $porcentaje = ($total > 0) ? round((($campos['total_informacion'] ?? 0) * 100) / $total, 0) : 0;
                             echo $porcentaje . "%"; ?></td>
                       </tr>
                       <tr>
                         <td>
-                          <p><i class="fa fa-square black"></i>Abandonada </p>
+                          <p><?php echo icono_estatus(8); ?> Abandonada </p>
                         </td>
                         <td><?php $porcentaje = ($total > 0) ? round((($campos['total_abandonada'] ?? 0) * 100) / $total, 0) : 0;
                             echo $porcentaje . "%"; ?></td>
@@ -597,12 +580,13 @@ GROUP BY (municipios.id)";
                             labels: [<?php echo $r; ?>],
                             datasets: [{
                               label: '# Solicitudes',
-                              backgroundColor: "#1e90ff",
+                              backgroundColor: LDN_GRAFICAS.paleta[0],
                               data: [<?php echo $solicitudes; ?>]
                             }]
                           },
 
                           options: {
+                            legend: { display: false },
                             scales: {
                               yAxes: [{
                                 ticks: {
@@ -631,12 +615,13 @@ GROUP BY (municipios.id)";
                             labels: [<?php echo $r_motivo; ?>],
                             datasets: [{
                               label: '# Motivos de Solicitudes',
-                              backgroundColor: "#003366",
+                              backgroundColor: LDN_GRAFICAS.paleta[0],
                               data: [<?php echo $motivo_solicitudes; ?>]
                             }]
                           },
 
                           options: {
+                            legend: { display: false },
                             scales: {
                               yAxes: [{
                                 ticks: {

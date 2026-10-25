@@ -135,9 +135,9 @@ include_once '../config/config_bd.php';
   include_once '../config/conexion2_bd.php';
 
 // CONSULTA TABLA PERSONAL_171 UNIDO CON TABLAS GRUPOS_GUARDIA Y GRUPOS_ORGANISMOS
-$consulta = mysqli_query($mysql,"SELECT * FROM solicitud WHERE id = $sol ");
+$consulta = pg_query($mysql,"SELECT * FROM solicitud WHERE id = " . (int)$sol . " ");
 
-$fila= mysqli_fetch_array($consulta);
+$fila= pg_fetch_array($consulta);
 ?>
 <!--      FIN CONEXION CON BASE DE DATOS          -->
 <!-- Inicio Formulario RESULTADO DE CONSULTA DE SOLICITUD -->

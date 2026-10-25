@@ -21,6 +21,8 @@
 <script src="../vendors/jQuery-Smart-Wizard/js/jquery.smartWizard.js"></script>
 <!-- Chart.js -->
 <script src="../vendors/Chart.js/dist/Chart.min.js"></script>
+<!-- Tema comun de graficas -->
+<script src="../js/graficas_tema.js"></script>
 <!-- gauge.js -->
 <script src="../vendors/gauge.js/dist/gauge.min.js"></script>
 <!-- bootstrap-progressbar -->

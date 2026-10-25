@@ -30,6 +30,8 @@
   <link href="build/css/custom.min.css" rel="stylesheet">
   <!-- Animate.css -->
   <link href="vendors/animate.css/animate.min.css" rel="stylesheet">
+  <!-- Tipografia Inter y diseño compacto -->
+  <link href="css/compacto_inter.css" rel="stylesheet">
 
 </head>
 
@@ -72,10 +74,22 @@
 }
 
 #copyright {
-  margin: 1rem;
-  padding: 1rem;
+  margin: 0.5rem;
+  padding: 0.5rem;
   text-align: center;
 
+}
+
+/* Banner sin espacios vacios para evitar scroll en la pantalla de acceso */
+#bandera {
+  float: none;
+  display: block;
+  margin: 12px auto 0;
+  width: 100%;
+  max-width: 1100px;
+  height: auto;
+  max-height: 140px;
+  object-fit: contain;
 }
   </style>
   <div>
@@ -94,8 +108,9 @@
             <div>
               <input type="text" class="form-control" id="usuario_acceso" name="usuario" placeholder="Usuario" required="" pattern="[A-Za-z0-9]{6,20}" title="Intente con mayúsculas, minúsculas y números" />
             </div>
-            <div>
+            <div class="campo-clave">
               <input type="password" class="form-control" id="contrasena" name="contrasena" placeholder="Contraseña" required="" pattern="[A-Za-z0-9&%$!*+@#]{6,16}" title="La contraseña, podrá contener letras mayúsculas, minúsculas, números y los caracteres & % $ ! * + @ #. Su tamaño: entre 8 y 16 caracteres." />
+              <button type="button" class="ver-clave" id="ver_clave" aria-label="Mostrar contraseña" title="Mostrar contraseña" aria-pressed="false"><i class="fa fa-eye" aria-hidden="true"></i></button>
             </div>
             <div>
               <button type="submit" class="btn btn-dark" value="ENTRAR">ENTRAR</button>
@@ -144,16 +159,7 @@
       <div class="col-md-10 col-sm-10  ">
         <!-- Banner de la consolidación institucional de los cuerpos de seguridad y prevención del Estado -->
         <!-- Actualizado en nobiembre del 2025 -->
-      <img src="images/Banner_headers.png" class="bandera" id="bandera">
-        <br><br/>
-        <br><br/>
-        <br><br/>
-        <br><br/>
-        <br><br/>
-        <br><br/>
-        <br><br/>
-        <br><br/>
-        <br><br/>
+      <img src="images/Banner_headers.png" class="bandera" id="bandera" alt="Banner institucional">
       </div>
       <div class="col-md-1 col-sm-1  "></div>
 
@@ -214,6 +220,25 @@
 
   <!-- Custom Theme Scripts -->
   <script src="build/js/custom.min.js"></script>
+
+  <!-- Mostrar / ocultar contraseña -->
+  <script>
+    (function () {
+      var boton = document.getElementById('ver_clave');
+      var campo = document.getElementById('contrasena');
+      if (!boton || !campo) return;
+      boton.addEventListener('click', function () {
+        var mostrar = campo.type === 'password';
+        campo.type = mostrar ? 'text' : 'password';
+        boton.querySelector('i').className = mostrar ? 'fa fa-eye-slash' : 'fa fa-eye';
+        var texto = mostrar ? 'Ocultar contraseña' : 'Mostrar contraseña';
+        boton.setAttribute('aria-label', texto);
+        boton.setAttribute('title', texto);
+        boton.setAttribute('aria-pressed', mostrar ? 'true' : 'false');
+        campo.focus();
+      });
+    })();
+  </script>
 
 </body>
 

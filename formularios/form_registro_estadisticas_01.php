@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . '/../config/graficas_helper.php'; ?>
               <div class="col-md-6 col-sm-6  ">
 
                       <?php /********* Seleccion el estatus de la Solicitud ***********/
@@ -15,29 +16,29 @@
 
                       require_once '../config/conexion2_bd.php';
 
-                      $consulta1 = mysqli_query($conexion2, "SELECT COUNT(estatus) total1 FROM `solicitud` WHERE `fecha` >= '$fecha' AND `hora_sol` >= '$hora' AND `estatus` = 1 ") or die("Error al consultar Linea 17");
-                      $regid1 = mysqli_fetch_array($consulta1); // Efectivo
+                      $consulta1 = pg_query($conexion2, "SELECT COUNT(estatus) total1 FROM solicitud WHERE fecha >= '$fecha' AND hora_sol >= '$hora' AND estatus = 1 ") or die("Error al consultar Linea 17");
+                      $regid1 = pg_fetch_array($consulta1); // Efectivo
       
-                      $consulta2 = mysqli_query($conexion2, "SELECT COUNT(estatus) total2 FROM `solicitud` WHERE `fecha` >= '$fecha' AND `hora_sol` >= '$hora' AND `estatus` = 2 ") or die("Error al consultar Linea 20");
-                      $regid2 = mysqli_fetch_array($consulta2); // No efectivo
+                      $consulta2 = pg_query($conexion2, "SELECT COUNT(estatus) total2 FROM solicitud WHERE fecha >= '$fecha' AND hora_sol >= '$hora' AND estatus = 2 ") or die("Error al consultar Linea 20");
+                      $regid2 = pg_fetch_array($consulta2); // No efectivo
       
-                      $consulta3 = mysqli_query($conexion2, "SELECT COUNT(estatus) total3 FROM `solicitud` WHERE `fecha` >= '$fecha' AND `hora_sol` >= '$hora' AND `estatus` = 3 ") or die("Error al consultar Linea 23");
-                      $regid3 = mysqli_fetch_array($consulta3); // Sin Despacho
+                      $consulta3 = pg_query($conexion2, "SELECT COUNT(estatus) total3 FROM solicitud WHERE fecha >= '$fecha' AND hora_sol >= '$hora' AND estatus = 3 ") or die("Error al consultar Linea 23");
+                      $regid3 = pg_fetch_array($consulta3); // Sin Despacho
       
-                      $consulta4 = mysqli_query($conexion2, "SELECT COUNT(estatus) total4 FROM `solicitud` WHERE `fecha` >= '$fecha' AND `hora_sol` >= '$hora' AND `estatus` = 4 ") or die("Error al consultar Linea 26");
-                      $regid4 = mysqli_fetch_array($consulta4); // Repetida
+                      $consulta4 = pg_query($conexion2, "SELECT COUNT(estatus) total4 FROM solicitud WHERE fecha >= '$fecha' AND hora_sol >= '$hora' AND estatus = 4 ") or die("Error al consultar Linea 26");
+                      $regid4 = pg_fetch_array($consulta4); // Repetida
       
-                      $consulta5 = mysqli_query($conexion2, "SELECT COUNT(estatus) total5 FROM `solicitud` WHERE `fecha` >= '$fecha' AND `hora_sol` >= '$hora' AND `estatus` = 6 ") or die("Error al consultar Linea 29");
-                      $regid5 = mysqli_fetch_array($consulta5); // Sabotaje
+                      $consulta5 = pg_query($conexion2, "SELECT COUNT(estatus) total5 FROM solicitud WHERE fecha >= '$fecha' AND hora_sol >= '$hora' AND estatus = 6 ") or die("Error al consultar Linea 29");
+                      $regid5 = pg_fetch_array($consulta5); // Sabotaje
       
-                      $consulta6 = mysqli_query($conexion2, "SELECT COUNT(estatus) total6 FROM `solicitud` WHERE `fecha` >= '$fecha' AND `hora_sol` >= '$hora' AND `estatus` = 7 ") or die("Error al consultar Linea 32");
-                      $regid6 = mysqli_fetch_array($consulta6); // Informacion
+                      $consulta6 = pg_query($conexion2, "SELECT COUNT(estatus) total6 FROM solicitud WHERE fecha >= '$fecha' AND hora_sol >= '$hora' AND estatus = 7 ") or die("Error al consultar Linea 32");
+                      $regid6 = pg_fetch_array($consulta6); // Informacion
       
-                      $consulta7 = mysqli_query($conexion2, "SELECT COUNT(estatus) total7 FROM `solicitud` WHERE `fecha` >= '$fecha' AND `hora_sol` >= '$hora' AND `estatus` = 8 ") or die("Error al consultar Linea 35");
-                      $regid7 = mysqli_fetch_array($consulta7); // Abandonada
+                      $consulta7 = pg_query($conexion2, "SELECT COUNT(estatus) total7 FROM solicitud WHERE fecha >= '$fecha' AND hora_sol >= '$hora' AND estatus = 8 ") or die("Error al consultar Linea 35");
+                      $regid7 = pg_fetch_array($consulta7); // Abandonada
       
-                      $consulta_total = mysqli_query($conexion2, "SELECT COUNT(estatus) total FROM `solicitud` WHERE `fecha` >= '$fecha' AND `hora_sol` >= '$hora' ") or die("Error al consultar Linea 38");
-                      $regid_total = mysqli_fetch_array($consulta_total); // Total Suma
+                      $consulta_total = pg_query($conexion2, "SELECT COUNT(estatus) total FROM solicitud WHERE fecha >= '$fecha' AND hora_sol >= '$hora' ") or die("Error al consultar Linea 38");
+                      $regid_total = pg_fetch_array($consulta_total); // Total Suma
                       ?>
                     <table class="table table-bordered">
                       <thead>
@@ -50,31 +51,31 @@
                       <tbody>
 
                       <tr align='center' ><th scope='row'><?php echo $result1['id']; ?></th>
-                      <td><i class="fa fa-square blue"> <?php echo $result1['tipo_estatus']; ?></i></td>
+                      <td><?php echo icono_estatus(1); ?> <?php echo $result1['tipo_estatus']; ?></td>
                       <td><input type="varchar" class="form-control" name="efectivo" required min="0" Max="999" maxlength="40" value="<?php echo $regid1['total1']; ?>" title="Este campo contiene el total de llamadas de solicitudes en estatus efectivas" readonly /></td>
 
                       <tr align='center' ><th scope='row'><?php echo $result2['id']; ?></th>
-                      <td><i class="fa fa-square green"> <?php echo $result2['tipo_estatus']; ?></i></td>
+                      <td><?php echo icono_estatus(2); ?> <?php echo $result2['tipo_estatus']; ?></td>
                       <td><input type="varchar" class="form-control" name="no_efectivo" required min="0" Max="999" maxlength="40" value="<?php echo $regid2['total2']; ?>" title="Este campo contiene el total de llamadas de solicitudes en estatus no efectivas" readonly /></td></tr>
 
                       <tr align='center' ><th scope='row'><?php echo $result3['id']; ?></th>
-                      <td><i class="fa fa-square purple"> <?php echo $result3['tipo_estatus']; ?></i></td>
+                      <td><?php echo icono_estatus(3); ?> <?php echo $result3['tipo_estatus']; ?></td>
                       <td><input type="varchar" class="form-control" name="sin_despacho" required min="0" Max="999" maxlength="40" value="<?php echo $regid3['total3']; ?>" title="Este campo contiene el total de llamadas de solicitudes en estatus sin despacho" readonly /></td></tr>
 
                       <tr align='center' ><th scope='row'><?php echo $result4['id']; ?></th>
-                      <td><i class="fa fa-square aero"> <?php echo $result4['tipo_estatus']; ?></i></td>
+                      <td><?php echo icono_estatus(4); ?> <?php echo $result4['tipo_estatus']; ?></td>
                       <td><input type="varchar" class="form-control" name="repetida" required min="0" Max="999" maxlength="40" value="<?php echo $regid4['total4']; ?>" title="Este campo contiene el total de llamadas de solicitudes en estatus repetidas" readonly /></td></tr>
 
                       <tr align='center' ><th scope='row'><?php echo $result6['id']; ?></th>
-                      <td><i class="fa fa-square red"> <?php echo $result6['tipo_estatus']; ?></i></td>
+                      <td><?php echo icono_estatus(6); ?> <?php echo $result6['tipo_estatus']; ?></td>
                       <td><input type="varchar" class="form-control" name="sabotaje" required min="0" Max="999" maxlength="40" value="<?php echo $regid5['total5']; ?>" title="Este campo contiene el total de llamadas de solicitudes en estatus sabotaje" readonly /></td></tr>
 
                       <tr align='center' ><th scope='row'><?php echo $result7['id']; ?></th>
-                      <td><i class="fa fa-square blue"> <?php echo $result7['tipo_estatus']; ?></i></td>
+                      <td><?php echo icono_estatus(7); ?> <?php echo $result7['tipo_estatus']; ?></td>
                       <td><input type="varchar" class="form-control" name="informacion" required min="0" Max="999" maxlength="40" value="<?php echo $regid6['total6']; ?>" title="Este campo contiene el total de llamadas de solicitudes en estatus información" readonly /></td></tr>
 
                       <tr align='center' ><th scope='row'><?php echo $result8['id']; ?></th>
-                      <td><i class="fa fa-square black"> <?php echo $result8['tipo_estatus']; ?></i></td>
+                      <td><?php echo icono_estatus(8); ?> <?php echo $result8['tipo_estatus']; ?></td>
                       <td><input type="varchar" class="form-control" name="abandonada" required min="0" Max="999" maxlength="40" value="<?php echo $regid7['total7']; ?>" title="Este campo contiene el total de llamadas de solicitudes en estatus abandonada" readonly /></td></tr>
 
                          <tr align="center">
@@ -113,17 +114,17 @@ while ($filas = pg_fetch_array($resp)) {
 
 }
 
-$where =  " `fecha` >= '$fecha' AND `hora_sol` >= '$hora' AND estatus IN (1,2,3,4,6,7,8) ";
-$sql = "select id, estatus, COUNT(estatus) AS total  from solicitud where $where 
+$where =  " fecha >= '$fecha' AND hora_sol >= '$hora' AND estatus IN (1,2,3,4,6,7,8) ";
+$sql = "select estatus, COUNT(estatus) AS total  from solicitud where $where 
 GROUP BY solicitud.estatus";
 
-$consulta1 = mysqli_query($conexion2, "$sql");
-//echo "filas; " . mysqli_num_rows($consulta1) . " <br />";
+$consulta1 = pg_query($conexion2, "$sql");
+//echo "filas; " . pg_num_rows($consulta1) . " <br />";
 //var_dump($estatus);
 $datos = "";
 $a=0;
 
-while ($rm = mysqli_fetch_array($consulta1)) {
+while ($rm = pg_fetch_array($consulta1)) {
 
     $a = $rm["total"] + $a;
     $e = $rm["estatus"];
@@ -185,24 +186,7 @@ if ($('.grafica1').length) {
             ],
             datasets: [{
                 data: [<?php echo $datos; ?>],
-                backgroundColor: [
-                  "#3498DB",
-                  "#26B99A",
-                  "#9B59B6",
-                  "#BDC3C7",
-                    "#E74C3C",
-                    "blue",
-                    "black"
-                ],
-                hoverBackgroundColor: [
-                  "#49A9EA",
-                  "#36CAAB",
-                  "#B370CF",
-                  "#CFD4D8",
-                    "#E95E4F",
-                    "blue",
-                    "black"
-                ]
+                backgroundColor: [<?php foreach ([1, 2, 3, 4, 6, 7, 8] as $id_est) { echo '"' . color_estatus($id_est) . '",'; } ?>]
             }]
         },
         options: {
@@ -224,50 +208,50 @@ if ($('.grafica1').length) {
 
 </script>
 
-                        <canvas class="grafica1" height="140" width="140" style="margin: 15px 10px 10px 0"></canvas>
+                        <canvas class="grafica1" height="180" width="180" style="margin: 15px 10px 10px 0"></canvas>
 
                           </td>
                       <td>
                       <table class="tile_info">
                           <tr>
                             <td>
-                              <p><i class="fa fa-square blue"></i>Efectivas </p>
+                              <p><?php echo icono_estatus(1); ?> Efectivas </p>
                             </td>
                             <td><?php $porcentaje = $regid1['total1']*100/$regid_total['total']; $porcentaje = round($porcentaje, 0);  echo $porcentaje."%"; ?></td>
                           </tr>
                           <tr>
                             <td>
-                              <p><i class="fa fa-square green"></i>No Efectivas </p>
+                              <p><?php echo icono_estatus(2); ?> No Efectivas </p>
                             </td>
                             <td><?php $porcentaje = $regid2['total2']*100/$regid_total['total']; $porcentaje = round($porcentaje, 0);  echo $porcentaje."%"; ?></td>
                           </tr>
                           <tr>
                             <td>
-                              <p><i class="fa fa-square purple"></i>Sin Despacho </p>
+                              <p><?php echo icono_estatus(3); ?> Sin Despacho </p>
                             </td>
                             <td><?php $porcentaje = $regid3['total3']*100/$regid_total['total']; $porcentaje = round($porcentaje, 0);  echo $porcentaje."%"; ?></td>
                           </tr>
                           <tr>
                             <td>
-                              <p><i class="fa fa-square aero"></i>Repetida </p>
+                              <p><?php echo icono_estatus(4); ?> Repetida </p>
                             </td>
                             <td><?php $porcentaje = $regid4['total4']*100/$regid_total['total']; $porcentaje = round($porcentaje, 0);  echo $porcentaje."%"; ?></td>
                           </tr>
                           <tr>
                             <td>
-                              <p><i class="fa fa-square red"></i>Sabotaje </p>
+                              <p><?php echo icono_estatus(6); ?> Sabotaje </p>
                             </td>
                             <td><?php $porcentaje = $regid5['total5']*100/$regid_total['total']; $porcentaje = round($porcentaje, 0);  echo $porcentaje."%"; ?></td>
                           </tr>
                           <tr>
                             <td>
-                              <p><i class="fa fa-square blue"></i>Información </p>
+                              <p><?php echo icono_estatus(7); ?> Información </p>
                             </td>
                             <td><?php $porcentaje = $regid6['total6']*100/$regid_total['total']; $porcentaje = round($porcentaje, 0);  echo $porcentaje."%"; ?></td>
                           </tr>
                           <tr>
                             <td>
-                              <p><i class="fa fa-square black"></i>Abandonada </p>
+                              <p><?php echo icono_estatus(8); ?> Abandonada </p>
                             </td>
                             <td><?php $porcentaje = $regid7['total7']*100/$regid_total['total']; $porcentaje = round($porcentaje, 0);  echo $porcentaje."%"; ?></td>
                           </tr>
@@ -282,7 +266,7 @@ if ($('.grafica1').length) {
 
                       <?php
                       // Consulta a la Base de Datos para Solicitud con mayor relevancia
-                          $consulta1 = mysqli_query($conexion2,"SELECT id FROM `solicitud` WHERE fecha >= '$fecha' AND hora_sol >= '$hora' AND `estatus` = 1 ");
+                          $consulta1 = pg_query($conexion2,"SELECT id FROM solicitud WHERE fecha >= '$fecha' AND hora_sol >= '$hora' AND estatus = 1 ");
                           if (!$consulta1) {
                           echo "Ocurrió un error.\n";
                           exit;
@@ -296,7 +280,7 @@ if ($('.grafica1').length) {
                           <select class="form-control" name="mayor_rele" title="Seleccione la solicitud de mayor relevancia" required>
                             <option value="">--Seleccione--</option>
                             <?php
-                              while($solicitud1=mysqli_fetch_array($consulta1))
+                              while($solicitud1=pg_fetch_array($consulta1))
                               { 
                             ?>
                             <option name="id" value="<?php echo $solicitud1[0] ?> "><?php echo $solicitud1[0] ?></option>

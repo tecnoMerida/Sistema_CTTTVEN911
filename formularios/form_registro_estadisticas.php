@@ -1,3 +1,4 @@
+<?php require_once __DIR__ . '/../config/graficas_helper.php'; ?>
               <div class="col-md-6 col-sm-6  ">
 
                 <?php /********* Seleccion el estatus de la Solicitud ***********/
@@ -57,48 +58,48 @@
 
                     <tr align='center'>
                       <th scope='row'><?php echo $result1['id']; ?></th>
-                      <td><i class="fa fa-square blue"> <?php echo $result1['tipo_estatus']; ?></i></td>
+                      <td><?php echo icono_estatus(1); ?> <?php echo $result1['tipo_estatus']; ?></td>
                       <td><input type="varchar" class="form-control" name="efectivo" required min="0" Max="999" maxlength="40" value="<?php echo $regid1['total1']; ?>" title="Este campo contiene el total de llamadas de solicitudes en estatus efectivas" readonly /></td>
 
                     <tr align='center'>
                       <th scope='row'><?php echo $result2['id']; ?></th>
-                      <td><i class="fa fa-square green"> <?php echo $result2['tipo_estatus']; ?></i></td>
+                      <td><?php echo icono_estatus(2); ?> <?php echo $result2['tipo_estatus']; ?></td>
                       <td><input type="varchar" class="form-control" name="no_efectivo" required min="0" Max="999" maxlength="40" value="<?php echo $regid2['total2']; ?>" title="Este campo contiene el total de llamadas de solicitudes en estatus no efectivas" readonly /></td>
                     </tr>
 
                     <tr align='center'>
                       <th scope='row'><?php echo $result3['id']; ?></th>
-                      <td><i class="fa fa-square purple"> <?php echo $result3['tipo_estatus']; ?></i></td>
+                      <td><?php echo icono_estatus(3); ?> <?php echo $result3['tipo_estatus']; ?></td>
                       <td><input type="varchar" class="form-control" name="sin_despacho" required min="0" Max="999" maxlength="40" value="<?php echo $regid3['total3']; ?>" title="Este campo contiene el total de llamadas de solicitudes en estatus sin despacho" readonly /></td>
                     </tr>
 
                     <tr align='center'>
                       <th scope='row'><?php echo $result4['id']; ?></th>
-                      <td><i class="fa fa-square aero"> <?php echo $result4['tipo_estatus']; ?></i></td>
+                      <td><?php echo icono_estatus(4); ?> <?php echo $result4['tipo_estatus']; ?></td>
                       <td><input type="varchar" class="form-control" name="repetida" required min="0" Max="999" maxlength="40" value="<?php echo $regid4['total4']; ?>" title="Este campo contiene el total de llamadas de solicitudes en estatus repetidas" readonly /></td>
                     </tr>
 
                     <tr align='center'>
                       <th scope='row'><?php echo $result5['id']; ?></th>
-                      <td><i class="fa fa-square red"> <?php echo $result5['tipo_estatus']; ?></i></td>
+                      <td><?php echo icono_estatus(5); ?> <?php echo $result5['tipo_estatus']; ?></td>
                       <td><input type="varchar" class="form-control" name="sabotaje" required min="0" Max="999" maxlength="40" value="<?php echo $regid8['total8']; ?>" title="Este campo contiene el total de llamadas de solicitudes en estatus sabotaje" readonly /></td>
                     </tr>
 
                     <tr align='center'>
                       <th scope='row'><?php echo $result6['id']; ?></th>
-                      <td><i class="fa fa-square dark gray"> <?php echo $result6['tipo_estatus']; ?></i></td>
+                      <td><?php echo icono_estatus(6); ?> <?php echo $result6['tipo_estatus']; ?></td>
                       <td><input type="varchar" class="form-control" name="sabotaje" required min="0" Max="999" maxlength="40" value="<?php echo $regid5['total5']; ?>" title="Este campo contiene el total de llamadas de solicitudes en estatus sabotaje" readonly /></td>
                     </tr>
 
                     <tr align='center'>
                       <th scope='row'><?php echo $result7['id']; ?></th>
-                      <td><i class="fa fa-square blue"> <?php echo $result7['tipo_estatus']; ?></i></td>
+                      <td><?php echo icono_estatus(7); ?> <?php echo $result7['tipo_estatus']; ?></td>
                       <td><input type="varchar" class="form-control" name="informacion" required min="0" Max="999" maxlength="40" value="<?php echo $regid6['total6']; ?>" title="Este campo contiene el total de llamadas de solicitudes en estatus información" readonly /></td>
                     </tr>
 
                     <tr align='center'>
                       <th scope='row'><?php echo $result8['id']; ?></th>
-                      <td><i class="fa fa-square black"> <?php echo $result8['tipo_estatus']; ?></i></td>
+                      <td><?php echo icono_estatus(8); ?> <?php echo $result8['tipo_estatus']; ?></td>
                       <td><input type="varchar" class="form-control" name="abandonada" required min="0" Max="999" maxlength="40" value="<?php echo $regid7['total7']; ?>" title="Este campo contiene el total de llamadas de solicitudes en estatus abandonada" readonly /></td>
                     </tr>
 
@@ -156,56 +157,56 @@
                   $total2 .= $texto2;
 
                   $total2 .= ',';
-                  $color .= '"blue"';
+                  $color .= '"' . color_estatus(1) . '"';
                   $color .= ',';
                 } else if ($rm["id"] == 2) {
                   $texto2 = $estatuspg[$e];
                   $total2 .= $texto2;
 
                   $total2 .= ',';
-                  $color .= '"green"';
+                  $color .= '"' . color_estatus(2) . '"';
                   $color .= ',';
                 } else if ($rm["id"] == 3) {
                   $texto2 = $estatuspg[$e];
                   $total2 .= $texto2;
 
                   $total2 .= ',';
-                  $color .= '"purple"';
+                  $color .= '"' . color_estatus(3) . '"';
                   $color .= ',';
                 } else if ($rm["id"] == 4) {
                   $texto2 = $estatuspg[$e];
                   $total2 .= $texto2;
 
                   $total2 .= ',';
-                  $color .= '"aero"';
+                  $color .= '"' . color_estatus(4) . '"';
                   $color .= ',';
                 } else if ($rm["id"] == 5) {
                   $texto2 = $estatuspg[$e];
                   $total2 .= $texto2;
 
                   $total2 .= ',';
-                  $color .= '"red"';
+                  $color .= '"' . color_estatus(5) . '"';
                   $color .= ',';
                 } else if ($rm["id"] == 6) {
                   $texto2 = $estatuspg[$e];
                   $total2 .= $texto2;
 
                   $total2 .= ',';
-                  $color .= '"#34495E"';
+                  $color .= '"' . color_estatus(6) . '"';
                   $color .= ',';
                 } else if ($rm["id"] == 7) {
                   $texto2 = $estatuspg[$e];
                   $total2 .= $texto2;
 
                   $total2 .= ',';
-                  $color .= '"#3498DB"';
+                  $color .= '"' . color_estatus(7) . '"';
                   $color .= ',';
                 } else if ($rm["id"] == 8) {
                   $texto2 = $estatuspg[$e];
                   $total2 .= $texto2;
 
                   $total2 .= ',';
-                  $color .= '"black"';
+                  $color .= '"' . color_estatus(8) . '"';
                 }
               }
 
@@ -277,14 +278,14 @@
                           }
                         </script>
 
-                        <canvas class="grafica1" height="140" width="140" style="margin: 15px 10px 10px 0"></canvas>
+                        <canvas class="grafica1" height="180" width="180" style="margin: 15px 10px 10px 0"></canvas>
 
                       </td>
                       <td>
                         <table class="tile_info">
                           <tr>
                             <td>
-                              <p><i class="fa fa-square blue"></i>Efectivas </p>
+                              <p><?php echo icono_estatus(1); ?> Efectivas </p>
                             </td>
                             <td><?php $porcentaje = $regid1['total1'] * 100 / $regid_total['total'];
                                 $porcentaje = round($porcentaje, 0);
@@ -292,7 +293,7 @@
                           </tr>
                           <tr>
                             <td>
-                              <p><i class="fa fa-square green"></i>No Efectivas </p>
+                              <p><?php echo icono_estatus(2); ?> No Efectivas </p>
                             </td>
                             <td><?php $porcentaje = $regid2['total2'] * 100 / $regid_total['total'];
                                 $porcentaje = round($porcentaje, 0);
@@ -300,7 +301,7 @@
                           </tr>
                           <tr>
                             <td>
-                              <p><i class="fa fa-square purple"></i>Sin Despacho </p>
+                              <p><?php echo icono_estatus(3); ?> Sin Despacho </p>
                             </td>
                             <td><?php $porcentaje = $regid3['total3'] * 100 / $regid_total['total'];
                                 $porcentaje = round($porcentaje, 0);
@@ -308,7 +309,7 @@
                           </tr>
                           <tr>
                             <td>
-                              <p><i class="fa fa-square aero"></i>Repetida </p>
+                              <p><?php echo icono_estatus(4); ?> Repetida </p>
                             </td>
                             <td><?php $porcentaje = $regid4['total4'] * 100 / $regid_total['total'];
                                 $porcentaje = round($porcentaje, 0);
@@ -316,7 +317,7 @@
                           </tr>
                           <tr>
                             <td>
-                              <p><i class="fa fa-square red"></i>Pendiente </p>
+                              <p><?php echo icono_estatus(5); ?> Pendiente </p>
                             </td>
                             <td><?php $porcentaje = $regid8['total8'] * 100 / $regid_total['total'];
                                 $porcentaje = round($porcentaje, 0);
@@ -324,7 +325,7 @@
                           </tr>
                           <tr>
                             <td>
-                              <p><i class="fa fa-square black"></i>Sabotaje </p>
+                              <p><?php echo icono_estatus(6); ?> Sabotaje </p>
                             </td>
                             <td><?php $porcentaje = $regid5['total5'] * 100 / $regid_total['total'];
                                 $porcentaje = round($porcentaje, 0);
@@ -332,7 +333,7 @@
                           </tr>
                           <tr>
                             <td>
-                              <p><i class="fa fa-square blue"></i>Información </p>
+                              <p><?php echo icono_estatus(7); ?> Información </p>
                             </td>
                             <td><?php $porcentaje = $regid6['total6'] * 100 / $regid_total['total'];
                                 $porcentaje = round($porcentaje, 0);
@@ -340,7 +341,7 @@
                           </tr>
                           <tr>
                             <td>
-                              <p><i class="fa fa-square dark gray"></i>Abandonada </p>
+                              <p><?php echo icono_estatus(8); ?> Abandonada </p>
                             </td>
                             <td><?php $porcentaje = $regid7['total7'] * 100 / $regid_total['total'];
                                 $porcentaje = round($porcentaje, 0);

@@ -83,6 +83,7 @@ $cedula11 = $_REQUEST['cedula_consultada'];
     <!-- Animate.css -->
     <link href="../vendors/animate.css/animate.min.css" rel="stylesheet">
 
+<link href="../css/compacto_inter.css" rel="stylesheet">
 </head>
 
 <body class="login">

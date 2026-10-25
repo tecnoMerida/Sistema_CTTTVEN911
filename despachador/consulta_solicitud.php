@@ -25,8 +25,8 @@ include_once '../config/conexion2_bd.php';
 
 if (isset($_POST['consultar'])) {
   $sol = $_POST['numero_solicitud'];
-  $consulta1 = "SELECT * FROM solicitud WHERE id = $sol ";  
-  $resultado1=mysqli_query($conexion2, $consulta1);
+  $consulta1 = "SELECT * FROM solicitud WHERE id = " . (int)$sol;  
+  $resultado1=pg_query($conexion2, $consulta1);
 
    }
 
@@ -137,10 +137,10 @@ $sol = ($_REQUEST['numero_solicitud']);
                       <tbody>
             <?php
                // Realiza la conexion y busqueda del boton Buscar
-                $registros = mysqli_query($conexion2,"SELECT * FROM solicitud WHERE id = $sol ");
+                $registros = pg_query($conexion2,"SELECT * FROM solicitud WHERE id = " . (int)$sol . " ");
 
-                $reg = mysqli_fetch_assoc($registros);
-                $total_rows = mysqli_num_rows($registros);
+                $reg = pg_fetch_assoc($registros);
+                $total_rows = pg_num_rows($registros);
                 
                 if( $total_rows != 0){
  
@@ -150,22 +150,22 @@ $sol = ($_REQUEST['numero_solicitud']);
                   echo "<tr align='center'><td>".$reg['id']."</td>\n";
             
                 $motivo=$reg['motivo'];// consulta el motivo de la llamada
-                $registrosm = mysqli_query($conexion2,"SELECT * FROM motivos_hijos WHERE id_motivo = $motivo ");
-                $reg1 = mysqli_fetch_array($registrosm);
+                $registrosm = pg_query($conexion2,"SELECT * FROM motivos_hijos WHERE id_motivo = " . (int)$motivo . " ");
+                $reg1 = pg_fetch_array($registrosm);
 
                   echo "<td>".$reg1['nom_mot_hijo']."</td>\n";
                   echo "<td>".$reg['fecha']."</td>\n";
                   echo "<td>".$reg['hora_sol']."</td>\n";
 
                 $desp=$reg['despachador'];// consulta despachador de solicitud
-                $registrosp = mysqli_query($conexion2,"SELECT * FROM 171_usuarioz WHERE id = $desp ");
-                $reg2 = mysqli_fetch_array($registrosp);
+                $registrosp = pg_query($conexion2,"SELECT * FROM \"171_usuarioz\" WHERE id = " . (int)$desp . " ");
+                $reg2 = pg_fetch_array($registrosp);
 
                   echo "<td>".$reg2['apellidos']."</td>\n";
                   echo "<td><a href=solicitud_consulta.php?id=".$reg['id']."><button class='btn btn-success' type='submit' action='' value='VER'>VER</button></a></td>\n";
 
-                } while ( $reg = mysqli_fetch_array ($registros) );
-                            mysqli_free_result($registros);
+                } while ( $reg = pg_fetch_array ($registros) );
+                            pg_free_result($registros);
                   } else { ?>
                    <script type="text/javascript">alert(" Número de solicitud NO válido ");</script>
               <?php
@@ -178,7 +178,7 @@ $sol = ($_REQUEST['numero_solicitud']);
                       </tbody>
                     </table>
             <?php
-                mysqli_close($conexion2);
+                pg_close($conexion2);
             ?>  
 <!-- /////////////////////////////////      FIN TABLA CONSULTA      ////////////////////////////////////-->
                   </div>

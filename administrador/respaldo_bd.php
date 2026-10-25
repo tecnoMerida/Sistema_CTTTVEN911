@@ -13,6 +13,7 @@ if ($_SESSION['tipo_rol_id'] != 1) {
     exit();
 }
 require_once '../config/conexion1.php';
+require_once '../config/config_bd.php';
 
 // Ajuste dinámico de límites de memoria y tiempo de ejecución para bases de datos grandes
 @ini_set('memory_limit', '512M');
@@ -50,20 +51,11 @@ function get_pg_binary($name) {
     return $name;
 }
 
-// Función auxiliar para ubicar binarios de MySQL / MariaDB en Windows
-function get_mysql_binary($name) {
-    $paths = [
-        "C:\\xampp\\mysql\\bin\\{$name}.exe",
-        "C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\{$name}.exe",
-        "C:\\Program Files\\MySQL\\MySQL Server 5.7\\bin\\{$name}.exe",
-        "C:\\Program Files\\MariaDB\\bin\\{$name}.exe"
-    ];
-    foreach ($paths as $path) {
-        if (file_exists($path)) {
-            return '"' . $path . '"';
-        }
-    }
-    return $name;
+// Parametros de conexion para psql / pg_dump tomados de la configuracion
+// (config/conexion_local.php o config/config_bd.php)
+function pg_args_cli() {
+    putenv("PGPASSWORD=" . PASSWORD);
+    return "-h " . escapeshellarg(HOST) . " -p " . escapeshellarg(PORT) . " -U " . escapeshellarg(USER);
 }
 
 // Función para formatear tamaños de archivo
@@ -171,7 +163,7 @@ function convert_mysql_create_table_to_pg($mysql_ddl) {
         return false;
     }
     $table = $m[1];
-    $pg_table = ($table === 'municipios' || $table === 'parroquias') ? '"deb5_' . $table . '"' : '"' . $table . '"';
+    $pg_table = 'historico."' . strtolower($table) . '"';
     
     $pos_start = strpos($mysql_ddl, '(');
     $pos_end = strrpos($mysql_ddl, ')');
@@ -191,12 +183,13 @@ function convert_mysql_create_table_to_pg($mysql_ddl) {
         $line = preg_replace('/AUTO_INCREMENT/i', '', $line);
         
         if (preg_match('/^`([^`]+)`\s*(.*)$/i', $line, $col_match)) {
-            $col_name = '"' . $col_match[1] . '"';
+            $col_name = '"' . strtolower($col_match[1]) . '"';
             $rest = trim($col_match[2]);
             $rest = preg_replace('/\bint\(\d+\)/i', 'integer', $rest);
             $rest = preg_replace('/\btinyint\(\d+\)/i', 'smallint', $rest);
             $rest = preg_replace('/\bvarchar\((\d+)\)/i', 'character varying($1)', $rest);
-            $rest = preg_replace('/\bchar\((\d+)\)/i', 'character($1)', $rest);
+            // varchar conserva el comportamiento de CHAR en MySQL (sin espacios finales)
+            $rest = preg_replace('/\bchar\((\d+)\)/i', 'character varying($1)', $rest);
             $rest = preg_replace('/\bdatetime\b/i', 'timestamp without time zone', $rest);
             $rest = preg_replace('/\btime\b/i', 'time without time zone', $rest);
             $rest = preg_replace('/\bdate\b/i', 'date', $rest);
@@ -204,7 +197,7 @@ function convert_mysql_create_table_to_pg($mysql_ddl) {
             $pg_cols[] = "    $col_name $rest";
         }
     }
-    return "CREATE TABLE IF NOT EXISTS $pg_table (\n" . implode(",\n", $pg_cols) . "\n);";
+    return "DROP TABLE IF EXISTS $pg_table;\nCREATE TABLE $pg_table (\n" . implode(",\n", $pg_cols) . "\n);";
 }
 
 // Convertidor streaming de archivo MySQL completo a PostgreSQL
@@ -218,9 +211,14 @@ function convert_mysql_file_to_pg($source_file, $dest_file) {
     }
     
     fwrite($out_f, "-- Migración generada automáticamente de MySQL (Debian 5) a PostgreSQL\n");
+    fwrite($out_f, "-- Las tablas del Sistema 171 se restauran en el esquema historico (ver config/conexion2_bd.php)\n");
     fwrite($out_f, "SET client_encoding = 'UTF8';\n");
-    fwrite($out_f, "SET standard_conforming_strings = on;\n");
-    fwrite($out_f, "BEGIN;\n\n");
+    // Con standard_conforming_strings = off PostgreSQL interpreta los escapes
+    // de MySQL (\n, \r, \\, \') dentro de las cadenas igual que MySQL
+    fwrite($out_f, "SET standard_conforming_strings = off;\n");
+    fwrite($out_f, "SET escape_string_warning = off;\n");
+    fwrite($out_f, "BEGIN;\n");
+    fwrite($out_f, "CREATE SCHEMA IF NOT EXISTS historico;\n\n");
     
     $in_create = false;
     $current_create = '';
@@ -249,11 +247,11 @@ function convert_mysql_file_to_pg($source_file, $dest_file) {
         // INSERT INTO
         if (preg_match('/^INSERT INTO `([^`]+)` \(([^)]+)\) VALUES/i', $line, $m)) {
             $table = $m[1];
-            $pg_table = ($table === 'municipios' || $table === 'parroquias') ? '"deb5_' . $table . '"' : '"' . $table . '"';
+            $pg_table = 'historico."' . strtolower($table) . '"';
             $cols = explode(',', $m[2]);
             $pg_cols = [];
             foreach ($cols as $c) {
-                $pg_cols[] = '"' . trim($c, " \t\r\n`") . '"';
+                $pg_cols[] = '"' . strtolower(trim($c, " \t\r\n`")) . '"';
             }
             $header = 'INSERT INTO ' . $pg_table . ' (' . implode(', ', $pg_cols) . ') VALUES' . "\n";
             fwrite($out_f, $header);
@@ -263,8 +261,6 @@ function convert_mysql_file_to_pg($source_file, $dest_file) {
         
         if ($in_insert) {
             $val_line = str_replace("'0000-00-00'", "NULL", $line);
-            $val_line = str_replace("\\'", "''", $val_line);
-            $val_line = str_replace('\\"', '"', $val_line);
             fwrite($out_f, $val_line);
             
             if (substr(rtrim($line), -1) === ';') {
@@ -281,42 +277,9 @@ function convert_mysql_file_to_pg($source_file, $dest_file) {
     return true;
 }
 
-// Función para ejecutar importación en MySQL
-function execute_mysql_import($filepath, $target_db = '911a2021') {
-    $mysql_bin = get_mysql_binary('mysql');
-    $mysql_clean = trim($mysql_bin, '"');
-    
-    $host = '127.0.0.1';
-    $user = 'root';
-    $pass = '';
-    if (defined('USERMYSQL') && USERMYSQL !== 'sistema1') { $user = USERMYSQL; }
-    if (defined('PASSWORDMYSQL') && PASSWORDMYSQL !== 'sistema12021') { $pass = PASSWORDMYSQL; }
-    $pass_arg = !empty($pass) ? "-p\"$pass\"" : "";
-    
-    // Crear bases de datos si no existen
-    $create_sql = "CREATE DATABASE IF NOT EXISTS \`$target_db\` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish2_ci; CREATE DATABASE IF NOT EXISTS \`ven911_2025\` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish2_ci;";
-    $cmd_create = "\"$mysql_clean\" -h $host -u $user $pass_arg -e \"$create_sql\" 2>&1";
-    @exec($cmd_create);
-    
-    // Ejecutar con comando source
-    $norm_path = str_replace('\\', '/', realpath($filepath));
-    $source_cmd = "SET NAMES utf8; SET foreign_key_checks = 0; source $norm_path;";
-    $cmd_import = "\"$mysql_clean\" -h $host -u $user $pass_arg --default-character-set=utf8 --max_allowed_packet=512M $target_db -e \"$source_cmd\" 2>&1";
-    
-    exec($cmd_import, $output, $return_var);
-    
-    return [
-        'success' => ($return_var === 0),
-        'engine' => 'MySQL / MariaDB',
-        'database' => $target_db,
-        'output' => $output,
-        'return_var' => $return_var
-    ];
-}
-
 // Función para ejecutar importación en PostgreSQL
 function execute_postgres_import($filepath, $is_mysql = false) {
-    putenv("PGPASSWORD=XTAE5qxIn4o");
+    $pg_args = pg_args_cli();
     $psql = get_pg_binary('psql');
     
     $final_file = $filepath;
@@ -334,7 +297,7 @@ function execute_postgres_import($filepath, $is_mysql = false) {
         $final_file = $temp_converted;
     }
     
-    $cmd = "$psql -h localhost -p 5432 -U postgres -d ven911 -f \"$final_file\" 2>&1";
+    $cmd = "$psql $pg_args -d ven911 -f \"$final_file\" 2>&1";
     exec($cmd, $output, $return_var);
     
     if ($temp_converted && file_exists($temp_converted)) {
@@ -386,9 +349,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $filename = 'respaldo_ven911_' . $fecha_actual . '.sql';
     $filepath = $dir_backups . '/' . $filename;
     
-    putenv("PGPASSWORD=XTAE5qxIn4o");
+    $pg_args = pg_args_cli();
     $pg_dump = get_pg_binary('pg_dump');
-    $cmd = "$pg_dump -h localhost -p 5432 -U postgres -F p -b -v -f \"$filepath\" ven911 2>&1";
+    $cmd = "$pg_dump $pg_args -F p -b -v -f \"$filepath\" ven911 2>&1";
     exec($cmd, $output, $return_var);
     
     if ($return_var === 0 && file_exists($filepath) && filesize($filepath) > 0) {
@@ -427,7 +390,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $restore_file = '';
     $orig_name = '';
     $source_folder = $_POST['carpeta_origen'] ?? 'backups';
-    $motor_destino = $_POST['motor_destino'] ?? 'auto';
+    // El sistema trabaja solo con PostgreSQL: los volcados MySQL se convierten
+    $motor_destino = 'postgres';
     
     // 1. Archivo preexistente en el servidor
     if (!empty($_POST['archivo_existente'])) {
@@ -470,24 +434,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $format_info = detect_sql_format($restore_file);
     $is_mysql_source = ($format_info['type'] === 'mysql');
     
-    // Determinar destino
-    if ($motor_destino === 'auto') {
-        $motor_destino = $is_mysql_source ? 'mysql' : 'postgres';
-    }
-    
     $import_results = [];
     $start_time = microtime(true);
     
-    // Ejecución según destino
-    if ($motor_destino === 'mysql' || $motor_destino === 'ambos') {
-        $res_my = execute_mysql_import($restore_file, '911a2021');
-        $import_results['mysql'] = $res_my;
-    }
-    
-    if ($motor_destino === 'postgres' || $motor_destino === 'ambos') {
-        $res_pg = execute_postgres_import($restore_file, $is_mysql_source);
-        $import_results['postgres'] = $res_pg;
-    }
+    $res_pg = execute_postgres_import($restore_file, $is_mysql_source);
+    $import_results['postgres'] = $res_pg;
     
     $elapsed = round(microtime(true) - $start_time, 2);
     
@@ -595,23 +546,6 @@ usort($all_backups, function($a, $b) {
     return $b['date'] - $a['date'];
 });
 
-// Detectar estado de los motores
-$mysql_ok = false;
-if (function_exists('mysqli_report')) {
-    @mysqli_report(MYSQLI_REPORT_OFF);
-}
-try {
-    $my_test = @mysqli_connect('127.0.0.1', 'root', '', '911a2021');
-    if (!$my_test) {
-        $my_test = @mysqli_connect('127.0.0.1', 'root', '');
-    }
-    if ($my_test) {
-        $mysql_ok = true;
-        @mysqli_close($my_test);
-    }
-} catch (Throwable $e) {
-    $mysql_ok = false;
-}
 ?>
 
 <!-- Estilos y Cabecera Superior -->
@@ -779,12 +713,7 @@ try {
                       <span class="badge badge-secondary p-2" style="font-size: 12px;"><i class="fa fa-server"></i> localhost:5432</span>
                     </div>
                     <div>
-                      <?php if ($mysql_ok): ?>
-                        <span class="badge badge-warning text-dark p-2" style="font-size: 12px;"><i class="fa fa-check-circle"></i> MySQL/MariaDB Activo (911a2021)</span>
-                        <span class="badge badge-dark p-2" style="font-size: 12px;"><i class="fa fa-database"></i> localhost:3306</span>
-                      <?php else: ?>
-                        <span class="badge badge-secondary p-2" style="font-size: 12px;"><i class="fa fa-info-circle"></i> MySQL en espera (XAMPP / 192.168.2.252)</span>
-                      <?php endif; ?>
+                      <span class="badge badge-info p-2" style="font-size: 12px;"><i class="fa fa-archive"></i> Datos históricos Sistema 171 (esquema historico)</span>
                     </div>
                   </div>
                 </div>
@@ -804,7 +733,7 @@ try {
                   </h4>
                   <p class="text-secondary mb-0" style="font-size: 13.5px;">
                     Se ha detectado el respaldo <code>ven911_2025.sql</code> (<strong>50.12 MB</strong> con <strong>186.465 registros</strong> de llamadas y Plan Amigo 171).
-                    Está listo en el servidor para restaurarse con un solo clic hacia <strong>MySQL (911a2021)</strong> o migrarse hacia <strong>PostgreSQL (ven911)</strong> sin necesidad de subirlo por el navegador.
+                    Está listo en el servidor para migrarse con un solo clic hacia <strong>PostgreSQL (ven911, esquema historico)</strong> sin necesidad de subirlo por el navegador.
                   </p>
                 </div>
                 <div class="col-md-4 col-sm-12 text-md-right text-sm-left mt-2">
@@ -879,12 +808,8 @@ try {
 
                 <div class="form-group mb-3">
                   <label class="font-weight-bold text-secondary" style="font-size: 13px;"><i class="fa fa-cogs"></i> Motor de Destino:</label>
-                  <select name="motor_destino" class="form-control">
-                    <option value="auto" selected>Detección Automática Inteligente (Recomendado)</option>
-                    <option value="mysql">MySQL / MariaDB (BD: 911a2021 / ven911_2025)</option>
-                    <option value="postgres">PostgreSQL (BD: ven911)</option>
-                    <option value="ambos">Doble Destino (MySQL + Migración a PostgreSQL)</option>
-                  </select>
+                  <input type="hidden" name="motor_destino" value="postgres">
+                  <p class="form-control-plaintext py-0">PostgreSQL (BD: ven911). Los respaldos MySQL se convierten al esquema <code>historico</code>.</p>
                 </div>
 
                 <button type="button" class="btn btn-warning btn-block py-2 font-weight-bold text-dark" onclick="confirmarImportacionSubida()">
@@ -1032,14 +957,10 @@ try {
 
           <div class="form-group">
             <label class="font-weight-bold text-dark"><i class="fa fa-server"></i> Seleccione el Motor de Base de Datos Destino:</label>
-            <select name="motor_destino" id="modal-select-motor" class="form-control font-weight-bold">
-              <option value="auto">Detección Automática Inteligente (Recomendado según el archivo)</option>
-              <option value="mysql">MySQL / MariaDB (BD: 911a2021 / ven911_2025 - Para tablas de llamadas y Amigo 171)</option>
-              <option value="postgres">PostgreSQL (BD: ven911 - Base de datos principal)</option>
-              <option value="ambos">Doble Motor (Restaura en MySQL y migra datos hacia PostgreSQL)</option>
-            </select>
+            <input type="hidden" name="motor_destino" id="modal-select-motor" value="postgres">
+            <p class="form-control-plaintext font-weight-bold py-0">PostgreSQL (BD: ven911 - Base de datos principal)</p>
             <small class="form-text text-muted">
-              * Para respaldos de <strong>Debian 5 (Plantilla 1)</strong>, la opción MySQL o Doble Motor asegura que las consultas operativas de llamadas funcionen de inmediato.
+              * Los respaldos MySQL del Sistema 171 (Debian 5 / Plantilla 1) se convierten y restauran en el esquema <strong>historico</strong>, que usan las consultas de llamadas.
             </small>
           </div>
         </div>
@@ -1109,15 +1030,6 @@ function abrirModalRestaurar(nombre, carpeta, formato, tamano, detalles) {
     document.getElementById('modal-info-formato').innerText = formato;
     document.getElementById('modal-info-detalles').innerText = detalles || 'Sin detalles adicionales.';
     
-    // Sugerencia de motor por defecto
-    var sel = document.getElementById('modal-select-motor');
-    if (carpeta === 'plantilla1' || nombre.indexOf('2025') !== -1) {
-        sel.value = 'mysql';
-    } else if (carpeta === 'plantilla2') {
-        sel.value = 'postgres';
-    } else {
-        sel.value = 'auto';
-    }
     
     $('#modalRestaurarServidor').modal('show');
 }
