@@ -1,4 +1,11 @@
 <?php
+/*
+ * ============================================================================
+ *  Libro Digital de Novedades 9-1-1 - VEN 911 Merida
+ *  Sistema reestructurado por el Ing. Nelson Briceño
+ *  Migraciones por el Ing. Francisco Paredes
+ * ============================================================================
+ */
 // ============================================================================
 // Conexión a los datos históricos del "Sistema 171" (solicitud, motivos_hijos,
 // motivos_padre, 171_usuarioz, sector, amigo171, contacto_amigo, etc.).

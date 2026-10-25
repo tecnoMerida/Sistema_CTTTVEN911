@@ -1,4 +1,11 @@
 <?php
+/*
+ * ============================================================================
+ *  Libro Digital de Novedades 9-1-1 - VEN 911 Merida
+ *  Sistema reestructurado por el Ing. Nelson Briceño
+ *  Migraciones por el Ing. Francisco Paredes
+ * ============================================================================
+ */
 // ============================================================================
 // Migracion de la base MySQL historica del "Sistema 171" (ven911_2025) hacia
 // PostgreSQL, en el esquema "historico" de la base principal ven911.

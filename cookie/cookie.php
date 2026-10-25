@@ -1,4 +1,11 @@
 <?php
+/*
+ * ============================================================================
+ *  Libro Digital de Novedades 9-1-1 - VEN 911 Merida
+ *  Sistema reestructurado por el Ing. Nelson Briceño
+ *  Migraciones por el Ing. Francisco Paredes
+ * ============================================================================
+ */
 // ERRORES DE PHP: se registran siempre en el log del servidor y no se muestran
 // al usuario (pueden revelar rutas y datos internos). Para verlos en pantalla
 // durante el desarrollo, definir MOSTRAR_ERRORES en config/conexion_local.php.

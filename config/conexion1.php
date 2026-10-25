@@ -1,4 +1,11 @@
 <?php
+/*
+ * ============================================================================
+ *  Libro Digital de Novedades 9-1-1 - VEN 911 Merida
+ *  Sistema reestructurado por el Ing. Nelson Briceño
+ *  Migraciones por el Ing. Francisco Paredes
+ * ============================================================================
+ */
 // detalles de la conexion
 // Si existe config/conexion_local.php (no se sube a git) se usan sus credenciales;
 // si no, se mantiene la conexion original.

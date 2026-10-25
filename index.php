@@ -1,3 +1,12 @@
+<?php
+/*
+ * ============================================================================
+ *  Libro Digital de Novedades 9-1-1 - VEN 911 Merida
+ *  Sistema reestructurado por el Ing. Nelson Briceño
+ *  Migraciones por el Ing. Francisco Paredes
+ * ============================================================================
+ */
+?>
 <!DOCTYPE html>
 <html lang="es-español">
 <link rel="shortcut icon" href="images/911.ico">
