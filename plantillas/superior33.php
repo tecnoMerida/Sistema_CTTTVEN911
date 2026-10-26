@@ -36,9 +36,9 @@
     <link href="../vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
-    <link href="../css/estilo_menu.css" rel="stylesheet" media="screen" />
+    <link href="../css/estilo_menu.css?v=2" rel="stylesheet" media="screen" />
     <!-- Tipografia Inter y diseño compacto -->
-    <link href="../css/compacto_inter.css" rel="stylesheet">
+    <link href="../css/compacto_inter.css?v=3" rel="stylesheet">
 
 
 

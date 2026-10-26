@@ -46,7 +46,7 @@ if (session_status() === PHP_SESSION_NONE) {
     <link href="../css/estilo_menu.css" rel="stylesheet" media="screen" />
 
     <title>Libro Digital de Novedades 9-1-1</title>
-   <link href="../css/compacto_inter.css" rel="stylesheet">
+   <link href="../css/compacto_inter.css?v=3" rel="stylesheet">
    </head>
   <body class="nav-md">
   <style type="text/css">

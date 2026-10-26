@@ -43,7 +43,7 @@
                         <div class="col-md-6 col-sm-6">
                           <input type="text" name="telefono_p" id="telefono_p" class="form-control" value="<?php echo strtoupper($pariente['telefono_p']); ?>" title="Llene este campo con el número de teléfono de habitación" placeholder="Ingrese número habitación o móvil" maxlength="14" required='required' data-validate-length-range="14,14" data-inputmask="'mask' : '(999) 999-9999'" pattern="[0-9() -]{11,14}">
                         </div>
-                        <div class="col-md-6 col-sm-6">
+                        <div class="col-md-3 col-sm-3">
                           <p>Ej: (274) 262-4321</p>
                         </div>
                       </div>

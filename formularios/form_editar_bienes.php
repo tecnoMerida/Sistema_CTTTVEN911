@@ -59,7 +59,7 @@
               ?>
 					</div>
 
-                  	<br/><br/><br/><br/>
+                  	
 <!-- Inicio Formulario Registro Bienes -->
                   <form class="" action="../insertar_bienes.php?ac=2" method="post" data-parsley-validate>
                   <?php
@@ -87,7 +87,7 @@
                       <div class="col-md-6 col-sm-6">
                         <input type="text" name="codigo_b" id="codigo_b" class="form-control" value="<?php echo strtoupper($reg['codigo_b']); ?>" placeholder="Ingrese Código Bienes" required="required" minlength="5" maxlength="20" title="Llene este campo con el código de bienes, entre 5 y 20 dígitos" pattern="[A-Za-z0-9 /-]{5,20}" />
                       </div>
-                      <div class="col-md-6 col-sm-6">
+                      <div class="col-md-3 col-sm-3">
                           <p>Ej: TT-01-1234-ABCD-00DD</p>
                       </div>
                     </div>
@@ -130,7 +130,7 @@
                       <div class="col-md-6 col-sm-6">
                         <input type="text" name="serial_b" id="serial_b" class="form-control" value="<?php echo strtoupper($reg['serial_b']); ?>" placeholder="Ingrese Serial del Bienes" required="required" minlength="4" maxlength="50" title="Llene este campo con el serial del bienes, entre 4 y 40 dígitos" pattern="[A-záéíóúüñÁÉÍÓÜÚÑ0-9/-]{4,50}" />
                       </div>
-                      <div class="col-md-6 col-sm-6">
+                      <div class="col-md-3 col-sm-3">
                           <p>Ej: ABCD-0000-ABCD-0000</p>
                       </div>
                     </div>

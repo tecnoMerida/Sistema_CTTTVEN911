@@ -92,7 +92,7 @@ $cedula= $regid['cedula'];
                 </div>
 
 
-                <br/><br/><br/><br/>
+                
 <!-- Inicio Formulario Registro Bienes -->
                   <form class="" action="../insertar_bienes.php?ac=1" method="post" id="demo-form" data-parsley-validate>
 

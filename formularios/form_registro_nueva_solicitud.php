@@ -66,7 +66,7 @@ require_once dirname(__DIR__) . '/config/cuadrantes_helper.php';
                                   <div class="col-md-6 col-sm-6">
                                     <input type="text" name="telefono_celular_sol" id="telefono_celular_sol" class="form-control" title="Llene este campo con el número de teléfono de quien realiza la llamada (agregando código de area o compañía de servicio)" placeholder="Número teléfono" maxlength="14" required='required' data-validate-length-range="14,14" data-inputmask="'mask' : '(999) 999-9999'" pattern="[0-9() -]{11,14}">
                                   </div>
-                                  <div class="col-md-6 col-sm-6">
+                                  <div class="col-md-3 col-sm-3">
                                     <p>Ej: (424) 765-4321</p>
                                   </div>
                                 </div>

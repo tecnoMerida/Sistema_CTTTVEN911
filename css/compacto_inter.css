@@ -1,5 +1,5 @@
 /* ==============================================================
-   TIPOGRAFIA INTER + DISEÑO COMPACTO
+   TIPOGRAFIA INTER + DISEÑO COMPACTO Y AJUSTADO A PANTALLA
    Se carga despues de custom.min.css y estilo_menu.css para
    ajustar la plantilla Gentelella sin modificar sus archivos.
    La fuente se sirve localmente (vendors/inter) para que funcione
@@ -33,8 +33,6 @@
 
 /* --------------------------------------------------------------
    1. TIPOGRAFIA
-   Solo se asigna a elementos de texto: los iconos .fa conservan
-   su propia fuente.
    -------------------------------------------------------------- */
 html {
     -webkit-text-size-adjust: 100%;
@@ -57,13 +55,14 @@ table,
 .nav.side-menu > li > a,
 .nav.child_menu > li > a,
 .x_title h2,
-.page-title h3 {
+.page-title h3,
+.page-title h4 {
     font-family: var(--ldn-fuente) !important;
 }
 
 body {
     font-size: 13px;
-    line-height: 1.45;
+    line-height: 1.4;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
@@ -80,152 +79,407 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.25;
 }
 
-.right_col h1 { font-size: 1.6rem; }
-.right_col h3 { font-size: 1.25rem; }
+.right_col h1 { font-size: 1.5rem; }
+.right_col h3 { font-size: 1.2rem; }
 .right_col h4 { font-size: 1.05rem; }
-
-/* Monitores pequeños / portatiles: todo un poco mas compacto */
-@media (max-width: 1366px), (max-height: 768px) {
-    body { font-size: 12.5px; }
-}
-
-/* Monitores grandes: un poco mas de tamaño para leer comodo */
-@media (min-width: 1920px) and (min-height: 1000px) {
-    body { font-size: 14px; }
-}
 
 /* --------------------------------------------------------------
    2. ENCABEZADO SUPERIOR
-   El iframe de logos y reloj conserva su altura (estilo_menu.css).
    -------------------------------------------------------------- */
 .nav_menu {
-    margin-bottom: 6px !important;
+    margin-bottom: 4px !important;
 }
 
 /* --------------------------------------------------------------
-   3. AREA DE CONTENIDO Y PANELES
+   3. AREA DE CONTENIDO Y PANELES (COMPACTO Y AJUSTADO)
    -------------------------------------------------------------- */
 .right_col {
-    padding: 6px 14px 0 !important;
+    padding: 4px 10px 0 !important;
 }
 
 .page-title {
     height: auto !important;
-    padding: 4px 0 !important;
+    padding: 0 !important;
+    margin-bottom: 2px !important;
 }
 
 .page-title .title_left h3,
-.page-title .title_right h3 {
-    margin: 4px 0 !important;
+.page-title .title_left h4,
+.page-title .title_right h3,
+.page-title .title_right h4 {
+    margin: 2px 0 4px !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    line-height: 1.2 !important;
 }
 
 .x_panel {
-    padding: 8px 14px !important;
-    margin-bottom: 8px !important;
+    padding: 6px 12px !important;
+    margin-bottom: 6px !important;
     border-color: var(--ldn-borde) !important;
     border-radius: 6px;
     box-shadow: 0 1px 2px rgba(16, 24, 40, 0.04);
 }
 
 .x_title {
-    padding: 2px 4px 6px !important;
-    margin-bottom: 8px !important;
+    padding: 2px 4px 4px !important;
+    margin-bottom: 6px !important;
+    min-height: auto !important;
     border-bottom-width: 1px !important;
 }
 
 .x_title h2 {
-    font-size: 15px !important;
+    font-size: 13.5px !important;
     font-weight: 600 !important;
-    margin: 4px 0 2px !important;
+    margin: 2px 0 !important;
+    line-height: 1.25 !important;
+}
+
+.x_title .panel_toolbox {
+    min-width: auto !important;
+    margin: 0 !important;
+}
+
+.x_title .panel_toolbox > li > a {
+    padding: 2px 5px !important;
+    font-size: 12px !important;
+    color: #aab2bd;
 }
 
 .x_content {
-    padding: 0 4px 4px !important;
+    padding: 0 !important;
     margin-top: 2px !important;
+    float: none !important;
+}
+
+/* Eliminar saltos de linea redundantes que empujan los formularios */
+.x_content > br,
+.tab-pane > br,
+.tab-pane > .x_content > br,
+form > br,
+.form-group > br,
+.field.item.form-group > br,
+.accordion br {
+    display: none !important;
+}
+
+/* Secciones divisorias en formularios Gentelella */
+span.section {
+    display: block;
+    margin: 4px 0 !important;
+    padding: 0 0 4px 0 !important;
+    font-size: 13px !important;
+    line-height: 1.3 !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+}
+
+span.section:empty,
+span.section:has(> p:empty) {
+    display: none !important;
 }
 
 .tile_count {
-    margin-bottom: 8px !important;
-    margin-top: 8px !important;
+    margin-bottom: 6px !important;
+    margin-top: 4px !important;
 }
 
 /* --------------------------------------------------------------
-   4. FORMULARIOS
+   4. FORMULARIOS (MAXIMA COMPACIDAD Y AJUSTE A LA PANTALLA)
    -------------------------------------------------------------- */
 .form-group,
 .field.item.form-group {
-    margin-bottom: 8px !important;
+    margin-bottom: 4px !important;
 }
 
-.form-control {
-    min-height: 32px;
-    padding: 4px 10px;
-    font-size: 0.95em;
-    border-radius: 4px;
-    border-color: #ccd3db;
+.form-horizontal .form-group,
+.form-horizontal .field.item.form-group {
+    margin-left: -5px;
+    margin-right: -5px;
 }
 
-textarea.form-control {
-    min-height: 60px;
+.form-horizontal .form-group > [class*="col-"],
+.field.item.form-group > [class*="col-"] {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+/* Etiquetas de formulario */
+.col-form-label,
+.control-label,
+label.label-align,
+.form-group label {
+    padding-top: 4px !important;
+    padding-bottom: 2px !important;
+    margin-bottom: 0 !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    line-height: 1.25 !important;
+    color: #334155 !important;
+}
+
+/* Textos obligatorios y de ayuda */
+.form-group strong,
+.field.item.form-group strong {
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    color: #64748b !important;
+    display: inline-block !important;
+    margin-bottom: 2px !important;
+}
+
+.form-group p,
+.field.item.form-group p,
+.form-group small,
+.field.item.form-group small {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 11px !important;
+    line-height: 1.25 !important;
+    color: #64748b !important;
+}
+
+/* Evitar que el ejemplo <p>Ej: ...</p> salte a una linea extra */
+@media (min-width: 768px) {
+    .field.item.form-group > label.col-md-3 ~ .col-md-6:last-child,
+    .field.item.form-group > label.col-sm-3 ~ .col-sm-6:last-child {
+        width: 25% !important;
+        float: left !important;
+        padding-top: 5px !important;
+        padding-left: 4px !important;
+    }
+}
+
+/* Controles de entrada: inputs, selects */
+.form-control,
+input.form-control,
+select.form-control {
+    height: 28px !important;
+    min-height: 28px !important;
+    padding: 2px 8px !important;
+    font-size: 12px !important;
+    line-height: 1.3 !important;
+    border-radius: 4px !important;
+    border: 1px solid #cbd5e1 !important;
+    background-color: #ffffff;
+    box-shadow: none !important;
+}
+
+select.form-control {
+    padding-top: 1px !important;
+    padding-bottom: 1px !important;
 }
 
 .form-control:focus {
-    border-color: var(--ldn-acento);
-    box-shadow: 0 0 0 3px rgba(26, 187, 156, 0.15);
+    border-color: var(--ldn-acento) !important;
+    box-shadow: 0 0 0 2px rgba(26, 187, 156, 0.2) !important;
+    outline: none !important;
 }
 
-.col-form-label,
-.control-label {
-    padding-top: 5px !important;
-    padding-bottom: 5px !important;
-    font-weight: 500;
+.form-control[readonly],
+.form-control[disabled] {
+    background-color: #f8fafc !important;
+    color: #475569 !important;
+    border-color: #e2e8f0 !important;
 }
 
+/* Select2 compacto */
+.select2-container .select2-selection--single {
+    height: 28px !important;
+    min-height: 28px !important;
+    padding: 0 6px !important;
+    font-size: 12px !important;
+    border-color: #cbd5e1 !important;
+    border-radius: 4px !important;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 26px !important;
+    font-size: 12px !important;
+    padding-left: 2px !important;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 26px !important;
+}
+
+/* Textareas compactas pero comodas */
+textarea.form-control,
+textarea.resizable_textarea {
+    min-height: 38px !important;
+    height: 42px !important;
+    max-height: 80px !important;
+    padding: 3px 8px !important;
+    font-size: 12px !important;
+    line-height: 1.35 !important;
+    resize: vertical !important;
+}
+
+/* Acordeon compacto */
+.accordion .panel {
+    margin-bottom: 3px !important;
+    border-radius: 4px !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: none !important;
+}
+
+.accordion .panel-heading {
+    padding: 5px 10px !important;
+    background-color: #f8fafc !important;
+    border-radius: 3px !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+    cursor: pointer;
+}
+
+.accordion .panel-title {
+    font-size: 12.5px !important;
+    font-weight: 600 !important;
+    margin: 0 !important;
+    color: #1e293b !important;
+}
+
+.accordion .panel-body {
+    padding: 6px 10px !important;
+}
+
+/* Pestanas de navegacion en modulos (Formulario / Tabla) */
+.nav-tabs.bar_tabs {
+    height: 30px !important;
+    padding: 2px 0 0 !important;
+    margin-bottom: 6px !important;
+    border-bottom: 1px solid #e2e8f0 !important;
+}
+
+.nav-tabs.bar_tabs > li {
+    margin-bottom: -1px !important;
+}
+
+.nav-tabs.bar_tabs > li > a {
+    padding: 4px 12px !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    line-height: 1.3 !important;
+    border-radius: 4px 4px 0 0 !important;
+}
+
+/* Alertas de mensajes en formularios (.msn1) */
+.alert,
+.alert.msn1 {
+    padding: 4px 10px !important;
+    margin-bottom: 6px !important;
+    font-size: 12px !important;
+    min-height: auto !important;
+    height: auto !important;
+    border-radius: 4px !important;
+}
+
+.alert .close {
+    padding: 2px 8px !important;
+    line-height: 1 !important;
+}
+
+/* Linea divisoria y botones finales */
 .ln_solid {
-    margin: 10px 0 !important;
+    margin: 6px 0 !important;
+    border-top: 1px solid #e2e8f0 !important;
 }
 
 .btn {
-    padding: 5px 14px;
-    font-size: 0.95em;
-    font-weight: 500;
-    border-radius: 4px;
-    margin-bottom: 4px;
+    padding: 3px 12px !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    border-radius: 4px !important;
+    margin-bottom: 2px !important;
+    min-height: 26px !important;
+    line-height: 1.4 !important;
 }
 
 .btn-sm,
 .btn-group-sm > .btn {
-    padding: 3px 10px;
+    padding: 2px 8px !important;
+    font-size: 11px !important;
+    min-height: 22px !important;
+}
+
+.btn-group .btn {
+    padding: 2px 10px !important;
+    font-size: 11.5px !important;
+}
+
+/* Avatar de operador en pantalla de solicitud */
+#operador_avatar {
+    max-width: 200px !important;
+    max-height: 240px !important;
+    width: auto !important;
+    height: auto !important;
+    opacity: 0.85;
+    pointer-events: none;
+}
+
+@media (max-width: 1400px) {
+    #operador_avatar {
+        display: none !important;
+    }
 }
 
 /* --------------------------------------------------------------
    5. TABLAS Y DATATABLES
    -------------------------------------------------------------- */
 .table {
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .table th,
 .table td {
-    padding: 5px 8px !important;
+    padding: 4px 8px !important;
+    font-size: 12px !important;
+    line-height: 1.3 !important;
     vertical-align: middle !important;
 }
 
 .table thead th {
     font-weight: 600;
+    font-size: 11.5px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.03em !important;
     white-space: nowrap;
+}
+
+.table .btn {
+    padding: 2px 8px !important;
+    font-size: 11px !important;
+    min-height: 22px !important;
 }
 
 .dataTables_wrapper .dataTables_length,
 .dataTables_wrapper .dataTables_filter,
 .dataTables_wrapper .dataTables_info,
 .dataTables_wrapper .dataTables_paginate {
-    padding-top: 4px !important;
-    margin-bottom: 4px;
+    padding: 2px 0 !important;
+    margin-bottom: 2px !important;
+    font-size: 12px !important;
+}
+
+.dataTables_wrapper .dataTables_filter input {
+    height: 26px !important;
+    padding: 2px 6px !important;
+    font-size: 12px !important;
+    border-radius: 4px !important;
+    border: 1px solid #cbd5e1 !important;
+}
+
+.dataTables_wrapper .dataTables_length select {
+    height: 26px !important;
+    padding: 2px 4px !important;
+    font-size: 12px !important;
+    border-radius: 4px !important;
+    border: 1px solid #cbd5e1 !important;
 }
 
 .dataTables_wrapper .pagination {
-    margin: 4px 0 !important;
+    margin: 2px 0 !important;
+}
+
+.dataTables_wrapper .pagination > li > a {
+    padding: 2px 8px !important;
+    font-size: 11.5px !important;
 }
 
 /* Graficas: Morris (SVG) con la misma fuente y leyendas alineadas */
@@ -261,8 +515,8 @@ textarea.form-control {
 }
 
 footer {
-    padding: 8px 14px !important;
-    font-size: 12px;
+    padding: 6px 14px !important;
+    font-size: 11px;
 }
 
 .ir-arriba {
@@ -271,15 +525,79 @@ footer {
 }
 
 /* --------------------------------------------------------------
-   7. PANTALLAS PEQUEÑAS (tablets y celulares)
+   7. PANTALLAS PEQUEÑAS Y PORTATILES (MAXIMO AJUSTE SIN SCROLL)
    -------------------------------------------------------------- */
-@media (max-width: 991px) {
+@media (max-width: 1366px), (max-height: 768px) {
+    body {
+        font-size: 12px;
+    }
+
     .right_col {
-        padding: 6px 8px 0 !important;
+        padding: 4px 8px 0 !important;
     }
 
     .x_panel {
-        padding: 8px 10px !important;
+        padding: 4px 8px !important;
+        margin-bottom: 4px !important;
+    }
+
+    .form-group,
+    .field.item.form-group {
+        margin-bottom: 3px !important;
+    }
+
+    .form-control,
+    input.form-control,
+    select.form-control {
+        height: 26px !important;
+        min-height: 26px !important;
+        font-size: 11.5px !important;
+        padding: 2px 6px !important;
+    }
+
+    .col-form-label,
+    .control-label,
+    label.label-align {
+        padding-top: 3px !important;
+        padding-bottom: 1px !important;
+        font-size: 11.5px !important;
+    }
+
+    .btn {
+        padding: 2px 10px !important;
+        font-size: 11.5px !important;
+        min-height: 24px !important;
+    }
+
+    textarea.form-control,
+    textarea.resizable_textarea {
+        min-height: 32px !important;
+        height: 36px !important;
+        font-size: 11.5px !important;
+    }
+
+    .accordion .panel-heading {
+        padding: 4px 8px !important;
+    }
+
+    .accordion .panel-body {
+        padding: 4px 8px !important;
+    }
+
+    .table th,
+    .table td {
+        padding: 3px 6px !important;
+        font-size: 11.5px !important;
+    }
+}
+
+@media (max-width: 991px) {
+    .right_col {
+        padding: 4px 6px 0 !important;
+    }
+
+    .x_panel {
+        padding: 6px 8px !important;
     }
 
     .label-align {
@@ -298,8 +616,6 @@ footer {
     margin-top: 3vh;
 }
 
-/* Sin formulario de registro: el de acceso ocupa su espacio real,
-   asi el banner queda debajo sin margenes ni saltos de linea extra */
 .login .login_form {
     position: relative;
 }
@@ -332,7 +648,6 @@ footer {
     letter-spacing: 0.04em;
 }
 
-/* Campo de contraseña con boton para mostrar u ocultar */
 .campo-clave {
     position: relative;
     margin-bottom: 14px;

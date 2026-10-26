@@ -123,7 +123,7 @@ $estatus_personal_id = $reg_id['estatus_personal_id'];
                                <div class="col-md-6 col-sm-6">
                                  <input type="text" name="pregunta_recuperacion_1" id="pregunta_recuperacion_1" class="form-control" placeholder="Formula la pregunta 01" minlength="6" maxlength="200" title="Llene este campo formulando una pregunta 01 para la recuperación de contraseña, entre 6 y 200 dígitos" pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-0-9]{6,200}" required="required" autofocus />
                                </div>
-                               <div class="col-md-6 col-sm-6">
+                               <div class="col-md-3 col-sm-3">
                                  <p>Ej: Cual era el nombre del perro</br>del libertador</p>
                                </div>
                              </div>
@@ -143,7 +143,7 @@ $estatus_personal_id = $reg_id['estatus_personal_id'];
                                <div class="col-md-6 col-sm-6">
                                  <input type="text" name="pregunta_recuperacion_2" id="pregunta_recuperacion_2" class="form-control" placeholder="Formula la pregunta 02" minlength="6" maxlength="200" title="Llene este campo formulando una pregunta 01 para la recuperación de contraseña, entre 6 y 200 dígitos" pattern="[a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-0-9]{6,200}" required="required" />
                                </div>
-                               <div class="col-md-6 col-sm-6">
+                               <div class="col-md-3 col-sm-3">
                                  <p>Ej: Cual es la marca de mi primer</br>vehículo</p>
                                </div>
                              </div>

@@ -13,7 +13,7 @@
                       <div class="col-md-6 col-sm-6">
                         <input type="text" name="codigo_b" id="codigo_b" class="form-control" placeholder="Ingrese código bienes" minlength="5" maxlength="20" title="Llene este campo con el código de bienes, entre 5 y 20 dígitos" autofocus pattern="[A-Za-z0-9 /-]{5,20}" required  />
                       </div>
-                      <div class="col-md-6 col-sm-6">
+                      <div class="col-md-3 col-sm-3">
                           <p>Ej: TT-01-1234-ABCD-00DD</p>
                       </div>
                     </div>
@@ -56,7 +56,7 @@
                       <div class="col-md-6 col-sm-6">
                         <input type="text" name="serial_b" id="serial_b" class="form-control" placeholder="Ingrese serial del bienes" required minlength="4" maxlength="50" title="Llene este campo con el serial del bienes" pattern="[A-záéíóúüñÁÉÍÓÜÚÑ0-9/-]{4,50}" />
                       </div>
-                      <div class="col-md-6 col-sm-6">
+                      <div class="col-md-3 col-sm-3">
                           <p>Ej: ABCD-0000-ABCD-0000</p>
                       </div>
                     </div>

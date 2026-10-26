@@ -29,9 +29,9 @@
     <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
-    <link href="../css/estilo_menu.css" rel="stylesheet" media="screen" />
+    <link href="../css/estilo_menu.css?v=2" rel="stylesheet" media="screen" />
     <!-- Tipografia Inter y diseño compacto -->
-    <link href="../css/compacto_inter.css" rel="stylesheet">
+    <link href="../css/compacto_inter.css?v=3" rel="stylesheet">
     <!-- bootstrap-wysiwyg -->
     <link href="../vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet">
     <!-- Switchery -->

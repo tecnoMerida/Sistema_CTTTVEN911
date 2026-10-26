@@ -152,7 +152,7 @@ $estatus_personal_id = $reg_id['estatus_personal_id'];
                                <div class="col-md-6 col-sm-6">
                                  <input type="text" name="telefono_p" id="telefono_p" class="form-control" placeholder="Ingrese número telefono" maxlength="14" data-validate-length-range="14,14" data-inputmask="'mask' : '(999) 999-9999'" title="Llene este campo con el número de teléfono del familiar" pattern="[0-9() -]{11,14}" required='required' />
                                </div>
-                               <div class="col-md-6 col-sm-6">
+                               <div class="col-md-3 col-sm-3">
                                  <p>Ej: (274) 262-4321</p>
                                </div>
                              </div>

@@ -13,7 +13,7 @@
                                        <div class="col-md-6 col-sm-6">
                                            <input type="text" name="pregunta_recuperacion_1" id="pregunta_recuperacion_1" class="form-control" placeholder="Formula la pregunta 01" minlength="6" maxlength="200" value="<?php echo $ps_id['pregunta_recuperacion_1']; ?>" title="Pregunta uno para la recuperación de contraseña, entre 6 y 200 dígitos" pattern="[A-Za-zÑñ0-9 -]{6,200}" required />
                                        </div>
-                                       <div class="col-md-6 col-sm-6">
+                                       <div class="col-md-3 col-sm-3">
                                  <p>Ej: Cual era el nombre del perro</br>del libertador</p>
                                </div>
                                     </div>
@@ -31,7 +31,7 @@
                                        <div class="col-md-6 col-sm-6">
                                            <input type="text" name="pregunta_recuperacion_2" id="pregunta_recuperacion_2" class="form-control" placeholder="Formula la pregunta 02" minlength="6" maxlength="200" value="<?php echo $ps_id['pregunta_recuperacion_2']; ?>" title="Pregunta dos para la recuperación de contraseña, entre 6 y 200 dígitos" pattern="[A-Za-zÑñ0-9 -]{6,200}" required />
                                        </div>
-                                       <div class="col-md-6 col-sm-6">
+                                       <div class="col-md-3 col-sm-3">
                                  <p>Ej: Cual es la marca de mi primer</br>vehículo</p>
                                </div>
                                     </div>

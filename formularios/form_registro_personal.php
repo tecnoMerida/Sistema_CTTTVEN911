@@ -158,7 +158,7 @@
                                <div class="col-md-6 col-sm-6">
                                  <input type="text" name="telefono_celular" id="telefono_celular" class="form-control" title="Llene este campo con el número de teléfono móvil" placeholder="Ingrese número móvil" maxlength="14" required='required' data-validate-length-range="14,14" data-inputmask="'mask' : '(999) 999-9999'" pattern="[0-9() -]{11,14}">
                                </div>
-                               <div class="col-md-6 col-sm-6">
+                               <div class="col-md-3 col-sm-3">
                                  <p>Ej: (424) 765-4321</p>
                                </div>
                              </div>
@@ -170,7 +170,7 @@
                                <div class="col-md-6 col-sm-6">
                                  <input type="text" id="telefono_casa" class="form-control" name="telefono_casa" title="Llene este campo con el número de teléfono de habitación" placeholder="Ingrese número habitación" maxlength="14" required='required' data-validate-length-range="14,14" data-inputmask="'mask' : '(999) 999-9999'" pattern="[0-9() -]{11,14}">
                                </div>
-                               <div class="col-md-6 col-sm-6">
+                               <div class="col-md-3 col-sm-3">
                                  <p>Ej: (274) 262-4321</p>
                                </div>
                              </div>
@@ -182,7 +182,7 @@
                                <div class="col-md-6 col-sm-6">
                                  <input class="form-control email" type="email" id="email" name="correo_electronico" title="Llene este campo con la dirección de correo electrónico" placeholder="Ingrese correo electrónico" data-validate-linked="email" data-parsley-trigger="change" required />
                                </div>
-                               <div class="col-md-6 col-sm-6">
+                               <div class="col-md-3 col-sm-3">
                                  <p>Ej: ejemplo@sistema911.com</p>
                                </div>
                              </div>

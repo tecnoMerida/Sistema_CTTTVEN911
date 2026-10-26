@@ -60,13 +60,11 @@
                   </div>
                   <div class="col-md-3 col-sm-3"></div>
 
-                  <br /><br /><br /><br />
+                  
                   <!--        // Seccion de mensajes en pantalla -->
                   <!--			// Inicio Formulario Registro de Grupos -->
                   <form class="" action="../insertar_organismo.php?ac=3" method="post" data-parsley-validate>
-                    <span class="section">
-                      <p></p>
-                    </span>
+                    
                     <div class="field item form-group">
                       <label class="col-form-label col-md-3 col-sm-3  label-align" for="nombre_grupo">Grupo<span class="required">*</span></label>
                       <div class="col-md-6 col-sm-6">

@@ -47,7 +47,7 @@
                         </div>
                         <div class="col-md-3 col-sm-3"></div>
 
-                        <br /><br /><br /><br />
+                        
                         <!--        // Seccion de mensajes en pantalla -->
                         <?php 
 /////////////////////////////////     CONEXION CON BASE DE DATOS        ////////////////////////////////

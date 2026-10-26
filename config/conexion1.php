@@ -7,14 +7,7 @@
  * ============================================================================
  */
 // detalles de la conexion
-// Si existe config/conexion_local.php (no se sube a git) se usan sus credenciales;
-// si no, se mantiene la conexion original.
-if (file_exists(__DIR__ . '/conexion_local.php')) {
-    require_once __DIR__ . '/conexion_local.php';
-    $conn_string = "host=" . HOST . " port=" . PORT . " dbname=" . DATABASE . " user=" . USER . " password='" . PASSWORD . "' options='--client_encoding=UTF8'";
-} else {
-    $conn_string = "host=localhost port=5432 dbname=ven911 user=postgres password=XTAE5qxIn4o options='--client_encoding=UTF8'";
-}
+$conn_string = "host=localhost port=5432 dbname=ven911 user=postgres password=123456 options='--client_encoding=UTF8'";
 
 // establecemos una conexion con el servidor postgresSQL
 $dbconn = pg_connect($conn_string) or die ("Errror al conectar con la base de datos! pg 1");
@@ -25,11 +18,6 @@ if (!$dbconn) {
 } else {
    // echo "Conexión exitosa\n";
 }
-
-
-
-
-
 
 /*
 class gbd
