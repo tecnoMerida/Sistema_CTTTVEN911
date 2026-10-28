@@ -74,29 +74,29 @@
 
                                                    <?php
                                                     // Consulta a la Base de Datos
-                                                    $result3 = pg_query($dbconn, "SELECT * FROM organismos");
+                                                    $result3 = pg_query($dbconn, "SELECT id, nombre_oganismos FROM public.organismos ORDER BY id ASC");
                                                     if (!$result3) {
                                                         echo "Ocurrió un error.\n";
                                                         exit;
                                                     }
                                                     ?>
-                                                   <div class="field item form-group">
-                                                       <label class="col-form-label col-md-3 col-sm-3  label-align" for="organismos_id">Organismo<span class="required">
-                                                               <font COLOR="#FF0000">*</font>
-                                                           </span></label>
-                                                       <div class="col-md-6 col-sm-6">
-                                                           <select class="form-control" name="organismos_id" id="organismos_id" title="Seleccione el organismo al cual pertenece" required>
-                                                               <option value="">--Seleccione--</option>
-                                                               <?php
-                                                                while ($registro3 = pg_fetch_array($result3)) {
+                                                    <div class="field item form-group">
+                                                        <label class="col-form-label col-md-3 col-sm-3  label-align" for="organismos_id">Organismo<span class="required">
+                                                                <font COLOR="#FF0000">*</font>
+                                                            </span></label>
+                                                        <div class="col-md-6 col-sm-6">
+                                                            <select class="form-control" name="organismos_id" id="organismos_id" title="Seleccione el organismo al cual pertenece" required>
+                                                                <option value="">--Seleccione--</option>
+                                                                <?php
+                                                                while ($registro3 = pg_fetch_assoc($result3)) {
                                                                 ?>
-                                                                   <option name="id" value="<?php echo $registro3[0] ?> "><?php echo strtoupper($registro3[1]) ?></option>
-                                                               <?php
+                                                                    <option value="<?php echo $registro3['id']; ?>"><?php echo strtoupper($registro3['nombre_oganismos']); ?></option>
+                                                                <?php
                                                                 }
                                                                 ?>
-                                                           </select>
-                                                       </div>
-                                                   </div>
+                                                            </select>
+                                                        </div>
+                                                    </div>
 
 
                                                    <?php

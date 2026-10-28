@@ -16,7 +16,125 @@ require_once '../config/conexion1.php';
 require_once '../config/permisos_helper.php';
 
 // -------------------------------------------------------------
-// PROCESAR GUARDADO DE PERMISOS
+// 1. PROCESAR SINCRONIZACIÓN MASIVA DE TODOS LOS USUARIOS
+// -------------------------------------------------------------
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'sincronizar_todos_perfiles') {
+    $admin_user = pg_escape_string($dbconn, $_SESSION['usuario'] ?? 'ADMIN');
+    $q_all = pg_query($dbconn, "SELECT id, tipo_rol_id, usuario FROM public.usuario ORDER BY id ASC");
+    $total_sincronizados = 0;
+    
+    if ($q_all) {
+        while ($u = pg_fetch_assoc($q_all)) {
+            $uid = intval($u['id']);
+            $rol = intval($u['tipo_rol_id'] ?? 4);
+            $p = obtener_permisos_por_rol($rol);
+            
+            $sql_sync = "
+            INSERT INTO public.usuario_permisos (
+                usuario_id, modulo_administrador, modulo_personal, modulo_bienes,
+                modulo_seguridad, modulo_solicitudes, modulo_estadisticas, modulo_respaldo,
+                modulo_actividades, modulo_cupaz, modulo_ayuda, modulo_calendario, accion_consultar,
+                accion_crear, accion_editar, accion_eliminar, accion_exportar_bd,
+                accion_importar_bd, actualizado_por, fecha_actualizacion
+            ) VALUES (
+                $uid, '{$p['modulo_administrador']}', '{$p['modulo_personal']}', '{$p['modulo_bienes']}',
+                '{$p['modulo_seguridad']}', '{$p['modulo_solicitudes']}', '{$p['modulo_estadisticas']}', '{$p['modulo_respaldo']}',
+                '{$p['modulo_actividades']}', '{$p['modulo_cupaz']}', '{$p['modulo_ayuda']}', '{$p['modulo_calendario']}', '{$p['accion_consultar']}',
+                '{$p['accion_crear']}', '{$p['accion_editar']}', '{$p['accion_eliminar']}', '{$p['accion_exportar_bd']}',
+                '{$p['accion_importar_bd']}', '$admin_user', NOW()
+            )
+            ON CONFLICT (usuario_id) DO UPDATE SET
+                modulo_administrador = EXCLUDED.modulo_administrador,
+                modulo_personal = EXCLUDED.modulo_personal,
+                modulo_bienes = EXCLUDED.modulo_bienes,
+                modulo_seguridad = EXCLUDED.modulo_seguridad,
+                modulo_solicitudes = EXCLUDED.modulo_solicitudes,
+                modulo_estadisticas = EXCLUDED.modulo_estadisticas,
+                modulo_respaldo = EXCLUDED.modulo_respaldo,
+                modulo_actividades = EXCLUDED.modulo_actividades,
+                modulo_cupaz = EXCLUDED.modulo_cupaz,
+                modulo_ayuda = EXCLUDED.modulo_ayuda,
+                modulo_calendario = EXCLUDED.modulo_calendario,
+                accion_consultar = EXCLUDED.accion_consultar,
+                accion_crear = EXCLUDED.accion_crear,
+                accion_editar = EXCLUDED.accion_editar,
+                accion_eliminar = EXCLUDED.accion_eliminar,
+                accion_exportar_bd = EXCLUDED.accion_exportar_bd,
+                accion_importar_bd = EXCLUDED.accion_importar_bd,
+                actualizado_por = EXCLUDED.actualizado_por,
+                fecha_actualizacion = NOW();
+            ";
+            pg_query($dbconn, $sql_sync);
+            $total_sincronizados++;
+        }
+    }
+    
+    $detalles = "Sincronización masiva de permisos según perfil completada para $total_sincronizados usuarios";
+    @pg_query($dbconn, "INSERT INTO bitacora (usuario_aplicacion, nombre_esquema, nombre_tabla, proceso, valor_nuevo, fecha_operacion) VALUES ('$admin_user', 'ADMINISTRACION', 'PERMISOS USUARIO', 'SINCRONIZAR_TODOS', '$detalles', NOW())");
+    
+    $ret_uid = intval($_POST['usuario_id'] ?? 0);
+    header("Location: permisos_usuario.php?usuario_id=$ret_uid&msg=sync_all_ok&total=$total_sincronizados");
+    exit();
+}
+
+// -------------------------------------------------------------
+// 2. PROCESAR RESTABLECIMIENTO SEGÚN PERFIL PARA UN USUARIO
+// -------------------------------------------------------------
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'restablecer_perfil_usuario') {
+    $target_uid = intval($_POST['usuario_id'] ?? 0);
+    if ($target_uid > 0) {
+        $u_info = pg_fetch_assoc(pg_query($dbconn, "SELECT usuario, tipo_rol_id FROM public.usuario WHERE id = $target_uid"));
+        if ($u_info) {
+            $p = obtener_permisos_por_rol($u_info['tipo_rol_id'] ?? 4);
+            $admin_user = pg_escape_string($dbconn, $_SESSION['usuario'] ?? 'ADMIN');
+            
+            $sql_reset = "
+            INSERT INTO public.usuario_permisos (
+                usuario_id, modulo_administrador, modulo_personal, modulo_bienes,
+                modulo_seguridad, modulo_solicitudes, modulo_estadisticas, modulo_respaldo,
+                modulo_actividades, modulo_cupaz, modulo_ayuda, modulo_calendario, accion_consultar,
+                accion_crear, accion_editar, accion_eliminar, accion_exportar_bd,
+                accion_importar_bd, actualizado_por, fecha_actualizacion
+            ) VALUES (
+                $target_uid, '{$p['modulo_administrador']}', '{$p['modulo_personal']}', '{$p['modulo_bienes']}',
+                '{$p['modulo_seguridad']}', '{$p['modulo_solicitudes']}', '{$p['modulo_estadisticas']}', '{$p['modulo_respaldo']}',
+                '{$p['modulo_actividades']}', '{$p['modulo_cupaz']}', '{$p['modulo_ayuda']}', '{$p['modulo_calendario']}', '{$p['accion_consultar']}',
+                '{$p['accion_crear']}', '{$p['accion_editar']}', '{$p['accion_eliminar']}', '{$p['accion_exportar_bd']}',
+                '{$p['accion_importar_bd']}', '$admin_user', NOW()
+            )
+            ON CONFLICT (usuario_id) DO UPDATE SET
+                modulo_administrador = EXCLUDED.modulo_administrador,
+                modulo_personal = EXCLUDED.modulo_personal,
+                modulo_bienes = EXCLUDED.modulo_bienes,
+                modulo_seguridad = EXCLUDED.modulo_seguridad,
+                modulo_solicitudes = EXCLUDED.modulo_solicitudes,
+                modulo_estadisticas = EXCLUDED.modulo_estadisticas,
+                modulo_respaldo = EXCLUDED.modulo_respaldo,
+                modulo_actividades = EXCLUDED.modulo_actividades,
+                modulo_cupaz = EXCLUDED.modulo_cupaz,
+                modulo_ayuda = EXCLUDED.modulo_ayuda,
+                modulo_calendario = EXCLUDED.modulo_calendario,
+                accion_consultar = EXCLUDED.accion_consultar,
+                accion_crear = EXCLUDED.accion_crear,
+                accion_editar = EXCLUDED.accion_editar,
+                accion_eliminar = EXCLUDED.accion_eliminar,
+                accion_exportar_bd = EXCLUDED.accion_exportar_bd,
+                accion_importar_bd = EXCLUDED.accion_importar_bd,
+                actualizado_por = EXCLUDED.actualizado_por,
+                fecha_actualizacion = NOW();
+            ";
+            pg_query($dbconn, $sql_reset);
+            
+            $detalles = "Permisos restablecidos exactamente según perfil para usuario: {$u_info['usuario']} (ID: $target_uid)";
+            @pg_query($dbconn, "INSERT INTO bitacora (usuario_aplicacion, nombre_esquema, nombre_tabla, proceso, valor_nuevo, fecha_operacion) VALUES ('$admin_user', 'ADMINISTRACION', 'PERMISOS USUARIO', 'RESTABLECER', '$detalles', NOW())");
+        }
+        header("Location: permisos_usuario.php?usuario_id=$target_uid&msg=reset_ok");
+        exit();
+    }
+}
+
+// -------------------------------------------------------------
+// 3. PROCESAR GUARDADO DE PERMISOS
 // -------------------------------------------------------------
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'guardar_permisos') {
     $target_uid = intval($_POST['usuario_id'] ?? 0);
@@ -31,6 +149,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $m_estadisticas = isset($_POST['modulo_estadisticas']) ? 'true' : 'false';
         $m_respaldo     = isset($_POST['modulo_respaldo']) ? 'true' : 'false';
         $m_actividades  = isset($_POST['modulo_actividades']) ? 'true' : 'false';
+        $m_cupaz        = isset($_POST['modulo_cupaz']) ? 'true' : 'false';
         $m_ayuda        = isset($_POST['modulo_ayuda']) ? 'true' : 'false';
         $m_calendario   = isset($_POST['modulo_calendario']) ? 'true' : 'false';
         
@@ -49,13 +168,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         INSERT INTO public.usuario_permisos (
             usuario_id, modulo_administrador, modulo_personal, modulo_bienes,
             modulo_seguridad, modulo_solicitudes, modulo_estadisticas, modulo_respaldo,
-            modulo_actividades, modulo_ayuda, modulo_calendario, accion_consultar,
+            modulo_actividades, modulo_cupaz, modulo_ayuda, modulo_calendario, accion_consultar,
             accion_crear, accion_editar, accion_eliminar, accion_exportar_bd,
             accion_importar_bd, actualizado_por, fecha_actualizacion
         ) VALUES (
             $target_uid, $m_admin, $m_personal, $m_bienes,
             $m_seguridad, $m_solicitudes, $m_estadisticas, $m_respaldo,
-            $m_actividades, $m_ayuda, $m_calendario, $a_consultar,
+            $m_actividades, $m_cupaz, $m_ayuda, $m_calendario, $a_consultar,
             $a_crear, $a_editar, $a_eliminar, $a_exportar_bd,
             $a_importar_bd, '$admin_user', NOW()
         )
@@ -68,6 +187,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             modulo_estadisticas = EXCLUDED.modulo_estadisticas,
             modulo_respaldo = EXCLUDED.modulo_respaldo,
             modulo_actividades = EXCLUDED.modulo_actividades,
+            modulo_cupaz = EXCLUDED.modulo_cupaz,
             modulo_ayuda = EXCLUDED.modulo_ayuda,
             modulo_calendario = EXCLUDED.modulo_calendario,
             accion_consultar = EXCLUDED.accion_consultar,
@@ -103,7 +223,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 $sql_usuarios = "
     SELECT u.id, u.usuario, u.tipo_rol_id, r.tipo_rol, u.personal_cedula,
            p.p_nombre, p.p_apellido, u.estado_usuario_id,
-           COALESCE(perm.id, 0) as tiene_permisos_personalizados
+           COALESCE(perm.id, 0) as tiene_permisos_personalizados,
+           perm.modulo_administrador, perm.modulo_personal, perm.modulo_bienes,
+           perm.modulo_seguridad, perm.modulo_solicitudes, perm.modulo_estadisticas,
+           perm.modulo_respaldo, perm.modulo_actividades, perm.modulo_cupaz, perm.modulo_ayuda, perm.modulo_calendario,
+           perm.accion_consultar, perm.accion_crear, perm.accion_editar,
+           perm.accion_eliminar, perm.accion_exportar_bd, perm.accion_importar_bd
     FROM public.usuario u
     LEFT JOIN public.tipo_rol r ON u.tipo_rol_id = r.id
     LEFT JOIN public.personal p ON u.personal_cedula = p.cedula
@@ -135,41 +260,8 @@ if ($selected_user) {
     if ($q_perm && pg_num_rows($q_perm) > 0) {
         $permisos_actuales = pg_fetch_assoc($q_perm);
     } else {
-        // Valores por defecto inteligentes según el rol actual del usuario
-        $rol_id = intval($selected_user['tipo_rol_id']);
-        if ($rol_id === 1) { // Administrador: acceso total
-            $permisos_actuales = [
-                'modulo_administrador' => 't', 'modulo_personal' => 't', 'modulo_bienes' => 't',
-                'modulo_seguridad' => 't', 'modulo_solicitudes' => 't', 'modulo_estadisticas' => 't',
-                'modulo_respaldo' => 't', 'modulo_actividades' => 't', 'modulo_ayuda' => 't', 'modulo_calendario' => 't',
-                'accion_consultar' => 't', 'accion_crear' => 't', 'accion_editar' => 't',
-                'accion_eliminar' => 't', 'accion_exportar_bd' => 't', 'accion_importar_bd' => 't'
-            ];
-        } elseif ($rol_id === 2) { // Supervisor
-            $permisos_actuales = [
-                'modulo_administrador' => 'f', 'modulo_personal' => 't', 'modulo_bienes' => 't',
-                'modulo_seguridad' => 't', 'modulo_solicitudes' => 't', 'modulo_estadisticas' => 't',
-                'modulo_respaldo' => 'f', 'modulo_actividades' => 'f', 'modulo_ayuda' => 't', 'modulo_calendario' => 't',
-                'accion_consultar' => 't', 'accion_crear' => 't', 'accion_editar' => 't',
-                'accion_eliminar' => 'f', 'accion_exportar_bd' => 'f', 'accion_importar_bd' => 'f'
-            ];
-        } elseif ($rol_id === 3) { // Despachador
-            $permisos_actuales = [
-                'modulo_administrador' => 'f', 'modulo_personal' => 'f', 'modulo_bienes' => 't',
-                'modulo_seguridad' => 't', 'modulo_solicitudes' => 't', 'modulo_estadisticas' => 'f',
-                'modulo_respaldo' => 'f', 'modulo_actividades' => 'f', 'modulo_ayuda' => 't', 'modulo_calendario' => 't',
-                'accion_consultar' => 't', 'accion_crear' => 't', 'accion_editar' => 'f',
-                'accion_eliminar' => 'f', 'accion_exportar_bd' => 'f', 'accion_importar_bd' => 'f'
-            ];
-        } else { // Operador
-            $permisos_actuales = [
-                'modulo_administrador' => 'f', 'modulo_personal' => 'f', 'modulo_bienes' => 'f',
-                'modulo_seguridad' => 't', 'modulo_solicitudes' => 't', 'modulo_estadisticas' => 'f',
-                'modulo_respaldo' => 'f', 'modulo_actividades' => 'f', 'modulo_ayuda' => 't', 'modulo_calendario' => 't',
-                'accion_consultar' => 't', 'accion_crear' => 't', 'accion_editar' => 'f',
-                'accion_eliminar' => 'f', 'accion_exportar_bd' => 'f', 'accion_importar_bd' => 'f'
-            ];
-        }
+        // Valores estándar que coinciden exactamente con el rol/perfil actual
+        $permisos_actuales = obtener_permisos_por_rol($selected_user['tipo_rol_id'] ?? 4);
     }
 }
 
@@ -190,13 +282,6 @@ function is_checked($val) {
     background: #ffffff;
     padding: 22px;
     margin-bottom: 25px;
-}
-.perm-header {
-    background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
-    color: #ffffff;
-    border-radius: 8px;
-    padding: 18px 22px;
-    margin-bottom: 22px;
 }
 .custom-switch-item {
     background: #f8f9fa;
@@ -260,6 +345,10 @@ function is_checked($val) {
             <h3><i class="fa fa-key"></i> GESTIÓN DE PERMISOS Y ACCESOS DE USUARIOS</h3>
           </div>
           <div class="title_right text-right">
+            <!-- Botón de Sincronización Masiva según Perfil -->
+            <button type="button" class="btn btn-warning btn-sm font-weight-bold shadow-sm" onclick="sincronizarTodos()" title="Sincronizar permisos de todos los usuarios registrados según su perfil actual">
+              <i class="fa fa-refresh"></i> Sincronizar Todos según Perfil
+            </button>
             <a href="respaldo_bd.php" class="btn btn-outline-secondary btn-sm font-weight-bold">
               <i class="fa fa-database"></i> Respaldo BD
             </a>
@@ -271,10 +360,26 @@ function is_checked($val) {
 
         <div class="clearfix"></div>
 
-        <!-- Alerta de Guardado Exitoso -->
+        <!-- Formulario oculto para sincronización masiva -->
+        <form id="form_sync_all" method="POST" action="permisos_usuario.php" style="display:none;">
+          <input type="hidden" name="action" value="sincronizar_todos_perfiles">
+          <input type="hidden" name="usuario_id" value="<?php echo $selected_uid; ?>">
+        </form>
+
+        <!-- Alertas de Estado -->
         <?php if (isset($_GET['msg']) && $_GET['msg'] === 'saved_ok'): ?>
           <div class="alert alert-success alert-dismissible fade show" role="alert">
             <i class="fa fa-check-circle"></i> <strong>¡Permisos Actualizados!</strong> Se han guardado satisfactoriamente los módulos y acciones para el usuario seleccionado.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        <?php elseif (isset($_GET['msg']) && $_GET['msg'] === 'sync_all_ok'): ?>
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fa fa-check-circle"></i> <strong>¡Sincronización Masiva Exitosa!</strong> Se han sincronizado los permisos de todos los usuarios (<?php echo intval($_GET['total'] ?? 0); ?> usuarios) garantizando que coincidan con su perfil asignado.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+        <?php elseif (isset($_GET['msg']) && $_GET['msg'] === 'reset_ok'): ?>
+          <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <i class="fa fa-info-circle"></i> <strong>¡Permisos Restablecidos!</strong> Los permisos del usuario fueron restablecidos exactamente a los de su perfil/rol.
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           </div>
         <?php endif; ?>
@@ -351,6 +456,7 @@ function is_checked($val) {
                   <button type="button" class="btn btn-outline-success btn-preset" onclick="aplicarPlantilla('op')"><i class="fa fa-headphones"></i> Perfil Operador</button>
                   <button type="button" class="btn btn-outline-secondary btn-preset" onclick="aplicarPlantilla('consulta')"><i class="fa fa-eye"></i> Solo Consulta</button>
                   <button type="button" class="btn btn-outline-dark btn-preset" onclick="aplicarPlantilla('ninguno')"><i class="fa fa-ban"></i> Desmarcar Todos</button>
+                  <button type="button" class="btn btn-outline-primary btn-preset" onclick="restablecerPerfilActual()"><i class="fa fa-refresh"></i> Coincidir con Rol Actual</button>
                 </div>
               </div>
             </div>
@@ -406,6 +512,11 @@ function is_checked($val) {
                   <div class="custom-switch-item">
                     <label for="mod_actividades"><i class="fa fa-history text-secondary mr-2"></i> Registro de Actividades y Auditoría</label>
                     <input type="checkbox" name="modulo_actividades" id="mod_actividades" class="chk-modulo" <?php echo is_checked($permisos_actuales['modulo_actividades'] ?? false); ?>>
+                  </div>
+
+                  <div class="custom-switch-item">
+                    <label for="mod_cupaz"><i class="fa fa-shield text-success mr-2"></i> Módulo CUPAZ (Cuadrantes de Paz)</label>
+                    <input type="checkbox" name="modulo_cupaz" id="mod_cupaz" class="chk-modulo" <?php echo is_checked($permisos_actuales['modulo_cupaz'] ?? true); ?>>
                   </div>
 
                   <div class="custom-switch-item">
@@ -471,12 +582,13 @@ function is_checked($val) {
                   <div class="form-group row">
                     <label class="col-sm-4 col-form-label font-weight-bold text-muted">Rol en el Sistema:</label>
                     <div class="col-sm-8">
-                      <select name="tipo_rol_id" class="form-control" style="font-weight: 600;">
+                      <select name="tipo_rol_id" id="select_tipo_rol" onchange="alCambiarRol(this.value)" class="form-control" style="font-weight: 600;">
                         <option value="1" <?php if ($selected_user['tipo_rol_id'] == 1) echo 'selected'; ?>>Administrador</option>
                         <option value="2" <?php if ($selected_user['tipo_rol_id'] == 2) echo 'selected'; ?>>Supervisor</option>
                         <option value="3" <?php if ($selected_user['tipo_rol_id'] == 3) echo 'selected'; ?>>Despachador</option>
                         <option value="4" <?php if ($selected_user['tipo_rol_id'] == 4) echo 'selected'; ?>>Operador</option>
                       </select>
+                      <small class="text-muted"><i class="fa fa-info-circle"></i> Al cambiar el rol, las casillas se actualizarán automáticamente para coincidir con el perfil.</small>
                     </div>
                   </div>
 
@@ -505,8 +617,11 @@ function is_checked($val) {
                 <button type="submit" class="btn btn-success btn-lg px-5 py-3 font-weight-bold" style="border-radius: 8px; box-shadow: 0 4px 15px rgba(38, 185, 154, 0.4);">
                   <i class="fa fa-save"></i> Guardar Permisos del Usuario
                 </button>
-                <a href="permisos_usuario.php" class="btn btn-secondary btn-lg px-4 py-3 ml-2 font-weight-bold" style="border-radius: 8px;">
-                  <i class="fa fa-times"></i> Cancelar
+                <button type="button" class="btn btn-info btn-lg px-4 py-3 ml-2 font-weight-bold" onclick="restablecerPerfilActual()" style="border-radius: 8px;" title="Cargar los permisos estándar de su perfil actual">
+                  <i class="fa fa-refresh"></i> Coincidir con su Perfil
+                </button>
+                <a href="permisos_usuario.php?usuario_id=<?php echo $selected_uid; ?>" class="btn btn-secondary btn-lg px-4 py-3 ml-2 font-weight-bold" style="border-radius: 8px;">
+                  <i class="fa fa-undo"></i> Deshacer Cambios
                 </a>
               </div>
             </div>
@@ -532,7 +647,7 @@ function is_checked($val) {
                         <th>Cédula</th>
                         <th>Rol</th>
                         <th>Estado</th>
-                        <th>Personalizado</th>
+                        <th>Estado Permisos</th>
                         <th>Acción</th>
                       </tr>
                     </thead>
@@ -544,6 +659,21 @@ function is_checked($val) {
                           elseif ($usr['tipo_rol_id'] == 2) $rb = 'role-badge-sup';
                           elseif ($usr['tipo_rol_id'] == 3) $rb = 'role-badge-desp';
                           $es_actual = ($usr['id'] == $selected_uid);
+                          
+                          // Evaluar si coincide con el perfil estándar
+                          $es_coincidente = false;
+                          if ($usr['tiene_permisos_personalizados'] > 0) {
+                              $esperado = obtener_permisos_por_rol($usr['tipo_rol_id']);
+                              $coincide = true;
+                              foreach ($esperado as $k => $v) {
+                                  $val_usr = ($usr[$k] === 't' || $usr[$k] === true || $usr[$k] === '1') ? 't' : 'f';
+                                  if ($val_usr !== $v) {
+                                      $coincide = false;
+                                      break;
+                                  }
+                              }
+                              $es_coincidente = $coincide;
+                          }
                         ?>
                         <tr <?php if ($es_actual) echo 'style="background-color: #e8f8f5; font-weight: bold;"'; ?>>
                           <td><?php echo $usr['id']; ?></td>
@@ -565,10 +695,12 @@ function is_checked($val) {
                             </span>
                           </td>
                           <td>
-                            <?php if ($usr['tiene_permisos_personalizados'] > 0): ?>
-                              <span class="badge badge-success"><i class="fa fa-check"></i> Personalizado</span>
+                            <?php if ($usr['tiene_permisos_personalizados'] == 0): ?>
+                              <span class="badge badge-info"><i class="fa fa-id-badge"></i> Heredado de Perfil</span>
+                            <?php elseif ($es_coincidente): ?>
+                              <span class="badge badge-success"><i class="fa fa-check-circle"></i> Coincide con Perfil</span>
                             <?php else: ?>
-                              <span class="badge badge-light border text-muted">Heredado Rol</span>
+                              <span class="badge badge-warning text-dark"><i class="fa fa-sliders"></i> Personalizado</span>
                             <?php endif; ?>
                           </td>
                           <td>
@@ -610,8 +742,28 @@ function toggleGrupo(grupo, state) {
     });
 }
 
+// Al cambiar el selector de Rol, se sincronizan las casillas con la plantilla del perfil
+function alCambiarRol(rolId) {
+    var mapa = { '1': 'admin', '2': 'sup', '3': 'desp', '4': 'op' };
+    if (mapa[rolId]) {
+        aplicarPlantilla(mapa[rolId], false);
+    }
+}
+
 // Plantillas predeterminadas de permisos
-function aplicarPlantilla(tipo) {
+function aplicarPlantilla(tipo, updateSelect) {
+    if (updateSelect === undefined) updateSelect = true;
+    
+    if (updateSelect) {
+        var sel = document.getElementById('select_tipo_rol');
+        if (sel) {
+            if (tipo === 'admin') sel.value = '1';
+            else if (tipo === 'sup') sel.value = '2';
+            else if (tipo === 'desp') sel.value = '3';
+            else if (tipo === 'op') sel.value = '4';
+        }
+    }
+    
     if (tipo === 'admin') {
         // Administrador: todo habilitado
         toggleGrupo('modulos', true);
@@ -626,6 +778,7 @@ function aplicarPlantilla(tipo) {
         setCheckbox('mod_estadisticas', true);
         setCheckbox('mod_respaldo', false);
         setCheckbox('mod_actividades', false);
+        setCheckbox('mod_cupaz', true);
         setCheckbox('mod_ayuda', true);
         setCheckbox('mod_calendario', true);
         
@@ -645,6 +798,7 @@ function aplicarPlantilla(tipo) {
         setCheckbox('mod_estadisticas', false);
         setCheckbox('mod_respaldo', false);
         setCheckbox('mod_actividades', false);
+        setCheckbox('mod_cupaz', true);
         setCheckbox('mod_ayuda', true);
         setCheckbox('mod_calendario', true);
         
@@ -664,6 +818,7 @@ function aplicarPlantilla(tipo) {
         setCheckbox('mod_estadisticas', false);
         setCheckbox('mod_respaldo', false);
         setCheckbox('mod_actividades', false);
+        setCheckbox('mod_cupaz', true);
         setCheckbox('mod_ayuda', true);
         setCheckbox('mod_calendario', true);
         
@@ -683,6 +838,7 @@ function aplicarPlantilla(tipo) {
         setCheckbox('mod_estadisticas', true);
         setCheckbox('mod_respaldo', false);
         setCheckbox('mod_actividades', false);
+        setCheckbox('mod_cupaz', true);
         setCheckbox('mod_ayuda', true);
         setCheckbox('mod_calendario', true);
         
@@ -695,6 +851,20 @@ function aplicarPlantilla(tipo) {
     } else if (tipo === 'ninguno') {
         toggleGrupo('modulos', false);
         toggleGrupo('acciones', false);
+    }
+}
+
+// Restablecer casillas al perfil actual seleccionado
+function restablecerPerfilActual() {
+    var sel = document.getElementById('select_tipo_rol');
+    var rolId = sel ? sel.value : '4';
+    alCambiarRol(rolId);
+}
+
+// Confirmación para sincronizar todos los usuarios
+function sincronizarTodos() {
+    if (confirm('¿Está seguro de que desea sincronizar los permisos de TODOS los usuarios según su rol/perfil actual?\n\nEsta acción registrará para cada uno de los 56 usuarios los permisos que corresponden a su perfil (Administrador, Supervisor, Despachador u Operador).')) {
+        document.getElementById('form_sync_all').submit();
     }
 }
 </script>

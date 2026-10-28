@@ -166,16 +166,6 @@
                   <li><a href="../../administrador/respaldo_bd.php"><i class="fa fa-database"></i> Respaldo Base de Datos</a></li>
                   <li><a href="../../administrador/registro_actividades.php"><i class="fa fa-history"></i> Registro de Actividades</a></li>
                   <li><a href="../../administrador/permisos_usuario.php"><i class="fa fa-key"></i> Permisos de Usuario</a></li>
-                  <li><a><i class="fa fa-info-circle
-                    "></i> Ayuda <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="../../administrador/manual.php">Manual Usuario</a></li>
-                      <li><a href="../../administrador/contacto.php">Contactos</a></li>
-                    </ul>
-                  </li>
-                  <li><a href="../../administrador/calendario.php"><i class="fa fa-calendar"></i> Calendario <span class="label label-success pull-right"></span></a>
-                  </li>
-
 <!--                  <li><a href="../cookie/logout.php"><i class="fa fa-sign-out"></i> Cerrar Sesión <span class="label label-success pull-right"></span></a>
                   </li>-->
 
@@ -203,15 +193,6 @@
                       <li><a href="../../supervisor/estadisticas_dia.php">Estadísticas</a></li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-info-circle
-                    "></i> Ayuda <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="../../supervisor/manual_sup.php">Manual Usuario</a></li>
-<!--                      <li><a href="../supervisor/contactos.php">Contactos</a></li>-->
-                    </ul>
-                  </li>
-                  <li><a href="../../supervisor/calendario.php"><i class="fa fa-calendar"></i> Calendario <span class="label label-success pull-right"></span></a>
-                  </li>
 
                     </ul>
                 </li>
@@ -234,15 +215,6 @@
                     <ul class="nav child_menu">
                       <li><a href="../../despachador/novedades_guardia.php">Novedades Guardia</a></li>
                     </ul>
-                  </li>
-                  <li><a><i class="fa fa-info-circle
-                    "></i> Ayuda <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="../../despachador/manual.php">Manual Usuario</a></li>
-<!--                      <li><a href="../despachador/contactos.php">Contactos</a></li>-->
-                    </ul>
-                  </li>
-                  <li><a href="../../despachador/calendario.php"><i class="fa fa-calendar"></i> Calendario <span class="label label-success pull-right"></span></a>
                   </li>
 
                     </ul>

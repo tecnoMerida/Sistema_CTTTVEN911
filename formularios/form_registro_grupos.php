@@ -35,53 +35,64 @@
             </ul>
             <div class="tab-content" id="myTabContent">
               <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                <div class="x_content">
-                  <!--            Seccion de Mensajes en pantalla -->
-                  <div class="col-md-3 col-sm-3"></div>
-                  <div class="col-md-6 col-sm-6" align="center">
+                <div class="row justify-content-center py-4">
+                  <div class="col-xl-6 col-lg-7 col-md-8 col-sm-10 col-12">
+
+                    <!-- Seccion de Mensajes en pantalla -->
                     <?php
                     $msg = $_GET['msg'] ?? '';
                     if ($msg == "1") {
-                      echo '<div class="alert alert-danger alert-dismissible msn1">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>El grupo ya existe!!!</strong></div>';
-                    }
-                    if ($msg == "2") {
-                      echo '<div class="alert alert-success alert-dismissible msn1">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Grupo registrado con EXITO!!!</strong></div>';
+                      echo '<div class="alert alert-danger alert-dismissible fade show text-center msn1" role="alert">
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">&times;</button>
+                              <strong><i class="fa fa-exclamation-triangle"></i> ¡El grupo ya existe!</strong>
+                            </div>';
+                    } elseif ($msg == "2") {
+                      echo '<div class="alert alert-success alert-dismissible fade show text-center msn1" role="alert">
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">&times;</button>
+                              <strong><i class="fa fa-check-circle"></i> ¡Grupo registrado con ÉXITO!</strong>
+                            </div>';
                     } elseif ($msg == "3") {
-                      echo '<div class="alert alert-secondary alert-dismissible msn1">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    <strong>Grupo NO registrado</strong></div>';
+                      echo '<div class="alert alert-secondary alert-dismissible fade show text-center msn1" role="alert">
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">&times;</button>
+                              <strong><i class="fa fa-info-circle"></i> Grupo NO registrado</strong>
+                            </div>';
                     }
-
                     ?>
-                  </div>
-                  <div class="col-md-3 col-sm-3"></div>
 
-                  
-                  <!--        // Seccion de mensajes en pantalla -->
-                  <!--			// Inicio Formulario Registro de Grupos -->
-                  <form class="" action="../insertar_organismo.php?ac=3" method="post" data-parsley-validate>
-                    
-                    <div class="field item form-group">
-                      <label class="col-form-label col-md-3 col-sm-3  label-align" for="nombre_grupo">Grupo<span class="required">*</span></label>
-                      <div class="col-md-6 col-sm-6">
-                        <input type="text" name="nombre_grupo" id="nombre_grupo" class="form-control" placeholder="Ingresa nuevo grupo" title="Llene este campo con el nombre de un nuevo grupo" minlength="3" maxlength="30" pattern="[a-zA-Z0-9 -]{3,30}" required="required" />
-                      </div>
-                      <input type="hidden" name="cedula_usuario" id="cedula_usuario" value="<?php echo $cedula;?>" required />
-                    </div>
+                    <div class="card shadow-sm border p-4" style="border-radius: 8px; background-color: #fafbfc;">
+                      <p class="text-muted text-center mb-3" style="font-size: 13px;">
+                        Los campos que contengan (<span class="text-danger font-weight-bold">*</span>) son de asignación obligatoria
+                      </p>
 
-                    <div class="ln_solid">
-                      <div class="form-group">
-                        <div class="col-md-6 offset-md-3">
-                          <button type='submit' class="btn btn-primary">Guardar</button>
-                          <button type='reset' class="btn btn-success">Limpiar</button>
+                      <!-- Inicio Formulario Registro de Grupos -->
+                      <form class="form-horizontal form-label-left" action="../insertar_organismo.php?ac=3" method="post" data-parsley-validate>
+                        
+                        <div class="form-group row align-items-center mb-3">
+                          <label class="col-md-3 col-sm-4 col-form-label text-md-right text-sm-right font-weight-bold" for="nombre_grupo" style="font-size: 13px;">
+                            Grupo <span class="text-danger">*</span>
+                          </label>
+                          <div class="col-md-9 col-sm-8">
+                            <input type="text" name="nombre_grupo" id="nombre_grupo" class="form-control" placeholder="Ingresa nuevo grupo" title="Llene este campo con el nombre de un nuevo grupo" minlength="3" maxlength="30" pattern="[a-zA-Z0-9 -]{3,30}" required="required" autofocus style="height: 36px; font-size: 13px;" />
+                          </div>
+                          <input type="hidden" name="cedula_usuario" id="cedula_usuario" value="<?php echo htmlspecialchars($cedula ?? ''); ?>" required />
                         </div>
-                      </div>
+
+                        <div class="ln_solid my-3"></div>
+
+                        <div class="form-group row mb-0">
+                          <div class="col-12 text-center">
+                            <button type="submit" class="btn btn-primary px-4 py-2 font-weight-bold shadow-sm" style="border-radius: 5px;">
+                              <i class="fa fa-save"></i> Guardar
+                            </button>
+                            <button type="reset" class="btn btn-success px-4 py-2 font-weight-bold shadow-sm ml-2" style="border-radius: 5px;">
+                              <i class="fa fa-eraser"></i> Limpiar
+                            </button>
+                          </div>
+                        </div>
+                      </form>
                     </div>
-                  </form>
+
+                  </div>
                 </div>
               </div>
               <!-- ********************************        TABLA DE ORGANISMOS       ****************************-->

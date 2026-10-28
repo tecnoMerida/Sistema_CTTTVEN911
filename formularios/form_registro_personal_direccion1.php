@@ -51,7 +51,17 @@
                                                        <!-- // Seleccion del Sector donde ocurrio el evento //-->
                                                        <label class="col-form-label col-md-3 col-sm-3  label-align">Sector</label>
                                                        <div class="col-md-6 col-sm-6">
-                                                           <input class="form-control" name="nombre_sector" id="cboSectores" title="Sector de residencia" value="<?php echo $nombre_sector; ?>" readonly />
+                                                           <input class="form-control" name="nombre_sector" id="txt_nombre_sector" title="Sector de residencia" value="<?php 
+            $sec_tmp = $nombre_sector ?? '';
+            if (!empty($sec_tmp) && is_numeric($sec_tmp) && (int)$sec_tmp > 0) {
+                $q = pg_query($dbconn, "SELECT nombre_sector FROM public.sectores WHERE id = " . intval($sec_tmp));
+                if ($q && pg_num_rows($q) > 0) {
+                    $r = pg_fetch_assoc($q);
+                    $sec_tmp = $r['nombre_sector'];
+                }
+            }
+            echo strtoupper($sec_tmp);
+        ?>" readonly />
                                                        </div>
                                                    </div>
 

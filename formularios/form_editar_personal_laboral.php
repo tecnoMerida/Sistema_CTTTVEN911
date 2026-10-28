@@ -8,15 +8,9 @@
 
                 <?php
                 $organismos1 = $reg['organismos_id'];
-                $result03 = pg_query($dbconn, "SELECT * FROM organismos WHERE id = $organismos1 ");
-                if (!$result03) {
-                    echo "Ocurrio un Error.\n";
-                    exit;
-                }
-                $reg03 = pg_fetch_array($result03);
 
                 // Consulta a la Base de Datos
-                $result33 = pg_query($dbconn, "SELECT * FROM organismos");
+                $result33 = pg_query($dbconn, "SELECT id, nombre_oganismos FROM public.organismos ORDER BY id ASC");
                 if (!$result33) {
                     echo "Ocurrió un error.\n";
                     exit;
@@ -28,11 +22,12 @@
                         </span></label>
                     <div class="col-md-6 col-sm-6">
                         <select name="organismos_id" id="organismos_id" class="form-control" title="Seleccione el organismo de al cual pertenece" required>
-                            <option value="<?php echo $reg03['id']; ?>"><?php echo strtoupper($reg03['nombre_oganismos']); ?></option>
+                            <option value="">--Seleccione--</option>
                             <?php
-                            while ($registro3 = pg_fetch_array($result33)) {
+                            while ($registro3 = pg_fetch_assoc($result33)) {
+                                $selected = ($registro3['id'] == $organismos1) ? 'selected' : '';
                             ?>
-                                <option value="<?php echo $registro3[0] ?> "><?php echo strtoupper($registro3[1]); ?></option>
+                                <option value="<?php echo $registro3['id']; ?>" <?php echo $selected; ?>><?php echo strtoupper($registro3['nombre_oganismos']); ?></option>
                             <?php
                             }
                             ?>

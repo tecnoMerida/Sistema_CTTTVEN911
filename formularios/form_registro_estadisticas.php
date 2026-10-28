@@ -391,7 +391,7 @@
 
                 <input type="hidden" name="mes" id="mes" value="<?php echo $mes = date("n"); ?>" required />
                 <input type="hidden" name="ano" id="ano" value="<?php echo $ano = date("Y"); ?>" required />
-                <input type="hidden" name="guardia_id" id="guardia_id" value="<?php echo $grupos01; ?>" required />
+                <input type="hidden" name="guardia_id" id="guardia_id" value="<?php echo intval(!empty($grupos01) ? $grupos01 : (isset($reg_id['id']) ? $reg_id['id'] : 0)); ?>" required />
                 <input type="hidden" name="personal_usuario" id="personal_usuario" value="<?php echo $cedula_personal; ?>" required />
               </div>
 

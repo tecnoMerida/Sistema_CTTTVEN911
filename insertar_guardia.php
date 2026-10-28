@@ -94,7 +94,7 @@ if(isset($_POST)){ // Asignamos valores a las variables del POST
               $num_lesionados = 0;
               $num_heridos = 0;
               $funcionario = $_POST['funcionario'];
-              $amigo171 = $_POST['amigo171'];
+              $amigo171 = isset($_POST['amigo171']) ? $_POST['amigo171'] : 0;
               $motos = 0;
               $vehiculos = 0;
               $direccion_solicitud = strtoupper($_POST['direccion_solicitud']);
@@ -197,7 +197,7 @@ if(isset($_POST)){ // Asignamos valores a las variables del POST
             $num_lesionados = $_POST['num_lesionados'];
             $num_heridos = $_POST['num_heridos'];
             $funcionario = $_POST['funcionario'];
-            $amigo171 = $_POST['amigo171'];
+            $amigo171 = isset($_POST['amigo171']) ? $_POST['amigo171'] : 0;
             $motos = $_POST['motos'];
             $vehiculos = $_POST['vehiculos'];
             $direccion_solicitud = strtoupper($_POST['direccion_solicitud']);

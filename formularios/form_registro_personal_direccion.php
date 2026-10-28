@@ -158,7 +158,7 @@
                                                                <font COLOR="#FF0000">*</font>
                                                            </span></label>
                                                        <div class="col-md-6 col-sm-6">
-                                                           <input type="text" name="casa" id="casa" class="form-control optional" placeholder="Ingrese casa o edificio de residencia" minlength="0" maxlength="40" title="Llene este campo con el nombre o número de casa o edificio de residencia, entre 0 y 40 dígitos" pattern="[A-Za-záéíóúüñÁÉÍÓÜÚÑ0-9 /-]{0,40}" required />
+                                                           <input type="text" name="casa" id="casa" class="form-control optional" placeholder="Ingrese casa o edificio de residencia" minlength="0" maxlength="40" title="Llene este campo con el nombre o número de casa o edificio de residencia, entre 0 y 40 dígitos" pattern="[A-Za-záéíóúüñÁÉÍÓÜÚÑ0-9 /.,-]{0,40}" required />
                                                        </div>
                                                        <div class="col-md-6 col-sm-6">
                                                            <p>Nota: números menores a 10<br /> agregar un 0 - Ej: 00</p>

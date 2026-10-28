@@ -125,23 +125,6 @@ require_once dirname(__DIR__) . '/config/cuadrantes_helper.php';
                     </div>
                 </div>
 
-                <div class="field item form-group">
-                    <!-- // Llamada recibida es de algun trabajor o amigo de la institucion 171/911 // -->
-                    <label class="col-form-label col-md-3 col-sm-3  label-align" for="amigo171">Amigo 911<span class="required">
-                            <font COLOR="#FF0000">*</font>
-                        </span></label>
-                    <div class="col-md-6 col-sm-6">
-                        <div id="" class="btn-group" data-toggle="buttons">
-                            <label class="btn btn-secondary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default" title="Seleccione si llamada recibida o solicitud, es amigo de la Institución 911">
-                                <input type="radio" name="amigo171" value="1" class="flat" checked="checked" required> &nbsp; SI&nbsp;
-                            </label>
-                            <label class="btn btn-secondary" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default" title="Seleccione si llamada recibida o solicitud, No es amigo de la Institución 911">
-                                <input type="radio" name="amigo171" value="0" class="flat" required> &nbsp; NO&nbsp;
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
                                 <?php /********* Seleccion del Motivo de la llamada de Solicitud ***********/
                                 // Consulta a la Base de Datos Tabla Motivos por Grupo
                                 $result44 = pg_query($dbconn, "SELECT * FROM motivo_solicitud_grupo ORDER BY id");

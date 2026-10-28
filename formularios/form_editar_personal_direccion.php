@@ -89,8 +89,18 @@
                                                    <font COLOR="#FF0000">*</font>
                                                  </span></label>
                                                <div class="col-md-6 col-sm-6">
+                                                 <?php
+                                                 $sector_actual_txt = $reg['nombre_sector'] ?? '';
+                                                 if (!empty($sector_actual_txt) && is_numeric($sector_actual_txt) && (int)$sector_actual_txt > 0) {
+                                                     $res_sec_e = pg_query($dbconn, "SELECT nombre_sector FROM public.sectores WHERE id = " . intval($sector_actual_txt));
+                                                     if ($res_sec_e && pg_num_rows($res_sec_e) > 0) {
+                                                         $fila_sec_e = pg_fetch_assoc($res_sec_e);
+                                                         $sector_actual_txt = $fila_sec_e['nombre_sector'];
+                                                     }
+                                                 }
+                                                 ?>
                                                  <select class="form-control" name="nombre_sector" id="cboSectores" title="Seleccione sector en que reside">
-                                                   <option value="<?php echo $reg['nombre_sector']; ?>"><?php echo $reg['nombre_sector']; ?></option>
+                                                   <option value="<?php echo htmlspecialchars($sector_actual_txt); ?>"><?php echo htmlspecialchars($sector_actual_txt); ?></option>
                                                  </select>
                                                </div>
                                              </div>
@@ -100,7 +110,7 @@
                                                    <font COLOR="#FF0000">*</font>
                                                  </span></label>
                                                <div class="col-md-6 col-sm-6">
-                                                 <input type="text" name="avenida" id="avenida" class="form-control optional" placeholder="Ingrese avenida de residencia" minlength="0" maxlength="40" value="<?php echo strtoupper($reg['avenida']); ?>" title="Llene este campo con la avenida de residencia, entre 0 y 40 dígitos" pattern="[A-Za-z0-9 -]{0,40}" data-validate-length-range="0,40" required />
+                                                 <input type="text" name="avenida" id="avenida" class="form-control optional" placeholder="Ingrese avenida de residencia" minlength="0" maxlength="40" value="<?php echo strtoupper($reg['avenida']); ?>" title="Llene este campo con la avenida de residencia, entre 0 y 40 dígitos" pattern="[A-Za-záéíóúüñÁÉÍÓÜÚÑ0-9 /.,-]{0,40}" data-validate-length-range="0,40" required />
                                                </div>
                                              </div>
 
@@ -119,7 +129,7 @@
                                                    <font COLOR="#FF0000">*</font>
                                                  </span></label>
                                                <div class="col-md-6 col-sm-6">
-                                                 <input type="text" name="casa" id="casa" class="form-control optional" placeholder="Ingrese casa o edificio de residencia" minlength="0" maxlength="40" value="<?php echo strtoupper($reg['casa']); ?>" title="Llene este campo con el nombre o número de casa o edificio de residencia, entre 0 y 40 dígitos" pattern="[A-Za-z0-9 -]{0,40}" data-validate-length-range="0,40" required />
+                                                 <input type="text" name="casa" id="casa" class="form-control optional" placeholder="Ingrese casa o edificio de residencia" minlength="0" maxlength="40" value="<?php echo strtoupper($reg['casa']); ?>" title="Llene este campo con el nombre o número de casa o edificio de residencia, entre 0 y 40 dígitos" pattern="[A-Za-záéíóúüñÁÉÍÓÜÚÑ0-9 /.,-]{0,40}" data-validate-length-range="0,40" required />
                                                </div>
                                                <div class="col-md-6 col-sm-6">
                                                  <p>Nota: números menores a 10<br /> agregar un 0 - Ej: 00</p>

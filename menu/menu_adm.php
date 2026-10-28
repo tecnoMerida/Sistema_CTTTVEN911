@@ -1,3 +1,8 @@
+<?php
+if (!function_exists('tiene_permiso')) {
+    @include_once __DIR__ . '/../config/permisos_helper.php';
+}
+?>
 <!-- ////////////////////////////////         MENU PANEL DERECHO          ///////////////////////////////-->
 <style>
   .SLDN{
@@ -125,9 +130,11 @@
               <div class="menu_section">
                 <h3>General</h3>
                 <ul class="nav side-menu">
+                  <?php if (tiene_permiso('modulo_administrador') || tiene_permiso('modulo_personal') || tiene_permiso('modulo_bienes') || tiene_permiso('modulo_seguridad') || tiene_permiso('modulo_respaldo') || tiene_permiso('modulo_actividades')): ?>
                   <li><a><i class="fa fa-users"></i> Administrador <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
 
+                  <?php if (tiene_permiso('modulo_personal') || tiene_permiso('modulo_administrador')): ?>
                   <li><a><i class="fa fa-sitemap"></i> Herramienta Sistema <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                         <li><a>Personal<span class="fa fa-chevron-down"></span></a>
@@ -148,35 +155,47 @@
                         </li>
                     </ul>
                   </li>
+                  <?php endif; ?>
 
+                  <?php if (tiene_permiso('modulo_bienes') || tiene_permiso('modulo_administrador')): ?>
                   <li><a><i class="fa fa-archive"></i> Módulo Administrativo <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="../administrador/registro_bienes.php">Nuevo Bienes</a></li>
                       <li><a href="../administrador/inventario_bienes.php">Inventario Bienes</a></li>
                     </ul>
                   </li>
+                  <?php endif; ?>
 
+                  <?php if (tiene_permiso('modulo_seguridad') || tiene_permiso('modulo_estadisticas') || tiene_permiso('modulo_administrador')): ?>
                   <li><a><i class="fa fa-edit"></i> Módulo Seguridad <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
+                      <?php if (tiene_permiso('modulo_seguridad') || tiene_permiso('modulo_administrador')): ?>
                       <li><a href="../administrador/novedades_guardia.php">Novedades Guardia</a></li>
+                      <?php endif; ?>
+                      <?php if (tiene_permiso('modulo_actividades') || tiene_permiso('modulo_administrador')): ?>
                       <li><a href="../administrador/registro_actividades.php">Registro de Actividades</a></li>
+                      <?php endif; ?>
+                      <?php if (tiene_permiso('modulo_estadisticas') || tiene_permiso('modulo_administrador')): ?>
                       <li><a href="../administrador/estadisticas.php">Estadísticas</a></li>
+                      <?php endif; ?>
                     </ul>
                   </li>
+                  <?php endif; ?>
+
+                  <?php if (tiene_permiso('modulo_respaldo') || tiene_permiso('modulo_administrador')): ?>
                   <li><a href="../administrador/respaldo_bd.php"><i class="fa fa-database"></i> Respaldo Base de Datos</a></li>
+                  <?php endif; ?>
+
+                  <?php if (tiene_permiso('modulo_actividades') || tiene_permiso('modulo_administrador')): ?>
                   <li><a href="../administrador/registro_actividades.php"><i class="fa fa-history"></i> Registro de Actividades</a></li>
+                  <?php endif; ?>
+
+                  <?php if (tiene_permiso('modulo_administrador')): ?>
                   <li><a href="../administrador/permisos_usuario.php"><i class="fa fa-key"></i> Permisos de Usuario</a></li>
-                  <li><a><i class="fa fa-info-circle
-                    "></i> Ayuda <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="../administrador/manual.php">Manual Usuario</a></li>
-                      <li><a href="../administrador/contacto.php">Contactos</a></li>
-                    </ul>
-                  </li>
-                  <li><a href="../administrador/calendario.php"><i class="fa fa-calendar"></i> Calendario <span class="label label-success pull-right"></span></a>
-                  </li>
+                  <?php endif; ?>
                 </ul>
                 </li>
+                <?php endif; ?>
 
                 <!-- /************************************ */
                      /************************************ */
@@ -185,9 +204,11 @@
                      /************************************ */
                      /************************************ */ -->
 
+                <?php if (tiene_permiso('modulo_administrador') || tiene_permiso('modulo_solicitudes') || tiene_permiso('modulo_seguridad') || tiene_permiso('modulo_estadisticas')): ?>
                 <li><a><i class="fa fa-users"></i> Supervisor <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
 
+                <?php if (tiene_permiso('modulo_solicitudes')): ?>
                 <li><a><i class="fa fa-sitemap"></i> Solicitudes <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="../supervisor/nueva_solicitud01.php">Nueva Solicitud</a></li>
@@ -195,32 +216,34 @@
                       <!--<li><a href="../supervisor/consulta_solicitud.php">Consulta 911</a></li>-->
                     </ul>
                   </li>
+                <?php endif; ?>
 
+                <?php if (tiene_permiso('modulo_seguridad')): ?>
                 <li><a><i class="fa fa-archive"></i> Observaciones <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="../supervisor/nueva_observacion.php">Nueva Observación</a></li>
                       <li><a href="../supervisor/observaciones_personal.php">Observaciones Personal</a></li>
                     </ul>
                   </li>
+                <?php endif; ?>
+
+                <?php if (tiene_permiso('modulo_seguridad') || tiene_permiso('modulo_estadisticas')): ?>
                   <li><a><i class="fa fa-edit"></i> Módulo Seguridad <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
+                      <?php if (tiene_permiso('modulo_seguridad')): ?>
                       <li><a href="../supervisor/novedades_guardia.php">Novedades Guardia</a></li>
+                      <?php endif; ?>
+                      <?php if (tiene_permiso('modulo_estadisticas')): ?>
                       <li><a href="../supervisor/estadisticas_dia.php">Estadísticas</a></li>
                       <li><a href="../supervisor/estadisticas_personal.php">Estadísticas Personal</a></li>
+                      <?php endif; ?>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-info-circle
-                    "></i> Ayuda <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="../supervisor/manual_sup.php">Manual Usuario</a></li>
-<!--                      <li><a href="../supervisor/contactos.php">Contactos</a></li>-->
-                    </ul>
-                  </li>
-                  <li><a href="../supervisor/calendario.php"><i class="fa fa-calendar"></i> Calendario <span class="label label-success pull-right"></span></a>
-                  </li>
+                <?php endif; ?>
 
                     </ul>
                 </li>
+                <?php endif; ?>
 
                 <!-- /************************************ */
                      /************************************ */
@@ -229,9 +252,11 @@
                      /************************************ */
                      /************************************ */ -->
 
+                <?php if (tiene_permiso('modulo_administrador') || tiene_permiso('modulo_solicitudes') || tiene_permiso('modulo_seguridad')): ?>
                 <li><a><i class="fa fa-users"></i> Despachador <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
 
+                <?php if (tiene_permiso('modulo_solicitudes')): ?>
                 <li><a><i class="fa fa-sitemap"></i> Solicitudes <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <!--<li><a href="../despachador/nueva_solicitud.php">Nueva Solicitud</a></li>-->
@@ -239,29 +264,27 @@
                       <!--<li><a href="../despachador/consulta_solicitud.php">Consulta 911</a></li>-->
                     </ul>
                   </li>
+                <?php endif; ?>
 
+                <?php if (tiene_permiso('modulo_seguridad')): ?>
                 <li><a><i class="fa fa-archive"></i> Observaciones <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="../despachador/nueva_observacion.php">Nueva Observación</a></li>
                     </ul>
                   </li>
+                <?php endif; ?>
+
+                <?php if (tiene_permiso('modulo_seguridad')): ?>
                   <li><a><i class="fa fa-edit"></i> Módulo Seguridad <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="../despachador/novedades_guardia.php">Novedades Guardia</a></li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-info-circle
-                    "></i> Ayuda <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="../despachador/manual.php">Manual Usuario</a></li>
-<!--                      <li><a href="../despachador/contactos.php">Contactos</a></li>-->
-                    </ul>
-                  </li>
-                  <li><a href="../despachador/calendario.php"><i class="fa fa-calendar"></i> Calendario <span class="label label-success pull-right"></span></a>
-                  </li>
+                <?php endif; ?>
 
                     </ul>
                 </li>
+                <?php endif; ?>
 
                 <!-- /************************************ */
                      /************************************ */
@@ -270,43 +293,44 @@
                      /************************************ */
                      /************************************ */ -->
 
+                <?php if (tiene_permiso('modulo_administrador') || tiene_permiso('modulo_solicitudes') || tiene_permiso('modulo_seguridad')): ?>
                      <li><a><i class="fa fa-users"></i> Operadores <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
 
+                <?php if (tiene_permiso('modulo_solicitudes')): ?>
                 <li><a><i class="fa fa-sitemap"></i> Solicitudes <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="../operador/nueva_solicitud.php">Nueva Solicitud</a></li>
                       <!--<li><a href="consulta_solicitud.php">Consulta 911</a></li>-->
                     </ul>
                   </li>
+                <?php endif; ?>
 
+                <?php if (tiene_permiso('modulo_seguridad')): ?>
                 <li><a><i class="fa fa-archive"></i> Observaciones <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="../operador/nueva_observacion.php">Nueva Observación</a></li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-info-circle
-                    "></i> Ayuda <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="../operador/manual.php">Manual Usuario</a></li>
-                      <!--<li><a href="contactos.php">Contactos</a></li>-->
-                    </ul>
-                  </li>
-                  <li><a href="calendario.php"><i class="fa fa-calendar"></i> Calendario <span class="label label-success pull-right"></span></a>
-                  </li>
+                <?php endif; ?>
 
+                <?php if (tiene_permiso('modulo_seguridad') || tiene_permiso('modulo_bienes')): ?>
                   <li><a href="control_bienes_s.php"><i class="fa fa-sign-out"></i> Cerrar Guardia <span class="label label-success pull-right"></span></a>
                   </li>
+                <?php endif; ?>
 
                     </ul>
                 </li>
+                <?php endif; ?>
 
                 <!-- Módulo CUPAZ en el panel principal -->
+                <?php if (tiene_permiso('modulo_cupaz')): ?>
                 <li><a><i class="fa fa-shield"></i> CUPAZ <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
                     <li><a href="../administrador/cuadrantes.php">Cuadrantes de Paz <span class="badge badge-success pull-right">240</span></a></li>
                   </ul>
                 </li>
+                <?php endif; ?>
 
             </ul>
 

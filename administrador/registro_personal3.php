@@ -42,7 +42,15 @@ if (!isset($_SESSION['tipo_rol_id'])) {
       $parroquias_id = $_REQUEST['parroquias_id'];
       $municipios_id = $_REQUEST['municipios_id'];
       $estados_id = $_REQUEST['estados_id'];
-      $nombre_sector = $_REQUEST['nombre_sector'];
+      $nombre_sector = $_REQUEST['nombre_sector'] ?? '';
+      if (!empty($nombre_sector) && is_numeric($nombre_sector) && (int)$nombre_sector > 0) {
+          $cons_sec = pg_query($dbconn, "SELECT nombre_sector FROM public.sectores WHERE id = " . intval($nombre_sector));
+          if ($cons_sec && pg_num_rows($cons_sec) > 0) {
+              $reg_sec = pg_fetch_assoc($cons_sec);
+              $nombre_sector = $reg_sec['nombre_sector'];
+          }
+      }
+      $nombre_sector = strtoupper($nombre_sector);
       $avenida = $_REQUEST['avenida'];
       $calle = $_REQUEST['calle'];
       $casa = $_REQUEST['casa'];

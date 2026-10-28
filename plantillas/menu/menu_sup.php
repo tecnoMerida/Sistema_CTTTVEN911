@@ -151,15 +151,6 @@
                       <li><a href="cuadrantes.php">Cuadrantes de Paz <span class="badge badge-success pull-right">240</span></a></li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-info-circle
-                    "></i> Ayuda <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="manual_sup.php">Manual Usuario</a></li>
-                      <li><a href="contactos.php">Contactos</a></li>
-                    </ul>
-                  </li>
-                  <li><a href="calendario.php"><i class="fa fa-calendar"></i> Calendario <span class="label label-success pull-right"></span></a>
-                  </li>
 
                   <li><a href="estadisticas.php"><i class="fa fa-sign-out"></i> Cerrar Guardia <span class="label label-success pull-right"></span></a>
                   </li>

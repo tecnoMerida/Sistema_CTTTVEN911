@@ -18,23 +18,56 @@ if (session_status() === PHP_SESSION_NONE) {
 require_once '../config/conexion1.php';
 
 // Consulta al personal de guardia
-$personal_usuario = $_SESSION['personal_cedula'];
-$consulta_pers = pg_query($dbconn,"SELECT * FROM public.personal WHERE cedula = $personal_usuario ");
-$regid= pg_fetch_array($consulta_pers);
+$personal_usuario = $_SESSION['personal_cedula'] ?? 0;
+$cedula_personal = 0;
+$organismo = 1;
+if ($personal_usuario) {
+    $consulta_pers = pg_query($dbconn,"SELECT * FROM public.personal WHERE cedula = " . intval($personal_usuario));
+    if ($consulta_pers && pg_num_rows($consulta_pers) > 0) {
+        $regid = pg_fetch_assoc($consulta_pers);
+        $cedula_personal = $regid['cedula'];
+        $organismo = $regid['organismos_id'];
+    }
+}
 
-$cedula_personal = $regid['cedula'];
-$organismo = $regid['organismos_id'];
+// 1. Intentar buscar la guardia abierta para este usuario
+$reg_id = null;
+if ($cedula_personal) {
+    $ultimo1 = pg_query($dbconn, "SELECT id, fecha_inicio_g, grupos_guardia_id, usuario_entrada_id  
+                                  FROM public.guardias
+                                  WHERE usuario_entrada_id = " . intval($cedula_personal) . "
+                                  AND fecha_fin_g IS NULL
+                                  ORDER BY id DESC LIMIT 1");
+    if ($ultimo1 && pg_num_rows($ultimo1) > 0) {
+        $reg_id = pg_fetch_assoc($ultimo1);
+    }
+}
 
-$ultimo1 = pg_query($dbconn,"SELECT id, fecha_inicio_g::timestamp::date, grupos_guardia_id, usuario_entrada_id  
-FROM public.guardias
-WHERE usuario_entrada_id = $cedula_personal
-AND fecha_inicio_g::timestamp::date = (SELECT MAX(fecha_inicio_g::timestamp::date) FROM guardias) order by id DESC");
-$reg_id= pg_fetch_array($ultimo1);
+// 2. Si no se encontró, buscar cualquier guardia que esté abierta actualmente
+if (!$reg_id) {
+    $q_abierta = pg_query($dbconn, "SELECT id, fecha_inicio_g, grupos_guardia_id, usuario_entrada_id 
+                                    FROM public.guardias 
+                                    WHERE fecha_fin_g IS NULL 
+                                    ORDER BY id DESC LIMIT 1");
+    if ($q_abierta && pg_num_rows($q_abierta) > 0) {
+        $reg_id = pg_fetch_assoc($q_abierta);
+    }
+}
 
-$grupos01 = $reg_id['id'];
-$cedula_personal1 = $reg_id['usuario_entrada_id'];
-$grupo = $reg_id['grupos_guardia_id'];
-$fecha_inicio = $reg_id['fecha_inicio_g'];
+// 3. Fallback: tomar la última guardia registrada en el sistema
+if (!$reg_id) {
+    $q_ultima = pg_query($dbconn, "SELECT id, fecha_inicio_g, grupos_guardia_id, usuario_entrada_id 
+                                   FROM public.guardias 
+                                   ORDER BY id DESC LIMIT 1");
+    if ($q_ultima && pg_num_rows($q_ultima) > 0) {
+        $reg_id = pg_fetch_assoc($q_ultima);
+    }
+}
+
+$grupos01 = $reg_id['id'] ?? 0;
+$cedula_personal1 = $reg_id['usuario_entrada_id'] ?? $cedula_personal;
+$grupo = $reg_id['grupos_guardia_id'] ?? 1;
+$fecha_inicio = $reg_id['fecha_inicio_g'] ?? date('Y-m-d 08:00:00');
 $fecha = date('Y-m-d', strtotime($fecha_inicio));
 $hora = date('H:i:s', strtotime($fecha_inicio));
 ?>

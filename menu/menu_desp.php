@@ -1,3 +1,8 @@
+<?php
+if (!function_exists('tiene_permiso')) {
+    @include_once __DIR__ . '/../config/permisos_helper.php';
+}
+?>
 <!-- ////////////////////////////////         MENU PANEL DERECHO          /////////////////////////////////////-->
 <style>
   .SLDN{
@@ -126,6 +131,7 @@
                 <h3>General</h3>
                 <ul class="nav side-menu">
 
+                <?php if (tiene_permiso('modulo_solicitudes')): ?>
                 <li><a><i class="fa fa-sitemap"></i> Solicitudes <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <!--<li><a href="nueva_solicitud01.php">Nueva Solicitud</a></li>-->
@@ -133,34 +139,43 @@
                       <!--<li><a href="consulta_solicitud.php">Consulta 911</a></li>-->
                     </ul>
                   </li>
+                <?php endif; ?>
 
+                <?php if (tiene_permiso('modulo_seguridad')): ?>
                 <li><a><i class="fa fa-archive"></i> Observaciones <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="nueva_observacion.php">Nueva Observación</a></li>
                     </ul>
                   </li>
+                <?php endif; ?>
+
+                <?php if (tiene_permiso('modulo_seguridad')): ?>
                   <li><a><i class="fa fa-edit"></i> Módulo Seguridad <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="novedades_guardia.php">Novedades Guardia</a></li>
                     </ul>
                   </li>
+                <?php endif; ?>
+
+                <?php if (tiene_permiso('modulo_cupaz')): ?>
                   <li><a><i class="fa fa-shield"></i> CUPAZ <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="cuadrantes.php">Cuadrantes de Paz <span class="badge badge-success pull-right">240</span></a></li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-info-circle
-                    "></i> Ayuda <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="manual.php">Manual Usuario</a></li>
-                      <li><a href="contactos.php">Contactos</a></li>
-                    </ul>
-                  </li>
-                  <li><a href="calendario.php"><i class="fa fa-calendar"></i> Calendario <span class="label label-success pull-right"></span></a>
-                  </li>
+                <?php endif; ?>
 
+                <?php if (tiene_permiso('modulo_seguridad') || tiene_permiso('modulo_bienes')): ?>
                   <li><a href="control_bienes_s.php"><i class="fa fa-sign-out"></i> Cerrar Guardia <span class="label label-success pull-right"></span></a>
                   </li>
+                <?php endif; ?>
+
+                <?php if (!tiene_permiso('modulo_solicitudes') && !tiene_permiso('modulo_seguridad') && !tiene_permiso('modulo_cupaz') && !tiene_permiso('modulo_bienes')): ?>
+                <li style="padding: 16px 12px; text-align: center; color: #bdc3c7;">
+                  <i class="fa fa-lock fa-2x text-warning" style="display: block; margin-bottom: 8px;"></i>
+                  <span style="font-size: 11.5px; line-height: 1.4; display: block; color: #ecf0f1;">No tiene módulos asignados a su cuenta.<br><small class="text-muted">Contacte al Administrador</small></span>
+                </li>
+                <?php endif; ?>
 
                 </ul>
 
@@ -177,9 +192,15 @@
 
             <!-- /menu footer buttons -->
             <div class="sidebar-footer hidden-small">
+              <?php if (tiene_permiso('modulo_seguridad') || tiene_permiso('modulo_bienes')): ?>
               <a class="cerrar btn-cerrar-sesion" title="Cerrar Guardia" href="control_bienes_s.php">
                 <i class="fa fa-power-off"></i> <span>Cerrar Guardia</span>
               </a>
+              <?php else: ?>
+              <a class="cerrar btn-cerrar-sesion" title="Cerrar Sesión" href="../cookie/logout.php">
+                <i class="fa fa-power-off"></i> <span>Cerrar Sesión</span>
+              </a>
+              <?php endif; ?>
             </div>
             <!-- /menu footer buttons -->
           </div>

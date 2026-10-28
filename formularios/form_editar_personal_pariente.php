@@ -49,9 +49,9 @@
                       </div>
 
                       <div class="field item form-group">
-                        <label class="col-form-label col-md-3 col-sm-3  label-align" for="observaciones_p">Observaciones<span class="required"><font COLOR="#FF0000">*</font></span></label>
+                        <label class="col-form-label col-md-3 col-sm-3  label-align" for="observaciones_p">Observaciones</label>
                         <div class="col-md-6 col-sm-6">
-                          <textarea type="text" name="observaciones_p" id="observaciones_p" class="resizable_textarea form-control" placeholder="Ingrese alguna observacion del familiar" minlength="8" maxlength="400" value="<?php echo strtoupper($pariente['observaciones_p']); ?>" title="Llene este campo con alguna observación necesaria para el familiar, entre 8 y 400 dígitos" required='required' pattern="[a-zA-Z0-9àáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]{8,400}" /><?php echo strtoupper($pariente['observaciones_p']); ?></textarea>
+                          <textarea name="observaciones_p" id="observaciones_p" class="resizable_textarea form-control optional" placeholder="Ingrese alguna observación del familiar (opcional)" maxlength="400" title="Observación para el familiar (opcional), hasta 400 caracteres"><?php echo strtoupper($pariente['observaciones_p'] ?? ''); ?></textarea>
                         </div>
                       </div>
 

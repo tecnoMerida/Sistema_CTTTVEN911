@@ -85,6 +85,7 @@ if (isset($_POST['usuario']) && isset($_POST['contrasena'])) {
 					$_SESSION['usuario'] = $usuario_login;
 					$_SESSION['contrasena'] = $clave_hash; // GUARDAMOS EL HASH PARA EL BYPASS
 					$_SESSION['id'] = $registro['id'];
+					$_SESSION['id_usuario'] = $registro['id'];
 					$_SESSION['tipo_rol_id'] = $registro['tipo_rol_id'];
 					$_SESSION['estado_usuario_id'] = $registro['estado_usuario_id'];
 					$_SESSION['personal_cedula'] = $registro['personal_cedula'];
